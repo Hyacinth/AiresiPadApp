@@ -7,6 +7,10 @@
 //
 
 #import "LoginViewController.h"
+#import "LoginTableCell.h"
+#import "AiresSingleton.h"
+
+#define mSingleton 	((AiresSingleton *) [AiresSingleton getSingletonInstance])
 
 @interface LoginViewController ()
 
@@ -18,7 +22,8 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
+        if(!loginCredentials)
+            loginCredentials = [[NSMutableArray alloc] init];
     }
     return self;
 }
@@ -34,5 +39,136 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+#pragma mark-
+#pragma mark IBAction
+
+-(IBAction)onLogin:(id)sender
+{
+    //Save values in keychain
+    SecurityManager *mSecurityManager = [mSingleton getSecurityManager];
+    for (NSIndexPath *indexPath in loginCredentials)
+    {
+        LoginTableCell *cell = (LoginTableCell *)[loginFieldTable cellForRowAtIndexPath:indexPath];
+        if (cell.tag == CELL_USER_FIELD && [cell.cellTextField.text length] > 0)
+        {
+            [mSecurityManager setValue:cell.cellTextField.text forKey:LOGIN_USERNAME];
+        }
+        else if (cell.tag == CELL_PWD_FIELD && [cell.cellTextField.text length] > 0)
+        {
+            [mSecurityManager setValue:cell.cellTextField.text forKey:LOGIN_PASSWORD];
+        }
+    }
+    //Check internet connectivity
+    if(![mSingleton isConnectedToInternet])
+    {
+        UIAlertView *noNetworkAlert = [[UIAlertView alloc] initWithTitle:@"Connection error" message:@"Unable to connect.\n Check your internet connection and try again." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+        [noNetworkAlert show];
+        return;
+    }
+    
+    //Do Login
+}
+
+-(IBAction)onForgotPassword:(id)sender
+{
+    NSURL *url = [NSURL URLWithString:@"http://www.google.com"];
+    if (![[UIApplication sharedApplication] openURL:url])
+        NSLog(@"%@%@",@"Failed to open url:",[url description]);
+}
+
+-(IBAction)onSettings:(id)sender
+{
+    if(!mLoginSettingsViewController)
+        mLoginSettingsViewController = [[LoginSettingsViewController alloc] init];
+    
+    if(!popover)
+        popover = [[UIPopoverController alloc]initWithContentViewController:mLoginSettingsViewController];
+    
+    [popover setContentViewController:mLoginSettingsViewController];
+    [popover setPopoverContentSize:CGSizeMake(300, 180)];
+    [popover setDelegate:self];
+    
+    [popover presentPopoverFromRect:settingsButton.bounds inView:settingsButton permittedArrowDirections:UIPopoverArrowDirectionRight animated:YES];
+}
+
+#pragma mark-
+#pragma mark UITableView Delegate and Datasource Methods
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    //Preset login environment before table loads
+    [loginCredentials removeAllObjects];
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return 2;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *CellIdentifier = @"loginFieldTable";
+    SecurityManager *mSecurityManager = [mSingleton getSecurityManager];
+    LoginTableCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    
+    if (cell == nil)
+    {
+        cell = [[LoginTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] ;
+        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"LoginTableCell" owner:self options:nil];
+		cell = (LoginTableCell *)[nib objectAtIndex:0];
+    }
+    [cell.cellTextField setDelegate:self];
+    [cell.cellTextField setClearButtonMode:UITextFieldViewModeWhileEditing];
+    if(indexPath.row == 0)
+    {
+        cell.cellLabel.text = @"User Name";
+        [cell.cellTextField setText:[mSecurityManager getValueForKey:LOGIN_USERNAME]];
+        [cell.cellTextField setReturnKeyType:UIReturnKeyNext];
+        cell.tag = CELL_USER_FIELD;
+    }
+    else
+    {
+        cell.cellLabel.text = @"Password";
+        [cell.cellTextField setSecureTextEntry:TRUE];
+        if ([[mSecurityManager getValueForKey:LOGIN_AUTOLOGIN] isEqualToString:@"TRUE"])
+            [cell.cellTextField setText:[mSecurityManager getValueForKey:LOGIN_PASSWORD]];
+        [cell.cellTextField setReturnKeyType:UIReturnKeyDone];
+        [cell.cellTextField setClearsOnBeginEditing:FALSE];
+        cell.tag = CELL_PWD_FIELD;
+    }
+    [loginCredentials addObject:indexPath];
+    return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    LoginTableCell *cell = (LoginTableCell *)[tableView cellForRowAtIndexPath:indexPath];
+    [cell.cellTextField becomeFirstResponder];
+}
+
+#pragma mark-
+#pragma mark UITextField Delegate
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    LoginTableCell * currentCell = (LoginTableCell *) textField.superview.superview;
+    if (currentCell.tag == CELL_USER_FIELD)
+    {
+        NSIndexPath * currentIndexPath = [loginFieldTable indexPathForCell:currentCell];
+        NSIndexPath * nextIndexPath = [NSIndexPath indexPathForRow:currentIndexPath.row + 1 inSection:0];
+        LoginTableCell * nextCell = (LoginTableCell *) [loginFieldTable cellForRowAtIndexPath:nextIndexPath];
+        
+        [nextCell.cellTextField becomeFirstResponder];
+    }
+    else if (currentCell.tag == CELL_PWD_FIELD)
+    {
+        [textField resignFirstResponder];
+    }
+    
+    return TRUE;
+}
+
 
 @end

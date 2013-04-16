@@ -7,6 +7,9 @@
 //
 
 #import "LoginSettingsViewController.h"
+#import "AiresSingleton.h"
+
+#define mSingleton 	((AiresSingleton *) [AiresSingleton getSingletonInstance])
 
 @interface LoginSettingsViewController ()
 
@@ -26,7 +29,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
@@ -41,31 +43,64 @@
 }
 
 #pragma mark - Table view data source
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 50;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    return @"      Choose an Environment      ";
+}
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-#warning Potentially incomplete method implementation.
-    // Return the number of sections.
-    return 0;
+    //Reset login credentials before table loads
+    SecurityManager *mSecurityManager = [mSingleton getSecurityManager];
+    NSString *env = [mSecurityManager getValueForKey:LOGIN_ENVIRONMENT];
+    if (!env)
+        [mSecurityManager setValue:LOGIN_SETTINGS_PRODUCTION forKey:LOGIN_ENVIRONMENT];
+    
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-#warning Incomplete method implementation.
-    // Return the number of rows in the section.
-    return 0;
+    return 3;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
+    SecurityManager *mSecurityManager = [mSingleton getSecurityManager];
+
+    static NSString *CellIdentifier = @"LoginSettingsViewController";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
-    
-    // Configure the cell...
-    
+    cell.textLabel.textAlignment = UITextAlignmentLeft;
+    cell.selectionStyle = UITableViewCellSelectionStyleBlue;
+    NSString *env = [mSecurityManager getValueForKey:LOGIN_ENVIRONMENT];
+
+    switch (indexPath.row) {
+        case 0:
+            cell.textLabel.text = LOGIN_SETTINGS_PRODUCTION;
+            break;
+        case 1:
+            cell.textLabel.text = LOGIN_SETTINGS_STAGE;
+            break;
+        case 2:
+            cell.textLabel.text = LOGIN_SETTINGS_QA;
+            break;
+
+        default:
+            break;
+    }
+    if ([env isEqualToString:cell.textLabel.text])
+        cell.accessoryType = UITableViewCellAccessoryCheckmark;
+    else
+        cell.accessoryType = UITableViewCellAccessoryNone;
+
     return cell;
 }
 
@@ -112,13 +147,10 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     */
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    SecurityManager *mSecurityManager = [mSingleton getSecurityManager];
+    [mSecurityManager setValue:cell.textLabel.text forKey:LOGIN_ENVIRONMENT];
+    [tableView reloadData];
 }
 
 @end
