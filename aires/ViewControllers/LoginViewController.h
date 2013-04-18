@@ -22,15 +22,21 @@ typedef enum
     IBOutlet UIButton *forgotPasswordButton;
     IBOutlet UIButton *settingsButton;
     IBOutlet UIButton *settings2Button;
+    BOOL isLoggingIn;
     
     NSMutableArray *loginCredentials;
     
     UIPopoverController *popover;
     LoginSettingsViewController *mLoginSettingsViewController;
+    UIAlertView *loggingInAlert;
+    UIActivityIndicatorView *loadingIndicator;
+    
 }
 
 -(IBAction)onLogin:(id)sender;
 -(IBAction)onForgotPassword:(id)sender;
 -(IBAction)onSettings:(id)sender;
+
+-(void)enableControls:(BOOL)flag;
 
 @end

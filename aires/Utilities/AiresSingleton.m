@@ -35,12 +35,48 @@ static AiresSingleton* instance;
 	return instance;
 }
 
+#pragma mark Global Methods
+
 - (BOOL)isConnectedToInternet
 {
     if ([[Reachability reachabilityForInternetConnection] currentReachabilityStatus] == NotReachable)
         return NO;
-
+    
     return YES;
+}
+
+-(NSDate *)getCurrentDeviceTime
+{
+    NSDate *date = [NSDate date];
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setDateFormat:@"EEE,MM-dd-yyyy HH:mm:ss"];
+    [dateFormat setLocale:[NSLocale currentLocale]];
+    NSString *dateString = [dateFormat stringFromDate:date];
+    NSLog(@"CurrentData:%@",dateString);
+    return date;
+}
+
+-(BOOL)isValidAccessToken
+{
+    NSString *accessToken = [[self getSecurityManager] getValueForKey:LOGIN_ACCESSTOKEN];
+    if (!accessToken || [accessToken length] <= 0)
+        return FALSE;
+    
+    NSDate *currentDate = [self getCurrentDeviceTime];
+    
+    NSString *str_prevDate = [[self getSecurityManager] getValueForKey:LOGIN_ACCESSTOKEN_TIME];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"EEE,MM-dd-yyyy HH:mm:ss"];
+    NSDate *prevDate = [[NSDate alloc] init];
+    prevDate = [dateFormatter dateFromString:str_prevDate];
+    
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    NSDateComponents *components = [calendar components:kCFCalendarUnitHour fromDate:prevDate toDate:currentDate options:0];
+    
+    if(components.hour >= 12)
+        return FALSE;
+    
+    return TRUE;
 }
 
 #pragma mark -
@@ -59,6 +95,20 @@ static AiresSingleton* instance;
         mSecurityManager = [[SecurityManager alloc] initWithServiceName:mAppBundleID];
     }
     return mSecurityManager;
+}
+
+- (WebServiceManager *)getWebServiceManager
+{
+    if(!mWebServiceManager)
+        mWebServiceManager = [[WebServiceManager alloc] init];
+    return mWebServiceManager;
+}
+
+- (JSONParser *)getJSONParser
+{
+    if(!mJSONParser)
+        mJSONParser = [[JSONParser alloc] init];
+    return mJSONParser;
 }
 
 #pragma mark -

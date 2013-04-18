@@ -31,13 +31,44 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(localNotificationhandler:) name:NOTIFICATION_LOGIN_FAILED object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(localNotificationhandler:) name:NOTIFICATION_LOGIN_SUCCESS object:nil];
+    
+
     // Do any additional setup after loading the view from its nib.
+}
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+      if (isLoggingIn)
+    {
+        if(!loggingInAlert)
+            loggingInAlert = [[UIAlertView alloc] initWithTitle:@"Logging In" message:@"Please Wait..." delegate:self cancelButtonTitle:nil otherButtonTitles:nil];
+        loadingIndicator = [[UIActivityIndicatorView alloc]
+                            initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+        loadingIndicator.frame = CGRectMake(130, 85, 16, 16);
+        [loadingIndicator startAnimating];
+        [loggingInAlert addSubview:loadingIndicator];
+        [loggingInAlert show];
+    }
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+-(void)enableControls:(BOOL)flag
+{
+    [loginButton setEnabled:flag];
+    [forgotPasswordButton setEnabled:flag];
+    [settingsButton setEnabled:flag];
+    [settings2Button setEnabled:flag];
+    [loginFieldTable setUserInteractionEnabled:flag];
+    isLoggingIn = !flag;
 }
 
 #pragma mark-
@@ -68,6 +99,18 @@
     }
     
     //Do Login
+    [self enableControls:FALSE];
+    [[mSingleton getWebServiceManager] loginWithUserName:[mSecurityManager getValueForKey:LOGIN_USERNAME] password:[mSecurityManager getValueForKey:LOGIN_PASSWORD] andAccessToken:nil];
+    
+    if(!loggingInAlert)
+        loggingInAlert = [[UIAlertView alloc] initWithTitle:@"Logging in..." message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:nil];
+    loadingIndicator = [[UIActivityIndicatorView alloc]
+                        initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+    loadingIndicator.frame = CGRectMake(130, 85, 16, 16);
+    [loadingIndicator startAnimating];
+    [loggingInAlert addSubview:loadingIndicator];
+    [loggingInAlert show];
+    
 }
 
 -(IBAction)onForgotPassword:(id)sender
@@ -89,7 +132,7 @@
     [popover setPopoverContentSize:CGSizeMake(300, 180)];
     [popover setDelegate:self];
     
-    [popover presentPopoverFromRect:settingsButton.bounds inView:settingsButton permittedArrowDirections:UIPopoverArrowDirectionRight animated:YES];
+    [popover presentPopoverFromRect:settingsButton.bounds inView:settingsButton permittedArrowDirections:UIPopoverArrowDirectionDown animated:YES];
 }
 
 #pragma mark-
@@ -127,6 +170,7 @@
         [cell.cellTextField setText:[mSecurityManager getValueForKey:LOGIN_USERNAME]];
         [cell.cellTextField setReturnKeyType:UIReturnKeyNext];
         cell.tag = CELL_USER_FIELD;
+        cell.cellTextField.text = @"gbtpa\\dcreggett";
     }
     else
     {
@@ -137,6 +181,7 @@
         [cell.cellTextField setReturnKeyType:UIReturnKeyDone];
         [cell.cellTextField setClearsOnBeginEditing:FALSE];
         cell.tag = CELL_PWD_FIELD;
+        cell.cellTextField.text = @"password123";
     }
     [loginCredentials addObject:indexPath];
     return cell;
@@ -165,10 +210,30 @@
     else if (currentCell.tag == CELL_PWD_FIELD)
     {
         [textField resignFirstResponder];
+        [self onLogin:nil];
     }
     
     return TRUE;
 }
 
-
+#pragma mark-
+#pragma mark Notification Handler
+- (void) localNotificationhandler:(NSNotification *) notification
+{
+    if ([[notification name] isEqualToString:NOTIFICATION_LOGIN_FAILED])
+    {
+        [self enableControls:TRUE];
+        [loggingInAlert dismissWithClickedButtonIndex:0 animated:YES];
+        //        [loadingIndicator removeFromSuperview];
+        //        [loggingInAlert setTitle:@"Login Failed"];
+        //        [loggingInAlert setMessage:@"Try Again"];
+        //        [loggingInAlert addButtonWithTitle:@"Ok"];
+        //        [loggingInAlert performSelector:@selector(show) withObject:nil afterDelay:1];
+    }
+    else if ([[notification name] isEqualToString:NOTIFICATION_LOGIN_SUCCESS])
+    {
+        [self enableControls:TRUE];
+        [loggingInAlert dismissWithClickedButtonIndex:0 animated:TRUE];
+    }
+}
 @end

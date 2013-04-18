@@ -28,6 +28,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    // [[mSingleton getWebServiceManager] tryLogin];
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     [self loadLoginView];
@@ -62,13 +63,29 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
-
 #pragma mark -
 #pragma mark Private Methods
-
 -(void)loadLoginView
 {
     self.mLoginViewController= [[LoginViewController alloc] initWithNibName:@"LoginViewController" bundle:nil];
+    if ([mSingleton isValidAccessToken])
+    {
+        if ([mSingleton isConnectedToInternet])
+        {
+            [self.mLoginViewController enableControls:FALSE];
+            NSString *accessToken = [[mSingleton getSecurityManager] getValueForKey:LOGIN_ACCESSTOKEN];
+            [[mSingleton getWebServiceManager] loginWithUserName:nil password:nil andAccessToken:accessToken];
+        }
+        else
+        {
+            //Directly Load Dashboard
+            return;
+        }
+    }
+    else
+    {
+        [self.mLoginViewController enableControls:TRUE];
+    }
     
     UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:self.mLoginViewController];
 	[navController.navigationBar setBarStyle:UIBarStyleBlack];
@@ -79,4 +96,6 @@
     [self.window makeKeyAndVisible];
 }
 
+
 @end
+
