@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="2061" systemVersion="12D78" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="Project" representedClassName="Project" syncable="YES">
+        <attribute name="project_ClientName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="project_CompletedFlag" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="project_ContactFullName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="project_ContactPhoneNumber" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="project_DateOnsite" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="project_LabEmail" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="project_LabName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="project_LocationAddress" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="project_LocationAddress2" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="project_LocationCity" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="project_LocationPostalCode" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="project_LocationState" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="project_ProjectDescription" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="project_ProjectNumber" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="project_TurnAroundTime" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="projectID" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="fromUser" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="toProject" inverseEntity="User" syncable="YES"/>
+        <relationship name="toSample" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Sample" inverseName="fromProject" inverseEntity="Sample" syncable="YES"/>
+    </entity>
+    <entity name="Sample" representedClassName="Sample" syncable="YES">
+        <attribute name="sample_CielingFlag" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="sample_Comments" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="sample_DeviceTypeName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="sample_EmployeeJob" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="sample_EmployeeName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="sample_Notes" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="sample_OperationArea" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="sample_SampleId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="sample_SampleNumber" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="sample_STELFlag" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="sample_TWAFlag" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="sampleID" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="fromProject" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Project" inverseName="toSample" inverseEntity="Project" syncable="YES"/>
+        <relationship name="toSampleChemical" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="SampleChemical" inverseName="fromSample" inverseEntity="SampleChemical" syncable="YES"/>
+        <relationship name="toSampleMeasurement" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="SampleMeasurement" inverseName="fromSample" inverseEntity="SampleMeasurement" syncable="YES"/>
+        <relationship name="toSampleProtectionEquipment" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="SampleProtectionEquipment" inverseName="fromSample" inverseEntity="SampleProtectionEquipment" syncable="YES"/>
+        <relationship name="toSampleTotalMeasurement" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="SampleTotalMeasurement" inverseName="fromSample" inverseEntity="SampleTotalMeasurement" syncable="YES"/>
+    </entity>
+    <entity name="SampleChemical" representedClassName="SampleChemical" syncable="YES">
+        <attribute name="sampleChemical_Name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="sampleChemicalID" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="fromSample" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Sample" inverseName="toSampleChemical" inverseEntity="Sample" syncable="YES"/>
+    </entity>
+    <entity name="SampleMeasurement" representedClassName="SampleMeasurement" syncable="YES">
+        <attribute name="sampleMeasurement_OffFlowRate" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="sampleMeasurement_OffTime" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="sampleMeasurement_OnFlowRate" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="sampleMeasurement_OnTime" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="sampleMesurementID" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="fromSample" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Sample" inverseName="toSampleMeasurement" inverseEntity="Sample" syncable="YES"/>
+    </entity>
+    <entity name="SampleProtectionEquipment" representedClassName="SampleProtectionEquipment" syncable="YES">
+        <attribute name="sampleProtectionEquipment_Name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="sampleProtectionEquipmentID" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="fromSample" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Sample" inverseName="toSampleProtectionEquipment" inverseEntity="Sample" syncable="YES"/>
+    </entity>
+    <entity name="SampleTotalMeasurement" representedClassName="SampleTotalMeasurement" syncable="YES">
+        <attribute name="sampleTotalMeasurement_TotalArea" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="sampleTotalMeasurement_TotalMinutes" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="sampleTotalMeasurement_TotalVolume" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="sampleTotalMeasurementID" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="fromSample" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Sample" inverseName="toSampleTotalMeasurement" inverseEntity="Sample" syncable="YES"/>
+    </entity>
+    <entity name="User" representedClassName="User" syncable="YES">
+        <attribute name="user_CertificationId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="user_FirstName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="user_Id" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="user_Image" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="user_iOSDeviceId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="user_LastName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="user_LoginName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="userID" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="toProject" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Project" inverseName="fromUser" inverseEntity="Project" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="Project" positionX="-4491" positionY="-658" width="171" height="313"/>
+        <element name="Sample" positionX="-4266" positionY="-657" width="180" height="298"/>
+        <element name="SampleChemical" positionX="-4023" positionY="-658" width="171" height="88"/>
+        <element name="SampleMeasurement" positionX="-3987" positionY="-567" width="243" height="133"/>
+        <element name="SampleProtectionEquipment" positionX="-3933" positionY="-432" width="252" height="88"/>
+        <element name="SampleTotalMeasurement" positionX="-3951" positionY="-342" width="225" height="118"/>
+        <element name="User" positionX="-4671" positionY="-481" width="128" height="178"/>
+    </elements>
+</model>

@@ -24,6 +24,22 @@
     //Save required data
     for (NSDictionary *loginData in loginDetails)
     {
+        NSLog(@"Class Types");
+        NSLog(@"AccessToken %@",[[loginData valueForKey:@"AccessToken"] class]);
+        NSLog(@"LoginDateTime %@",[[loginData valueForKey:@"LoginDateTime"] class]);
+        NSLog(@"User %@",[[loginData valueForKey:@"User"] class]);
+        NSLog(@"UserId %@",[[loginData valueForKey:@"UserId"] class]);
+        NSLog(@"UserName %@",[[loginData valueForKey:@"UserName"] class]);
+        NSLog(@"__metadata %@",[[loginData valueForKey:@"__metadata"] class]);
+
+        
+        NSArray *UserDetails = [loginData objectForKey:@"User"];
+        for (NSDictionary *UserData in UserDetails)
+        {
+            NSLog(@"Class Types");
+
+        }
+        
         NSString *accessToken = [loginData valueForKey:@"AccessToken"];
         NSDate *currentDate = [mSingleton  getCurrentDeviceTime];
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];

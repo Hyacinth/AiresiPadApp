@@ -171,6 +171,8 @@
         [cell.cellTextField setReturnKeyType:UIReturnKeyNext];
         cell.tag = CELL_USER_FIELD;
         cell.cellTextField.text = @"gbtpa\\dcreggett";
+        //cell.cellTextField.text = @"fail";
+
     }
     else
     {

@@ -36,28 +36,22 @@
         doLogin = TRUE;
     }
     if (doLogin) {
+        NSMutableURLRequest *request = [httpClient requestWithMethod:@"GET" path:@"Login" parameters:nil];
+        AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+        [httpClient registerHTTPOperationClass:[AFHTTPRequestOperation class]];
+        [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+            // Print the response body in text
+            NSLog(@"Response: %@", [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding]);
+            NSError *error;
+            NSData *jsonData = [NSJSONSerialization dataWithJSONObject:responseObject options:NSJSONWritingPrettyPrinted error:&error];
+            
+            [[mSingleton getJSONParser] performSelectorOnMainThread:@selector(parseLoginDetails:) withObject:jsonData waitUntilDone:YES];
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            NSLog(@"Error: %@", error);
+        }];
         
-        NSMutableURLRequest *request = [httpClient requestWithMethod:@"GET" path:nil parameters:nil];
-        
-        AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request
-                                                                                            success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON)
-                                             {
-                                                 NSLog(@"Success");
-                                                 NSError *error;
-                                                 NSData *jsonData = [NSJSONSerialization dataWithJSONObject:JSON options:NSJSONWritingPrettyPrinted error:&error];
-                                                 
-                                                 [[mSingleton getJSONParser] performSelectorOnMainThread:@selector(parseLoginDetails:) withObject:jsonData waitUntilDone:NO];                                                 [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_LOGIN_SUCCESS object:self];
-                                                 
-                                                 
-                                             }
-                                                                                            failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON)
-                                             {
-                                                 NSLog(@"Request Failed with Error: %@, %@", error, error.userInfo);
-                                                 NSLog(@"Failure");
-                                                 [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_LOGIN_FAILED object:self];
-                                                 
-                                             }];
-        
+        ;
+        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_LOGIN_SUCCESS object:self];
         [operation start];
     }
     else
@@ -66,40 +60,4 @@
     }
     
 }
-
--(void)tryLogin
-{
-    NSURL *url = [NSURL URLWithString:@"http://192.168.6.18/AiresStaging/AiresDataService.svc/Login?$expand=User"];
-    AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:url];
-    [httpClient registerHTTPOperationClass:[AFJSONRequestOperation class]];
-    [httpClient setDefaultHeader:@"Accept" value:@"application/json;odata=verbose"];
-    [httpClient setDefaultHeader:@"username" value:@"gbtpa\\dcreggett"];
-    [httpClient setDefaultHeader:@"password" value:@"password123"];
-    
-    NSMutableURLRequest *request = [httpClient requestWithMethod:@"GET" path:nil parameters:nil];
-    
-    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request
-                                                                                        success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON)
-                                         {
-                                             NSLog(@"Success");
-                                             NSError *error;
-                                             NSData *jsonData = [NSJSONSerialization dataWithJSONObject:JSON options:NSJSONWritingPrettyPrinted error:&error];
-                                             
-                                             [[mSingleton getJSONParser] performSelectorOnMainThread:@selector(parseLoginDetails:) withObject:jsonData waitUntilDone:YES];
-                                             [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_LOGIN_SUCCESS object:self];
-                                             
-                                             
-                                         }
-                                                                                        failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON)
-                                         {
-                                             NSLog(@"Request Failed with Error: %@, %@", error, error.userInfo);
-                                             NSLog(@"Failure");
-                                             [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_LOGIN_FAILED object:self];
-                                             
-                                         }];
-    
-    [operation start];
-    
-}
-
 @end

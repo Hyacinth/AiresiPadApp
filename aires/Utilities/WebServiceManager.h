@@ -14,6 +14,5 @@
 }
 
 -(void)loginWithUserName:(NSString *)username password:(NSString *)password andAccessToken:(NSString *)accessToken;
--(void)tryLogin;
 
 @end
