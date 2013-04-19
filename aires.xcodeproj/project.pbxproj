@@ -93,6 +93,8 @@
 		988411AD171587AC00A1ED57 /* AFURLConnectionOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 988411A2171587AC00A1ED57 /* AFURLConnectionOperation.m */; };
 		988411AE171587AC00A1ED57 /* AFXMLRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 988411A4171587AC00A1ED57 /* AFXMLRequestOperation.m */; };
 		988411AF171587AC00A1ED57 /* UIImageView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 988411A6171587AC00A1ED57 /* UIImageView+AFNetworking.m */; };
+		98A241DA17210FEF001A14F0 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 98A241CA17210FEF001A14F0 /* Model.xcdatamodeld */; };
+		98A241E317211620001A14F0 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98A241E217211620001A14F0 /* CoreData.framework */; };
 		98A3DBD3171EA83A001D4A9B /* btn_login.png in Resources */ = {isa = PBXBuildFile; fileRef = 98A3DBD1171EA83A001D4A9B /* btn_login.png */; };
 		98A3DBD4171EA83A001D4A9B /* ico_settings_small.png in Resources */ = {isa = PBXBuildFile; fileRef = 98A3DBD2171EA83A001D4A9B /* ico_settings_small.png */; };
 		98A3DBD7171EA84B001D4A9B /* btn_login@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 98A3DBD5171EA84B001D4A9B /* btn_login@2x.png */; };
@@ -224,6 +226,8 @@
 		988411A4171587AC00A1ED57 /* AFXMLRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFXMLRequestOperation.m; sourceTree = "<group>"; };
 		988411A5171587AC00A1ED57 /* UIImageView+AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+AFNetworking.h"; sourceTree = "<group>"; };
 		988411A6171587AC00A1ED57 /* UIImageView+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+AFNetworking.m"; sourceTree = "<group>"; };
+		98A241CB17210FEF001A14F0 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
+		98A241E217211620001A14F0 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		98A3DBD1171EA83A001D4A9B /* btn_login.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn_login.png; sourceTree = "<group>"; };
 		98A3DBD2171EA83A001D4A9B /* ico_settings_small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ico_settings_small.png; sourceTree = "<group>"; };
 		98A3DBD5171EA84B001D4A9B /* btn_login@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_login@2x.png"; sourceTree = "<group>"; };
@@ -266,6 +270,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				98A241E317211620001A14F0 /* CoreData.framework in Frameworks */,
 				98E33F0F1717D20800466E0F /* MobileCoreServices.framework in Frameworks */,
 				98E33F0D1717D19800466E0F /* SystemConfiguration.framework in Frameworks */,
 				988410B11715417A00A1ED57 /* Security.framework in Frameworks */,
@@ -298,6 +303,7 @@
 		98659CA4170DA3FD00A0DEF8 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				98A241E217211620001A14F0 /* CoreData.framework */,
 				98659CA5170DA3FD00A0DEF8 /* UIKit.framework */,
 				98659CA7170DA3FD00A0DEF8 /* Foundation.framework */,
 				98659CA9170DA3FD00A0DEF8 /* CoreGraphics.framework */,
@@ -441,6 +447,14 @@
 			path = AFNetworking;
 			sourceTree = "<group>";
 		};
+		98A241C917210FEF001A14F0 /* AiresDataModel */ = {
+			isa = PBXGroup;
+			children = (
+				98A241CA17210FEF001A14F0 /* Model.xcdatamodeld */,
+			);
+			path = AiresDataModel;
+			sourceTree = "<group>";
+		};
 		98B37B6417153B9E00F78A54 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
@@ -452,6 +466,7 @@
 		98B37B6517153B9E00F78A54 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				98A241C917210FEF001A14F0 /* AiresDataModel */,
 				98E23B84171FD7C500FFAD4A /* JSON */,
 				98841193171587AC00A1ED57 /* AFNetworking */,
 				9884113F171562DD00A1ED57 /* Constants.h */,
@@ -684,6 +699,7 @@
 				98E23BA2171FD96200FFAD4A /* NSScanner_Extensions.m in Sources */,
 				98E23BA5171FF2BB00FFAD4A /* WebServiceManager.m in Sources */,
 				98E23BA8171FF4B300FFAD4A /* JSONParser.m in Sources */,
+				98A241DA17210FEF001A14F0 /* Model.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -806,6 +822,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		98A241CA17210FEF001A14F0 /* Model.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				98A241CB17210FEF001A14F0 /* Model.xcdatamodel */,
+			);
+			currentVersion = 98A241CB17210FEF001A14F0 /* Model.xcdatamodel */;
+			path = Model.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 98659C9A170DA3FD00A0DEF8 /* Project object */;
 }
