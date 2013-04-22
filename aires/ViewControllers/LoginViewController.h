@@ -18,10 +18,10 @@ typedef enum
 @interface LoginViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, UIPopoverControllerDelegate>
 {
     IBOutlet UITableView *loginFieldTable;
+    IBOutlet UILabel *welcomeLabel;
     IBOutlet UIButton *loginButton;
     IBOutlet UIButton *forgotPasswordButton;
     IBOutlet UIButton *settingsButton;
-    IBOutlet UIButton *settings2Button;
     BOOL isLoggingIn;
     
     NSMutableArray *loginCredentials;
@@ -29,14 +29,13 @@ typedef enum
     UIPopoverController *popover;
     LoginSettingsViewController *mLoginSettingsViewController;
     UIAlertView *loggingInAlert;
-    UIActivityIndicatorView *loadingIndicator;
     
 }
+@property(nonatomic) BOOL isLoggingIn;
 
 -(IBAction)onLogin:(id)sender;
 -(IBAction)onForgotPassword:(id)sender;
 -(IBAction)onSettings:(id)sender;
 
--(void)enableControls:(BOOL)flag;
 
 @end

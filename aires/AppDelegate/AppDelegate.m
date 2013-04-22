@@ -69,23 +69,15 @@
     self.mLoginViewController= [[LoginViewController alloc] initWithNibName:@"LoginViewController" bundle:nil];
     if ([mSingleton isValidAccessToken])
     {
-        if ([mSingleton isConnectedToInternet])
-        {
-            [self.mLoginViewController enableControls:FALSE];
-            NSString *accessToken = [[mSingleton getSecurityManager] getValueForKey:LOGIN_ACCESSTOKEN];
-            [[mSingleton getWebServiceManager] loginWithUserName:nil password:nil andAccessToken:accessToken];
-        }
-        else
-        {
-            //Directly Load Dashboard
-            return;
-        }
+        //Show loading and take to dashboard
+        self.mLoginViewController.isLoggingIn = TRUE;
     }
     else
     {
-        [self.mLoginViewController enableControls:TRUE];
+        self.mLoginViewController.isLoggingIn = FALSE;
+        //Reset CoreData
+        [[mSingleton getPersistentStoreManager] resetCoreData];
     }
-    
     UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:self.mLoginViewController];
 	[navController.navigationBar setBarStyle:UIBarStyleBlack];
 	self.navigationController = navController;

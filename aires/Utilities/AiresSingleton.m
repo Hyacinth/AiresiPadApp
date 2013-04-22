@@ -111,6 +111,13 @@ static AiresSingleton* instance;
     return mJSONParser;
 }
 
+- (PersistentStoreManager *)getPersistentStoreManager
+{
+    if(!mPersistentStoreManager)
+        mPersistentStoreManager = [[PersistentStoreManager alloc] init];
+    return mPersistentStoreManager;
+}
+
 #pragma mark -
 #pragma mark Private Methods
 

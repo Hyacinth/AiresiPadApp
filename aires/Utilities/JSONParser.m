@@ -10,6 +10,7 @@
 #import "CJSONDataSerializer.h"
 #import "CJSONDeserializer.h"
 #import "AiresSingleton.h"
+#import "User.h"
 
 #define mSingleton 	((AiresSingleton *) [AiresSingleton getSingletonInstance])
 
@@ -19,36 +20,20 @@
 {
     NSError *error;
     NSDictionary * config = [[CJSONDeserializer deserializer] deserializeAsDictionary:jsonData error:&error];
-	NSArray *loginDetails = [config objectForKey:@"d"];
-    NSLog(@"Login Data:%@",loginDetails);
+	NSDictionary *loginDetails = [config objectForKey:@"response"];
+    NSLog(@"Login Data:%@ %@",[loginDetails class ],loginDetails);
     //Save required data
-    for (NSDictionary *loginData in loginDetails)
-    {
-        NSLog(@"Class Types");
-        NSLog(@"AccessToken %@",[[loginData valueForKey:@"AccessToken"] class]);
-        NSLog(@"LoginDateTime %@",[[loginData valueForKey:@"LoginDateTime"] class]);
-        NSLog(@"User %@",[[loginData valueForKey:@"User"] class]);
-        NSLog(@"UserId %@",[[loginData valueForKey:@"UserId"] class]);
-        NSLog(@"UserName %@",[[loginData valueForKey:@"UserName"] class]);
-        NSLog(@"__metadata %@",[[loginData valueForKey:@"__metadata"] class]);
-
-        
-        NSArray *UserDetails = [loginData objectForKey:@"User"];
-        for (NSDictionary *UserData in UserDetails)
-        {
-            NSLog(@"Class Types");
-
-        }
-        
-        NSString *accessToken = [loginData valueForKey:@"AccessToken"];
-        NSDate *currentDate = [mSingleton  getCurrentDeviceTime];
-        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-        [dateFormatter setDateFormat:@"EEE,MM-dd-yyyy HH:mm:ss"];
-        NSString *accessTokenTime = [dateFormatter stringFromDate:currentDate];
-
-        [[mSingleton getSecurityManager] setValue:accessToken forKey:LOGIN_ACCESSTOKEN];
-        [[mSingleton getSecurityManager] setValue:accessTokenTime forKey:LOGIN_ACCESSTOKEN_TIME];
-    }
+    NSString *accessToken = [loginDetails valueForKey:@"AccessToken"];
+    NSDate *currentDate = [mSingleton  getCurrentDeviceTime];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"EEE,MM-dd-yyyy HH:mm:ss"];
+    NSString *accessTokenTime = [dateFormatter stringFromDate:currentDate];
+    
+    [[mSingleton getSecurityManager] setValue:accessToken forKey:LOGIN_ACCESSTOKEN];
+    [[mSingleton getSecurityManager] setValue:accessTokenTime forKey:LOGIN_ACCESSTOKEN_TIME];
+    
+    NSDictionary *userData = [loginDetails objectForKey:@"User"];
+    [[mSingleton getPersistentStoreManager] storeAiresUser:userData];
 }
 
 @end

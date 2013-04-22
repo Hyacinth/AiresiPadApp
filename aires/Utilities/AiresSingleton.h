@@ -11,6 +11,7 @@
 #import "SecurityManager.h"
 #import "WebServiceManager.h"
 #import "JSONParser.h"
+#import "PersistentStoreManager.h"
 #import "Constants.h"
 
 @interface AiresSingleton : NSObject
@@ -18,6 +19,7 @@
     SecurityManager *mSecurityManager;
     WebServiceManager *mWebServiceManager;
     JSONParser *mJSONParser;
+    PersistentStoreManager *mPersistentStoreManager;
 }
 
 + (AiresSingleton *) getSingletonInstance;
@@ -30,5 +32,6 @@
 - (SecurityManager *)getSecurityManager;
 - (WebServiceManager *)getWebServiceManager;
 - (JSONParser *)getJSONParser;
+- (PersistentStoreManager *)getPersistentStoreManager;
 
 @end
