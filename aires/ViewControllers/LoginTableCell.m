@@ -7,21 +7,23 @@
 //
 
 #import "LoginTableCell.h"
+#import <QuartzCore/QuartzCore.h>
 
 @implementation LoginTableCell
-@synthesize cellLabel;
 @synthesize cellTextField;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        if(!cellLabel)
-            cellLabel = [[UILabel alloc] init];
-        
         if(!cellTextField)
             cellTextField = [[UITextField alloc] init];
     }
+    [self.layer setCornerRadius:4];
+    [self.layer setMasksToBounds:YES];
+    [self.layer setBorderWidth:0.25];
+    
+
     return self;
 }
 

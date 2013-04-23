@@ -13,6 +13,8 @@
     
 }
 
+-(void)getEnvironment;
 -(void)loginWithUserName:(NSString *)username andpassword:(NSString *)password;
+-(void)fetchProjectsforUser;
 
 @end

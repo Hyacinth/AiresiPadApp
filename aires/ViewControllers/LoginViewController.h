@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "LoginSettingsViewController.h"
+#import "DashboardViewController.h"
 
 typedef enum
 {
@@ -30,7 +31,12 @@ typedef enum
     LoginSettingsViewController *mLoginSettingsViewController;
     UIAlertView *loggingInAlert;
     
+    BOOL istextFieldEditing;
+    
+    DashboardViewController *mDashboardViewController;
+    
 }
+
 @property(nonatomic) BOOL isLoggingIn;
 
 -(IBAction)onLogin:(id)sender;

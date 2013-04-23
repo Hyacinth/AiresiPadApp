@@ -10,11 +10,9 @@
 
 @interface LoginTableCell : UITableViewCell
 {
-    IBOutlet UILabel *cellLabel;
     IBOutlet UITextField *cellTextField;
 }
 
-@property(strong, nonatomic) UILabel *cellLabel;
 @property(strong, nonatomic) UITextField *cellTextField;
 
 @end
