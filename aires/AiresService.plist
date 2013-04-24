@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Root URL</key>
+	<string>http://192.168.6.18/AiresStaging/config.txt</string>
+	<key>Path</key>
+	<dict>
+		<key>Project</key>
+		<string>ProjectDetails</string>
+		<key>Login</key>
+		<string>Login</string>
+	</dict>
+</dict>
+</plist>

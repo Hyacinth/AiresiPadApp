@@ -36,4 +36,12 @@
     [[mSingleton getPersistentStoreManager] storeAiresUser:userData];
 }
 
+-(void)parseUserProjectData:(NSData *)jsonData
+{
+    NSError *error;
+    NSDictionary * config = [[CJSONDeserializer deserializer] deserializeAsDictionary:jsonData error:&error];
+	NSDictionary *projectDetails = [config objectForKey:@"response"];
+    NSLog(@"Login Data:%@ %@",[projectDetails class ],projectDetails);
+}
+
 @end

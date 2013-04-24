@@ -10,7 +10,8 @@
 
 @interface WebServiceManager : NSObject
 {
-    
+    NSMutableDictionary *AiresService;
+    NSString *AiresServicePath;
 }
 
 -(void)getEnvironment;

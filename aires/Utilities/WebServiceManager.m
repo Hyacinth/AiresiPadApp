@@ -16,10 +16,32 @@
 
 @implementation WebServiceManager
 
+- (id)init {
+    self = [super init];
+    if (!self) {
+        return nil;
+    }
+    if(!AiresServicePath)
+        AiresServicePath = [[NSString alloc] init];
+    AiresServicePath = [[NSBundle mainBundle] pathForResource:
+                       @"AiresService" ofType:@"plist"];
+
+    // Path to the plist (in the application bundle)
+    
+    // Build the array from the plist
+    if(!AiresService)
+        AiresService = [[NSMutableDictionary alloc] initWithContentsOfFile:AiresServicePath];
+    
+    
+    // Show the string values
+    
+    return self;
+}
 
 -(void) getEnvironment
 {
-    NSURL *url = [NSURL URLWithString:@"http://192.168.6.18/AiresStaging/config.txt"];
+    NSString *rootURL = [AiresService objectForKey:@"Root URL"];
+    NSURL *url = [NSURL URLWithString:rootURL];
     NSData *data = [NSData dataWithContentsOfURL:url];
     
     NSString* newStr = [[NSString alloc] initWithData:data
@@ -72,7 +94,10 @@
     [httpClient setDefaultHeader:@"username" value:username];
     [httpClient setDefaultHeader:@"password" value:password];
     
-    NSMutableURLRequest *request = [httpClient requestWithMethod:@"GET" path:@"Login" parameters:nil];
+    NSDictionary *path = [AiresService objectForKey:@"Path"];
+    NSString *repativeURL = [path objectForKey:@"Login"];
+    
+    NSMutableURLRequest *request = [httpClient requestWithMethod:@"GET" path:repativeURL parameters:nil];
     AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
     [httpClient registerHTTPOperationClass:[AFHTTPRequestOperation class]];
     [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject)
@@ -102,7 +127,10 @@
     [httpClient setDefaultHeader:@"Accept" value:@"application/json;odata=verbose"];
     [httpClient setDefaultHeader:@"access_token" value:[[mSingleton getSecurityManager] getValueForKey:LOGIN_ACCESSTOKEN]];
     
-    NSMutableURLRequest *request = [httpClient requestWithMethod:@"GET" path:@"ProjectDetails" parameters:nil];
+    NSDictionary *path = [AiresService objectForKey:@"Path"];
+    NSString *repativeURL = [path objectForKey:@"Project"];
+    
+    NSMutableURLRequest *request = [httpClient requestWithMethod:@"GET" path:repativeURL parameters:nil];
     AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
     [httpClient registerHTTPOperationClass:[AFHTTPRequestOperation class]];
     [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject)
@@ -110,7 +138,7 @@
          // Print the response body in text
          NSLog(@"Response: %@", [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding]);
          
-         //[[mSingleton getJSONParser] performSelectorOnMainThread:@selector(parseLoginDetails:) withObject:responseObject waitUntilDone:YES];
+         [[mSingleton getJSONParser] performSelectorOnMainThread:@selector(parseUserProjectData:) withObject:responseObject waitUntilDone:YES];
          
      }failure:^(AFHTTPRequestOperation *operation, NSError *error)
      {

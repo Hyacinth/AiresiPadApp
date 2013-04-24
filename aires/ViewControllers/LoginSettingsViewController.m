@@ -21,7 +21,14 @@
 {
     self = [super initWithStyle:style];
     if (self) {
-        // Custom initialization
+        SecurityManager *mSecurityManager = [mSingleton getSecurityManager];
+        NSString *env = [mSecurityManager getValueForKey:LOGIN_ENVIRONMENT];
+        if (!env)
+        {
+            [mSecurityManager setValue:LOGIN_SETTINGS_PRODUCTION forKey:LOGIN_ENVIRONMENT];
+            NSLog(@"%@",[mSingleton.environmentURLs objectForKey:LOGIN_SETTINGS_PRODUCTION]);
+            [mSecurityManager setValue:[mSingleton.environmentURLs objectForKey:LOGIN_SETTINGS_PRODUCTION] forKey:LOGIN_ENVIRONMENT_URL];
+        }
     }
     return self;
 }
@@ -56,12 +63,7 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     //Reset login credentials before table loads
-    SecurityManager *mSecurityManager = [mSingleton getSecurityManager];
-    NSString *env = [mSecurityManager getValueForKey:LOGIN_ENVIRONMENT];
-    if (!env)
-        [mSecurityManager setValue:LOGIN_SETTINGS_PRODUCTION forKey:LOGIN_ENVIRONMENT];
-    
-    return 1;
+        return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section

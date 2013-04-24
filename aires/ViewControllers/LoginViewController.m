@@ -39,6 +39,9 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(localNotificationhandler:) name:NOTIFICATION_LOGIN_SUCCESS object:nil];
     // Do any additional setup after loading the view from its nib.
     
+    if(!mLoginSettingsViewController)
+        mLoginSettingsViewController = [[LoginSettingsViewController alloc] init];
+
     UIImage *buttonImage = [[UIImage imageNamed:@"btn_login"]
                             resizableImageWithCapInsets:UIEdgeInsetsMake(0, 15, 0, 15)];
     
@@ -61,7 +64,7 @@
     CGRect logoFrame = airesLogoImageView.frame;
     logoFrame.origin.y = 78.0f;
     
-    [UIView animateWithDuration:0.3
+    [UIView animateWithDuration:0.45
                      animations:^{
                          airesLogoImageView.frame = logoFrame;
                      }
@@ -86,6 +89,7 @@
 //            loggingInAlert = [[UIAlertView alloc] initWithTitle:@"Logging In" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:nil];
 //        [loggingInAlert show];
         [[mSingleton getWebServiceManager] fetchProjectsforUser];
+        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_LOGIN_SUCCESS object:self];
     }
 }
 

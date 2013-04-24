@@ -14,4 +14,5 @@
 }
 
 -(void)parseLoginDetails:(NSData *)jsonData;
+-(void)parseUserProjectData:(NSData *)jsonData;
 @end

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		84AF07B317280974006F8756 /* AiresService.plist in Resources */ = {isa = PBXBuildFile; fileRef = 84AF07B217280974006F8756 /* AiresService.plist */; };
 		84F623FA1727DAD700FD5D7E /* Default-Landscape@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 84F623F81727DAD700FD5D7E /* Default-Landscape@2x~ipad.png */; };
 		84F623FB1727DAD700FD5D7E /* Default-Landscape~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 84F623F91727DAD700FD5D7E /* Default-Landscape~ipad.png */; };
 		84F624021727F97700FD5D7E /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 84F624001727F97700FD5D7E /* icon.png */; };
@@ -188,6 +189,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		84AF07B217280974006F8756 /* AiresService.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = AiresService.plist; sourceTree = "<group>"; };
 		84F623F81727DAD700FD5D7E /* Default-Landscape@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape@2x~ipad.png"; sourceTree = "<group>"; };
 		84F623F91727DAD700FD5D7E /* Default-Landscape~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape~ipad.png"; sourceTree = "<group>"; };
 		84F624001727F97700FD5D7E /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
@@ -496,6 +498,7 @@
 		98659CAC170DA3FD00A0DEF8 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				84AF07B217280974006F8756 /* AiresService.plist */,
 				84F624001727F97700FD5D7E /* icon.png */,
 				84F624011727F97700FD5D7E /* icon@2x.png */,
 				84F623F81727DAD700FD5D7E /* Default-Landscape@2x~ipad.png */,
@@ -968,6 +971,7 @@
 				84F623FB1727DAD700FD5D7E /* Default-Landscape~ipad.png in Resources */,
 				84F624021727F97700FD5D7E /* icon.png in Resources */,
 				84F624031727F97700FD5D7E /* icon@2x.png in Resources */,
+				84AF07B317280974006F8756 /* AiresService.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
