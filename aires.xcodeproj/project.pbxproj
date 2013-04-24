@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		84F623FA1727DAD700FD5D7E /* Default-Landscape@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 84F623F81727DAD700FD5D7E /* Default-Landscape@2x~ipad.png */; };
+		84F623FB1727DAD700FD5D7E /* Default-Landscape~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 84F623F91727DAD700FD5D7E /* Default-Landscape~ipad.png */; };
 		9817B52517269D0D00155182 /* ini.m in Sources */ = {isa = PBXBuildFile; fileRef = 9817B51A17269D0D00155182 /* ini.m */; };
 		9817B52617269D0D00155182 /* parse.m in Sources */ = {isa = PBXBuildFile; fileRef = 9817B51C17269D0D00155182 /* parse.m */; };
 		9817B52717269D0D00155182 /* retrieve.m in Sources */ = {isa = PBXBuildFile; fileRef = 9817B51E17269D0D00155182 /* retrieve.m */; };
@@ -15,9 +17,6 @@
 		98659CA6170DA3FD00A0DEF8 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98659CA5170DA3FD00A0DEF8 /* UIKit.framework */; };
 		98659CA8170DA3FD00A0DEF8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98659CA7170DA3FD00A0DEF8 /* Foundation.framework */; };
 		98659CAA170DA3FD00A0DEF8 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98659CA9170DA3FD00A0DEF8 /* CoreGraphics.framework */; };
-		98659CB8170DA3FD00A0DEF8 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 98659CB7170DA3FD00A0DEF8 /* Default.png */; };
-		98659CBA170DA3FD00A0DEF8 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 98659CB9170DA3FD00A0DEF8 /* Default@2x.png */; };
-		98659CBC170DA3FD00A0DEF8 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 98659CBB170DA3FD00A0DEF8 /* Default-568h@2x.png */; };
 		988410AC17153F8F00A1ED57 /* SecurityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 988410AB17153F8F00A1ED57 /* SecurityManager.m */; };
 		988410AF1715402700A1ED57 /* AiresSingleton.m in Sources */ = {isa = PBXBuildFile; fileRef = 988410AE1715402700A1ED57 /* AiresSingleton.m */; };
 		988410B11715417A00A1ED57 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 988410B01715417A00A1ED57 /* Security.framework */; };
@@ -187,6 +186,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		84F623F81727DAD700FD5D7E /* Default-Landscape@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape@2x~ipad.png"; sourceTree = "<group>"; };
+		84F623F91727DAD700FD5D7E /* Default-Landscape~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape~ipad.png"; sourceTree = "<group>"; };
 		9817B51917269D0D00155182 /* ini.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ini.h; sourceTree = "<group>"; };
 		9817B51A17269D0D00155182 /* ini.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ini.m; sourceTree = "<group>"; };
 		9817B51B17269D0D00155182 /* parse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = parse.h; sourceTree = "<group>"; };
@@ -204,9 +205,6 @@
 		98659CAD170DA3FD00A0DEF8 /* aires-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "aires-Info.plist"; sourceTree = "<group>"; };
 		98659CB1170DA3FD00A0DEF8 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		98659CB3170DA3FD00A0DEF8 /* aires-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "aires-Prefix.pch"; sourceTree = "<group>"; };
-		98659CB7170DA3FD00A0DEF8 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
-		98659CB9170DA3FD00A0DEF8 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
-		98659CBB170DA3FD00A0DEF8 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		988410AA17153F8F00A1ED57 /* SecurityManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SecurityManager.h; sourceTree = "<group>"; };
 		988410AB17153F8F00A1ED57 /* SecurityManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SecurityManager.m; sourceTree = "<group>"; };
 		988410AD1715402700A1ED57 /* AiresSingleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AiresSingleton.h; sourceTree = "<group>"; };
@@ -494,13 +492,12 @@
 		98659CAC170DA3FD00A0DEF8 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				84F623F81727DAD700FD5D7E /* Default-Landscape@2x~ipad.png */,
+				84F623F91727DAD700FD5D7E /* Default-Landscape~ipad.png */,
 				98B37B6717153B9E00F78A54 /* InfoPlist.strings */,
 				98659CAD170DA3FD00A0DEF8 /* aires-Info.plist */,
 				98659CB1170DA3FD00A0DEF8 /* main.m */,
 				98659CB3170DA3FD00A0DEF8 /* aires-Prefix.pch */,
-				98659CB7170DA3FD00A0DEF8 /* Default.png */,
-				98659CB9170DA3FD00A0DEF8 /* Default@2x.png */,
-				98659CBB170DA3FD00A0DEF8 /* Default-568h@2x.png */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -837,9 +834,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				98659CB8170DA3FD00A0DEF8 /* Default.png in Resources */,
-				98659CBA170DA3FD00A0DEF8 /* Default@2x.png in Resources */,
-				98659CBC170DA3FD00A0DEF8 /* Default-568h@2x.png in Resources */,
 				98B37B6D17153B9E00F78A54 /* InfoPlist.strings in Resources */,
 				988410B61715439500A1ED57 /* LoginViewController.xib in Resources */,
 				9884113E17155B5C00A1ED57 /* LoginTableCell.xib in Resources */,
@@ -964,6 +958,8 @@
 				98B425FC17268A3300D15811 /* project.png in Resources */,
 				98B425FD17268A3300D15811 /* search.png in Resources */,
 				98B425FE17268A3300D15811 /* search_close.png in Resources */,
+				84F623FA1727DAD700FD5D7E /* Default-Landscape@2x~ipad.png in Resources */,
+				84F623FB1727DAD700FD5D7E /* Default-Landscape~ipad.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
