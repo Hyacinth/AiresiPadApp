@@ -123,7 +123,7 @@
         popover = [[UIPopoverController alloc]initWithContentViewController:mLoginSettingsViewController];
     
     [popover setContentViewController:mLoginSettingsViewController];
-    [popover setPopoverContentSize:CGSizeMake(300, 180)];
+    [popover setPopoverContentSize:CGSizeMake(300, 226)];
     [popover setDelegate:self];
     
     [popover presentPopoverFromRect:settingsButton.bounds inView:settingsButton permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];

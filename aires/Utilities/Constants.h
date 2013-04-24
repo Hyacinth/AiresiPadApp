@@ -15,8 +15,9 @@
 #define LOGIN_ENVIRONMENT_URL       @"login_environment_url"
 
 #define LOGIN_SETTINGS_PRODUCTION   @"Production"
-#define LOGIN_SETTINGS_STAGE        @"State"
+#define LOGIN_SETTINGS_STAGE        @"Stage"
 #define LOGIN_SETTINGS_QA           @"QA"
+#define LOGIN_SETTINGS_DEVELOPMENT  @"Development"
 
 
 

@@ -8,12 +8,12 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "aires/Utilities/WebServiceManager.m"
-         timestampString = "388406758.817509"
+         timestampString = "388474708.415296"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "48"
-         endingLineNumber = "48"
-         landmarkName = "-getEnvironment"
+         startingLineNumber = "67"
+         endingLineNumber = "67"
+         landmarkName = "-loginWithUserName:andpassword:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

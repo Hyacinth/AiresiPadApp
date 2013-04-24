@@ -11,7 +11,6 @@
 		9817B52617269D0D00155182 /* parse.m in Sources */ = {isa = PBXBuildFile; fileRef = 9817B51C17269D0D00155182 /* parse.m */; };
 		9817B52717269D0D00155182 /* retrieve.m in Sources */ = {isa = PBXBuildFile; fileRef = 9817B51E17269D0D00155182 /* retrieve.m */; };
 		9817B52817269D0D00155182 /* section.m in Sources */ = {isa = PBXBuildFile; fileRef = 9817B52017269D0D00155182 /* section.m */; };
-		9817B52917269D0D00155182 /* test.ini in Resources */ = {isa = PBXBuildFile; fileRef = 9817B52117269D0D00155182 /* test.ini */; };
 		9817B52B17269D0D00155182 /* utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 9817B52417269D0D00155182 /* utils.m */; };
 		98659CA6170DA3FD00A0DEF8 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98659CA5170DA3FD00A0DEF8 /* UIKit.framework */; };
 		98659CA8170DA3FD00A0DEF8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98659CA7170DA3FD00A0DEF8 /* Foundation.framework */; };
@@ -196,7 +195,6 @@
 		9817B51E17269D0D00155182 /* retrieve.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = retrieve.m; sourceTree = "<group>"; };
 		9817B51F17269D0D00155182 /* section.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = section.h; sourceTree = "<group>"; };
 		9817B52017269D0D00155182 /* section.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = section.m; sourceTree = "<group>"; };
-		9817B52117269D0D00155182 /* test.ini */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = test.ini; sourceTree = "<group>"; };
 		9817B52317269D0D00155182 /* utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = utils.h; sourceTree = "<group>"; };
 		9817B52417269D0D00155182 /* utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = utils.m; sourceTree = "<group>"; };
 		98659CA2170DA3FD00A0DEF8 /* aires.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = aires.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -443,7 +441,6 @@
 				9817B51E17269D0D00155182 /* retrieve.m */,
 				9817B51F17269D0D00155182 /* section.h */,
 				9817B52017269D0D00155182 /* section.m */,
-				9817B52117269D0D00155182 /* test.ini */,
 				9817B52317269D0D00155182 /* utils.h */,
 				9817B52417269D0D00155182 /* utils.m */,
 			);
@@ -967,7 +964,6 @@
 				98B425FC17268A3300D15811 /* project.png in Resources */,
 				98B425FD17268A3300D15811 /* search.png in Resources */,
 				98B425FE17268A3300D15811 /* search_close.png in Resources */,
-				9817B52917269D0D00155182 /* test.ini in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

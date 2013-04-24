@@ -20,7 +20,11 @@
     WebServiceManager *mWebServiceManager;
     JSONParser *mJSONParser;
     PersistentStoreManager *mPersistentStoreManager;
+    
+    NSMutableDictionary *environmentURLs;
 }
+
+@property(nonatomic, strong) NSMutableDictionary *environmentURLs;
 
 + (AiresSingleton *) getSingletonInstance;
 - (BOOL)isConnectedToInternet;

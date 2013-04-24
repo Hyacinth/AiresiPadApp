@@ -20,6 +20,7 @@ static AiresSingleton* instance;
 
 #pragma mark -
 @implementation AiresSingleton
+@synthesize environmentURLs;
 
 #pragma mark -
 
