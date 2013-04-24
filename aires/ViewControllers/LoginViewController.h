@@ -18,6 +18,7 @@ typedef enum
 
 @interface LoginViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, UIPopoverControllerDelegate>
 {
+    IBOutlet UIImageView *airesLogoImageView;
     IBOutlet UITableView *loginFieldTable;
     IBOutlet UILabel *welcomeLabel;
     IBOutlet UIButton *loginButton;

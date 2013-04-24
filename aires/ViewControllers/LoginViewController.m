@@ -52,6 +52,29 @@
     istextFieldEditing = FALSE;
     [self adjustLoginFieldFrame:istextFieldEditing];
     
+    loginFieldTable.alpha = 0;
+    loginButton.alpha = 0;
+    welcomeLabel.alpha = 0;
+    forgotPasswordButton.alpha = 0;
+    settingsButton.alpha = 0;
+    
+    CGRect logoFrame = airesLogoImageView.frame;
+    logoFrame.origin.y = 78.0f;
+    
+    [UIView animateWithDuration:0.3
+                     animations:^{
+                         airesLogoImageView.frame = logoFrame;
+                     }
+                     completion:^(BOOL finished) {
+                         [UIView animateWithDuration:0.3
+                                          animations:^{
+                                              loginFieldTable.alpha = 1.0f;
+                                              loginButton.alpha = 1.0f;
+                                              welcomeLabel.alpha = 1.0f;
+                                              forgotPasswordButton.alpha = 1.0f;
+                                              settingsButton.alpha = 1.0f;
+                                          }];
+                     }];
 }
 
 -(void)viewDidAppear:(BOOL)animated
