@@ -66,6 +66,11 @@
     }
 }
 
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+    return UIInterfaceOrientationIsLandscape(interfaceOrientation);
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -170,7 +175,7 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     //Preset login environment before table loads
-    [loginCredentials removeAllObjects];
+    //[loginCredentials removeAllObjects];
     return 1;
 }
 

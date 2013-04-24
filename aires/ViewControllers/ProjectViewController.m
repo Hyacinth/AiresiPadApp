@@ -50,7 +50,7 @@
     
     [UIView transitionFromView:self.view
                         toView:vc.view
-                      duration:1.5
+                      duration:0.75
                        options:UIViewAnimationOptionTransitionFlipFromLeft
                     completion:^(BOOL finished){
                         /* do something on animation completion */

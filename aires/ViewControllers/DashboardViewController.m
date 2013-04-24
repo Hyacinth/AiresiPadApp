@@ -166,7 +166,7 @@
         
         [UIView transitionFromView:self.view
                             toView:projectVC.view
-                          duration:1.5
+                          duration:0.75
                            options:UIViewAnimationOptionTransitionFlipFromRight
                         completion:^(BOOL finished){
                             /* do something on animation completion */
