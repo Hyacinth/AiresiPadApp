@@ -228,7 +228,15 @@
         [[mSingleton getSecurityManager] deleteValueForKey:LOGIN_ACCESSTOKEN_TIME];
         [popover dismissPopoverAnimated:YES];
 
-        [self.navigationController popToRootViewControllerAnimated:YES];
+        CATransition* transition = [CATransition animation];
+        transition.duration = 0.25;
+        transition.type = kCATransitionFade;
+        transition.subtype = kCATransitionFromTop;
+        
+        [self.navigationController.view.layer
+         addAnimation:transition forKey:kCATransition];
+        
+        [self.navigationController popViewControllerAnimated:NO];
     }
     
 }

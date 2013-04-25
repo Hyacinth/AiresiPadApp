@@ -230,9 +230,17 @@
     {
         if(!mDashboardViewController)
             mDashboardViewController = [[DashboardViewController alloc] initWithNibName:@"DashboardViewController" bundle:nil];
+     
+        CATransition* transition = [CATransition animation];
+        transition.duration = 0.25;
+        transition.type = kCATransitionFade;
+        transition.subtype = kCATransitionFromTop;
+        
+        [self.navigationController.view.layer
+         addAnimation:transition forKey:kCATransition];
+        
         [self.navigationController pushViewController:mDashboardViewController animated:NO];
-    }
-    
+    }    
 }
 
 
