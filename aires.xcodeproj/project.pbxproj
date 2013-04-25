@@ -167,6 +167,8 @@
 		98B425FD17268A3300D15811 /* search.png in Resources */ = {isa = PBXBuildFile; fileRef = 98B4258B17268A3300D15811 /* search.png */; };
 		98B425FE17268A3300D15811 /* search_close.png in Resources */ = {isa = PBXBuildFile; fileRef = 98B4258C17268A3300D15811 /* search_close.png */; };
 		98B4260017268A8800D15811 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98B425FF17268A8700D15811 /* QuartzCore.framework */; };
+		98B68CDB1728EEF10065D411 /* DashboardSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98B68CD91728EEF10065D411 /* DashboardSettingsViewController.m */; };
+		98B68CDC1728EEF10065D411 /* DashboardSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98B68CDA1728EEF10065D411 /* DashboardSettingsViewController.xib */; };
 		98BA957817255B5900858A36 /* ProximaNova-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 98BA957417255B5900858A36 /* ProximaNova-Bold.otf */; };
 		98BA957917255B5900858A36 /* ProximaNova-BoldIt.otf in Resources */ = {isa = PBXBuildFile; fileRef = 98BA957517255B5900858A36 /* ProximaNova-BoldIt.otf */; };
 		98BA957A17255B5900858A36 /* ProximaNova-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 98BA957617255B5900858A36 /* ProximaNova-Regular.otf */; };
@@ -381,6 +383,9 @@
 		98B4258B17268A3300D15811 /* search.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = search.png; sourceTree = "<group>"; };
 		98B4258C17268A3300D15811 /* search_close.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = search_close.png; sourceTree = "<group>"; };
 		98B425FF17268A8700D15811 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		98B68CD81728EEF10065D411 /* DashboardSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DashboardSettingsViewController.h; sourceTree = "<group>"; };
+		98B68CD91728EEF10065D411 /* DashboardSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DashboardSettingsViewController.m; sourceTree = "<group>"; };
+		98B68CDA1728EEF10065D411 /* DashboardSettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DashboardSettingsViewController.xib; sourceTree = "<group>"; };
 		98BA957417255B5900858A36 /* ProximaNova-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ProximaNova-Bold.otf"; sourceTree = "<group>"; };
 		98BA957517255B5900858A36 /* ProximaNova-BoldIt.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ProximaNova-BoldIt.otf"; sourceTree = "<group>"; };
 		98BA957617255B5900858A36 /* ProximaNova-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ProximaNova-Regular.otf"; sourceTree = "<group>"; };
@@ -603,6 +608,9 @@
 				98B4250F172689A000D15811 /* ProjectViewController.h */,
 				98B42510172689A100D15811 /* ProjectViewController.m */,
 				98B42511172689A100D15811 /* ProjectViewController.xib */,
+				98B68CD81728EEF10065D411 /* DashboardSettingsViewController.h */,
+				98B68CD91728EEF10065D411 /* DashboardSettingsViewController.m */,
+				98B68CDA1728EEF10065D411 /* DashboardSettingsViewController.xib */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -972,6 +980,7 @@
 				84F624021727F97700FD5D7E /* icon.png in Resources */,
 				84F624031727F97700FD5D7E /* icon@2x.png in Resources */,
 				84AF07B317280974006F8756 /* AiresService.plist in Resources */,
+				98B68CDC1728EEF10065D411 /* DashboardSettingsViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1024,6 +1033,7 @@
 				9817B52717269D0D00155182 /* retrieve.m in Sources */,
 				9817B52817269D0D00155182 /* section.m in Sources */,
 				9817B52B17269D0D00155182 /* utils.m in Sources */,
+				98B68CDB1728EEF10065D411 /* DashboardSettingsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
