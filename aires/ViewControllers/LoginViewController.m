@@ -155,6 +155,8 @@
 
 -(IBAction)onForgotPassword:(id)sender
 {
+    welcomeLabel.text = @"Welcome. Please login.";
+    
     NSURL *url = [NSURL URLWithString:@"http://password.ajg.com"];
     if (![[UIApplication sharedApplication] openURL:url])
         NSLog(@"%@%@",@"Failed to open url:",[url description]);
@@ -162,6 +164,8 @@
 
 -(IBAction)onSettings:(id)sender
 {
+    welcomeLabel.text = @"Welcome. Please login.";
+    
     if(!mLoginSettingsViewController)
         mLoginSettingsViewController = [[LoginSettingsViewController alloc] init];
     
@@ -180,6 +184,8 @@
 #pragma mark Private methods
 -(void)adjustLoginFieldFrame:(BOOL)flag
 {
+    welcomeLabel.text = @"Welcome. Please login.";
+    
     CGRect labelFrame;
     CGRect loginFrame;
     
@@ -225,6 +231,8 @@
     if ([[notification name] isEqualToString:NOTIFICATION_LOGIN_FAILED])
     {
         NSLog(@"Show Error Message...");
+        
+        welcomeLabel.text = @"Welcome. Please login.";
     }
     else if ([[notification name] isEqualToString:NOTIFICATION_LOGIN_SUCCESS])
     {
