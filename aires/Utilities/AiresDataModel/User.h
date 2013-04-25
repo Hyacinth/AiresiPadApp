@@ -25,9 +25,9 @@
 
 @interface User (CoreDataGeneratedAccessors)
 
-//- (void)addAiresProjectObject:(Project *)value;
-//- (void)removeAiresProjectObject:(Project *)value;
-//- (void)addAiresProject:(NSSet *)values;
-//- (void)removeAiresProject:(NSSet *)values;
+- (void)addAiresProjectObject:(Project *)value;
+- (void)removeAiresProjectObject:(Project *)value;
+- (void)addAiresProject:(NSSet *)values;
+- (void)removeAiresProject:(NSSet *)values;
 
 @end

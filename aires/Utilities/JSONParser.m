@@ -40,8 +40,10 @@
 {
     NSError *error;
     NSDictionary * config = [[CJSONDeserializer deserializer] deserializeAsDictionary:jsonData error:&error];
-	NSDictionary *projectDetails = [config objectForKey:@"response"];
-    NSLog(@"Login Data:%@ %@",[projectDetails class ],projectDetails);
+	NSDictionary *projectDetails = [[config objectForKey:@"response"] objectAtIndex:0];
+    NSLog(@"projectDetails Data:%@ %@",[projectDetails class ],projectDetails);
+    [[mSingleton getPersistentStoreManager] storeProjectDetails:projectDetails ];
+
 }
 
 @end

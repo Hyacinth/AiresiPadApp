@@ -21,14 +21,7 @@
 {
     self = [super initWithStyle:style];
     if (self) {
-        SecurityManager *mSecurityManager = [mSingleton getSecurityManager];
-        NSString *env = [mSecurityManager getValueForKey:LOGIN_ENVIRONMENT];
-        if (!env)
-        {
-            [mSecurityManager setValue:LOGIN_SETTINGS_PRODUCTION forKey:LOGIN_ENVIRONMENT];
-            NSLog(@"%@",[mSingleton.environmentURLs objectForKey:LOGIN_SETTINGS_PRODUCTION]);
-            [mSecurityManager setValue:[mSingleton.environmentURLs objectForKey:LOGIN_SETTINGS_PRODUCTION] forKey:LOGIN_ENVIRONMENT_URL];
-        }
+        
     }
     return self;
 }

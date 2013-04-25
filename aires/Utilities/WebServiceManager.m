@@ -40,10 +40,22 @@
 
 -(void) getEnvironment
 {
+    if([mSingleton.environmentURLs count] > 0)
+        return;
+    
     NSString *rootURL = [AiresService objectForKey:@"Root URL"];
     NSURL *url = [NSURL URLWithString:rootURL];
-    NSData *data = [NSData dataWithContentsOfURL:url];
+   // NSData *data = [NSData dataWithContentsOfURL:url];
     
+    NSError* error = nil;
+    NSData* data = [NSData dataWithContentsOfURL:url options:NSDataReadingUncached error:&error];
+    if (error) {
+        NSLog(@"%@", [error localizedDescription]);
+        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_LOGIN_FAILED object:self];
+        return;
+    } else {
+        NSLog(@"Data has loaded successfully.");
+    }
     NSString* newStr = [[NSString alloc] initWithData:data
                                              encoding:NSUTF8StringEncoding];
     
@@ -81,6 +93,15 @@
     str = [parser get: @"url" section: @"qa"];
     [mSingleton.environmentURLs setValue:str forKey:LOGIN_SETTINGS_QA];
     
+    SecurityManager *mSecurityManager = [mSingleton getSecurityManager];
+    NSString *env = [mSecurityManager getValueForKey:LOGIN_ENVIRONMENT];
+    if (!env)
+    {
+        [mSecurityManager setValue:LOGIN_SETTINGS_PRODUCTION forKey:LOGIN_ENVIRONMENT];
+        NSLog(@"%@",[mSingleton.environmentURLs objectForKey:LOGIN_SETTINGS_PRODUCTION]);
+        [mSecurityManager setValue:[mSingleton.environmentURLs objectForKey:LOGIN_SETTINGS_PRODUCTION] forKey:LOGIN_ENVIRONMENT_URL];
+    }
+
 }
 
 -(void)loginWithUserName:(NSString *)username andpassword:(NSString *)password
@@ -103,9 +124,8 @@
     [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject)
      {
          // Print the response body in text
-         NSLog(@"Response: %@", [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding]);
-         
          [[mSingleton getJSONParser] performSelectorOnMainThread:@selector(parseLoginDetails:) withObject:responseObject waitUntilDone:YES];
+         [[mSingleton getWebServiceManager] fetchProjectsforUser];
          [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_LOGIN_SUCCESS object:self];
          
      }failure:^(AFHTTPRequestOperation *operation, NSError *error)

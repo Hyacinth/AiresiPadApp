@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 #import "User.h"
+#import "Project.h"
 
 @interface PersistentStoreManager : NSObject
 {
@@ -32,5 +33,7 @@
 //For User
 -(void)storeAiresUser:(NSDictionary *)dict;
 -(User *)getAiresUser;
+
+-(void)storeProjectDetails:(NSDictionary *)dict;
 
 @end

@@ -102,6 +102,9 @@ static AiresSingleton* instance;
 {
     if(!mWebServiceManager)
         mWebServiceManager = [[WebServiceManager alloc] init];
+    
+    [mWebServiceManager getEnvironment];
+
     return mWebServiceManager;
 }
 
