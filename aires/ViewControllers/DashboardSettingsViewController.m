@@ -1,34 +1,27 @@
 //
-//  LoginSettingsViewController.m
+//  DashboardSettingsViewController.m
 //  aires
 //
-//  Created by Gautham on 10/04/13.
+//  Created by Gautham on 25/04/13.
 //  Copyright (c) 2013 Imaginea. All rights reserved.
 //
 
-#import "LoginSettingsViewController.h"
+#import "DashboardSettingsViewController.h"
 #import "AiresSingleton.h"
 
 #define mSingleton 	((AiresSingleton *) [AiresSingleton getSingletonInstance])
 
-@interface LoginSettingsViewController ()
+@interface DashboardSettingsViewController ()
 
 @end
 
-@implementation LoginSettingsViewController
+@implementation DashboardSettingsViewController
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
     if (self) {
-        SecurityManager *mSecurityManager = [mSingleton getSecurityManager];
-        NSString *env = [mSecurityManager getValueForKey:LOGIN_ENVIRONMENT];
-        if (!env)
-        {
-            [mSecurityManager setValue:LOGIN_SETTINGS_PRODUCTION forKey:LOGIN_ENVIRONMENT];
-            NSLog(@"%@",[mSingleton.environmentURLs objectForKey:LOGIN_SETTINGS_PRODUCTION]);
-            [mSecurityManager setValue:[mSingleton.environmentURLs objectForKey:LOGIN_SETTINGS_PRODUCTION] forKey:LOGIN_ENVIRONMENT_URL];
-        }
+        // Custom initialization
     }
     return self;
 }
@@ -36,8 +29,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self setTitle:@"Choose an Environment"];
-
+    [self.tableView setScrollEnabled:FALSE];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -52,61 +44,45 @@
 }
 
 #pragma mark - Table view data source
-//- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-//{
-//    return 50;
-//}
-//
-//- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
-//{
-//    return @"      Choose an Environment      ";
-//}
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    //Reset login credentials before table loads
-        return 1;
+    // Return the number of sections.
+    return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 4;
+    // Return the number of rows in the section.
+    return 1;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    SecurityManager *mSecurityManager = [mSingleton getSecurityManager];
-    
-    static NSString *CellIdentifier = @"LoginSettingsViewController";
+    static NSString *CellIdentifier = @"DashboardSettingsViewController";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
-    cell.textLabel.textAlignment = UITextAlignmentLeft;
-    cell.selectionStyle = UITableViewCellSelectionStyleBlue;
-    NSString *env = [mSecurityManager getValueForKey:LOGIN_ENVIRONMENT];
     
-    switch (indexPath.row) {
+    // Configure the cell...
+    switch (indexPath.section) {
         case 0:
-            cell.textLabel.text = LOGIN_SETTINGS_PRODUCTION;
+            cell.textLabel.textAlignment = UITextAlignmentLeft;
+            if (!rememberPasswordSwitch)
+                rememberPasswordSwitch = [[UISwitch alloc] init];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            cell.accessoryView = rememberPasswordSwitch;
+            cell.textLabel.text = @"Remember Password";
             break;
         case 1:
-            cell.textLabel.text = LOGIN_SETTINGS_STAGE;
-            break;
-        case 2:
-            cell.textLabel.text = LOGIN_SETTINGS_QA;
-            break;
-        case 3:
-            cell.textLabel.text = LOGIN_SETTINGS_DEVELOPMENT;
+            cell.textLabel.textAlignment = UITextAlignmentCenter;
+            cell.textLabel.text = @"Logout";
             break;
             
         default:
             break;
     }
-    if ([env isEqualToString:cell.textLabel.text])
-        cell.accessoryType = UITableViewCellAccessoryCheckmark;
-    else
-        cell.accessoryType = UITableViewCellAccessoryNone;
     
     return cell;
 }
@@ -154,11 +130,17 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-    SecurityManager *mSecurityManager = [mSingleton getSecurityManager];
-    [mSecurityManager setValue:cell.textLabel.text forKey:LOGIN_ENVIRONMENT];
-    [mSecurityManager setValue:[mSingleton.environmentURLs objectForKey:cell.textLabel.text] forKey:LOGIN_ENVIRONMENT_URL];
-    [tableView reloadData];
+    switch (indexPath.section) {
+        case 0:
+            break;
+        case 1:
+            [[mSingleton getWebServiceManager] logout];
+            break;
+            
+        default:
+            break;
+    }
+    
 }
 
 @end

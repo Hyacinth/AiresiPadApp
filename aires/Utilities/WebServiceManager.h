@@ -17,5 +17,6 @@
 -(void)getEnvironment;
 -(void)loginWithUserName:(NSString *)username andpassword:(NSString *)password;
 -(void)fetchProjectsforUser;
+-(void)logout;
 
 @end

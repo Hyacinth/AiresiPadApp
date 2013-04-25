@@ -85,11 +85,12 @@
     [super viewDidAppear:animated];
     if (isLoggingIn)
     {
-//        if(!loggingInAlert)
-//            loggingInAlert = [[UIAlertView alloc] initWithTitle:@"Logging In" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:nil];
-//        [loggingInAlert show];
+        //        if(!loggingInAlert)
+        //            loggingInAlert = [[UIAlertView alloc] initWithTitle:@"Logging In" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:nil];
+        //        [loggingInAlert show];
         [[mSingleton getWebServiceManager] fetchProjectsforUser];
         [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_LOGIN_SUCCESS object:self];
+        isLoggingIn = FALSE;
     }
 }
 
@@ -151,14 +152,15 @@
     if(!mLoginSettingsViewController)
         mLoginSettingsViewController = [[LoginSettingsViewController alloc] init];
     
+    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:mLoginSettingsViewController];
     if(!popover)
-        popover = [[UIPopoverController alloc]initWithContentViewController:mLoginSettingsViewController];
+        popover = [[UIPopoverController alloc]initWithContentViewController:navController];
     
-    [popover setContentViewController:mLoginSettingsViewController];
-    [popover setPopoverContentSize:CGSizeMake(300, 226)];
+    [popover setContentViewController:navController];
+    [popover setPopoverContentSize:CGSizeMake(300, 216)];
     [popover setDelegate:self];
-    
-    [popover presentPopoverFromRect:settingsButton.bounds inView:settingsButton permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+
+    [popover presentPopoverFromRect:settingsButton.bounds inView:settingsButton permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
 }
 
 #pragma mark-

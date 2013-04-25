@@ -6,6 +6,8 @@
 	<string>http://192.168.6.18/AiresStaging/config.txt</string>
 	<key>Path</key>
 	<dict>
+		<key>Logout</key>
+		<string>Logout</string>
 		<key>Project</key>
 		<string>ProjectDetails</string>
 		<key>Login</key>

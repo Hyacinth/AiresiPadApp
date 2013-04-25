@@ -11,6 +11,10 @@
 #import "CompletedProjectTileView.h"
 #import "ProjectViewController.h"
 #import <QuartzCore/QuartzCore.h>
+#import "Constants.h"
+#import "AiresSingleton.h"
+
+#define mSingleton 	((AiresSingleton *) [AiresSingleton getSingletonInstance])
 
 @interface DashboardViewController ()
 
@@ -41,6 +45,9 @@
     
     [_btnSettings setBackgroundImage:bgimage forState:UIControlStateNormal];
     [_btnRefresh setBackgroundImage:bgimage forState:UIControlStateNormal];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(localNotificationhandler:) name:NOTIFICATION_LOGOUT_FAILED object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(localNotificationhandler:) name:NOTIFICATION_LOGOUT_SUCCESS object:nil];
 }
 
 -(void)awakeFromNib
@@ -179,6 +186,23 @@
     }
 }
 
+
+-(IBAction)onSettings:(id)sender
+{
+    if(!mDashboardSettingsViewController)
+        mDashboardSettingsViewController = [[DashboardSettingsViewController alloc] init];
+    
+    if(!popover)
+        popover = [[UIPopoverController alloc]initWithContentViewController:mDashboardSettingsViewController];
+    
+    [popover setContentViewController:mDashboardSettingsViewController];
+    [popover setPopoverContentSize:CGSizeMake(300, 130)];
+    [popover setDelegate:self];
+    
+    [popover presentPopoverFromRect:self.btnSettings.bounds inView:self.btnSettings permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
+}
+
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -188,6 +212,25 @@
 - (void)viewDidUnload
 {   
     [super viewDidUnload];
+}
+
+#pragma mark-
+#pragma mark Notification Handler
+- (void) localNotificationhandler:(NSNotification *) notification
+{
+    if ([[notification name] isEqualToString:NOTIFICATION_LOGOUT_FAILED])
+    {
+        [popover dismissPopoverAnimated:YES];
+    }
+    else if ([[notification name] isEqualToString:NOTIFICATION_LOGOUT_SUCCESS])
+    {
+        [[mSingleton getSecurityManager] deleteValueForKey:LOGIN_ACCESSTOKEN];
+        [[mSingleton getSecurityManager] deleteValueForKey:LOGIN_ACCESSTOKEN_TIME];
+        [popover dismissPopoverAnimated:YES];
+
+        [self.navigationController popToRootViewControllerAnimated:YES];
+    }
+    
 }
 
 @end

@@ -8,8 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "iCarousel.h"
+#import "DashboardSettingsViewController.h"
 
-@interface DashboardViewController : UIViewController<iCarouselDataSource, iCarouselDelegate, iCarouselDeprecated>
+@interface DashboardViewController : UIViewController<iCarouselDataSource, iCarouselDelegate, iCarouselDeprecated, UIPopoverControllerDelegate>
+{
+    UIPopoverController *popover;
+    DashboardSettingsViewController *mDashboardSettingsViewController;
+}
 
 @property(nonatomic,retain) IBOutlet iCarousel *activeProjectsCarousel;
 @property (retain, nonatomic) IBOutlet iCarousel *completedProjectsCarousel;
@@ -24,5 +29,8 @@
 @property (retain, nonatomic) IBOutlet UITextField *searchField;
 @property (retain, nonatomic) IBOutlet UIButton *btnSettings;
 @property (retain, nonatomic) IBOutlet UIButton *btnRefresh;
+
+
+-(IBAction)onSettings:(id)sender;
 
 @end
