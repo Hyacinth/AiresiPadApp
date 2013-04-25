@@ -9,33 +9,23 @@
 #import <UIKit/UIKit.h>
 #import "LoginSettingsViewController.h"
 #import "DashboardViewController.h"
+#import "LoginFieldsView.h"
 
-typedef enum
-{
-    CELL_USER_FIELD,
-    CELL_PWD_FIELD
-}CELL_FIELD;
-
-@interface LoginViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, UIPopoverControllerDelegate>
+@interface LoginViewController : UIViewController<UIPopoverControllerDelegate, LoginFieldsDelegate>
 {
     IBOutlet UIImageView *airesLogoImageView;
-    IBOutlet UITableView *loginFieldTable;
     IBOutlet UILabel *welcomeLabel;
     IBOutlet UIButton *loginButton;
     IBOutlet UIButton *forgotPasswordButton;
     IBOutlet UIButton *settingsButton;
-    BOOL isLoggingIn;
+    IBOutlet LoginFieldsView *loginFieldsView;
     
     NSMutableArray *loginCredentials;
     
     UIPopoverController *popover;
     LoginSettingsViewController *mLoginSettingsViewController;
-    UIAlertView *loggingInAlert;
-    
-    BOOL istextFieldEditing;
-    
+        
     DashboardViewController *mDashboardViewController;
-    
 }
 
 @property(nonatomic) BOOL isLoggingIn;
@@ -43,6 +33,5 @@ typedef enum
 -(IBAction)onLogin:(id)sender;
 -(IBAction)onForgotPassword:(id)sender;
 -(IBAction)onSettings:(id)sender;
-
 
 @end

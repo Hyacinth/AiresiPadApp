@@ -7,7 +7,6 @@
 //
 
 #import "LoginViewController.h"
-#import "LoginTableCell.h"
 #import "AiresSingleton.h"
 
 #define mSingleton 	((AiresSingleton *) [AiresSingleton getSingletonInstance])
@@ -34,14 +33,17 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(localNotificationhandler:) name:NOTIFICATION_LOGIN_FAILED object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(localNotificationhandler:) name:NOTIFICATION_LOGIN_SUCCESS object:nil];
+
     // Do any additional setup after loading the view from its nib.
+    
+    loginFieldsView.delegate = self;
+    SecurityManager *mSecurityManager = [mSingleton getSecurityManager];
+    [loginFieldsView setUserFieldText:[mSecurityManager getValueForKey:LOGIN_USERNAME]];
+    [loginFieldsView setPassFieldText:[mSecurityManager getValueForKey:LOGIN_PASSWORD]];
     
     if(!mLoginSettingsViewController)
         mLoginSettingsViewController = [[LoginSettingsViewController alloc] init];
-
+    
     UIImage *buttonImage = [[UIImage imageNamed:@"btn_login"]
                             resizableImageWithCapInsets:UIEdgeInsetsMake(0, 15, 0, 15)];
     
@@ -50,16 +52,12 @@
     [forgotPasswordButton.titleLabel setFont:[UIFont fontWithName:@"ProximaNova-Regular" size:14.0]];
     [loginButton.titleLabel setFont:[UIFont fontWithName:@"ProximaNova-Bold" size:24]];
     [welcomeLabel setFont:[UIFont fontWithName:@"ProximaNova-Regular" size:24]];
-    [loginFieldTable setDelegate:self];
-    [loginFieldTable setDataSource:self];
-    istextFieldEditing = FALSE;
-    [self adjustLoginFieldFrame:istextFieldEditing];
     
-    loginFieldTable.alpha = 0;
     loginButton.alpha = 0;
     welcomeLabel.alpha = 0;
     forgotPasswordButton.alpha = 0;
     settingsButton.alpha = 0;
+    loginFieldsView.alpha = 0;
     
     CGRect logoFrame = airesLogoImageView.frame;
     logoFrame.origin.y = 78.0f;
@@ -71,11 +69,11 @@
                      completion:^(BOOL finished) {
                          [UIView animateWithDuration:0.3
                                           animations:^{
-                                              loginFieldTable.alpha = 1.0f;
                                               loginButton.alpha = 1.0f;
                                               welcomeLabel.alpha = 1.0f;
                                               forgotPasswordButton.alpha = 1.0f;
                                               settingsButton.alpha = 1.0f;
+                                              loginFieldsView.alpha = 1.0f;
                                           }];
                      }];
 }
@@ -85,13 +83,35 @@
     [super viewDidAppear:animated];
     if (isLoggingIn)
     {
-        //        if(!loggingInAlert)
-        //            loggingInAlert = [[UIAlertView alloc] initWithTitle:@"Logging In" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:nil];
-        //        [loggingInAlert show];
         [[mSingleton getWebServiceManager] fetchProjectsforUser];
         [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_LOGIN_SUCCESS object:self];
         isLoggingIn = FALSE;
     }
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(localNotificationhandler:) name:NOTIFICATION_LOGIN_FAILED object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(localNotificationhandler:) name:NOTIFICATION_LOGIN_SUCCESS object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillShow)
+                                                 name:UIKeyboardWillShowNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillHide)
+                                                 name:UIKeyboardWillHideNotification
+                                               object:nil];
+}
+
+-(void) viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -112,18 +132,9 @@
 {
     //Save values in keychain
     SecurityManager *mSecurityManager = [mSingleton getSecurityManager];
-    for (NSIndexPath *indexPath in loginCredentials)
-    {
-        LoginTableCell *cell = (LoginTableCell *)[loginFieldTable cellForRowAtIndexPath:indexPath];
-        if (cell.tag == CELL_USER_FIELD && [cell.cellTextField.text length] > 0)
-        {
-            [mSecurityManager setValue:cell.cellTextField.text forKey:LOGIN_USERNAME];
-        }
-        else if (cell.tag == CELL_PWD_FIELD && [cell.cellTextField.text length] > 0)
-        {
-            [mSecurityManager setValue:cell.cellTextField.text forKey:LOGIN_PASSWORD];
-        }
-    }
+    [mSecurityManager setValue:[loginFieldsView getUserFieldText] forKey:LOGIN_USERNAME];
+    [mSecurityManager setValue:[loginFieldsView getPassFieldText] forKey:LOGIN_PASSWORD];
+    
     //Check internet connectivity
     if(![mSingleton isConnectedToInternet])
     {
@@ -132,17 +143,18 @@
         return;
     }
     
-    //Do Login
-    [[mSingleton getWebServiceManager] loginWithUserName:[mSecurityManager getValueForKey:LOGIN_USERNAME] andpassword:[mSecurityManager getValueForKey:LOGIN_PASSWORD]];
+    [self.view endEditing:YES];
     
-    if(!loggingInAlert)
-        loggingInAlert = [[UIAlertView alloc] initWithTitle:@"Logging in..." message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:nil];
-    [loggingInAlert show];
+    [loginFieldsView showLoadingMessage:@"Signing in..."];
+    
+    //Do Login
+        
+    [[mSingleton getWebServiceManager] loginWithUserName:[mSecurityManager getValueForKey:LOGIN_USERNAME] andpassword:[mSecurityManager getValueForKey:LOGIN_PASSWORD]];   
 }
 
 -(IBAction)onForgotPassword:(id)sender
 {
-    NSURL *url = [NSURL URLWithString:@"http://www.google.com"];
+    NSURL *url = [NSURL URLWithString:@"http://password.ajg.com"];
     if (![[UIApplication sharedApplication] openURL:url])
         NSLog(@"%@%@",@"Failed to open url:",[url description]);
 }
@@ -159,7 +171,7 @@
     [popover setContentViewController:navController];
     [popover setPopoverContentSize:CGSizeMake(300, 216)];
     [popover setDelegate:self];
-
+    
     [popover presentPopoverFromRect:settingsButton.bounds inView:settingsButton permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
 }
 
@@ -173,145 +185,50 @@
     if(flag)
     {
         labelFrame = CGRectMake(361, 232, 302, 26);
-        loginFrame = CGRectMake(351, 288, 322, 100);
+        loginFrame = CGRectMake(352, 294, 322, 88);
     }
     else
     {
         labelFrame = CGRectMake(361, 298, 302, 26);
-        loginFrame = CGRectMake(351, 354, 322, 100);
+        loginFrame = CGRectMake(352, 360, 322, 88);
     }
     
-    [UIView beginAnimations:@"button_in" context:nil];
-    [UIView setAnimationDelegate:self];
-    [UIView setAnimationDidStopSelector:@selector(animationDone)];
-    [UIView setAnimationDuration:0.2];
-    [UIView setAnimationCurve:UIViewAnimationCurveEaseIn];
-    [UIView setAnimationBeginsFromCurrentState:YES];
-    
-    [welcomeLabel setFrame:labelFrame];
-    [loginFieldTable setFrame:loginFrame];
-    
-    [UIView commitAnimations];
+    [UIView animateWithDuration:0.25
+                     animations:^{
+                         [welcomeLabel setFrame:labelFrame];
+                         [loginFieldsView setFrame:loginFrame];
+                     }];
 }
 
-#pragma mark-
-#pragma mark UITableView Delegate and Datasource Methods
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+-(void)keyboardWillShow
 {
-    return 44;
+    [self adjustLoginFieldFrame:YES];
 }
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+-(void)keyboardWillHide
 {
-    //Preset login environment before table loads
-    //[loginCredentials removeAllObjects];
-    return 1;
+    [self adjustLoginFieldFrame:NO];
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+-(void)keyboardReturnedOnPasswordField
 {
-    return 2;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    static NSString *CellIdentifier = @"loginFieldTable";
-    SecurityManager *mSecurityManager = [mSingleton getSecurityManager];
-    LoginTableCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    
-    if (cell == nil)
-    {
-        cell = [[LoginTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] ;
-        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"LoginTableCell" owner:self options:nil];
-		cell = (LoginTableCell *)[nib objectAtIndex:0];
-    }
-    [cell setUserInteractionEnabled:TRUE];
-    [cell.cellTextField setDelegate:self];
-    [cell.cellTextField setClearButtonMode:UITextFieldViewModeWhileEditing];
-    [cell.cellTextField setFont:[UIFont fontWithName:@"ProximaNova-Regular" size:14.0]];
-    if(indexPath.row == 0)
-    {
-        cell.cellTextField.placeholder = @"User Name";
-        [cell.cellTextField setText:[mSecurityManager getValueForKey:LOGIN_USERNAME]];
-        [cell.cellTextField setReturnKeyType:UIReturnKeyNext];
-        cell.tag = CELL_USER_FIELD;
-        cell.cellTextField.text = @"gbtpa\\dcreggett";
-        
-    }
-    else
-    {
-        cell.cellTextField.placeholder = @"Password";
-        [cell.cellTextField setSecureTextEntry:TRUE];
-        if ([[mSecurityManager getValueForKey:LOGIN_AUTOLOGIN] isEqualToString:@"TRUE"])
-            [cell.cellTextField setText:[mSecurityManager getValueForKey:LOGIN_PASSWORD]];
-        [cell.cellTextField setReturnKeyType:UIReturnKeyGo];
-        [cell.cellTextField setClearsOnBeginEditing:FALSE];
-        cell.tag = CELL_PWD_FIELD;
-        cell.cellTextField.text = @"password123";
-    }
-    [loginCredentials addObject:indexPath];
-    return cell;
-}
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    LoginTableCell *cell = (LoginTableCell *)[tableView cellForRowAtIndexPath:indexPath];
-    [cell.cellTextField becomeFirstResponder];
-}
-
-
-#pragma mark-
-#pragma mark UITextField Delegate
-
-- (BOOL)textFieldShouldReturn:(UITextField *)textField
-{
-    LoginTableCell * currentCell = (LoginTableCell *) textField.superview.superview;
-    if (currentCell.tag == CELL_USER_FIELD)
-    {
-        NSIndexPath * currentIndexPath = [loginFieldTable indexPathForCell:currentCell];
-        NSIndexPath * nextIndexPath = [NSIndexPath indexPathForRow:currentIndexPath.row + 1 inSection:0];
-        LoginTableCell * nextCell = (LoginTableCell *) [loginFieldTable cellForRowAtIndexPath:nextIndexPath];
-        
-        istextFieldEditing = TRUE;
-        [self adjustLoginFieldFrame:istextFieldEditing];
-        [nextCell.cellTextField becomeFirstResponder];
-    }
-    else if (currentCell.tag == CELL_PWD_FIELD)
-    {
-        [textField resignFirstResponder];
-        istextFieldEditing = FALSE;
-        [self adjustLoginFieldFrame:istextFieldEditing];
-        [self onLogin:nil];
-    }
-    return TRUE;
-}
-
-- (void)textFieldDidBeginEditing:(UITextField *)textField
-{
-    istextFieldEditing = TRUE;
-    [self adjustLoginFieldFrame:istextFieldEditing];
-}
-
-- (void)textFieldDidEndEditing:(UITextField *)textField
-{
-    istextFieldEditing = FALSE;
-    [self adjustLoginFieldFrame:istextFieldEditing];
+    [self onLogin:nil];
 }
 
 #pragma mark-
 #pragma mark Notification Handler
 - (void) localNotificationhandler:(NSNotification *) notification
 {
+    [loginFieldsView hideLoadingMessage];
+    
     if ([[notification name] isEqualToString:NOTIFICATION_LOGIN_FAILED])
     {
-        [loggingInAlert dismissWithClickedButtonIndex:0 animated:YES];
+        NSLog(@"Show Error Message...");
     }
     else if ([[notification name] isEqualToString:NOTIFICATION_LOGIN_SUCCESS])
     {
-        [loggingInAlert dismissWithClickedButtonIndex:0 animated:TRUE];
         if(!mDashboardViewController)
             mDashboardViewController = [[DashboardViewController alloc] initWithNibName:@"DashboardViewController" bundle:nil];
-
         [self.navigationController pushViewController:mDashboardViewController animated:NO];
     }
     

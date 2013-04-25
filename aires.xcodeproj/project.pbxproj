@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8439D369172911140053278E /* LoginFieldsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8439D368172911140053278E /* LoginFieldsView.m */; };
 		84AF07B317280974006F8756 /* AiresService.plist in Resources */ = {isa = PBXBuildFile; fileRef = 84AF07B217280974006F8756 /* AiresService.plist */; };
 		84F623FA1727DAD700FD5D7E /* Default-Landscape@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 84F623F81727DAD700FD5D7E /* Default-Landscape@2x~ipad.png */; };
 		84F623FB1727DAD700FD5D7E /* Default-Landscape~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 84F623F91727DAD700FD5D7E /* Default-Landscape~ipad.png */; };
@@ -25,8 +26,6 @@
 		988410B11715417A00A1ED57 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 988410B01715417A00A1ED57 /* Security.framework */; };
 		988410B51715439500A1ED57 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 988410B31715439500A1ED57 /* LoginViewController.m */; };
 		988410B61715439500A1ED57 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 988410B41715439500A1ED57 /* LoginViewController.xib */; };
-		9884113C1715571F00A1ED57 /* LoginTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9884113B1715571F00A1ED57 /* LoginTableCell.m */; };
-		9884113E17155B5C00A1ED57 /* LoginTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9884113D17155B5C00A1ED57 /* LoginTableCell.xib */; };
 		988411451715686200A1ED57 /* LoginSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 988411431715686200A1ED57 /* LoginSettingsViewController.m */; };
 		988411461715686200A1ED57 /* LoginSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 988411441715686200A1ED57 /* LoginSettingsViewController.xib */; };
 		988411A7171587AC00A1ED57 /* AFHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 98841195171587AC00A1ED57 /* AFHTTPClient.m */; };
@@ -191,6 +190,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8439D367172911140053278E /* LoginFieldsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginFieldsView.h; sourceTree = "<group>"; };
+		8439D368172911140053278E /* LoginFieldsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginFieldsView.m; sourceTree = "<group>"; };
 		84AF07B217280974006F8756 /* AiresService.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = AiresService.plist; sourceTree = "<group>"; };
 		84F623F81727DAD700FD5D7E /* Default-Landscape@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape@2x~ipad.png"; sourceTree = "<group>"; };
 		84F623F91727DAD700FD5D7E /* Default-Landscape~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape~ipad.png"; sourceTree = "<group>"; };
@@ -221,9 +222,6 @@
 		988410B21715439500A1ED57 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		988410B31715439500A1ED57 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		988410B41715439500A1ED57 /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
-		9884113A1715571F00A1ED57 /* LoginTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginTableCell.h; sourceTree = "<group>"; };
-		9884113B1715571F00A1ED57 /* LoginTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginTableCell.m; sourceTree = "<group>"; };
-		9884113D17155B5C00A1ED57 /* LoginTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginTableCell.xib; sourceTree = "<group>"; };
 		9884113F171562DD00A1ED57 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		988411421715686100A1ED57 /* LoginSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginSettingsViewController.h; sourceTree = "<group>"; };
 		988411431715686200A1ED57 /* LoginSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginSettingsViewController.m; sourceTree = "<group>"; };
@@ -591,9 +589,8 @@
 				988410B21715439500A1ED57 /* LoginViewController.h */,
 				988410B31715439500A1ED57 /* LoginViewController.m */,
 				988410B41715439500A1ED57 /* LoginViewController.xib */,
-				9884113A1715571F00A1ED57 /* LoginTableCell.h */,
-				9884113B1715571F00A1ED57 /* LoginTableCell.m */,
-				9884113D17155B5C00A1ED57 /* LoginTableCell.xib */,
+				8439D367172911140053278E /* LoginFieldsView.h */,
+				8439D368172911140053278E /* LoginFieldsView.m */,
 				988411421715686100A1ED57 /* LoginSettingsViewController.h */,
 				988411431715686200A1ED57 /* LoginSettingsViewController.m */,
 				988411441715686200A1ED57 /* LoginSettingsViewController.xib */,
@@ -853,7 +850,6 @@
 			files = (
 				98B37B6D17153B9E00F78A54 /* InfoPlist.strings in Resources */,
 				988410B61715439500A1ED57 /* LoginViewController.xib in Resources */,
-				9884113E17155B5C00A1ED57 /* LoginTableCell.xib in Resources */,
 				988411461715686200A1ED57 /* LoginSettingsViewController.xib in Resources */,
 				98BA957817255B5900858A36 /* ProximaNova-Bold.otf in Resources */,
 				98BA957917255B5900858A36 /* ProximaNova-BoldIt.otf in Resources */,
@@ -996,7 +992,6 @@
 				988410AC17153F8F00A1ED57 /* SecurityManager.m in Sources */,
 				988410AF1715402700A1ED57 /* AiresSingleton.m in Sources */,
 				988410B51715439500A1ED57 /* LoginViewController.m in Sources */,
-				9884113C1715571F00A1ED57 /* LoginTableCell.m in Sources */,
 				988411451715686200A1ED57 /* LoginSettingsViewController.m in Sources */,
 				988411A7171587AC00A1ED57 /* AFHTTPClient.m in Sources */,
 				988411A8171587AC00A1ED57 /* AFHTTPRequestOperation.m in Sources */,
@@ -1034,6 +1029,7 @@
 				9817B52817269D0D00155182 /* section.m in Sources */,
 				9817B52B17269D0D00155182 /* utils.m in Sources */,
 				98B68CDB1728EEF10065D411 /* DashboardSettingsViewController.m in Sources */,
+				8439D369172911140053278E /* LoginFieldsView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
