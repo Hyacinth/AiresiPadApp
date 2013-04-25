@@ -232,7 +232,7 @@
     {
         NSLog(@"Show Error Message...");
         
-        welcomeLabel.text = @"Welcome. Please login.";
+        welcomeLabel.text = @"Login Failed";
     }
     else if ([[notification name] isEqualToString:NOTIFICATION_LOGIN_SUCCESS])
     {
