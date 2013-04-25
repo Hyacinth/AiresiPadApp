@@ -107,7 +107,7 @@
 
 -(void)showLoadingMessage:(NSString*)message
 {
-    [UIView animateWithDuration:0.25
+    [UIView animateWithDuration:0.15
                      animations:^{
                          midlineLayer.hidden = YES;
                          userField.alpha = 0;
@@ -131,21 +131,14 @@
 
 -(void)hideLoadingMessage
 {
-    [UIView animateWithDuration:0.25
+    [spinner removeFromSuperview];
+    [messageLabel removeFromSuperview];
+    
+    [UIView animateWithDuration:0.15
                      animations:^{
-                         spinner.alpha = 0;
-                         messageLabel.alpha = 0;
-                     }
-                     completion:^(BOOL finished) {
-                         [spinner removeFromSuperview];
-                         [messageLabel removeFromSuperview];
-                         
-                         [UIView animateWithDuration:0.25
-                                          animations:^{
-                                              midlineLayer.hidden = NO;
-                                              userField.alpha = 1.0f;
-                                              passField.alpha = 1.0f;
-                                          }];
+                         midlineLayer.hidden = NO;
+                         userField.alpha = 1.0f;
+                         passField.alpha = 1.0f;
                      }];
 }
 

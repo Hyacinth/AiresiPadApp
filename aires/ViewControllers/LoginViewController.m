@@ -93,6 +93,8 @@
 {
     [super viewWillAppear:animated];
     
+    [loginFieldsView hideLoadingMessage];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(localNotificationhandler:) name:NOTIFICATION_LOGIN_FAILED object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(localNotificationhandler:) name:NOTIFICATION_LOGIN_SUCCESS object:nil];
@@ -130,11 +132,6 @@
 
 -(IBAction)onLogin:(id)sender
 {
-    //Save values in keychain
-    SecurityManager *mSecurityManager = [mSingleton getSecurityManager];
-    [mSecurityManager setValue:[loginFieldsView getUserFieldText] forKey:LOGIN_USERNAME];
-    [mSecurityManager setValue:[loginFieldsView getPassFieldText] forKey:LOGIN_PASSWORD];
-    
     //Check internet connectivity
     if(![mSingleton isConnectedToInternet])
     {
@@ -143,12 +140,16 @@
         return;
     }
     
-    [self.view endEditing:YES];
+    //Save values in keychain
+    SecurityManager *mSecurityManager = [mSingleton getSecurityManager];
+    [mSecurityManager setValue:[loginFieldsView getUserFieldText] forKey:LOGIN_USERNAME];
+    [mSecurityManager setValue:[loginFieldsView getPassFieldText] forKey:LOGIN_PASSWORD];
     
     [loginFieldsView showLoadingMessage:@"Signing in..."];
-    
+
+    [self.view endEditing:YES];
+   
     //Do Login
-        
     [[mSingleton getWebServiceManager] loginWithUserName:[mSecurityManager getValueForKey:LOGIN_USERNAME] andpassword:[mSecurityManager getValueForKey:LOGIN_PASSWORD]];   
 }
 
