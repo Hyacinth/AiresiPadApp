@@ -27,7 +27,7 @@
 @property (nonatomic, retain) NSString * project_LocationPostalCode;
 @property (nonatomic, retain) NSString * project_LocationState;
 @property (nonatomic, retain) NSString * project_ProjectDescription;
-@property (nonatomic, retain) NSNumber * project_ProjectNumber;
+@property (nonatomic, retain) NSString * project_ProjectNumber;
 @property (nonatomic, retain) NSDate *   project_TurnAroundTime;
 @property (nonatomic, retain) NSNumber * projectID;
 @property (nonatomic, retain) NSSet *airesSample;
@@ -36,9 +36,9 @@
 
 @interface Project (CoreDataGeneratedAccessors)
 
-//- (void)addAiresSampleObject:(Sample *)value;
-//- (void)removeAiresSampleObject:(Sample *)value;
-//- (void)addAiresSample:(NSSet *)values;
-//- (void)removeAiresSample:(NSSet *)values;
+- (void)addAiresSampleObject:(Sample *)value;
+- (void)removeAiresSampleObject:(Sample *)value;
+- (void)addAiresSample:(NSSet *)values;
+- (void)removeAiresSample:(NSSet *)values;
 
 @end

@@ -14,7 +14,6 @@
 }
 
 - init;
-- (void)dealloc;
 
 @end
 

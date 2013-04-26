@@ -188,6 +188,10 @@
 		98E33F0B1717D15300466E0F /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 98E33F0A1717D15300466E0F /* Reachability.m */; };
 		98E33F0D1717D19800466E0F /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98E33F0C1717D19800466E0F /* SystemConfiguration.framework */; };
 		98E33F0F1717D20800466E0F /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98E33F0E1717D20800466E0F /* MobileCoreServices.framework */; };
+		98FDD36F172A7F13001A9295 /* Sample.m in Sources */ = {isa = PBXBuildFile; fileRef = 98FDD36E172A7F13001A9295 /* Sample.m */; };
+		98FDD372172A93A1001A9295 /* SampleChemical.m in Sources */ = {isa = PBXBuildFile; fileRef = 98FDD371172A93A1001A9295 /* SampleChemical.m */; };
+		98FDD375172A9940001A9295 /* SampleMeasurement.m in Sources */ = {isa = PBXBuildFile; fileRef = 98FDD374172A9940001A9295 /* SampleMeasurement.m */; };
+		98FDD378172A9941001A9295 /* SampleTotalMeasurement.m in Sources */ = {isa = PBXBuildFile; fileRef = 98FDD377172A9941001A9295 /* SampleTotalMeasurement.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -419,6 +423,14 @@
 		98E33F0A1717D15300466E0F /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		98E33F0C1717D19800466E0F /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		98E33F0E1717D20800466E0F /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		98FDD36D172A7F13001A9295 /* Sample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Sample.h; sourceTree = "<group>"; };
+		98FDD36E172A7F13001A9295 /* Sample.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Sample.m; sourceTree = "<group>"; };
+		98FDD370172A93A1001A9295 /* SampleChemical.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SampleChemical.h; sourceTree = "<group>"; };
+		98FDD371172A93A1001A9295 /* SampleChemical.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SampleChemical.m; sourceTree = "<group>"; };
+		98FDD373172A9940001A9295 /* SampleMeasurement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SampleMeasurement.h; sourceTree = "<group>"; };
+		98FDD374172A9940001A9295 /* SampleMeasurement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SampleMeasurement.m; sourceTree = "<group>"; };
+		98FDD376172A9941001A9295 /* SampleTotalMeasurement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SampleTotalMeasurement.h; sourceTree = "<group>"; };
+		98FDD377172A9941001A9295 /* SampleTotalMeasurement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SampleTotalMeasurement.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -547,10 +559,18 @@
 			isa = PBXGroup;
 			children = (
 				98A241CA17210FEF001A14F0 /* Model.xcdatamodeld */,
-				98B68CDD172913770065D411 /* Project.h */,
-				98B68CDE172913770065D411 /* Project.m */,
 				988701671725325E007FB144 /* User.h */,
 				988701681725325E007FB144 /* User.m */,
+				98B68CDD172913770065D411 /* Project.h */,
+				98B68CDE172913770065D411 /* Project.m */,
+				98FDD36D172A7F13001A9295 /* Sample.h */,
+				98FDD36E172A7F13001A9295 /* Sample.m */,
+				98FDD370172A93A1001A9295 /* SampleChemical.h */,
+				98FDD371172A93A1001A9295 /* SampleChemical.m */,
+				98FDD376172A9941001A9295 /* SampleTotalMeasurement.h */,
+				98FDD377172A9941001A9295 /* SampleTotalMeasurement.m */,
+				98FDD373172A9940001A9295 /* SampleMeasurement.h */,
+				98FDD374172A9940001A9295 /* SampleMeasurement.m */,
 			);
 			path = AiresDataModel;
 			sourceTree = "<group>";
@@ -1036,6 +1056,10 @@
 				98B68CDB1728EEF10065D411 /* DashboardSettingsViewController.m in Sources */,
 				8439D369172911140053278E /* LoginFieldsView.m in Sources */,
 				989B043D17295C83001D3FFD /* Project.m in Sources */,
+				98FDD36F172A7F13001A9295 /* Sample.m in Sources */,
+				98FDD372172A93A1001A9295 /* SampleChemical.m in Sources */,
+				98FDD375172A9940001A9295 /* SampleMeasurement.m in Sources */,
+				98FDD378172A9941001A9295 /* SampleTotalMeasurement.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

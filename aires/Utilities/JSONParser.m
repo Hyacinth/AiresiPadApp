@@ -43,7 +43,6 @@
 	NSArray *projectDetails = [config objectForKey:@"response"];
     NSLog(@"projectDetails Data:%@ %@",[projectDetails class ],projectDetails);
     [[mSingleton getPersistentStoreManager] storeProjectDetails:projectDetails ];
-
 }
 
 @end

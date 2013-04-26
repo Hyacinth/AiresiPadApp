@@ -7,7 +7,6 @@
 }
 
 - initWithName: (NSString *)name;
-- (void)dealloc;
 - (void)insert: (NSString *)name value: (NSString *)value;
 - (NSString *)retrieve: (NSString *)name;
 
