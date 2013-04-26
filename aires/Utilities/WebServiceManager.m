@@ -94,7 +94,7 @@
     [mSingleton.environmentURLs setValue:str forKey:LOGIN_SETTINGS_QA];
     
     SecurityManager *mSecurityManager = [mSingleton getSecurityManager];
-    NSString *env = [mSecurityManager getValueForKey:LOGIN_ENVIRONMENT];
+    NSString *env = [mSecurityManager getValueForKey:LOGIN_ENVIRONMENT_URL];
     if (!env)
     {
         [mSecurityManager setValue:LOGIN_SETTINGS_PRODUCTION forKey:LOGIN_ENVIRONMENT];

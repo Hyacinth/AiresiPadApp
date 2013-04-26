@@ -18,7 +18,6 @@
 		9817B52717269D0D00155182 /* retrieve.m in Sources */ = {isa = PBXBuildFile; fileRef = 9817B51E17269D0D00155182 /* retrieve.m */; };
 		9817B52817269D0D00155182 /* section.m in Sources */ = {isa = PBXBuildFile; fileRef = 9817B52017269D0D00155182 /* section.m */; };
 		9817B52B17269D0D00155182 /* utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 9817B52417269D0D00155182 /* utils.m */; };
-		9820EBA017295BEA00EC15BF /* Project.m in Sources */ = {isa = PBXBuildFile; fileRef = 98B68CDE172913770065D411 /* Project.m */; };
 		98659CA6170DA3FD00A0DEF8 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98659CA5170DA3FD00A0DEF8 /* UIKit.framework */; };
 		98659CA8170DA3FD00A0DEF8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98659CA7170DA3FD00A0DEF8 /* Foundation.framework */; };
 		98659CAA170DA3FD00A0DEF8 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98659CA9170DA3FD00A0DEF8 /* CoreGraphics.framework */; };
@@ -40,6 +39,7 @@
 		988411AF171587AC00A1ED57 /* UIImageView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 988411A6171587AC00A1ED57 /* UIImageView+AFNetworking.m */; };
 		988701691725325E007FB144 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 988701681725325E007FB144 /* User.m */; };
 		9887016C172533D1007FB144 /* PersistentStoreManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9887016B172533D1007FB144 /* PersistentStoreManager.m */; };
+		989B043D17295C83001D3FFD /* Project.m in Sources */ = {isa = PBXBuildFile; fileRef = 98B68CDE172913770065D411 /* Project.m */; };
 		98A241DA17210FEF001A14F0 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 98A241CA17210FEF001A14F0 /* Model.xcdatamodeld */; };
 		98A241E317211620001A14F0 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98A241E217211620001A14F0 /* CoreData.framework */; };
 		98B37B6317153B5C00F78A54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 98659CB1170DA3FD00A0DEF8 /* main.m */; };
@@ -1035,7 +1035,7 @@
 				9817B52B17269D0D00155182 /* utils.m in Sources */,
 				98B68CDB1728EEF10065D411 /* DashboardSettingsViewController.m in Sources */,
 				8439D369172911140053278E /* LoginFieldsView.m in Sources */,
-				9820EBA017295BEA00EC15BF /* Project.m in Sources */,
+				989B043D17295C83001D3FFD /* Project.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
