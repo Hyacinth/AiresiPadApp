@@ -133,7 +133,7 @@
 #pragma mark-
 #pragma mark IBAction
 
--(IBAction)onLogin:(id)sender
+-(IBAction)onLogin
 {
     //Check internet connectivity
     if(![mSingleton isConnectedToInternet])
@@ -143,20 +143,29 @@
         return;
     }
     
+    [loginFieldsView showLoadingMessage:@"Signing in..."];
+    [self.view endEditing:YES];
+    [self performSelector:@selector(changingMessage) withObject:nil afterDelay:1.0];
+}
+
+-(void)changingMessage
+{
+    [loginFieldsView changeLoadingMessage:@"Fetching Projects..."];
+    [self performSelector:@selector(loginAction) withObject:nil afterDelay:2.0];
+}
+
+-(void)loginAction
+{
     //Save values in keychain
     SecurityManager *mSecurityManager = [mSingleton getSecurityManager];
     [mSecurityManager setValue:[loginFieldsView getUserFieldText] forKey:LOGIN_USERNAME];
     [mSecurityManager setValue:[loginFieldsView getPassFieldText] forKey:LOGIN_PASSWORD];
-    
-    [loginFieldsView showLoadingMessage:@"Signing in..."];
-
-    [self.view endEditing:YES];
-   
+            
     //Do Login
-    [[mSingleton getWebServiceManager] loginWithUserName:[mSecurityManager getValueForKey:LOGIN_USERNAME] andpassword:[mSecurityManager getValueForKey:LOGIN_PASSWORD]];   
+    [[mSingleton getWebServiceManager] loginWithUserName:[mSecurityManager getValueForKey:LOGIN_USERNAME] andpassword:[mSecurityManager getValueForKey:LOGIN_PASSWORD]];
 }
 
--(IBAction)onForgotPassword:(id)sender
+-(IBAction)onForgotPassword
 {
     welcomeLabel.text = @"Welcome. Please login.";
     
@@ -165,7 +174,7 @@
         NSLog(@"%@%@",@"Failed to open url:",[url description]);
 }
 
--(IBAction)onSettings:(id)sender
+-(IBAction)onSettings
 {
     welcomeLabel.text = @"Welcome. Please login.";
     
@@ -222,7 +231,7 @@
 
 -(void)keyboardReturnedOnPasswordField
 {
-    [self onLogin:nil];
+    [self onLogin];
 }
 
 #pragma mark-
@@ -245,7 +254,7 @@
         CATransition* transition = [CATransition animation];
         transition.duration = 0.25;
         transition.type = kCATransitionFade;
-        transition.subtype = kCATransitionFromTop;
+        transition.subtype = kCATransitionFromRight;
         
         [self.navigationController.view.layer
          addAnimation:transition forKey:kCATransition];

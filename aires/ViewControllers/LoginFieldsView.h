@@ -28,6 +28,7 @@
 -(NSString*)getPassFieldText;
 -(void)showLoadingMessage:(NSString*)message;
 -(void)hideLoadingMessage;
+-(void)changeLoadingMessage:(NSString*)message;
 @end
 
 @protocol LoginFieldsDelegate <NSObject>

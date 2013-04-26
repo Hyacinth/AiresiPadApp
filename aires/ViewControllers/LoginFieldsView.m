@@ -142,6 +142,14 @@
                      }];
 }
 
+-(void)changeLoadingMessage:(NSString*)message
+{
+    if(messageLabel)
+    {
+        messageLabel.text = message;
+    }
+}
+
 #pragma mark-
 #pragma mark UITextField Delegate
 

@@ -30,8 +30,8 @@
 
 @property(nonatomic) BOOL isLoggingIn;
 
--(IBAction)onLogin:(id)sender;
--(IBAction)onForgotPassword:(id)sender;
--(IBAction)onSettings:(id)sender;
+-(IBAction)onLogin;
+-(IBAction)onForgotPassword;
+-(IBAction)onSettings;
 
 @end

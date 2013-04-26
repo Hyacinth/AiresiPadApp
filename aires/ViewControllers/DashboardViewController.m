@@ -141,7 +141,7 @@
     {
         if (view == nil)
         {
-            UIView *aView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 1024, 94)];
+            UIView *aView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1024, 94)];
             aView.backgroundColor = [UIColor clearColor];
             
             // 4 completed projects will be shown at a time
@@ -179,8 +179,11 @@
                             /* do something on animation completion */
                         }];
     }
-    
-    if(aCarousel == _completedProjectsCarousel && index == _completedProjectsCarousel.currentItemIndex)
+    else if(aCarousel == _completedProjectsCarousel && index == _completedProjectsCarousel.currentItemIndex)
+    {
+        
+    }
+    else
     {
         
     }
@@ -231,14 +234,10 @@
         CATransition* transition = [CATransition animation];
         transition.duration = 0.25;
         transition.type = kCATransitionFade;
-        transition.subtype = kCATransitionFromTop;
-        
-        [self.navigationController.view.layer
-         addAnimation:transition forKey:kCATransition];
-        
+        transition.subtype = kCATransitionFromRight;
+        [self.navigationController.view.layer addAnimation:transition forKey:kCATransition];
         [self.navigationController popViewControllerAnimated:NO];
     }
-    
 }
 
 @end
