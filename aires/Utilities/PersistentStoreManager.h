@@ -34,6 +34,6 @@
 -(void)storeAiresUser:(NSDictionary *)dict;
 -(User *)getAiresUser;
 
--(void)storeProjectDetails:(NSDictionary *)dict;
+-(void)storeProjectDetails:(NSArray *)projects;
 
 @end

@@ -41,6 +41,9 @@
     [loginFieldsView setUserFieldText:[mSecurityManager getValueForKey:LOGIN_USERNAME]];
     [loginFieldsView setPassFieldText:[mSecurityManager getValueForKey:LOGIN_PASSWORD]];
     
+    [loginFieldsView setUserFieldText:@"gbtpa\\dcreggett"];
+    [loginFieldsView setPassFieldText:@"password123"];
+    
     if(!mLoginSettingsViewController)
         mLoginSettingsViewController = [[LoginSettingsViewController alloc] init];
     

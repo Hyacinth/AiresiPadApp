@@ -30,6 +30,7 @@
 {
     [super viewDidLoad];
     [self setTitle:@"Choose an Environment"];
+    [[mSingleton getWebServiceManager] getEnvironment];
 
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -69,6 +70,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     SecurityManager *mSecurityManager = [mSingleton getSecurityManager];
+    NSString *env = [mSecurityManager getValueForKey:LOGIN_ENVIRONMENT];
     
     static NSString *CellIdentifier = @"LoginSettingsViewController";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
@@ -77,7 +79,6 @@
     }
     cell.textLabel.textAlignment = UITextAlignmentLeft;
     cell.selectionStyle = UITableViewCellSelectionStyleBlue;
-    NSString *env = [mSecurityManager getValueForKey:LOGIN_ENVIRONMENT];
     
     switch (indexPath.row) {
         case 0:

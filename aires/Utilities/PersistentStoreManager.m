@@ -163,7 +163,7 @@
 }
 
 - (void) resetCoreData
-{    
+{
     // Release CoreData chain
     mainContext = nil;
     managedObjectModel = nil;
@@ -214,40 +214,62 @@
     return nil;
 }
 
--(void)storeProjectDetails:(NSDictionary *)dict
+-(void)storeProjectDetails:(NSArray *)projects
 {
-    Project *mProject = [NSEntityDescription
-                   insertNewObjectForEntityForName:@"Project"
-                   inManagedObjectContext:[self mainContext]];
+    NSLog(@"Number of Projects :%d",[projects count]);
     
-    NSDictionary *client = [dict objectForKey:@"Client"];
-    NSDictionary *contact = [dict objectForKey:@"Contacts"];
-    NSDictionary *lab = [dict objectForKey:@"Lab"];
-
-    mProject.project_ClientName = [client objectForKey:@"ClientName"];
-    mProject.project_CompletedFlag = [dict objectForKey:@"CompletedFlag"];
-    mProject.project_ContactFirstName = [contact objectForKey:@"FirstName"];
-    mProject.project_ContactLastName = [contact objectForKey:@"LastName"];
-    mProject.project_ContactPhoneNumber = [contact objectForKey:@"LastName"];
-    mProject.project_DateOnsite = [contact objectForKey:@"PhoneNumber"];
-    //mProject.project_LabEmail = [lab objectForKey:@"LabEmail"];
-    mProject.project_LabName = [lab objectForKey:@"LabName"];
-    mProject.project_LocationAddress = [dict objectForKey:@"LocationAddress"];
-    //mProject.project_LocationAddress2 = [dict objectForKey:@"LocationAddress2"];
-    mProject.project_LocationCity = [dict objectForKey:@"LocationCity"];
-    mProject.project_LocationPostalCode = [dict objectForKey:@"LocationPostalCode"];
-    mProject.project_LocationState = [dict objectForKey:@"LocationState"];
-    mProject.project_ProjectDescription = [dict objectForKey:@"ProjectDescription"];
-    //mProject.project_ProjectNumber = (NSNumber *)[dict objectForKey:@"ProjectNumber"];
-    //mProject.project_TurnAroundTime = [dict objectForKey:@"TurnaroundTime"];
-    mProject.projectID = (NSNumber *)[dict objectForKey:@"ProjectId"] ;
-    [[self getAiresUser] addAiresProjectObject:mProject];
-    [[self getAiresUser] addAiresProjectObject:mProject];
-    
-    [[self mainContext] save:nil];
-
+    for (NSDictionary *dict in projects)
+    {
+        Project *mProject = [NSEntityDescription
+                             insertNewObjectForEntityForName:@"Project"
+                             inManagedObjectContext:[self mainContext]];
+        
+        NSDictionary *client = [dict objectForKey:@"Client"];
+        NSDictionary *contact = [dict objectForKey:@"Contacts"];
+        NSDictionary *lab = [dict objectForKey:@"Lab"];
+        
+        mProject.project_ClientName = [client objectForKey:@"ClientName"];
+        mProject.project_CompletedFlag = [dict objectForKey:@"CompletedFlag"];
+        mProject.project_ContactFirstName = [contact objectForKey:@"FirstName"];
+        mProject.project_ContactLastName = [contact objectForKey:@"LastName"];
+        mProject.project_ContactPhoneNumber = [contact objectForKey:@"LastName"];
+        mProject.project_DateOnsite = [contact objectForKey:@"PhoneNumber"];
+        //mProject.project_LabEmail = [lab objectForKey:@"LabEmail"];
+        mProject.project_LabName = [lab objectForKey:@"LabName"];
+        mProject.project_LocationAddress = [dict objectForKey:@"LocationAddress"];
+        //mProject.project_LocationAddress2 = [dict objectForKey:@"LocationAddress2"];
+        mProject.project_LocationCity = [dict objectForKey:@"LocationCity"];
+        mProject.project_LocationPostalCode = [dict objectForKey:@"LocationPostalCode"];
+        mProject.project_LocationState = [dict objectForKey:@"LocationState"];
+        mProject.project_ProjectDescription = [dict objectForKey:@"ProjectDescription"];
+        //mProject.project_ProjectNumber = (NSNumber *)[dict objectForKey:@"ProjectNumber"];
+        //mProject.project_TurnAroundTime = [dict objectForKey:@"TurnaroundTime"];
+        mProject.projectID = (NSNumber *)[dict objectForKey:@"ProjectId"] ;
+        [[self getAiresUser] addAiresProjectObject:mProject];
+        [[self getAiresUser] addAiresProjectObject:mProject];
+        
+        [[self mainContext] save:nil];
+        
         [self getAiresUser];
+        
+    }
+    
+    [self getUserProjects];
+}
 
-   }
+-(Project *)getUserProjects
+{
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setEntity:[NSEntityDescription entityForName:@"Project" inManagedObjectContext:[self mainContext]]];
+    NSArray *results = [[self mainContext] executeFetchRequest:request error:nil];
+    
+    if([results count] > 0)
+    {
+        Project *mProject = [results objectAtIndex:0];
+        return mProject;
+    }
+    
+    return nil;
+}
 
 @end
