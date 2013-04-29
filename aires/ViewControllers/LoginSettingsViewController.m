@@ -78,6 +78,7 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     cell.textLabel.textAlignment = UITextAlignmentLeft;
+    cell.textLabel.font = [UIFont fontWithName:@"ProximaNova-Regular" size:20.0f];
     cell.selectionStyle = UITableViewCellSelectionStyleBlue;
     
     switch (indexPath.row) {

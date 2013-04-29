@@ -67,7 +67,7 @@
     [userField setPlaceholder:@"Username"];
     [userField setDelegate:self];
     [userField setClearButtonMode:UITextFieldViewModeWhileEditing];
-    [userField setFont:[UIFont fontWithName:@"ProximaNova-Regular" size:14.0f]];
+    [userField setFont:[UIFont fontWithName:@"ProximaNova-Regular" size:16.0f]];
     [userField setReturnKeyType:UIReturnKeyNext];
     [userField setContentVerticalAlignment:UIControlContentVerticalAlignmentCenter];
     userField.autocorrectionType = UITextAutocorrectionTypeNo;
@@ -78,7 +78,7 @@
     [passField setPlaceholder:@"Password"];
     [passField setDelegate:self];
     [passField setClearButtonMode:UITextFieldViewModeWhileEditing];
-    [passField setFont:[UIFont fontWithName:@"ProximaNova-Regular" size:14.0f]];
+    [passField setFont:[UIFont fontWithName:@"ProximaNova-Regular" size:16.0f]];
     [passField setReturnKeyType:UIReturnKeyGo];
     [passField setContentVerticalAlignment:UIControlContentVerticalAlignmentCenter];
     passField.autocorrectionType = UITextAutocorrectionTypeNo;

@@ -70,7 +70,7 @@
     if ([mSingleton isValidAccessToken])
     {
         //Show loading and take to dashboard
-        self.mLoginViewController.isLoggingIn = FALSE;
+        self.mLoginViewController.isLoggingIn = TRUE;
     }
     else
     {

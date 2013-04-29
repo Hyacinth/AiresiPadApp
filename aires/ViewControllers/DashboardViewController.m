@@ -199,7 +199,7 @@
         popover = [[UIPopoverController alloc]initWithContentViewController:mDashboardSettingsViewController];
     
     [popover setContentViewController:mDashboardSettingsViewController];
-    [popover setPopoverContentSize:CGSizeMake(300, 130)];
+    [popover setPopoverContentSize:CGSizeMake(340, 130)];
     [popover setDelegate:self];
     
     [popover presentPopoverFromRect:self.btnSettings.bounds inView:self.btnSettings permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
