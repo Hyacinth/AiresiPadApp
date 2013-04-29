@@ -13,6 +13,8 @@
 #import <QuartzCore/QuartzCore.h>
 #import "Constants.h"
 #import "AiresSingleton.h"
+#import "User.h"
+#import "Project.h"
 
 #define mSingleton 	((AiresSingleton *) [AiresSingleton getSingletonInstance])
 
@@ -48,6 +50,7 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(localNotificationhandler:) name:NOTIFICATION_LOGOUT_FAILED object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(localNotificationhandler:) name:NOTIFICATION_LOGOUT_SUCCESS object:nil];
+    
 }
 
 -(void)awakeFromNib

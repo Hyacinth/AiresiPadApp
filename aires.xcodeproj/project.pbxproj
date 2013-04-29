@@ -173,6 +173,7 @@
 		98BA957917255B5900858A36 /* ProximaNova-BoldIt.otf in Resources */ = {isa = PBXBuildFile; fileRef = 98BA957517255B5900858A36 /* ProximaNova-BoldIt.otf */; };
 		98BA957A17255B5900858A36 /* ProximaNova-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 98BA957617255B5900858A36 /* ProximaNova-Regular.otf */; };
 		98BA957B17255B5900858A36 /* ProximaNova-RegularItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 98BA957717255B5900858A36 /* ProximaNova-RegularItalic.otf */; };
+		98DDACA7172E48F10031308B /* SampleProtectionEquipment.m in Sources */ = {isa = PBXBuildFile; fileRef = 98DDACA6172E48F10031308B /* SampleProtectionEquipment.m */; };
 		98E23B8F171FD7C500FFAD4A /* CJSONDataSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 98E23B86171FD7C500FFAD4A /* CJSONDataSerializer.m */; };
 		98E23B90171FD7C500FFAD4A /* CJSONDeserializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 98E23B88171FD7C500FFAD4A /* CJSONDeserializer.m */; };
 		98E23B91171FD7C500FFAD4A /* CJSONScanner.m in Sources */ = {isa = PBXBuildFile; fileRef = 98E23B8A171FD7C500FFAD4A /* CJSONScanner.m */; };
@@ -395,6 +396,8 @@
 		98BA957517255B5900858A36 /* ProximaNova-BoldIt.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ProximaNova-BoldIt.otf"; sourceTree = "<group>"; };
 		98BA957617255B5900858A36 /* ProximaNova-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ProximaNova-Regular.otf"; sourceTree = "<group>"; };
 		98BA957717255B5900858A36 /* ProximaNova-RegularItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ProximaNova-RegularItalic.otf"; sourceTree = "<group>"; };
+		98DDACA5172E48F10031308B /* SampleProtectionEquipment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SampleProtectionEquipment.h; sourceTree = "<group>"; };
+		98DDACA6172E48F10031308B /* SampleProtectionEquipment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SampleProtectionEquipment.m; sourceTree = "<group>"; };
 		98E23B85171FD7C500FFAD4A /* CJSONDataSerializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CJSONDataSerializer.h; sourceTree = "<group>"; };
 		98E23B86171FD7C500FFAD4A /* CJSONDataSerializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CJSONDataSerializer.m; sourceTree = "<group>"; };
 		98E23B87171FD7C500FFAD4A /* CJSONDeserializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CJSONDeserializer.h; sourceTree = "<group>"; };
@@ -571,6 +574,8 @@
 				98FDD377172A9941001A9295 /* SampleTotalMeasurement.m */,
 				98FDD373172A9940001A9295 /* SampleMeasurement.h */,
 				98FDD374172A9940001A9295 /* SampleMeasurement.m */,
+				98DDACA5172E48F10031308B /* SampleProtectionEquipment.h */,
+				98DDACA6172E48F10031308B /* SampleProtectionEquipment.m */,
 			);
 			path = AiresDataModel;
 			sourceTree = "<group>";
@@ -1060,6 +1065,7 @@
 				98FDD372172A93A1001A9295 /* SampleChemical.m in Sources */,
 				98FDD375172A9940001A9295 /* SampleMeasurement.m in Sources */,
 				98FDD378172A9941001A9295 /* SampleTotalMeasurement.m in Sources */,
+				98DDACA7172E48F10031308B /* SampleProtectionEquipment.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

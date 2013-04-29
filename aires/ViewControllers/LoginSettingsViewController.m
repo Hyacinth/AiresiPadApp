@@ -30,13 +30,10 @@
 {
     [super viewDidLoad];
     [self setTitle:@"Choose an Environment"];
-    [[mSingleton getWebServiceManager] getEnvironment];
-
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    //[[mSingleton getWebServiceManager] getEnvironment];
+    NSString *env = [[mSingleton getSecurityManager] getValueForKey:LOGIN_ENVIRONMENT];
+    if (!env)
+        [[mSingleton getSecurityManager] setValue:LOGIN_SETTINGS_PRODUCTION forKey:LOGIN_ENVIRONMENT];
 }
 
 - (void)didReceiveMemoryWarning
@@ -59,7 +56,7 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     //Reset login credentials before table loads
-        return 1;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -152,7 +149,8 @@
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     SecurityManager *mSecurityManager = [mSingleton getSecurityManager];
     [mSecurityManager setValue:cell.textLabel.text forKey:LOGIN_ENVIRONMENT];
-    [mSecurityManager setValue:[mSingleton.environmentURLs objectForKey:cell.textLabel.text] forKey:LOGIN_ENVIRONMENT_URL];
+    if ([mSingleton.environmentURLs objectForKey:cell.textLabel.text])
+        [mSecurityManager setValue:[mSingleton.environmentURLs objectForKey:cell.textLabel.text] forKey:LOGIN_ENVIRONMENT_URL];
     [tableView reloadData];
 }
 

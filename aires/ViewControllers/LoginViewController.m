@@ -33,7 +33,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
+    
     // Do any additional setup after loading the view from its nib.
     
     loginFieldsView.delegate = self;
@@ -79,14 +79,22 @@
                                               loginFieldsView.alpha = 1.0f;
                                           }];
                      }];
+    
+    //[self preLoadLoginSettings];
+    if (isLoggingIn)
+        [loginFieldsView showLoadingMessage:@"Signing in..."];
+    [self performSelector:@selector(preLoadLoginSettings) withObject:nil afterDelay:1.5];
 }
 
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+}
+
+-(void)preLoadLoginSettings
+{
     if (isLoggingIn)
     {
-        [[mSingleton getWebServiceManager] fetchProjectsforUser];
         [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_LOGIN_SUCCESS object:self];
         isLoggingIn = FALSE;
     }
@@ -96,11 +104,15 @@
 {
     [super viewWillAppear:animated];
     
-    [loginFieldsView hideLoadingMessage];
+    //[loginFieldsView hideLoadingMessage];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(localNotificationhandler:) name:NOTIFICATION_LOGIN_FAILED object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(localNotificationhandler:) name:NOTIFICATION_LOGIN_SUCCESS object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(localNotificationhandler:) name:NOTIFICATION_ENVIRONMENT_FAILED object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(localNotificationhandler:) name:NOTIFICATION_ENVIRONMENT_SUCCESS object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillShow)
@@ -160,7 +172,7 @@
     SecurityManager *mSecurityManager = [mSingleton getSecurityManager];
     [mSecurityManager setValue:[loginFieldsView getUserFieldText] forKey:LOGIN_USERNAME];
     [mSecurityManager setValue:[loginFieldsView getPassFieldText] forKey:LOGIN_PASSWORD];
-            
+    
     //Do Login
     [[mSingleton getWebServiceManager] loginWithUserName:[mSecurityManager getValueForKey:LOGIN_USERNAME] andpassword:[mSecurityManager getValueForKey:LOGIN_PASSWORD]];
 }
@@ -238,8 +250,6 @@
 #pragma mark Notification Handler
 - (void) localNotificationhandler:(NSNotification *) notification
 {
-    [loginFieldsView hideLoadingMessage];
-    
     if ([[notification name] isEqualToString:NOTIFICATION_LOGIN_FAILED])
     {
         NSLog(@"Show Error Message...");
@@ -250,7 +260,7 @@
     {
         if(!mDashboardViewController)
             mDashboardViewController = [[DashboardViewController alloc] initWithNibName:@"DashboardViewController" bundle:nil];
-     
+        
         CATransition* transition = [CATransition animation];
         transition.duration = 0.25;
         transition.type = kCATransitionFade;
@@ -260,7 +270,20 @@
          addAnimation:transition forKey:kCATransition];
         
         [self.navigationController pushViewController:mDashboardViewController animated:NO];
-    }    
+    }
+    else if ([[notification name] isEqualToString:NOTIFICATION_ENVIRONMENT_FAILED])
+    {
+        NSLog(@"Show Error Message...");
+        
+        welcomeLabel.text = @"Login Failed";
+    }
+    else if ([[notification name] isEqualToString:NOTIFICATION_ENVIRONMENT_SUCCESS])
+    {
+        welcomeLabel.text = @"Welcome. Please login.";
+    }
+    
+    [loginFieldsView hideLoadingMessage];
+
 }
 
 

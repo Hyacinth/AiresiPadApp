@@ -41,10 +41,10 @@
 - (void)addAiresSampleMeasurement:(NSSet *)values;
 - (void)removeAiresSampleMeasurement:(NSSet *)values;
 
-//- (void)addAiresSampleProtectionEquipmentObject:(SampleProtectionEquipment *)value;
-//- (void)removeAiresSampleProtectionEquipmentObject:(SampleProtectionEquipment *)value;
-//- (void)addAiresSampleProtectionEquipment:(NSSet *)values;
-//- (void)removeAiresSampleProtectionEquipment:(NSSet *)values;
+- (void)addAiresSampleProtectionEquipmentObject:(SampleProtectionEquipment *)value;
+- (void)removeAiresSampleProtectionEquipmentObject:(SampleProtectionEquipment *)value;
+- (void)addAiresSampleProtectionEquipment:(NSSet *)values;
+- (void)removeAiresSampleProtectionEquipment:(NSSet *)values;
 
 - (void)addAiresSampleTotalMeasurementObject:(SampleTotalMeasurement *)value;
 - (void)removeAiresSampleTotalMeasurementObject:(SampleTotalMeasurement *)value;

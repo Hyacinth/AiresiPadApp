@@ -10,7 +10,7 @@
 #import "Project.h"
 #import "SampleChemical.h"
 #import "SampleMeasurement.h"
-//#import "SampleProtectionEquipment.h"
+#import "SampleProtectionEquipment.h"
 #import "SampleTotalMeasurement.h"
 
 

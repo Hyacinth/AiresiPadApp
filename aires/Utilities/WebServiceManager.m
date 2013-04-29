@@ -11,6 +11,7 @@
 #import "Constants.h"
 #import "AiresSingleton.h"
 #import "ini.h"
+#import "Reachability.h"
 
 #define mSingleton 	((AiresSingleton *) [AiresSingleton getSingletonInstance])
 
@@ -24,8 +25,8 @@
     if(!AiresServicePath)
         AiresServicePath = [[NSString alloc] init];
     AiresServicePath = [[NSBundle mainBundle] pathForResource:
-                       @"AiresService" ofType:@"plist"];
-
+                        @"AiresService" ofType:@"plist"];
+    
     // Path to the plist (in the application bundle)
     
     // Build the array from the plist
@@ -41,17 +42,18 @@
 -(void) getEnvironment
 {
     if([mSingleton.environmentURLs count] > 0)
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_ENVIRONMENT_SUCCESS object:self];
         return;
-    
+    }
     NSString *rootURL = [AiresService objectForKey:@"Root URL"];
     NSURL *url = [NSURL URLWithString:rootURL];
-   // NSData *data = [NSData dataWithContentsOfURL:url];
-    
+    // NSData *data = [NSData dataWithContentsOfURL:url];
     NSError* error = nil;
     NSData* data = [NSData dataWithContentsOfURL:url options:NSDataReadingUncached error:&error];
     if (error) {
         NSLog(@"%@", [error localizedDescription]);
-        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_LOGIN_FAILED object:self];
+        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_ENVIRONMENT_FAILED object:self];
         return;
     } else {
         NSLog(@"Data has loaded successfully.");
@@ -94,19 +96,23 @@
     [mSingleton.environmentURLs setValue:str forKey:LOGIN_SETTINGS_QA];
     
     SecurityManager *mSecurityManager = [mSingleton getSecurityManager];
-    NSString *env = [mSecurityManager getValueForKey:LOGIN_ENVIRONMENT_URL];
-    if (!env)
+    NSString *envURL = [mSecurityManager getValueForKey:LOGIN_ENVIRONMENT_URL];
+    if (!envURL)
     {
-        [mSecurityManager setValue:LOGIN_SETTINGS_PRODUCTION forKey:LOGIN_ENVIRONMENT];
-        NSLog(@"%@",[mSingleton.environmentURLs objectForKey:LOGIN_SETTINGS_PRODUCTION]);
-        [mSecurityManager setValue:[mSingleton.environmentURLs objectForKey:LOGIN_SETTINGS_PRODUCTION] forKey:LOGIN_ENVIRONMENT_URL];
+        NSString *env = [[mSingleton getSecurityManager] getValueForKey:LOGIN_ENVIRONMENT];
+        if (!env)
+            [[mSingleton getSecurityManager] setValue:LOGIN_SETTINGS_PRODUCTION forKey:LOGIN_ENVIRONMENT];
+        env = [[mSingleton getSecurityManager] getValueForKey:LOGIN_ENVIRONMENT];
+        [mSecurityManager setValue:[mSingleton.environmentURLs objectForKey:env] forKey:LOGIN_ENVIRONMENT_URL];
     }
-
 }
 
 -(void)loginWithUserName:(NSString *)username andpassword:(NSString *)password
 {
     NSString *URLString = [[mSingleton getSecurityManager] getValueForKey:LOGIN_ENVIRONMENT_URL];
+    if (!URLString)
+        return;
+    
     NSURL *url = [NSURL URLWithString:URLString];
     AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:url];
     [httpClient registerHTTPOperationClass:[AFJSONRequestOperation class]];
@@ -125,7 +131,7 @@
      {
          // Print the response body in text
          [[mSingleton getJSONParser] performSelectorOnMainThread:@selector(parseLoginDetails:) withObject:responseObject waitUntilDone:YES];
-         [[mSingleton getWebServiceManager] fetchProjectsforUser];
+         [self fetchProjectsforUser];
          [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_LOGIN_SUCCESS object:self];
          
      }failure:^(AFHTTPRequestOperation *operation, NSError *error)
@@ -141,6 +147,9 @@
 -(void)fetchProjectsforUser
 {
     NSString *URLString = [[mSingleton getSecurityManager] getValueForKey:LOGIN_ENVIRONMENT_URL];
+    if (!URLString)
+        return;
+    
     NSURL *url = [NSURL URLWithString:URLString];
     AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:url];
     [httpClient registerHTTPOperationClass:[AFJSONRequestOperation class]];
@@ -173,6 +182,9 @@
 -(void)logout
 {
     NSString *URLString = [[mSingleton getSecurityManager] getValueForKey:LOGIN_ENVIRONMENT_URL];
+    if (!URLString)
+        return;
+    
     NSURL *url = [NSURL URLWithString:URLString];
     AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:url];
     [httpClient registerHTTPOperationClass:[AFJSONRequestOperation class]];
@@ -190,17 +202,17 @@
          // Print the response body in text
          NSLog(@"Response: %@", [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding]);
          [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_LOGOUT_SUCCESS object:self];
-
+         
      }failure:^(AFHTTPRequestOperation *operation, NSError *error)
      {
          NSLog(@"Error: %@", error);
          [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_LOGOUT_FAILED object:self];
-
+         
      }];
     
     ;
     [operation start];
-
+    
 }
 
 @end

@@ -22,8 +22,11 @@
 
 
 //Notifications
-#define NOTIFICATION_LOGIN_FAILED           @"notification_login_failed"
-#define NOTIFICATION_LOGIN_SUCCESS          @"notification_login_success"
+#define NOTIFICATION_LOGIN_FAILED            @"notification_login_failed"
+#define NOTIFICATION_LOGIN_SUCCESS           @"notification_login_success"
 
 #define NOTIFICATION_LOGOUT_FAILED           @"notification_logout_failed"
 #define NOTIFICATION_LOGOUT_SUCCESS          @"notification_logout_success"
+
+#define NOTIFICATION_ENVIRONMENT_FAILED      @"notification_environment_failed"
+#define NOTIFICATION_ENVIRONMENT_SUCCESS     @"notification_environment_success"

@@ -194,13 +194,20 @@
                    insertNewObjectForEntityForName:@"User"
                    inManagedObjectContext:[self mainContext]];
     
-    mUser.user_CertificationId = [dict valueForKey:@"CertificationId"];
-    mUser.user_FirstName = [dict valueForKey:@"FirstName"];
-    mUser.user_Id = [dict valueForKey:@"UserId"];
-    //mUser.user_Image = [dict valueForKey:@"FirstName"];
-    //mUser.user_iOSDeviceId = [dict valueForKey:@"iOSDeviceId"];
-    mUser.user_LastName = [dict valueForKey:@"LastName"];
-    mUser.user_LoginName = [dict valueForKey:@"LoginName"];
+    if (![[dict valueForKey:@"CertificationId"] isKindOfClass:[NSNull class]])
+        mUser.user_CertificationId = [dict valueForKey:@"CertificationId"];
+    if (![[dict valueForKey:@"FirstName"] isKindOfClass:[NSNull class]])
+        mUser.user_FirstName = [dict valueForKey:@"FirstName"];
+    if (![[dict valueForKey:@"UserId"] isKindOfClass:[NSNull class]])
+        mUser.user_Id = [dict valueForKey:@"UserId"];
+    //    if ([dict valueForKey:@"FirstName"])
+    //        mUser.user_Image = [dict valueForKey:@"FirstName"];
+    if (![[dict valueForKey:@"iOSDeviceId"] isKindOfClass:[NSNull class]])
+        mUser.user_iOSDeviceId = [dict valueForKey:@"iOSDeviceId"];
+    if (![[dict valueForKey:@"LastName"] isKindOfClass:[NSNull class]])
+        mUser.user_LastName = [dict valueForKey:@"LastName"];
+    if (![[dict valueForKey:@"LoginName"] isKindOfClass:[NSNull class]])
+        mUser.user_LoginName = [dict valueForKey:@"LoginName"];
     
     [[self mainContext] save:nil];
 }
@@ -233,7 +240,7 @@
 #pragma mark Project DataModel methods
 -(void)storeProjectDetails:(NSArray *)projects
 {
-    NSLog(@"Number of Projects :%d",[projects count]);
+    NSLog(@"  Projects :%d",[projects count]);
     
     for (NSDictionary *dict in projects)
     {
@@ -246,31 +253,48 @@
             NSDictionary *client = [dict objectForKey:@"Client"];
             NSDictionary *contact = [dict objectForKey:@"Contacts"];
             NSDictionary *lab = [dict objectForKey:@"Lab"];
-
-            mProject.project_ClientName = [client objectForKey:@"ClientName"];
-            mProject.project_CompletedFlag = [dict objectForKey:@"CompletedFlag"];
-            mProject.project_ContactFirstName = [contact objectForKey:@"FirstName"];
-            mProject.project_ContactLastName = [contact objectForKey:@"LastName"];
-            mProject.project_ContactPhoneNumber = [contact objectForKey:@"LastName"];
-            mProject.project_DateOnsite = [contact objectForKey:@"PhoneNumber"];
-            //mProject.project_LabEmail = [lab objectForKey:@"LabEmail"];
-            mProject.project_LabName = [lab objectForKey:@"LabName"];
-            mProject.project_LocationAddress = [dict objectForKey:@"LocationAddress"];
-            //mProject.project_LocationAddress2 = [dict objectForKey:@"LocationAddress2"];
-            mProject.project_LocationCity = [dict objectForKey:@"LocationCity"];
-            mProject.project_LocationPostalCode = [dict objectForKey:@"LocationPostalCode"];
-            mProject.project_LocationState = [dict objectForKey:@"LocationState"];
-            mProject.project_ProjectDescription = [dict objectForKey:@"ProjectDescription"];
-            mProject.project_ProjectNumber = [dict objectForKey:@"ProjectNumber"];
-            //mProject.project_TurnAroundTime = [dict objectForKey:@"TurnaroundTime"];
-            mProject.projectID = (NSNumber *)[dict objectForKey:@"ProjectId"] ;
             
+            if (![[dict valueForKey:@"ClientName"] isKindOfClass:[NSNull class]])
+                mProject.project_ClientName = [client objectForKey:@"ClientName"];
+            if (![[dict valueForKey:@"CompletedFlag"] isKindOfClass:[NSNull class]])
+                mProject.project_CompletedFlag = [dict objectForKey:@"CompletedFlag"];
+            if (![[dict valueForKey:@"FirstName"] isKindOfClass:[NSNull class]])
+                mProject.project_ContactFirstName = [contact objectForKey:@"FirstName"];
+            if (![[dict valueForKey:@"LastName"] isKindOfClass:[NSNull class]])
+                mProject.project_ContactLastName = [contact objectForKey:@"LastName"];
+            if (![[dict valueForKey:@"PhoneNumber"] isKindOfClass:[NSNull class]])
+                mProject.project_ContactPhoneNumber = [contact objectForKey:@"PhoneNumber"];
+            if (![[dict valueForKey:@"DateOnsite"] isKindOfClass:[NSNull class]])
+                mProject.project_DateOnsite = [contact objectForKey:@"DateOnsite"];
+            if (![[lab valueForKey:@"LabEmail"] isKindOfClass:[NSNull class]])
+                mProject.project_LabEmail = [lab objectForKey:@"LabEmail"];
+            if (![[lab valueForKey:@"LabName"] isKindOfClass:[NSNull class]])
+                mProject.project_LabName = [lab objectForKey:@"LabName"];
+            if (![[dict valueForKey:@"LocationAddress"] isKindOfClass:[NSNull class]])
+                mProject.project_LocationAddress = [dict objectForKey:@"LocationAddress"];
+            if (![[dict valueForKey:@"LocationAddress2"] isKindOfClass:[NSNull class]])
+                mProject.project_LocationAddress2 = [dict objectForKey:@"LocationAddress2"];
+            if (![[dict valueForKey:@"LocationCity"] isKindOfClass:[NSNull class]])
+                mProject.project_LocationCity = [dict objectForKey:@"LocationCity"];
+            if (![[dict valueForKey:@"LocationPostalCode"] isKindOfClass:[NSNull class]])
+                mProject.project_LocationPostalCode = [dict objectForKey:@"LocationPostalCode"];
+            if (![[dict valueForKey:@"LocationState"] isKindOfClass:[NSNull class]])
+                mProject.project_LocationState = [dict objectForKey:@"LocationState"];
+            if (![[dict valueForKey:@"ProjectDescription"] isKindOfClass:[NSNull class]])
+                mProject.project_ProjectDescription = [dict objectForKey:@"ProjectDescription"];
+            if (![[dict valueForKey:@"ProjectNumber"] isKindOfClass:[NSNull class]])
+                mProject.project_ProjectNumber = [dict objectForKey:@"ProjectNumber"];
+            if (![[dict valueForKey:@"TurnaroundTime"] isKindOfClass:[NSNull class]])
+                mProject.project_TurnAroundTime = [dict objectForKey:@"TurnaroundTime"];
+            if (![[dict valueForKey:@"ProjectId"] isKindOfClass:[NSNull class]])
+                mProject.projectID = (NSNumber *)[dict objectForKey:@"ProjectId"] ;
+            User *tempUser = [self getAiresUser];
+
             [[self getAiresUser] addAiresProjectObject:mProject];
             [[self mainContext] save:nil];
             
             NSArray *Samples = [dict objectForKey:@"Samples"];
             [self storeSampleDetails:Samples forProject:mProject];
-            NSLog(@"sample count:%d",[[self getSampleforProject:mProject] count]);
         }
     }
 }
@@ -291,7 +315,7 @@
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     [request setEntity:[NSEntityDescription entityForName:@"Project" inManagedObjectContext:[self mainContext]]];
     NSArray *results = [[self mainContext] executeFetchRequest:request error:nil];
-
+    
     return results;
 }
 
@@ -299,38 +323,44 @@
 #pragma mark Sample DataModel methods
 -(void)storeSampleDetails:(NSArray *)sample forProject:(Project *)project
 {
-    NSLog(@"Number of Sample :%d",[sample count]);
+    NSLog(@"  Sample :%d",[sample count]);
     
     for (NSDictionary *dict in sample)
     {
         Sample *mSample = [NSEntityDescription
-                             insertNewObjectForEntityForName:@"Sample"
-                             inManagedObjectContext:[self mainContext]];
+                           insertNewObjectForEntityForName:@"Sample"
+                           inManagedObjectContext:[self mainContext]];
         
-        mSample.sample_Comments = [dict objectForKey:@"Comments"];
-        //mSample.sample_DeviceTypeName = [dict objectForKey:@"DeviceType"];
-        mSample.sample_EmployeeJob = [dict objectForKey:@"EmployeeJob"];
-        mSample.sample_EmployeeName = [dict objectForKey:@"EmployeeName"];
-        //mSample.sample_Notes = [dict objectForKey:@"Notes"];
-        mSample.sample_OperationArea = [dict objectForKey:@"OperationArea"];
-        mSample.sample_SampleId = [dict objectForKey:@"SampleId"];
-        mSample.sample_SampleNumber = [dict objectForKey:@"SampleNumber"];
-        mSample.sampleID = [dict objectForKey:@"SampleId"];
+        if (![[dict valueForKey:@"Comments"] isKindOfClass:[NSNull class]])
+            mSample.sample_Comments = [dict objectForKey:@"Comments"];
+        if (![[dict valueForKey:@"DeviceType"] isKindOfClass:[NSNull class]])
+            mSample.sample_DeviceTypeName = [dict objectForKey:@"DeviceType"];
+        if (![[dict valueForKey:@"EmployeeJob"] isKindOfClass:[NSNull class]])
+            mSample.sample_EmployeeJob = [dict objectForKey:@"EmployeeJob"];
+        if (![[dict valueForKey:@"EmployeeName"] isKindOfClass:[NSNull class]])
+            mSample.sample_EmployeeName = [dict objectForKey:@"EmployeeName"];
+        if (![[dict valueForKey:@"Notes"] isKindOfClass:[NSNull class]])
+            mSample.sample_Notes = [dict objectForKey:@"Notes"];
+        if (![[dict valueForKey:@"OperationArea"] isKindOfClass:[NSNull class]])
+            mSample.sample_OperationArea = [dict objectForKey:@"OperationArea"];
+        if (![[dict valueForKey:@"SampleId"] isKindOfClass:[NSNull class]])
+            mSample.sample_SampleId = [dict objectForKey:@"SampleId"];
+        if (![[dict valueForKey:@"SampleNumber"] isKindOfClass:[NSNull class]])
+            mSample.sample_SampleNumber = [dict objectForKey:@"SampleNumber"];
+        if (![[dict valueForKey:@"SampleId"] isKindOfClass:[NSNull class]])
+            mSample.sampleID = [dict objectForKey:@"SampleId"];
         
         [project addAiresSampleObject:mSample];
         [[self mainContext] save:nil];
         
         NSArray *SampleChemicals = [dict objectForKey:@"SampleChemicals"];
         [self storeSampleChemicalDetails:SampleChemicals forSample:mSample];
-        NSLog(@"getSampleChemicalforSample count:%d",[[self getSampleChemicalforSample:mSample] count]);
-
+        
         NSArray *Measurements = [dict objectForKey:@"Measurements"];
         [self storeSampleTotalMeasurementDetails:Measurements forSample:mSample];
-        NSLog(@"getSampleTotalMeasurementforSample count:%d",[[self getSampleTotalMeasurementforSample:mSample] count]);
-
+        
         [self storeSampleChemicalDetails:SampleChemicals forSample:mSample];
-        NSLog(@"getSampleMeasurementforSample count:%d",[[self getSampleMeasurementforSample:mSample] count]);
-
+        [self storeSampleProtectionEquipmentDetails:SampleChemicals forSample:mSample];
     }
 }
 
@@ -352,22 +382,30 @@
 #pragma mark SampleChemical DataModel methods
 -(void)storeSampleChemicalDetails:(NSArray *)sampleChemical forSample:(Sample *)sample
 {
-    NSLog(@"Number of SampleChemical :%d",[sampleChemical count]);
+    NSLog(@"  SampleChemical :%d",[sampleChemical count]);
     for (NSDictionary *dict in sampleChemical)
     {
         SampleChemical *mSampleChemical = [NSEntityDescription
-                           insertNewObjectForEntityForName:@"SampleChemical"
-                           inManagedObjectContext:[self mainContext]];
+                                           insertNewObjectForEntityForName:@"SampleChemical"
+                                           inManagedObjectContext:[self mainContext]];
         
-//        mSampleChemical.sampleChemical_Name = [dict objectForKey:@"Chemical"];
-//        mSampleChemical.sampleChemical_PELCFlag = [dict objectForKey:@"PELCFlag"];
-//        mSampleChemical.sampleChemical_PELSTELFlag = [dict objectForKey:@"PELSTELFlag"];
-//        mSampleChemical.sampleChemical_PELTWAFlag = [dict objectForKey:@"PELTWAFlag"];
-//        mSampleChemical.sampleChemical_TLVCFlag = [dict objectForKey:@"TLVCFlag"];
-//        mSampleChemical.sampleChemical_TLVSTELFlag = [dict objectForKey:@"TLVSTELFlag"];
-//        mSampleChemical.sampleChemical_TLVTWAFlag = [dict objectForKey:@"TLVTWAFlag"];
-        mSampleChemical.sampleChemicalID = [dict objectForKey:@"ChemicalId"];
-
+        if (![[dict valueForKey:@"Chemical"] isKindOfClass:[NSNull class]])
+            mSampleChemical.sampleChemical_Name = [dict objectForKey:@"Chemical"];
+        if (![[dict valueForKey:@"PELCFlag"] isKindOfClass:[NSNull class]])
+            mSampleChemical.sampleChemical_PELCFlag = [dict objectForKey:@"PELCFlag"];
+        if (![[dict valueForKey:@"PELSTELFlag"] isKindOfClass:[NSNull class]])
+            mSampleChemical.sampleChemical_PELSTELFlag = [dict objectForKey:@"PELSTELFlag"];
+        if (![[dict valueForKey:@"PELTWAFlag"] isKindOfClass:[NSNull class]])
+            mSampleChemical.sampleChemical_PELTWAFlag = [dict objectForKey:@"PELTWAFlag"];
+        if (![[dict valueForKey:@"TLVCFlag"] isKindOfClass:[NSNull class]])
+            mSampleChemical.sampleChemical_TLVCFlag = [dict objectForKey:@"TLVCFlag"];
+        if (![[dict valueForKey:@"TLVSTELFlag"] isKindOfClass:[NSNull class]])
+            mSampleChemical.sampleChemical_TLVSTELFlag = [dict objectForKey:@"TLVSTELFlag"];
+        if (![[dict valueForKey:@"TLVTWAFlag"] isKindOfClass:[NSNull class]])
+            mSampleChemical.sampleChemical_TLVTWAFlag = [dict objectForKey:@"TLVTWAFlag"];
+        if (![[dict valueForKey:@"ChemicalId"] isKindOfClass:[NSNull class]])
+            mSampleChemical.sampleChemicalID = [dict objectForKey:@"ChemicalId"];
+        
         [sample addAiresSampleChemicalObject:mSampleChemical];
         [[self mainContext] save:nil];
     }
@@ -387,20 +425,26 @@
     return finalResult;
 }
 
+#pragma mark -
+#pragma mark SampleTotalMeasuremen DataModel methods
 -(void)storeSampleTotalMeasurementDetails:(NSArray *)sampleTotalMeaseurement forSample:(Sample *)sample
 {
-    NSLog(@"Number of sampleTotalMeaseurement :%d",[sampleTotalMeaseurement count]);
+    NSLog(@"  sampleTotalMeaseurement :%d",[sampleTotalMeaseurement count]);
     for (NSDictionary *dict in sampleTotalMeaseurement)
     {
         SampleTotalMeasurement *mSampleTotalMeasurement = [NSEntityDescription
-                                           insertNewObjectForEntityForName:@"SampleTotalMeasurement"
-                                           inManagedObjectContext:[self mainContext]];
+                                                           insertNewObjectForEntityForName:@"SampleTotalMeasurement"
+                                                           inManagedObjectContext:[self mainContext]];
         
-        mSampleTotalMeasurement.sampleTotalMeasurement_TotalArea = [dict objectForKey:@"Area"];
-        mSampleTotalMeasurement.sampleTotalMeasurement_TotalMinutes = [dict objectForKey:@"Minutes"];
-        mSampleTotalMeasurement.sampleTotalMeasurement_TotalVolume = [dict objectForKey:@"Volume"];
-        mSampleTotalMeasurement.sampleTotalMeasurementID = [dict objectForKey:@"MeasurementId"];
-
+        if (![[dict valueForKey:@"Area"] isKindOfClass:[NSNull class]])
+            mSampleTotalMeasurement.sampleTotalMeasurement_TotalArea = [dict objectForKey:@"Area"];
+        if (![[dict valueForKey:@"Minutes"] isKindOfClass:[NSNull class]])
+            mSampleTotalMeasurement.sampleTotalMeasurement_TotalMinutes = [dict objectForKey:@"Minutes"];
+        if (![[dict valueForKey:@"Volume"] isKindOfClass:[NSNull class]])
+            mSampleTotalMeasurement.sampleTotalMeasurement_TotalVolume = [dict objectForKey:@"Volume"];
+        if (![[dict valueForKey:@"MeasurementId"] isKindOfClass:[NSNull class]])
+            mSampleTotalMeasurement.sampleTotalMeasurementID = [dict objectForKey:@"MeasurementId"];
+        
         //[sample addAiresSampleTotalMeasurementObject:mSampleTotalMeasurement];
         [[self mainContext] save:nil];
     }
@@ -420,25 +464,32 @@
     return finalResult;
 }
 
+#pragma mark -
+#pragma mark SampleMeasurement DataModel methods
 -(void)storeSampleMeasurementDetails:(NSArray *)sampleMeaseurement forSample:(Sample *)sample
 {
-    NSLog(@"Number of sampleMeaseurement :%d",[sampleMeaseurement count]);
+    NSLog(@"  sampleMeaseurement :%d",[sampleMeaseurement count]);
     for (NSDictionary *dict in sampleMeaseurement)
     {
         SampleMeasurement *mSampleMeasurement = [NSEntityDescription
-                                                           insertNewObjectForEntityForName:@"SampleMeasurement"
-                                                           inManagedObjectContext:[self mainContext]];
+                                                 insertNewObjectForEntityForName:@"SampleMeasurement"
+                                                 inManagedObjectContext:[self mainContext]];
         
-        mSampleMeasurement.sampleMeasurement_OffFlowRate = [dict objectForKey:@"OffFlowRate"];
-        mSampleMeasurement.sampleMeasurement_OffTime = [dict objectForKey:@"OffTime"];
-        mSampleMeasurement.sampleMeasurement_OnFlowRate = [dict objectForKey:@"OnFlowRate"];
-        mSampleMeasurement.sampleMeasurement_OnTime = [dict objectForKey:@"OnTime"];
-        mSampleMeasurement.sampleMesurementID = [dict objectForKey:@"MeasurementId"];
-
+        if (![[dict valueForKey:@"OffFlowRate"] isKindOfClass:[NSNull class]])
+            mSampleMeasurement.sampleMeasurement_OffFlowRate = [dict objectForKey:@"OffFlowRate"];
+        if (![[dict valueForKey:@"OffTime"] isKindOfClass:[NSNull class]])
+            mSampleMeasurement.sampleMeasurement_OffTime = [dict objectForKey:@"OffTime"];
+        if (![[dict valueForKey:@"OnFlowRate"] isKindOfClass:[NSNull class]])
+            mSampleMeasurement.sampleMeasurement_OnFlowRate = [dict objectForKey:@"OnFlowRate"];
+        if (![[dict valueForKey:@"OnTime"] isKindOfClass:[NSNull class]])
+            mSampleMeasurement.sampleMeasurement_OnTime = [dict objectForKey:@"OnTime"];
+        if (![[dict valueForKey:@"MeasurementId"] isKindOfClass:[NSNull class]])
+            mSampleMeasurement.sampleMesurementID = [dict objectForKey:@"MeasurementId"];
+        
         [sample addAiresSampleMeasurementObject:mSampleMeasurement];
         [[self mainContext] save:nil];
     }
-
+    
 }
 
 -(NSArray *)getSampleMeasurementforSample:(Sample *)sample
@@ -450,6 +501,41 @@
     for (SampleMeasurement *mSampleMeasurement in results) {
         if ([mSampleMeasurement.fromSample.sample_SampleId isEqualToNumber:sample.sample_SampleId]) {
             [finalResult removeObject:mSampleMeasurement];
+        }
+    }
+    return finalResult;
+}
+
+#pragma mark -
+#pragma mark SampleProtectionEquipment DataModel methods
+-(void)storeSampleProtectionEquipmentDetails:(NSArray *)sampleProtectionEquipment forSample:(Sample *)sample
+{
+    NSLog(@"  sampleMeaseurement :%d",[sampleProtectionEquipment count]);
+    for (NSDictionary *dict in sampleProtectionEquipment)
+    {
+        SampleProtectionEquipment *mSampleProtectionEquipment = [NSEntityDescription
+                                                                 insertNewObjectForEntityForName:@"SampleProtectionEquipment"
+                                                                 inManagedObjectContext:[self mainContext]];
+        
+        //if (![[dict valueForKey:@""] isKindOfClass:[NSNull class]])
+        //            mSampleProtectionEquipment.sampleProtectionEquipment_Name = nil;
+        //   if (![[dict valueForKey:@""] isKindOfClass:[NSNull class]])
+        //            mSampleProtectionEquipment.sampleProtectionEquipmentID = nil;
+        
+        [sample addAiresSampleProtectionEquipmentObject:mSampleProtectionEquipment];
+        [[self mainContext] save:nil];
+    }
+}
+
+-(NSArray *)getSampleProtectionEquipmentforSample:(Sample *)sample
+{
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setEntity:[NSEntityDescription entityForName:@"SampleProtectionEquipment" inManagedObjectContext:[self mainContext]]];
+    NSArray *results = [[self mainContext] executeFetchRequest:request error:nil];
+    NSMutableArray *finalResult = [NSMutableArray arrayWithArray:results];
+    for (SampleProtectionEquipment *mSampleProtectionEquipment in results) {
+        if ([mSampleProtectionEquipment.fromSample.sample_SampleId isEqualToNumber:sample.sample_SampleId]) {
+            [finalResult removeObject:mSampleProtectionEquipment];
         }
     }
     return finalResult;
