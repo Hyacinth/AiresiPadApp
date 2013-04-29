@@ -36,6 +36,15 @@
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    if (!rememberPasswordSwitch)
+        rememberPasswordSwitch = [[UISwitch alloc] init];
+    BOOL switchValue = [[[mSingleton getSecurityManager] getValueForKey:LOGIN_AUTOLOGIN] boolValue];
+    [rememberPasswordSwitch setOn:switchValue];
+}
 
 - (void)didReceiveMemoryWarning
 {
@@ -76,6 +85,10 @@
             cell.textLabel.textAlignment = UITextAlignmentLeft;
             if (!rememberPasswordSwitch)
                 rememberPasswordSwitch = [[UISwitch alloc] init];
+            BOOL switchValue = [[[mSingleton getSecurityManager] getValueForKey:LOGIN_AUTOLOGIN] boolValue];
+            [rememberPasswordSwitch setOn:switchValue];
+            [rememberPasswordSwitch addTarget:self action:@selector(switchValueChanged:) forControlEvents:UIControlEventValueChanged];
+            
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             cell.accessoryView = rememberPasswordSwitch;
             cell.textLabel.text = @"Remember Password";
@@ -146,6 +159,13 @@
             break;
     }
     
+}
+
+#pragma mark - UISwitch Method
+-(void)switchValueChanged:(id)sender
+{
+    NSString *switchState = ([rememberPasswordSwitch isOn]) ? @"TRUE" : @"FALSE"; 
+    [[mSingleton getSecurityManager] setValue:switchState forKey:LOGIN_AUTOLOGIN];
 }
 
 @end

@@ -288,7 +288,6 @@
                 mProject.project_TurnAroundTime = [dict objectForKey:@"TurnaroundTime"];
             if (![[dict valueForKey:@"ProjectId"] isKindOfClass:[NSNull class]])
                 mProject.projectID = (NSNumber *)[dict objectForKey:@"ProjectId"] ;
-            User *tempUser = [self getAiresUser];
 
             [[self getAiresUser] addAiresProjectObject:mProject];
             [[self mainContext] save:nil];

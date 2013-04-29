@@ -37,13 +37,7 @@
     // Do any additional setup after loading the view from its nib.
     
     loginFieldsView.delegate = self;
-    SecurityManager *mSecurityManager = [mSingleton getSecurityManager];
-    [loginFieldsView setUserFieldText:[mSecurityManager getValueForKey:LOGIN_USERNAME]];
-    [loginFieldsView setPassFieldText:[mSecurityManager getValueForKey:LOGIN_PASSWORD]];
-    
-    [loginFieldsView setUserFieldText:@"gbtpa\\dcreggett"];
-    [loginFieldsView setPassFieldText:@"password123"];
-    
+        
     if(!mLoginSettingsViewController)
         mLoginSettingsViewController = [[LoginSettingsViewController alloc] init];
     
@@ -123,6 +117,19 @@
                                              selector:@selector(keyboardWillHide)
                                                  name:UIKeyboardWillHideNotification
                                                object:nil];
+    
+    SecurityManager *mSecurityManager = [mSingleton getSecurityManager];
+    [loginFieldsView setUserFieldText:[mSecurityManager getValueForKey:LOGIN_USERNAME]];
+    BOOL switchValue = [[[mSingleton getSecurityManager] getValueForKey:LOGIN_AUTOLOGIN] boolValue];
+    
+    if (switchValue)
+        [loginFieldsView setPassFieldText:[mSecurityManager getValueForKey:LOGIN_PASSWORD]];
+    else
+        [loginFieldsView setPassFieldText:@""];
+    
+    [loginFieldsView setUserFieldText:@"gbtpa\\dcreggett"];
+    //[loginFieldsView setPassFieldText:@"password123"];
+
 }
 
 -(void) viewWillDisappear:(BOOL)animated
@@ -283,7 +290,7 @@
     }
     
     [loginFieldsView hideLoadingMessage];
-
+    
 }
 
 
