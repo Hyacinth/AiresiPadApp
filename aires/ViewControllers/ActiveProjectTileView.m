@@ -7,6 +7,7 @@
 //
 
 #import "ActiveProjectTileView.h"
+#import <QuartzCore/QuartzCore.h>
 
 @interface ActiveProjectTileView ()
 {
@@ -37,6 +38,25 @@
     if (self) {
         // Initialization code
         self.backgroundColor = [UIColor clearColor];
+        
+        self.layer.cornerRadius = 8.0f;
+        self.layer.shadowRadius = 15.0f;
+        self.layer.shadowOpacity = 0.75f;
+        self.layer.shadowColor = [UIColor blackColor].CGColor;
+        self.layer.shadowPath = [UIBezierPath bezierPathWithRect:self.bounds].CGPath;
+        
+        // top blue line
+        CALayer *blueLayer = [CALayer layer];
+        blueLayer.frame = CGRectMake(0, 0, self.bounds.size.width, 6.0f);
+        blueLayer.backgroundColor = [UIColor colorWithRed:0 green:138.0f/255.0f blue:255.0f/255.0f alpha:1.0f].CGColor;
+        [self.layer insertSublayer:blueLayer atIndex:0];
+        
+        UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:blueLayer.bounds byRoundingCorners:(UIRectCornerTopLeft | UIRectCornerTopRight) cornerRadii:CGSizeMake(6.0, 6.0)];
+        
+        CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];
+        maskLayer.frame = blueLayer.bounds;
+        maskLayer.path = maskPath.CGPath;
+        blueLayer.mask = maskLayer;
         
         dateFont = [UIFont fontWithName:@"ProximaNova-Bold" size:48.0f];
         dayFont = [UIFont fontWithName:@"ProximaNova-Bold" size:16.0f];
@@ -79,8 +99,26 @@
 // An empty implementation adversely affects performance during animation.
 - (void)drawRect:(CGRect)rect
 {
+    // Create thegradient
+    CGFloat colors [] = {
+        1.0f, 1.0f, 1.0f, 1.0f,
+        227.0f/255.0f, 241.0f/255.0f, 251.0f/255.0f, 1.0
+    };
+    
+    CGColorSpaceRef baseSpace = CGColorSpaceCreateDeviceRGB();
+    CGGradientRef gradient = CGGradientCreateWithColorComponents(baseSpace, colors, NULL, 2);
+    CGColorSpaceRelease(baseSpace), baseSpace = NULL;
+    
     // Get the current context so we can draw.
-	CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    
+    CGRect myRect = rect;
+    myRect.origin.y += 6.0f;
+    myRect.size.height -= 12.0f;
+    CGPoint startPoint = CGPointMake(CGRectGetMidX(myRect), CGRectGetMinY(myRect));
+    CGPoint endPoint = CGPointMake(CGRectGetMidX(myRect), CGRectGetMaxY(myRect));
+    CGContextDrawLinearGradient(context, gradient, startPoint, endPoint, 0);
+    CGGradientRelease(gradient), gradient = NULL;
     
 	// Set the fill color to white.
 	CGContextSetFillColorWithColor(context, [UIColor colorWithRed:28.0f/255.0f green:34.0f/255.0f blue:39.0f/255.0f alpha:1.0f].CGColor);

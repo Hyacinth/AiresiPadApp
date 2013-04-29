@@ -80,7 +80,6 @@
     bounds.size.height += 70;
     
     gradientMask.bounds =  bounds;
-    //gradientMask.masksToBounds = YES;
     gradientMask.position = CGPointMake(_activeProjectsCarousel.bounds.size.width/2, _activeProjectsCarousel.bounds.size.height/2);
     
     NSObject *transparent = (NSObject *)[[UIColor clearColor] CGColor];
@@ -107,39 +106,10 @@
     if(aCarousel == _activeProjectsCarousel)
     {
         if (view == nil)
-        {
-            UIView *aView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 690, 480)];
-            aView.backgroundColor = [UIColor clearColor];
-            
-            // background gradient
-            CAGradientLayer *gradient = [CAGradientLayer layer];
-            gradient.cornerRadius = 8.0f;
-            gradient.frame = CGRectMake(0, 0, aView.frame.size.width, aView.frame.size.height);
-            gradient.colors = [NSArray arrayWithObjects:(id)[[UIColor whiteColor] CGColor], (id)[[UIColor colorWithRed:227.0f/255.0f green:241.0f/255.0f blue:251.0f/255.0f alpha:1.0f] CGColor], nil];
-            [aView.layer insertSublayer:gradient atIndex:0];
-            
-            gradient.shadowRadius = 15.0f;
-            gradient.shadowOpacity = 0.75f;
-            gradient.shadowColor = [UIColor blackColor].CGColor;
-            gradient.shadowPath = [UIBezierPath bezierPathWithRect:aView.bounds].CGPath;
-            
-            // top blue line
-            CALayer *blueLayer = [CALayer layer];
-            blueLayer.frame = CGRectMake(0, 0, aView.frame.size.width, 6.0f);
-            blueLayer.backgroundColor = [UIColor colorWithRed:0 green:138.0f/255.0f blue:255.0f/255.0f alpha:1.0f].CGColor;
-            [gradient insertSublayer:blueLayer atIndex:0];
-            
-            UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:blueLayer.bounds byRoundingCorners:(UIRectCornerTopLeft | UIRectCornerTopRight) cornerRadii:CGSizeMake(6.0, 6.0)];
-            
-            CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];
-            maskLayer.frame = blueLayer.bounds;
-            maskLayer.path = maskPath.CGPath;
-            blueLayer.mask = maskLayer;
-            
+        {            
             // content view            
-            ActiveProjectTileView *tileView = [[ActiveProjectTileView alloc] initWithFrame:aView.frame];
-            [aView addSubview:tileView];
-            return aView;
+            ActiveProjectTileView *tileView = [[ActiveProjectTileView alloc] initWithFrame:CGRectMake(0, 0, 690, 480)];
+            return tileView;
         }
         return view;
     }
