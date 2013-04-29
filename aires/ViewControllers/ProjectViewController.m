@@ -29,6 +29,7 @@
     // Do any additional setup after loading the view from its nib.
     
     [_homeButton.titleLabel setFont:[UIFont fontWithName:@"ProximaNova-Bold" size:12.0]];
+    [_samplesLabel setFont:[UIFont fontWithName:@"ProximaNova-Bold" size:20.0]];
     
     UIImage *bgimage = [UIImage imageNamed:@"btn_navbar_bg.png"];
 	bgimage = [bgimage stretchableImageWithLeftCapWidth:bgimage.size.width/2 topCapHeight:bgimage.size.height/2];

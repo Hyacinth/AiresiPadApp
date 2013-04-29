@@ -12,5 +12,6 @@
 
 @property (retain, nonatomic) IBOutlet UIButton *homeButton;
 @property (retain, nonatomic) IBOutlet UIButton *reportButton;
+@property (weak, nonatomic) IBOutlet UILabel *samplesLabel;
 
 @end
