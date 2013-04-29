@@ -8,11 +8,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "aires/ViewControllers/DashboardViewController.m"
-         timestampString = "388920797.86282"
+         timestampString = "388929196.395845"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "56"
-         endingLineNumber = "56"
+         startingLineNumber = "58"
+         endingLineNumber = "58"
          landmarkName = "-awakeFromNib"
          landmarkType = "5">
       </FileBreakpoint>
