@@ -115,7 +115,7 @@
     AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:url];
     [httpClient registerHTTPOperationClass:[AFJSONRequestOperation class]];
     
-    [httpClient setDefaultHeader:@"Accept" value:@"application/json;odata=verbose"];
+    [httpClient setDefaultHeader:@"Accept" value:@"application/json"];
     [httpClient setDefaultHeader:@"username" value:username];
     [httpClient setDefaultHeader:@"password" value:password];
     
@@ -151,7 +151,7 @@
     NSURL *url = [NSURL URLWithString:URLString];
     AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:url];
     [httpClient registerHTTPOperationClass:[AFJSONRequestOperation class]];
-    [httpClient setDefaultHeader:@"Accept" value:@"application/json;odata=verbose"];
+    [httpClient setDefaultHeader:@"Accept" value:@"application/json"];
     [httpClient setDefaultHeader:@"access_token" value:[[mSingleton getSecurityManager] getValueForKey:LOGIN_ACCESSTOKEN]];
     
     NSDictionary *path = [AiresService objectForKey:@"Service Path"];
@@ -192,7 +192,7 @@
     NSURL *url = [NSURL URLWithString:URLString];
     AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:url];
     [httpClient registerHTTPOperationClass:[AFJSONRequestOperation class]];
-    [httpClient setDefaultHeader:@"Accept" value:@"application/json;odata=verbose"];
+    [httpClient setDefaultHeader:@"Accept" value:@"application/json"];
     [httpClient setDefaultHeader:@"access_token" value:[[mSingleton getSecurityManager] getValueForKey:LOGIN_ACCESSTOKEN]];
     
     NSDictionary *path = [AiresService objectForKey:@"Service Path"];
@@ -229,7 +229,7 @@
     NSURL *url = [NSURL URLWithString:URLString];
     AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:url];
     [httpClient registerHTTPOperationClass:[AFJSONRequestOperation class]];
-    [httpClient setDefaultHeader:@"Accept" value:@"application/json;odata=verbose"];
+    [httpClient setDefaultHeader:@"Accept" value:@"application/json"];
     [httpClient setDefaultHeader:@"access_token" value:[[mSingleton getSecurityManager] getValueForKey:LOGIN_ACCESSTOKEN]];
     
     NSDictionary *path = [AiresService objectForKey:@"Data Service Path"];
@@ -264,7 +264,7 @@
     NSURL *url = [NSURL URLWithString:URLString];
     AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:url];
     [httpClient registerHTTPOperationClass:[AFJSONRequestOperation class]];
-    [httpClient setDefaultHeader:@"Accept" value:@"application/json;odata=verbose"];
+    [httpClient setDefaultHeader:@"Accept" value:@"application/json"];
     [httpClient setDefaultHeader:@"access_token" value:[[mSingleton getSecurityManager] getValueForKey:LOGIN_ACCESSTOKEN]];
     
     NSDictionary *path = [AiresService objectForKey:@"Data Service Path"];
@@ -298,7 +298,7 @@
     NSURL *url = [NSURL URLWithString:URLString];
     AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:url];
     [httpClient registerHTTPOperationClass:[AFJSONRequestOperation class]];
-    [httpClient setDefaultHeader:@"Accept" value:@"application/json;odata=verbose"];
+    [httpClient setDefaultHeader:@"Accept" value:@"application/json"];
     [httpClient setDefaultHeader:@"access_token" value:[[mSingleton getSecurityManager] getValueForKey:LOGIN_ACCESSTOKEN]];
     
     NSDictionary *path = [AiresService objectForKey:@"Data Service Path"];
