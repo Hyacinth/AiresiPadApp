@@ -7,11 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+@class ProjectDetailView;
 
 @interface ProjectViewController : UIViewController
 
 @property (retain, nonatomic) IBOutlet UIButton *homeButton;
 @property (retain, nonatomic) IBOutlet UIButton *reportButton;
 @property (weak, nonatomic) IBOutlet UILabel *samplesLabel;
+@property (weak, nonatomic) IBOutlet ProjectDetailView *projectDetailView;
+@property (weak, nonatomic) IBOutlet UIImageView *sampleSubHeaderView;
+@property (weak, nonatomic) IBOutlet UIButton *adjustSampleAreaButton;
+@property (weak, nonatomic) IBOutlet UIButton *addSampleButton;
 
 @end

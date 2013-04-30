@@ -7,8 +7,12 @@
 //
 
 #import "ProjectViewController.h"
+#import "ProjectDetailView.h"
 
 @interface ProjectViewController ()
+{
+    BOOL bProjectDetailsVisible;
+}
 
 @end
 
@@ -51,6 +55,8 @@
     bgimage = [UIImage imageNamed:@"navbar_back_pressed.png"];
     bgimage = [bgimage stretchableImageWithLeftCapWidth:bgimage.size.width/2 topCapHeight:bgimage.size.height/2];
     [_homeButton setBackgroundImage:bgimage forState:UIControlStateHighlighted];
+    
+    bProjectDetailsVisible = YES;
 }
 
 -(IBAction)homeButtonPressed:(id)sender
@@ -67,8 +73,20 @@
                     }];
     
     [self.navigationController popViewControllerAnimated:NO];
+}
 
-    
+-(IBAction)adjustSamplesArea:(id)sender
+{
+    [UIView animateWithDuration:0.25
+                     animations:^{
+                         _projectDetailView.frame = CGRectMake(bProjectDetailsVisible?-300.0f:0, 44.0f, 300.0f, 704.0f);
+                         _sampleSubHeaderView.frame = CGRectMake(bProjectDetailsVisible?0:301.0f, 44.0f, bProjectDetailsVisible?1024.0f:724.0f, 44.0f);
+                         _adjustSampleAreaButton.frame = CGRectMake(bProjectDetailsVisible?3.0f:303.0f, 45.0f, 50.0f, 32.0f);
+                         _samplesLabel.frame = CGRectMake(bProjectDetailsVisible?466.0f:616.0f, 50.0f, 93.0f, 21.0f);
+                     }
+                     completion:^(BOOL finished) {
+                         bProjectDetailsVisible = !bProjectDetailsVisible;
+                     }];
 }
 
 - (void)didReceiveMemoryWarning
@@ -79,6 +97,10 @@
 
 - (void)viewDidUnload
 {
+    [self setProjectDetailView:nil];
+    [self setSampleSubHeaderView:nil];
+    [self setAdjustSampleAreaButton:nil];
+    [self setAddSampleButton:nil];
     [super viewDidUnload];
 }
 

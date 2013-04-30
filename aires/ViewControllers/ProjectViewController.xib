@@ -237,6 +237,7 @@
 						<string key="NSFrame">{{968, 45}, {51, 32}}</string>
 						<reference key="NSSuperview" ref="766721923"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBIPadFramework</string>
@@ -353,6 +354,38 @@
 					<int key="connectionID">22</int>
 				</object>
 				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">projectDetailView</string>
+						<reference key="source" ref="841351856"/>
+						<reference key="destination" ref="917337490"/>
+					</object>
+					<int key="connectionID">27</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">sampleSubHeaderView</string>
+						<reference key="source" ref="841351856"/>
+						<reference key="destination" ref="837643396"/>
+					</object>
+					<int key="connectionID">28</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">adjustSampleAreaButton</string>
+						<reference key="source" ref="841351856"/>
+						<reference key="destination" ref="879726057"/>
+					</object>
+					<int key="connectionID">29</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">addSampleButton</string>
+						<reference key="source" ref="841351856"/>
+						<reference key="destination" ref="568343858"/>
+					</object>
+					<int key="connectionID">30</int>
+				</object>
+				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
 						<string key="label">homeButtonPressed:</string>
 						<reference key="source" ref="362423759"/>
@@ -360,6 +393,15 @@
 						<int key="IBEventType">7</int>
 					</object>
 					<int key="connectionID">14</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchEventConnection" key="connection">
+						<string key="label">adjustSamplesArea:</string>
+						<reference key="source" ref="879726057"/>
+						<reference key="destination" ref="841351856"/>
+						<int key="IBEventType">7</int>
+					</object>
+					<int key="connectionID">26</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -475,7 +517,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">25</int>
+			<int key="maxID">30</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -490,19 +532,53 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">ProjectViewController</string>
 					<string key="superclassName">UIViewController</string>
+					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="adjustSamplesArea:">id</string>
+						<string key="homeButtonPressed:">id</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="adjustSamplesArea:">
+							<string key="name">adjustSamplesArea:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="homeButtonPressed:">
+							<string key="name">homeButtonPressed:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</dictionary>
 					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="addSampleButton">UIButton</string>
+						<string key="adjustSampleAreaButton">UIButton</string>
 						<string key="homeButton">UIButton</string>
+						<string key="projectDetailView">ProjectDetailView</string>
 						<string key="reportButton">UIButton</string>
+						<string key="sampleSubHeaderView">UIImageView</string>
 						<string key="samplesLabel">UILabel</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<object class="IBToOneOutletInfo" key="addSampleButton">
+							<string key="name">addSampleButton</string>
+							<string key="candidateClassName">UIButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="adjustSampleAreaButton">
+							<string key="name">adjustSampleAreaButton</string>
+							<string key="candidateClassName">UIButton</string>
+						</object>
 						<object class="IBToOneOutletInfo" key="homeButton">
 							<string key="name">homeButton</string>
 							<string key="candidateClassName">UIButton</string>
 						</object>
+						<object class="IBToOneOutletInfo" key="projectDetailView">
+							<string key="name">projectDetailView</string>
+							<string key="candidateClassName">ProjectDetailView</string>
+						</object>
 						<object class="IBToOneOutletInfo" key="reportButton">
 							<string key="name">reportButton</string>
 							<string key="candidateClassName">UIButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="sampleSubHeaderView">
+							<string key="name">sampleSubHeaderView</string>
+							<string key="candidateClassName">UIImageView</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="samplesLabel">
 							<string key="name">samplesLabel</string>
