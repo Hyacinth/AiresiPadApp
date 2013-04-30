@@ -42,11 +42,17 @@
     
     _searchView.layer.cornerRadius = 15.0f;
     
-    UIImage *bgimage = [UIImage imageNamed:@"btn_navbar_bg.png"];
+    UIImage *bgimage = [UIImage imageNamed:@"btn_navbar_nor.png"];
 	bgimage = [bgimage stretchableImageWithLeftCapWidth:bgimage.size.width/2 topCapHeight:bgimage.size.height/2];
     
     [_btnSettings setBackgroundImage:bgimage forState:UIControlStateNormal];
     [_btnRefresh setBackgroundImage:bgimage forState:UIControlStateNormal];
+    
+    bgimage = [UIImage imageNamed:@"btn_navbar_pressed.png"];
+	bgimage = [bgimage stretchableImageWithLeftCapWidth:bgimage.size.width/2 topCapHeight:bgimage.size.height/2];
+    
+    [_btnSettings setBackgroundImage:bgimage forState:UIControlStateHighlighted];
+    [_btnRefresh setBackgroundImage:bgimage forState:UIControlStateHighlighted];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(localNotificationhandler:) name:NOTIFICATION_LOGOUT_FAILED object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(localNotificationhandler:) name:NOTIFICATION_LOGOUT_SUCCESS object:nil];

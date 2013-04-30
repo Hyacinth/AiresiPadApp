@@ -36,9 +36,13 @@
     [_homeButton.titleLabel setFont:[UIFont fontWithName:@"ProximaNova-Bold" size:12.0]];
     [_samplesLabel setFont:[UIFont fontWithName:@"ProximaNova-Bold" size:20.0]];
     
-    UIImage *bgimage = [UIImage imageNamed:@"btn_navbar_bg.png"];
+    UIImage *bgimage = [UIImage imageNamed:@"btn_navbar_nor.png"];
 	bgimage = [bgimage stretchableImageWithLeftCapWidth:bgimage.size.width/2 topCapHeight:bgimage.size.height/2];
     [_reportButton setBackgroundImage:bgimage forState:UIControlStateNormal];
+    
+    bgimage = [UIImage imageNamed:@"btn_navbar_pressed.png"];
+	bgimage = [bgimage stretchableImageWithLeftCapWidth:bgimage.size.width/2 topCapHeight:bgimage.size.height/2];
+    [_reportButton setBackgroundImage:bgimage forState:UIControlStateHighlighted];
     
     bgimage = [UIImage imageNamed:@"navbar_back_nor.png"];
     bgimage = [bgimage stretchableImageWithLeftCapWidth:bgimage.size.width/2 topCapHeight:bgimage.size.height/2];
