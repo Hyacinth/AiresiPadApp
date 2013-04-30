@@ -41,7 +41,6 @@
 		988701691725325E007FB144 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 988701681725325E007FB144 /* User.m */; };
 		9887016C172533D1007FB144 /* PersistentStoreManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9887016B172533D1007FB144 /* PersistentStoreManager.m */; };
 		989B043D17295C83001D3FFD /* Project.m in Sources */ = {isa = PBXBuildFile; fileRef = 98B68CDE172913770065D411 /* Project.m */; };
-		98A241DA17210FEF001A14F0 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 98A241CA17210FEF001A14F0 /* Model.xcdatamodeld */; };
 		98A241E317211620001A14F0 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98A241E217211620001A14F0 /* CoreData.framework */; };
 		98A7D1D5172FD0B1008794FE /* DeviceType.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A7D1D4172FD0B1008794FE /* DeviceType.m */; };
 		98B37B6317153B5C00F78A54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 98659CB1170DA3FD00A0DEF8 /* main.m */; };
@@ -192,6 +191,7 @@
 		98FDD372172A93A1001A9295 /* SampleChemical.m in Sources */ = {isa = PBXBuildFile; fileRef = 98FDD371172A93A1001A9295 /* SampleChemical.m */; };
 		98FDD375172A9940001A9295 /* SampleMeasurement.m in Sources */ = {isa = PBXBuildFile; fileRef = 98FDD374172A9940001A9295 /* SampleMeasurement.m */; };
 		98FDD378172A9941001A9295 /* SampleTotalMeasurement.m in Sources */ = {isa = PBXBuildFile; fileRef = 98FDD377172A9941001A9295 /* SampleTotalMeasurement.m */; };
+		98FF59A9172FD78C002CF862 /* Model.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 98FF59A8172FD78C002CF862 /* Model.xcdatamodel */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -256,7 +256,6 @@
 		988701681725325E007FB144 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		9887016A172533D0007FB144 /* PersistentStoreManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersistentStoreManager.h; sourceTree = "<group>"; };
 		9887016B172533D1007FB144 /* PersistentStoreManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersistentStoreManager.m; sourceTree = "<group>"; };
-		98A241CB17210FEF001A14F0 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		98A241E217211620001A14F0 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		98A7D1D3172FD0B1008794FE /* DeviceType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceType.h; sourceTree = "<group>"; };
 		98A7D1D4172FD0B1008794FE /* DeviceType.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceType.m; sourceTree = "<group>"; };
@@ -434,6 +433,7 @@
 		98FDD374172A9940001A9295 /* SampleMeasurement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SampleMeasurement.m; sourceTree = "<group>"; };
 		98FDD376172A9941001A9295 /* SampleTotalMeasurement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SampleTotalMeasurement.h; sourceTree = "<group>"; };
 		98FDD377172A9941001A9295 /* SampleTotalMeasurement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SampleTotalMeasurement.m; sourceTree = "<group>"; };
+		98FF59A8172FD78C002CF862 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -561,7 +561,7 @@
 		98A241C917210FEF001A14F0 /* AiresDataModel */ = {
 			isa = PBXGroup;
 			children = (
-				98A241CA17210FEF001A14F0 /* Model.xcdatamodeld */,
+				98FF59A8172FD78C002CF862 /* Model.xcdatamodel */,
 				988701671725325E007FB144 /* User.h */,
 				988701681725325E007FB144 /* User.m */,
 				98B68CDD172913770065D411 /* Project.h */,
@@ -1043,7 +1043,6 @@
 				98E23BA2171FD96200FFAD4A /* NSScanner_Extensions.m in Sources */,
 				98E23BA5171FF2BB00FFAD4A /* WebServiceManager.m in Sources */,
 				98E23BA8171FF4B300FFAD4A /* JSONParser.m in Sources */,
-				98A241DA17210FEF001A14F0 /* Model.xcdatamodeld in Sources */,
 				988701691725325E007FB144 /* User.m in Sources */,
 				9887016C172533D1007FB144 /* PersistentStoreManager.m in Sources */,
 				98B42512172689A100D15811 /* iCarousel.m in Sources */,
@@ -1066,6 +1065,7 @@
 				98DDACA7172E48F10031308B /* SampleProtectionEquipment.m in Sources */,
 				84EBF217172E92D700986667 /* ProjectDetailView.m in Sources */,
 				98A7D1D5172FD0B1008794FE /* DeviceType.m in Sources */,
+				98FF59A9172FD78C002CF862 /* Model.xcdatamodel in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1190,19 +1190,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCVersionGroup section */
-		98A241CA17210FEF001A14F0 /* Model.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				98A241CB17210FEF001A14F0 /* Model.xcdatamodel */,
-			);
-			currentVersion = 98A241CB17210FEF001A14F0 /* Model.xcdatamodel */;
-			path = Model.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = 98659C9A170DA3FD00A0DEF8 /* Project object */;
 }

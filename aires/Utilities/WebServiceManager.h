@@ -19,4 +19,8 @@
 -(void)fetchProjectsforUser;
 -(void)logout;
 
+-(void)getChemicalsList;
+-(void)getDeviceTypesList;
+-(void)getProtectionEquipmentsList;
+
 @end

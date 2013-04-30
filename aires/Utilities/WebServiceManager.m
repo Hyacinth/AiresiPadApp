@@ -167,11 +167,10 @@
          
          [[mSingleton getJSONParser] performSelectorOnMainThread:@selector(parseUserProjectData:) withObject:responseObject waitUntilDone:YES];
         
-         [self performSelectorOnMainThread:@selector(getChemicalsList) withObject:nil waitUntilDone:YES];
-         [self performSelectorOnMainThread:@selector(getDeviceTypesList) withObject:nil waitUntilDone:YES];
-         [self performSelectorOnMainThread:@selector(getProtectionEquipmentsList) withObject:nil waitUntilDone:YES];
-         
-     }
+//         [self performSelectorOnMainThread:@selector(getChemicalsList) withObject:nil waitUntilDone:YES];
+//         [self performSelectorOnMainThread:@selector(getDeviceTypesList) withObject:nil waitUntilDone:YES];
+//         [self performSelectorOnMainThread:@selector(getProtectionEquipmentsList) withObject:nil waitUntilDone:YES];
+              }
                                      failure:^(AFHTTPRequestOperation *operation, NSError *error)
      {
          NSLog(@"Error: %@", error);
@@ -242,8 +241,8 @@
      {
          // Print the response body in text
          NSLog(@"Chemicals: %@", [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding]);
-         [[mSingleton getJSONParser] performSelectorOnMainThread:@selector(parseChemicalList:) withObject:responseObject waitUntilDone:YES];
-         
+         //[[mSingleton getJSONParser] performSelectorOnMainThread:@selector(parseChemicalList:) withObject:responseObject waitUntilDone:YES];
+         [[mSingleton getJSONParser] parseChemicalList:responseObject];
      }
                                      failure:^(AFHTTPRequestOperation *operation, NSError *error)
      {
@@ -277,7 +276,8 @@
      {
          // Print the response body in text
          NSLog(@"DeviceTypes: %@", [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding]);
-         [[mSingleton getJSONParser] performSelectorOnMainThread:@selector(parseDeviceTypeList:) withObject:responseObject waitUntilDone:YES];
+         //[[mSingleton getJSONParser] performSelectorOnMainThread:@selector(parseDeviceTypeList:) withObject:responseObject waitUntilDone:YES];
+         [[mSingleton getJSONParser] parseDeviceTypeList:responseObject];
      }
                                      failure:^(AFHTTPRequestOperation *operation, NSError *error)
      {
@@ -311,7 +311,8 @@
      {
          // Print the response body in text
          NSLog(@"ProtectionEquipment: %@", [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding]);
-         [[mSingleton getJSONParser] performSelectorOnMainThread:@selector(parseProtectionEquipmentList:) withObject:responseObject waitUntilDone:YES];
+         //[[mSingleton getJSONParser] performSelectorOnMainThread:@selector(parseProtectionEquipmentList:) withObject:responseObject waitUntilDone:YES];
+         [[mSingleton getJSONParser] parseProtectionEquipmentList:responseObject];
      }
                                      failure:^(AFHTTPRequestOperation *operation, NSError *error)
      {

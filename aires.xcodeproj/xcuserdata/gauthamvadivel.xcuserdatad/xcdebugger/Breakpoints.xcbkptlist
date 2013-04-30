@@ -8,11 +8,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "aires/Utilities/WebServiceManager.m"
-         timestampString = "389008981.812061"
+         timestampString = "389012758.256064"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "280"
-         endingLineNumber = "280"
+         startingLineNumber = "279"
+         endingLineNumber = "279"
          landmarkName = "-getDeviceTypesList"
          landmarkType = "5">
       </FileBreakpoint>
@@ -20,25 +20,12 @@
          shouldBeEnabled = "Yes"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "aires/Utilities/WebServiceManager.m"
-         timestampString = "389008983.921275"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "314"
-         endingLineNumber = "314"
-         landmarkName = "-getProtectionEquipmentsList"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "Yes"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
          filePath = "aires/Utilities/JSONParser.m"
-         timestampString = "389010475.593418"
+         timestampString = "389012758.256064"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "74"
-         endingLineNumber = "74"
+         startingLineNumber = "79"
+         endingLineNumber = "79"
          landmarkName = "-parseProtectionEquipmentList:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -47,12 +34,12 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "aires/Utilities/PersistentStoreManager.m"
-         timestampString = "389010482.481435"
+         timestampString = "389011795.689231"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "585"
-         endingLineNumber = "585"
-         landmarkName = "-getChemicalList"
+         startingLineNumber = "664"
+         endingLineNumber = "664"
+         landmarkName = "-getProtectionEquipmentList"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -60,11 +47,37 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "aires/Utilities/PersistentStoreManager.m"
-         timestampString = "389010484.577479"
+         timestampString = "389011822.14035"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "621"
-         endingLineNumber = "621"
+         startingLineNumber = "637"
+         endingLineNumber = "637"
+         landmarkName = "-saveProtectionEquipmentList:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "aires/Utilities/PersistentStoreManager.m"
+         timestampString = "389011829.6412"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "554"
+         endingLineNumber = "554"
+         landmarkName = "-saveChemicalList:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "aires/Utilities/PersistentStoreManager.m"
+         timestampString = "389011835.663353"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "630"
+         endingLineNumber = "630"
          landmarkName = "-getDeviceTypeList"
          landmarkType = "5">
       </FileBreakpoint>
@@ -72,13 +85,26 @@
          shouldBeEnabled = "Yes"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "aires/Utilities/PersistentStoreManager.m"
-         timestampString = "389010487.129297"
+         filePath = "aires/Utilities/WebServiceManager.m"
+         timestampString = "389012758.256064"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "655"
-         endingLineNumber = "655"
-         landmarkName = "-getProtectionEquipmentList"
+         startingLineNumber = "250"
+         endingLineNumber = "250"
+         landmarkName = "-getChemicalsList"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "aires/Utilities/WebServiceManager.m"
+         timestampString = "389012901.066127"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "285"
+         endingLineNumber = "285"
+         landmarkName = "-getDeviceTypesList"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

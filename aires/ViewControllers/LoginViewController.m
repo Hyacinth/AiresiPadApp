@@ -187,6 +187,7 @@
 
 -(void)loginAction
 {
+    [popover dismissPopoverAnimated:YES];
     //Save values in keychain
     SecurityManager *mSecurityManager = [mSingleton getSecurityManager];
     [mSecurityManager setValue:[loginFieldsView getUserFieldText] forKey:LOGIN_USERNAME];
@@ -274,7 +275,6 @@
 {
     if ([[notification name] isEqualToString:NOTIFICATION_LOGIN_FAILED])
     {
-        NSLog(@"Show Error Message...");
         [welcomeLabel setTextColor:[UIColor redColor]];
         welcomeLabel.text = @"Login Failed";
         [loginFieldsView hideLoadingMessage];
@@ -296,8 +296,6 @@
     }
     else if ([[notification name] isEqualToString:NOTIFICATION_ENVIRONMENT_FAILED])
     {
-        NSLog(@"Show Error Message...");
-        
         [welcomeLabel setTextColor:[UIColor redColor]];
         welcomeLabel.text = @"Login Failed";
         [loginFieldsView hideLoadingMessage];

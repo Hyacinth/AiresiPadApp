@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1811" systemVersion="12C60" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="2061" systemVersion="12D78" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="DeviceType" representedClassName="DeviceType" syncable="YES">
+        <attribute name="contentType" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="deviceType_DeviceTypeID" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="deviceType_DeviceTypeName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="deviceTypeID" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+    </entity>
     <entity name="Project" representedClassName="Project" syncable="YES">
         <attribute name="project_ClientName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="project_CompletedFlag" optional="YES" attributeType="Boolean" syncable="YES"/>
@@ -40,6 +46,7 @@
         <relationship name="fromProject" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Project" inverseName="airesSample" inverseEntity="Project" syncable="YES"/>
     </entity>
     <entity name="SampleChemical" representedClassName="SampleChemical" syncable="YES">
+        <attribute name="contentType" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="sampleChemical_Name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="sampleChemical_PELCFlag" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="sampleChemical_PELSTELFlag" optional="YES" attributeType="Boolean" syncable="YES"/>
@@ -59,6 +66,7 @@
         <relationship name="fromSample" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Sample" inverseName="airesSampleMeasurement" inverseEntity="Sample" syncable="YES"/>
     </entity>
     <entity name="SampleProtectionEquipment" representedClassName="SampleProtectionEquipment" syncable="YES">
+        <attribute name="contentType" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="sampleProtectionEquipment_Name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="sampleProtectionEquipmentID" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <relationship name="fromSample" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Sample" inverseName="airesSampleProtectionEquipment" inverseEntity="Sample" syncable="YES"/>
@@ -81,12 +89,13 @@
         <relationship name="airesProject" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Project" inverseName="fromUser" inverseEntity="Project" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Project" positionX="-4491" positionY="-658" width="171" height="360"/>
+        <element name="Project" positionX="-4491" positionY="-658" width="171" height="330"/>
         <element name="Sample" positionX="-4266" positionY="-657" width="180" height="255"/>
-        <element name="SampleChemical" positionX="-4041" positionY="-720" width="171" height="180"/>
+        <element name="SampleChemical" positionX="-4050" positionY="-765" width="171" height="193"/>
         <element name="SampleMeasurement" positionX="-3987" positionY="-567" width="243" height="133"/>
-        <element name="SampleProtectionEquipment" positionX="-3933" positionY="-432" width="252" height="88"/>
+        <element name="SampleProtectionEquipment" positionX="-3933" positionY="-432" width="252" height="103"/>
         <element name="SampleTotalMeasurement" positionX="-3951" positionY="-342" width="225" height="118"/>
         <element name="User" positionX="-4671" positionY="-481" width="128" height="165"/>
+        <element name="DeviceType" positionX="-4221" positionY="-324" width="128" height="103"/>
     </elements>
 </model>

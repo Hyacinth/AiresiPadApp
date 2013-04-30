@@ -240,8 +240,6 @@
 #pragma mark Project DataModel methods
 -(void)storeProjectDetails:(NSArray *)projects
 {
-    NSLog(@"  Projects :%d",[projects count]);
-    
     for (NSDictionary *dict in projects)
     {
         if (![self isDuplicateProject:dict])
@@ -326,8 +324,6 @@
 #pragma mark Sample DataModel methods
 -(void)storeSampleDetails:(NSArray *)sample forProject:(Project *)project
 {
-    NSLog(@"  Sample :%d",[sample count]);
-    
     for (NSDictionary *dict in sample)
     {
         Sample *mSample = [NSEntityDescription
@@ -387,7 +383,6 @@
 #pragma mark SampleChemical DataModel methods
 -(void)storeSampleChemicalDetails:(NSArray *)sampleChemical forSample:(Sample *)sample
 {
-    NSLog(@"  SampleChemical :%d",[sampleChemical count]);
     for (NSDictionary *dict in sampleChemical)
     {
         SampleChemical *mSampleChemical = [NSEntityDescription
@@ -434,7 +429,6 @@
 #pragma mark SampleTotalMeasuremen DataModel methods
 -(void)storeSampleTotalMeasurementDetails:(NSArray *)sampleTotalMeaseurement forSample:(Sample *)sample
 {
-    NSLog(@"  sampleTotalMeaseurement :%d",[sampleTotalMeaseurement count]);
     for (NSDictionary *dict in sampleTotalMeaseurement)
     {
         SampleTotalMeasurement *mSampleTotalMeasurement = [NSEntityDescription
@@ -473,7 +467,6 @@
 #pragma mark SampleMeasurement DataModel methods
 -(void)storeSampleMeasurementDetails:(NSArray *)sampleMeaseurement forSample:(Sample *)sample
 {
-    NSLog(@"  sampleMeaseurement :%d",[sampleMeaseurement count]);
     for (NSDictionary *dict in sampleMeaseurement)
     {
         SampleMeasurement *mSampleMeasurement = [NSEntityDescription
@@ -515,7 +508,6 @@
 #pragma mark SampleProtectionEquipment DataModel methods
 -(void)storeSampleProtectionEquipmentDetails:(NSArray *)sampleProtectionEquipment forSample:(Sample *)sample
 {
-    NSLog(@"  sampleProtectionEquipment :%d",[sampleProtectionEquipment count]);
     for (NSDictionary *dict in sampleProtectionEquipment)
     {
         SampleProtectionEquipment *mSampleProtectionEquipment = [NSEntityDescription
@@ -550,7 +542,6 @@
 #pragma mark List DataModel methods
 -(void)saveChemicalList:(NSArray *)chemicalArray
 {
-    NSLog(@"  SampleChemical :%d",[chemicalArray count]);
     for (NSDictionary *dict in chemicalArray)
     {
         SampleChemical *mSampleChemical = [NSEntityDescription
@@ -596,11 +587,10 @@
 
 -(void)saveDeviceTypeList:(NSArray *)deviceArray
 {
-    NSLog(@"  sampleDeviceArray :%d",[deviceArray count]);
     for (NSDictionary *dict in deviceArray)
     {
         DeviceType *mDeviceType = [NSEntityDescription
-                                                                 insertNewObjectForEntityForName:@"DeviceType"
+                                   insertNewObjectForEntityForName:@"DeviceType"
                                                                  inManagedObjectContext:[self mainContext]];
         
         if (![[dict valueForKey:@"TypeName"] isKindOfClass:[NSNull class]])
@@ -633,7 +623,6 @@
 
 -(void)saveProtectionEquipmentList:(NSArray *)equipmentArray
 {
-    NSLog(@"  sampleProtectionEquipment :%d",[equipmentArray count]);
     for (NSDictionary *dict in equipmentArray)
     {
         SampleProtectionEquipment *mSampleProtectionEquipment = [NSEntityDescription
