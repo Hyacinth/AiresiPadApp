@@ -251,19 +251,21 @@
                                  inManagedObjectContext:[self mainContext]];
             
             NSDictionary *client = [dict objectForKey:@"Client"];
-            NSDictionary *contact = [dict objectForKey:@"Contacts"];
+            NSDictionary *contact = [dict objectForKey:@"Contact"];
             NSDictionary *lab = [dict objectForKey:@"Lab"];
             
             if (![[dict valueForKey:@"ClientName"] isKindOfClass:[NSNull class]])
                 mProject.project_ClientName = [client objectForKey:@"ClientName"];
             if (![[dict valueForKey:@"CompletedFlag"] isKindOfClass:[NSNull class]])
                 mProject.project_CompletedFlag = [dict objectForKey:@"CompletedFlag"];
-            if (![[dict valueForKey:@"FirstName"] isKindOfClass:[NSNull class]])
+            if (![[contact valueForKey:@"FirstName"] isKindOfClass:[NSNull class]])
                 mProject.project_ContactFirstName = [contact objectForKey:@"FirstName"];
-            if (![[dict valueForKey:@"LastName"] isKindOfClass:[NSNull class]])
+            if (![[contact valueForKey:@"LastName"] isKindOfClass:[NSNull class]])
                 mProject.project_ContactLastName = [contact objectForKey:@"LastName"];
-            if (![[dict valueForKey:@"PhoneNumber"] isKindOfClass:[NSNull class]])
+            if (![[contact valueForKey:@"PhoneNumber"] isKindOfClass:[NSNull class]])
                 mProject.project_ContactPhoneNumber = [contact objectForKey:@"PhoneNumber"];
+            if (![[contact valueForKey:@"Email"] isKindOfClass:[NSNull class]])
+                mProject.project_ContactEmail = [contact objectForKey:@"Email"];
             if (![[dict valueForKey:@"DateOnsite"] isKindOfClass:[NSNull class]])
                 mProject.project_DateOnsite = [contact objectForKey:@"DateOnsite"];
             if (![[lab valueForKey:@"LabEmail"] isKindOfClass:[NSNull class]])
@@ -288,6 +290,8 @@
                 mProject.project_TurnAroundTime = [dict objectForKey:@"TurnaroundTime"];
             if (![[dict valueForKey:@"ProjectId"] isKindOfClass:[NSNull class]])
                 mProject.projectID = (NSNumber *)[dict objectForKey:@"ProjectId"] ;
+            if (![[dict valueForKey:@"QCPerson"] isKindOfClass:[NSNull class]])
+                mProject.project_QCPerson = [dict objectForKey:@"QCPerson"];
             
             [[self getAiresUser] addAiresProjectObject:mProject];
             [[self mainContext] save:nil];

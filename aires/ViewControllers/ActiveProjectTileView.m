@@ -84,7 +84,7 @@
         [self addSubview:emailButton];
         
         [emailButton setImage:[UIImage imageNamed:@"email.png"] forState:UIControlStateNormal];
-        [emailButton setTitle:_project.project_LabEmail forState:UIControlStateNormal];
+        //[emailButton setTitle:_project.project_ContactEmail forState:UIControlStateNormal];
         [emailButton setTitleColor:[UIColor colorWithRed:28.0f/255.0f green:34.0f/255.0f blue:39.0f/255.0f alpha:1.0f] forState:UIControlStateNormal];
         [emailButton.titleLabel setFont:font14Bold];
         
@@ -94,6 +94,12 @@
         emailButton.titleEdgeInsets = UIEdgeInsetsMake(0, 20, 0, 0);
     }
     return self;
+}
+
+-(void)setProject:(Project *)project
+{
+    _project = project;
+    [emailButton setTitle:_project.project_ContactEmail forState:UIControlStateNormal];
 }
 
 // Only override drawRect: if you perform custom drawing.
@@ -123,7 +129,6 @@
     NSDate *now = _project.project_DateOnsite;
     NSDateFormatter *weekday = [[NSDateFormatter alloc] init];
     [weekday setDateFormat: @"EEEE"];
-    NSLog(@"The day of the week is: %@", [weekday stringFromDate:now]);
     
     NSDateComponents *components = [[NSCalendar currentCalendar] components:NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit fromDate:_project.project_DateOnsite];    
     
@@ -180,7 +185,7 @@
                      lineBreakMode:UILineBreakModeTailTruncation
                          alignment:UITextAlignmentLeft];
     
-    [@"Eric Smith" drawInRect:CGRectMake(238, 282, 100, 20)
+    [_project.project_QCPerson drawInRect:CGRectMake(238, 282, 100, 20)
                   withFont:font14Bold
              lineBreakMode:UILineBreakModeTailTruncation
                  alignment:UITextAlignmentLeft];

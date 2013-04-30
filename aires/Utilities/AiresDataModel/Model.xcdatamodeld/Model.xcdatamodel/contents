@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="2061" systemVersion="12D78" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1811" systemVersion="12C60" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="Project" representedClassName="Project" syncable="YES">
         <attribute name="project_ClientName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="project_CompletedFlag" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="project_ContactEmail" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="project_ContactFirstName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="project_ContactLastName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="project_ContactPhoneNumber" optional="YES" attributeType="String" syncable="YES"/>
@@ -16,6 +17,7 @@
         <attribute name="project_LocationState" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="project_ProjectDescription" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="project_ProjectNumber" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="project_QCPerson" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="project_TurnAroundTime" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="projectID" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <relationship name="airesSample" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Sample" inverseName="fromProject" inverseEntity="Sample" syncable="YES"/>
@@ -79,7 +81,7 @@
         <relationship name="airesProject" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Project" inverseName="fromUser" inverseEntity="Project" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Project" positionX="-4491" positionY="-658" width="171" height="330"/>
+        <element name="Project" positionX="-4491" positionY="-658" width="171" height="360"/>
         <element name="Sample" positionX="-4266" positionY="-657" width="180" height="255"/>
         <element name="SampleChemical" positionX="-4041" positionY="-720" width="171" height="180"/>
         <element name="SampleMeasurement" positionX="-3987" positionY="-567" width="243" height="133"/>

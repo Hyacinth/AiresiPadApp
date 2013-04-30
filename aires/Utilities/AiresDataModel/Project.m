@@ -18,6 +18,7 @@
 @dynamic project_ContactFirstName;
 @dynamic project_ContactLastName;
 @dynamic project_ContactPhoneNumber;
+@dynamic project_ContactEmail;
 @dynamic project_DateOnsite;
 @dynamic project_LabEmail;
 @dynamic project_LabName;
@@ -28,6 +29,7 @@
 @dynamic project_LocationState;
 @dynamic project_ProjectDescription;
 @dynamic project_ProjectNumber;
+@dynamic project_QCPerson;
 @dynamic project_TurnAroundTime;
 @dynamic projectID;
 @dynamic airesSample;
