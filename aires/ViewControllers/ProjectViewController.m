@@ -57,11 +57,14 @@
     [_homeButton setBackgroundImage:bgimage forState:UIControlStateHighlighted];
     
     bProjectDetailsVisible = YES;
+    
+    _samplesCarousel.type = iCarouselTypeLinear;
+    _samplesCarousel.bounceDistance = 0.25f;
+    _samplesCarousel.scrollSpeed = 0.6f;
 }
 
 -(IBAction)homeButtonPressed:(id)sender
 {
-    
     UIViewController *vc = [self.navigationController.viewControllers objectAtIndex:self.navigationController.viewControllers.count-2];
     
     [UIView transitionFromView:self.view
@@ -89,6 +92,71 @@
                      }];
 }
 
+#pragma mark - iCarousel datasource
+
+- (NSUInteger)numberOfItemsInCarousel:(iCarousel *)aCarousel
+{
+    return 2;
+}
+
+- (UIView *)carousel:(iCarousel *)aCarousel viewForItemAtIndex:(NSUInteger)index reusingView:(UIView*)view
+{
+    if (view == nil)
+    {
+        // content view
+        UIView *aView = [[UIView alloc] initWithFrame:_samplesCarousel.bounds];
+        
+        for (int i=0; i<12; i++)
+        {
+            // content view
+            UIView *sView = [[UIView alloc] initWithFrame:CGRectMake((i*60), 0, 60, 52)];
+            
+            UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+            button.frame = CGRectMake(7, 0, 47, 52);
+            [button setImage:[UIImage imageNamed:@"btn_sample_filled_unsel.png"] forState:UIControlStateNormal];
+            [button setImage:[UIImage imageNamed:@"btn_sample_filled_sel.png"] forState:UIControlStateSelected];
+            [sView addSubview:button];
+            [button addTarget:self action:@selector(buttonSelected:) forControlEvents:UIControlEventTouchUpInside];
+            
+            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, 30, 20)];
+            label.backgroundColor = [UIColor clearColor];
+            label.text = [NSString stringWithFormat:@"%d", (index*12) + (i+1)];
+            label.font = [UIFont fontWithName:@"ProximaNova-Bold" size:24.0f];
+            label.textColor = [UIColor colorWithRed:81.0f/255.0f green:93.0f/255.0f blue:125.0f/255.0f alpha:1.0f];
+            label.shadowColor = [UIColor whiteColor];
+            label.shadowOffset = CGSizeMake(0, 2);
+            [sView addSubview:label];
+            
+            UILabel *sLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 27, 60, 15)];
+            sLabel.backgroundColor = [UIColor clearColor];
+            sLabel.text = @"Sample";
+            sLabel.font = [UIFont fontWithName:@"ProximaNova-Bold" size:10.0f];
+            sLabel.textColor = [UIColor colorWithRed:122.0f/255.0f green:147.0f/255.0f blue:171.0f/255.0f alpha:1.0f];
+            sLabel.shadowColor = [UIColor whiteColor];
+            sLabel.shadowOffset = CGSizeMake(0, 1);
+            sLabel.textAlignment = UITextAlignmentCenter;
+            [sView addSubview:sLabel];
+
+            [aView addSubview:sView];
+        }
+        
+        return aView;
+    }
+    return view;
+}
+
+-(void)buttonSelected:(UIButton*)button
+{
+    [button setSelected:!button.isSelected];
+}
+
+#pragma mark - iCarousel delegate
+
+-(void)carousel:(iCarousel *)aCarousel didSelectItemAtIndex:(NSInteger)index
+{
+
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -101,6 +169,7 @@
     [self setSampleSubHeaderView:nil];
     [self setAdjustSampleAreaButton:nil];
     [self setAddSampleButton:nil];
+    [self setSamplesCarousel:nil];
     [super viewDidUnload];
 }
 

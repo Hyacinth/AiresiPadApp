@@ -7,9 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "iCarousel.h"
+
 @class ProjectDetailView;
 
-@interface ProjectViewController : UIViewController
+@interface ProjectViewController : UIViewController<iCarouselDataSource, iCarouselDelegate>
 
 @property (retain, nonatomic) IBOutlet UIButton *homeButton;
 @property (retain, nonatomic) IBOutlet UIButton *reportButton;
@@ -18,5 +20,6 @@
 @property (weak, nonatomic) IBOutlet UIImageView *sampleSubHeaderView;
 @property (weak, nonatomic) IBOutlet UIButton *adjustSampleAreaButton;
 @property (weak, nonatomic) IBOutlet UIButton *addSampleButton;
+@property (weak, nonatomic) IBOutlet iCarousel *samplesCarousel;
 
 @end
