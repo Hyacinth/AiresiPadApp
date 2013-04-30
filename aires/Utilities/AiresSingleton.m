@@ -68,8 +68,8 @@ static AiresSingleton* instance;
     NSString *str_prevDate = [[self getSecurityManager] getValueForKey:LOGIN_ACCESSTOKEN_TIME];
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"EEE,MM-dd-yyyy HH:mm:ss"];
-    NSDate *prevDate = [[NSDate alloc] init];
-    prevDate = [dateFormatter dateFromString:str_prevDate];
+    //NSDate *prevDate = [[NSDate alloc] init];
+    NSDate *prevDate = [dateFormatter dateFromString:str_prevDate];
     
     NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
     NSDateComponents *components = [calendar components:kCFCalendarUnitHour fromDate:prevDate toDate:currentDate options:0];

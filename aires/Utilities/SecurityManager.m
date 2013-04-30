@@ -43,8 +43,10 @@
     NSData *passwordData = [value dataUsingEncoding:NSUTF8StringEncoding];
     [dictionary setObject:passwordData forKey:(__bridge_transfer NSString *)kSecValueData];
 	
-    OSStatus status = SecItemAdd((__bridge_retained CFDictionaryRef)dictionary, NULL);
-	
+    CFDictionaryRef query = (__bridge_retained CFDictionaryRef) dictionary;
+    OSStatus status = SecItemAdd(query, NULL);
+    CFRelease(query);
+
     if (status == errSecSuccess) {
         return YES;
     }
@@ -62,10 +64,12 @@
     // Add search return types
     [searchDictionary setObject:(id)kCFBooleanTrue forKey:(__bridge_transfer NSString *)kSecReturnData];
 	
-    CFDataRef cfresult = NULL;
-    OSStatus status = SecItemCopyMatching((__bridge_retained CFDictionaryRef)searchDictionary,
-                                          (CFTypeRef *)&cfresult);
     
+    CFDataRef cfresult = NULL;
+    CFDictionaryRef query = (__bridge_retained CFDictionaryRef)searchDictionary;
+    OSStatus status = SecItemCopyMatching(query, (CFTypeRef *)&cfresult);
+    CFRelease(query);
+
     NSData *result = (__bridge_transfer NSData *)cfresult;
 	
     NSString *value = nil;
@@ -80,8 +84,11 @@
 - (BOOL)deleteValueForKey:(NSString *)key
 {
     NSMutableDictionary *searchDictionary = [self getDictionaryWithIdentifier:key];
-    OSStatus status = SecItemDelete((__bridge_retained CFDictionaryRef)searchDictionary);
     
+    CFDictionaryRef query = (__bridge_retained CFDictionaryRef) searchDictionary;
+    OSStatus status = SecItemDelete(query);
+    CFRelease(query);
+
     if(status == errSecSuccess){
         return YES;
     }

@@ -56,7 +56,7 @@
 		return INIP_ERROR_INVALID_SECTION;
 	
 	*l = 0;
-	name = [NSString stringWithCString: line +1];
+	name = [NSString stringWithCString: line +1 encoding:NSASCIIStringEncoding];
 	section = [[INISection alloc] initWithName: name];
 	[sections setObject: section forKey: name];
 	csection = section;
@@ -77,8 +77,8 @@
 		return INIP_ERROR_INVALID_ASSIGNMENT;
 	
 	*value++ = 0;
-	n = [NSString stringWithCString: name];
-	v = [NSString stringWithCString: value];
+	n = [NSString stringWithCString: name encoding:NSASCIIStringEncoding];
+	v = [NSString stringWithCString: value encoding:NSASCIIStringEncoding];
 	[csection insert: n value: v];
 	return INIP_ERROR_NONE;
 }

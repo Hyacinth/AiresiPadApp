@@ -50,6 +50,7 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(localNotificationhandler:) name:NOTIFICATION_LOGOUT_FAILED object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(localNotificationhandler:) name:NOTIFICATION_LOGOUT_SUCCESS object:nil];
+    
     User *tempUser = [[mSingleton getPersistentStoreManager] getAiresUser];
     [_usernameLabel setText:[NSString stringWithFormat:@"%@ %@",tempUser.user_FirstName,tempUser.user_LastName]];
 

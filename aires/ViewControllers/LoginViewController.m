@@ -37,7 +37,7 @@
     // Do any additional setup after loading the view from its nib.
     
     loginFieldsView.delegate = self;
-        
+    
     if(!mLoginSettingsViewController)
         mLoginSettingsViewController = [[LoginSettingsViewController alloc] init];
     
@@ -49,7 +49,8 @@
     [forgotPasswordButton.titleLabel setFont:[UIFont fontWithName:@"ProximaNova-Regular" size:14.0]];
     [loginButton.titleLabel setFont:[UIFont fontWithName:@"ProximaNova-Bold" size:24]];
     [welcomeLabel setFont:[UIFont fontWithName:@"ProximaNova-Regular" size:24]];
-    
+    [welcomeLabel setTextColor:[UIColor blackColor]];
+
     loginButton.alpha = 0;
     welcomeLabel.alpha = 0;
     forgotPasswordButton.alpha = 0;
@@ -89,7 +90,17 @@
 {
     if (isLoggingIn)
     {
-        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_LOGIN_SUCCESS object:self];
+        //If user deletes the app and reinstalls
+        if(![[mSingleton getPersistentStoreManager] getAiresUser])
+        {
+            NSString *user = [[mSingleton getSecurityManager] getValueForKey:LOGIN_USERNAME];
+            NSString *pwd = [[mSingleton getSecurityManager] getValueForKey:LOGIN_PASSWORD];
+            [[mSingleton getWebServiceManager] loginWithUserName:user andpassword:pwd];
+        }
+        else
+        {
+            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_LOGIN_SUCCESS object:self];
+        }
         isLoggingIn = FALSE;
     }
 }
@@ -129,12 +140,13 @@
     
     [loginFieldsView setUserFieldText:@"gbtpa\\dcreggett"];
     //[loginFieldsView setPassFieldText:@"password123"];
-
+    
 }
 
 -(void) viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
+    [loginFieldsView hideLoadingMessage];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
@@ -186,6 +198,7 @@
 
 -(IBAction)onForgotPassword
 {
+    [welcomeLabel setTextColor:[UIColor blackColor]];
     welcomeLabel.text = @"Welcome. Please login.";
     
     NSURL *url = [NSURL URLWithString:@"http://password.ajg.com"];
@@ -195,6 +208,7 @@
 
 -(IBAction)onSettings
 {
+    [welcomeLabel setTextColor:[UIColor blackColor]];
     welcomeLabel.text = @"Welcome. Please login.";
     
     if(!mLoginSettingsViewController)
@@ -215,6 +229,7 @@
 #pragma mark Private methods
 -(void)adjustLoginFieldFrame:(BOOL)flag
 {
+    [welcomeLabel setTextColor:[UIColor blackColor]];
     welcomeLabel.text = @"Welcome. Please login.";
     
     CGRect labelFrame;
@@ -260,8 +275,9 @@
     if ([[notification name] isEqualToString:NOTIFICATION_LOGIN_FAILED])
     {
         NSLog(@"Show Error Message...");
-        
+        [welcomeLabel setTextColor:[UIColor redColor]];
         welcomeLabel.text = @"Login Failed";
+        [loginFieldsView hideLoadingMessage];
     }
     else if ([[notification name] isEqualToString:NOTIFICATION_LOGIN_SUCCESS])
     {
@@ -282,15 +298,15 @@
     {
         NSLog(@"Show Error Message...");
         
+        [welcomeLabel setTextColor:[UIColor redColor]];
         welcomeLabel.text = @"Login Failed";
+        [loginFieldsView hideLoadingMessage];
     }
     else if ([[notification name] isEqualToString:NOTIFICATION_ENVIRONMENT_SUCCESS])
     {
+        [welcomeLabel setTextColor:[UIColor blackColor]];
         welcomeLabel.text = @"Welcome. Please login.";
     }
-    
-    [loginFieldsView hideLoadingMessage];
-    
 }
 
 

@@ -509,7 +509,7 @@
 #pragma mark SampleProtectionEquipment DataModel methods
 -(void)storeSampleProtectionEquipmentDetails:(NSArray *)sampleProtectionEquipment forSample:(Sample *)sample
 {
-    NSLog(@"  sampleMeaseurement :%d",[sampleProtectionEquipment count]);
+    NSLog(@"  sampleProtectionEquipment :%d",[sampleProtectionEquipment count]);
     for (NSDictionary *dict in sampleProtectionEquipment)
     {
         SampleProtectionEquipment *mSampleProtectionEquipment = [NSEntityDescription

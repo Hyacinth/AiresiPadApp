@@ -43,6 +43,7 @@
 	NSArray *projectDetails = [config objectForKey:@"response"];
     NSLog(@"projectDetails Data:%@ %@",[projectDetails class ],projectDetails);
     [[mSingleton getPersistentStoreManager] storeProjectDetails:projectDetails ];
+    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_LOGIN_SUCCESS object:self];
 }
 
 @end

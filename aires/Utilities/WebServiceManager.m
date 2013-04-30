@@ -73,12 +73,10 @@
     
     parser = [[INIParser alloc] init];
     
-    int err;
-    
     const char *stringAsChar = [path cStringUsingEncoding:[NSString defaultCStringEncoding]];
     char *cpy = calloc([path length]+1, 1);
     strncpy(cpy, stringAsChar, [path length]);
-    err = [parser parse: cpy];
+    [parser parse: cpy];
     
     NSString * str;
     if(!mSingleton.environmentURLs)
@@ -132,7 +130,6 @@
          // Print the response body in text
          [[mSingleton getJSONParser] performSelectorOnMainThread:@selector(parseLoginDetails:) withObject:responseObject waitUntilDone:YES];
          [self fetchProjectsforUser];
-         [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_LOGIN_SUCCESS object:self];
          
      }failure:^(AFHTTPRequestOperation *operation, NSError *error)
      {
@@ -169,9 +166,11 @@
          
          [[mSingleton getJSONParser] performSelectorOnMainThread:@selector(parseUserProjectData:) withObject:responseObject waitUntilDone:YES];
          
-     }failure:^(AFHTTPRequestOperation *operation, NSError *error)
+     }
+                                     failure:^(AFHTTPRequestOperation *operation, NSError *error)
      {
          NSLog(@"Error: %@", error);
+         [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_LOGIN_FAILED object:self];
      }];
     
     ;
