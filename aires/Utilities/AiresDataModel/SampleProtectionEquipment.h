@@ -16,5 +16,6 @@
 @property (nonatomic, retain) NSString * sampleProtectionEquipment_Name;
 @property (nonatomic, retain) NSNumber * sampleProtectionEquipmentID;
 @property (nonatomic, retain) Sample *fromSample;
+@property (nonatomic, retain) NSString * contentType;
 
 @end

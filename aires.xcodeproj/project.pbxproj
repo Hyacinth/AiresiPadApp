@@ -43,6 +43,7 @@
 		989B043D17295C83001D3FFD /* Project.m in Sources */ = {isa = PBXBuildFile; fileRef = 98B68CDE172913770065D411 /* Project.m */; };
 		98A241DA17210FEF001A14F0 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 98A241CA17210FEF001A14F0 /* Model.xcdatamodeld */; };
 		98A241E317211620001A14F0 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98A241E217211620001A14F0 /* CoreData.framework */; };
+		98A7D1D5172FD0B1008794FE /* DeviceType.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A7D1D4172FD0B1008794FE /* DeviceType.m */; };
 		98B37B6317153B5C00F78A54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 98659CB1170DA3FD00A0DEF8 /* main.m */; };
 		98B37B6D17153B9E00F78A54 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 98B37B6717153B9E00F78A54 /* InfoPlist.strings */; };
 		98B37B7317153BAF00F78A54 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 98B37B7217153BAF00F78A54 /* AppDelegate.m */; };
@@ -257,6 +258,8 @@
 		9887016B172533D1007FB144 /* PersistentStoreManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersistentStoreManager.m; sourceTree = "<group>"; };
 		98A241CB17210FEF001A14F0 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		98A241E217211620001A14F0 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		98A7D1D3172FD0B1008794FE /* DeviceType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceType.h; sourceTree = "<group>"; };
+		98A7D1D4172FD0B1008794FE /* DeviceType.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceType.m; sourceTree = "<group>"; };
 		98B37B6817153B9E00F78A54 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		98B37B7117153BAF00F78A54 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		98B37B7217153BAF00F78A54 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -573,6 +576,8 @@
 				98FDD374172A9940001A9295 /* SampleMeasurement.m */,
 				98DDACA5172E48F10031308B /* SampleProtectionEquipment.h */,
 				98DDACA6172E48F10031308B /* SampleProtectionEquipment.m */,
+				98A7D1D3172FD0B1008794FE /* DeviceType.h */,
+				98A7D1D4172FD0B1008794FE /* DeviceType.m */,
 			);
 			path = AiresDataModel;
 			sourceTree = "<group>";
@@ -1060,6 +1065,7 @@
 				98FDD378172A9941001A9295 /* SampleTotalMeasurement.m in Sources */,
 				98DDACA7172E48F10031308B /* SampleProtectionEquipment.m in Sources */,
 				84EBF217172E92D700986667 /* ProjectDetailView.m in Sources */,
+				98A7D1D5172FD0B1008794FE /* DeviceType.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -50,24 +50,31 @@
 {
     NSError *error;
     NSDictionary * config = [[CJSONDeserializer deserializer] deserializeAsDictionary:jsonData error:&error];
-	NSArray *projectDetails = [config objectForKey:@"d"];
-    NSLog(@"Chemical Data:%@ %@",[projectDetails class ],projectDetails);
+	NSArray *chemicalDetails = [config objectForKey:@"value"];
+    NSLog(@"Chemical Data:%@ %@",[chemicalDetails class ],chemicalDetails);
+    [[mSingleton getPersistentStoreManager] saveChemicalList:chemicalDetails];
 }
 
 -(void)parseDeviceTypeList:(NSData *)jsonData
 {
     NSError *error;
     NSDictionary * config = [[CJSONDeserializer deserializer] deserializeAsDictionary:jsonData error:&error];
-	NSArray *projectDetails = [config objectForKey:@"d"];
-    NSLog(@"Device Type Data:%@ %@",[projectDetails class ],projectDetails);
+	NSArray *deviceDetails = [config objectForKey:@"value"];
+    NSLog(@"Device Type Data:%@ %@",[deviceDetails class ],deviceDetails);
+    [[mSingleton getPersistentStoreManager] saveDeviceTypeList:deviceDetails];
 }
 
 -(void)parseProtectionEquipmentList:(NSData *)jsonData
 {
     NSError *error;
     NSDictionary * config = [[CJSONDeserializer deserializer] deserializeAsDictionary:jsonData error:&error];
-	NSArray *projectDetails = [config objectForKey:@"d"];
-    NSLog(@"Equipment Data:%@ %@",[projectDetails class ],projectDetails);
+	NSArray *equipmentDetails = [config objectForKey:@"value"];
+    NSLog(@"Equipment Data:%@ %@",[equipmentDetails class ],equipmentDetails);
+    [[mSingleton getPersistentStoreManager] saveProtectionEquipmentList:equipmentDetails];
+    
+    [[mSingleton getPersistentStoreManager] getChemicalList];
+    [[mSingleton getPersistentStoreManager] getDeviceTypeList];
+    [[mSingleton getPersistentStoreManager] getProtectionEquipmentList];
 }
 
 @end

@@ -15,5 +15,6 @@
 @dynamic sampleProtectionEquipment_Name;
 @dynamic sampleProtectionEquipmentID;
 @dynamic fromSample;
+@dynamic contentType;
 
 @end

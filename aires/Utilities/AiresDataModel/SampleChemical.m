@@ -21,5 +21,6 @@
 @dynamic sampleChemical_PELTWAFlag;
 @dynamic sampleChemical_PELSTELFlag;
 @dynamic fromSample;
+@dynamic contentType;
 
 @end

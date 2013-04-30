@@ -22,5 +22,6 @@
 @property (nonatomic, retain) NSNumber * sampleChemical_PELTWAFlag;
 @property (nonatomic, retain) NSNumber * sampleChemical_PELSTELFlag;
 @property (nonatomic, retain) Sample *fromSample;
+@property (nonatomic, retain) NSString * contentType;
 
 @end

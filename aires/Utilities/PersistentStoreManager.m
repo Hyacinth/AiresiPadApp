@@ -546,4 +546,122 @@
     return finalResult;
 }
 
+#pragma mark -
+#pragma mark List DataModel methods
+-(void)saveChemicalList:(NSArray *)chemicalArray
+{
+    NSLog(@"  SampleChemical :%d",[chemicalArray count]);
+    for (NSDictionary *dict in chemicalArray)
+    {
+        SampleChemical *mSampleChemical = [NSEntityDescription
+                                           insertNewObjectForEntityForName:@"SampleChemical"
+                                           inManagedObjectContext:[self mainContext]];
+        
+        if (![[dict valueForKey:@"Chemical"] isKindOfClass:[NSNull class]])
+            mSampleChemical.sampleChemical_Name = [dict objectForKey:@"Chemical"];
+        if (![[dict valueForKey:@"PELCFlag"] isKindOfClass:[NSNull class]])
+            mSampleChemical.sampleChemical_PELCFlag = [dict objectForKey:@"PELCFlag"];
+        if (![[dict valueForKey:@"PELSTELFlag"] isKindOfClass:[NSNull class]])
+            mSampleChemical.sampleChemical_PELSTELFlag = [dict objectForKey:@"PELSTELFlag"];
+        if (![[dict valueForKey:@"PELTWAFlag"] isKindOfClass:[NSNull class]])
+            mSampleChemical.sampleChemical_PELTWAFlag = [dict objectForKey:@"PELTWAFlag"];
+        if (![[dict valueForKey:@"TLVCFlag"] isKindOfClass:[NSNull class]])
+            mSampleChemical.sampleChemical_TLVCFlag = [dict objectForKey:@"TLVCFlag"];
+        if (![[dict valueForKey:@"TLVSTELFlag"] isKindOfClass:[NSNull class]])
+            mSampleChemical.sampleChemical_TLVSTELFlag = [dict objectForKey:@"TLVSTELFlag"];
+        if (![[dict valueForKey:@"TLVTWAFlag"] isKindOfClass:[NSNull class]])
+            mSampleChemical.sampleChemical_TLVTWAFlag = [dict objectForKey:@"TLVTWAFlag"];
+        if (![[dict valueForKey:@"ChemicalId"] isKindOfClass:[NSNull class]])
+            mSampleChemical.sampleChemicalID = [dict objectForKey:@"ChemicalId"];
+       
+        mSampleChemical.contentType = @"ListData";
+        [[self mainContext] save:nil];
+    }
+
+}
+
+-(NSArray *)getChemicalList
+{
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setEntity:[NSEntityDescription entityForName:@"SampleChemical" inManagedObjectContext:[self mainContext]]];
+    NSArray *results = [[self mainContext] executeFetchRequest:request error:nil];
+    NSMutableArray *finalResult = [NSMutableArray arrayWithArray:results];
+    for (SampleChemical *mSampleChemical in results) {
+        if (![mSampleChemical.contentType isEqualToString:@"ListData"]) {
+            [finalResult removeObject:mSampleChemical];
+        }
+    }
+    return finalResult;
+}
+
+-(void)saveDeviceTypeList:(NSArray *)deviceArray
+{
+    NSLog(@"  sampleDeviceArray :%d",[deviceArray count]);
+    for (NSDictionary *dict in deviceArray)
+    {
+        DeviceType *mDeviceType = [NSEntityDescription
+                                                                 insertNewObjectForEntityForName:@"DeviceType"
+                                                                 inManagedObjectContext:[self mainContext]];
+        
+        if (![[dict valueForKey:@"TypeName"] isKindOfClass:[NSNull class]])
+            mDeviceType.deviceType_DeviceTypeName = [dict valueForKey:@"TypeName"];
+        if (![[dict valueForKey:@"DeviceTypeId"] isKindOfClass:[NSNull class]])
+            mDeviceType.deviceType_DeviceTypeID = [dict valueForKey:@"DeviceTypeId"];
+        if (![[dict valueForKey:@"DeviceTypeId"] isKindOfClass:[NSNull class]])
+            mDeviceType.deviceTypeID = [dict valueForKey:@"DeviceTypeId"];
+        
+        mDeviceType.contentType = @"ListData";
+        [[self mainContext] save:nil];
+    }
+
+}
+
+-(NSArray *)getDeviceTypeList
+{
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setEntity:[NSEntityDescription entityForName:@"DeviceType" inManagedObjectContext:[self mainContext]]];
+    NSArray *results = [[self mainContext] executeFetchRequest:request error:nil];
+    NSMutableArray *finalResult = [NSMutableArray arrayWithArray:results];
+    for (DeviceType *mDeviceType in results) {
+        if (![mDeviceType.contentType isEqualToString:@"ListData"]) {
+            [finalResult removeObject:mDeviceType];
+        }
+    }
+    return finalResult;
+
+}
+
+-(void)saveProtectionEquipmentList:(NSArray *)equipmentArray
+{
+    NSLog(@"  sampleProtectionEquipment :%d",[equipmentArray count]);
+    for (NSDictionary *dict in equipmentArray)
+    {
+        SampleProtectionEquipment *mSampleProtectionEquipment = [NSEntityDescription
+                                                                 insertNewObjectForEntityForName:@"SampleProtectionEquipment"
+                                                                 inManagedObjectContext:[self mainContext]];
+        
+        if (![[dict valueForKey:@"ProtectionEquipmentName"] isKindOfClass:[NSNull class]])
+            mSampleProtectionEquipment.sampleProtectionEquipment_Name = [dict valueForKey:@"ProtectionEquipmentName"];
+        if (![[dict valueForKey:@"PPEId"] isKindOfClass:[NSNull class]])
+            mSampleProtectionEquipment.sampleProtectionEquipmentID = [dict valueForKey:@"PPEId"];
+        
+        mSampleProtectionEquipment.contentType = @"ListData";
+        [[self mainContext] save:nil];
+    }
+
+}
+-(NSArray *)getProtectionEquipmentList
+{
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setEntity:[NSEntityDescription entityForName:@"SampleProtectionEquipment" inManagedObjectContext:[self mainContext]]];
+    NSArray *results = [[self mainContext] executeFetchRequest:request error:nil];
+    NSMutableArray *finalResult = [NSMutableArray arrayWithArray:results];
+    for (SampleProtectionEquipment *mSampleProtectionEquipment in results) {
+        if (![mSampleProtectionEquipment.contentType isEqualToString:@"ListData"]) {
+            [finalResult removeObject:mSampleProtectionEquipment];
+        }
+    }
+    return finalResult;
+}
+
 @end
