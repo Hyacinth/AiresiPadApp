@@ -30,6 +30,7 @@
 @property (retain, nonatomic) IBOutlet UIButton *btnSettings;
 @property (retain, nonatomic) IBOutlet UIButton *btnRefresh;
 
+@property (retain, nonatomic) NSMutableArray *projectsArray;
 
 -(IBAction)onSettings:(id)sender;
 

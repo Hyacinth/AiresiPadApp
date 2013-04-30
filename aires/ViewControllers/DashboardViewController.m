@@ -60,6 +60,9 @@
     User *tempUser = [[mSingleton getPersistentStoreManager] getAiresUser];
     [_usernameLabel setText:[NSString stringWithFormat:@"%@ %@",tempUser.user_FirstName,tempUser.user_LastName]];
 
+    _projectsArray = [[NSMutableArray alloc] init];
+    [_projectsArray addObjectsFromArray:[[mSingleton getPersistentStoreManager] getUserProjects]];
+    [_activeProjectsCarousel reloadData];
 }
 
 -(void)awakeFromNib
@@ -105,17 +108,37 @@
     _activeProjectsCarousel.layer.mask = gradientMask;
 }
 
+-(IBAction)onSettings:(id)sender
+{
+    if(!mDashboardSettingsViewController)
+        mDashboardSettingsViewController = [[DashboardSettingsViewController alloc] init];
+    
+    if(!popover)
+        popover = [[UIPopoverController alloc]initWithContentViewController:mDashboardSettingsViewController];
+    
+    [popover setContentViewController:mDashboardSettingsViewController];
+    [popover setPopoverContentSize:CGSizeMake(340, 130)];
+    [popover setDelegate:self];
+    
+    [popover presentPopoverFromRect:self.btnSettings.bounds inView:self.btnSettings permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
+}
+
 #pragma mark - iCarousel datasource
+
+- (NSUInteger)numberOfItemsInCarousel:(iCarousel *)aCarousel
+{
+    return (aCarousel == _activeProjectsCarousel)?_projectsArray.count:4;
+}
 
 - (UIView *)carousel:(iCarousel *)aCarousel viewForItemAtIndex:(NSUInteger)index reusingView:(UIView*)view
 {
-
     if(aCarousel == _activeProjectsCarousel)
     {
         if (view == nil)
         {            
-            // content view            
+            // content view
             ActiveProjectTileView *tileView = [[ActiveProjectTileView alloc] initWithFrame:CGRectMake(0, 0, 690, 480)];
+            tileView.project = (Project*)[_projectsArray objectAtIndex:index];
             return tileView;
         }
         return view;
@@ -138,11 +161,6 @@
         }
         return view;
     }
-}
-
-- (NSUInteger)numberOfItemsInCarousel:(iCarousel *)aCarousel
-{
-    return (aCarousel == _activeProjectsCarousel)?5:4;
 }
 
 #pragma mark - iCarousel delegate
@@ -172,34 +190,6 @@
     }
 }
 
-
--(IBAction)onSettings:(id)sender
-{
-    if(!mDashboardSettingsViewController)
-        mDashboardSettingsViewController = [[DashboardSettingsViewController alloc] init];
-    
-    if(!popover)
-        popover = [[UIPopoverController alloc]initWithContentViewController:mDashboardSettingsViewController];
-    
-    [popover setContentViewController:mDashboardSettingsViewController];
-    [popover setPopoverContentSize:CGSizeMake(340, 130)];
-    [popover setDelegate:self];
-    
-    [popover presentPopoverFromRect:self.btnSettings.bounds inView:self.btnSettings permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
-}
-
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-- (void)viewDidUnload
-{   
-    [super viewDidUnload];
-}
-
 #pragma mark-
 #pragma mark Notification Handler
 - (void) localNotificationhandler:(NSNotification *) notification
@@ -221,6 +211,19 @@
         [self.navigationController.view.layer addAnimation:transition forKey:kCATransition];
         [self.navigationController popViewControllerAnimated:NO];
     }
+}
+
+#pragma mark - Memory Management
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+- (void)viewDidUnload
+{
+    [super viewDidUnload];
 }
 
 @end

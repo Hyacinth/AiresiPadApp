@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+@class Project;
 
 @interface ActiveProjectTileView : UIView
+
+@property(retain, nonatomic) Project *project;
 
 @end

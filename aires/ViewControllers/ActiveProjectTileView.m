@@ -8,6 +8,7 @@
 
 #import "ActiveProjectTileView.h"
 #import <QuartzCore/QuartzCore.h>
+#import "Project.h"
 
 @interface ActiveProjectTileView ()
 {
@@ -83,7 +84,7 @@
         [self addSubview:emailButton];
         
         [emailButton setImage:[UIImage imageNamed:@"email.png"] forState:UIControlStateNormal];
-        [emailButton setTitle:@"seanbeckley@gmail.com" forState:UIControlStateNormal];
+        [emailButton setTitle:_project.project_LabEmail forState:UIControlStateNormal];
         [emailButton setTitleColor:[UIColor colorWithRed:28.0f/255.0f green:34.0f/255.0f blue:39.0f/255.0f alpha:1.0f] forState:UIControlStateNormal];
         [emailButton.titleLabel setFont:font14Bold];
         
@@ -119,36 +120,46 @@
 	// Set the fill color to white.
 	CGContextSetFillColorWithColor(context, [UIColor colorWithRed:28.0f/255.0f green:34.0f/255.0f blue:39.0f/255.0f alpha:1.0f].CGColor);
     
-    [@"28" drawInRect:CGRectMake(40, 40, 60, 40)
+    NSDate *now = _project.project_DateOnsite;
+    NSDateFormatter *weekday = [[NSDateFormatter alloc] init];
+    [weekday setDateFormat: @"EEEE"];
+    NSLog(@"The day of the week is: %@", [weekday stringFromDate:now]);
+    
+    NSDateComponents *components = [[NSCalendar currentCalendar] components:NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit fromDate:_project.project_DateOnsite];    
+    
+    NSInteger day = [components day];
+    NSInteger month = [components month];
+    NSInteger year = [components year];
+    
+    [[NSString stringWithFormat:@"%d", day] drawInRect:CGRectMake(40, 40, 60, 40)
              withFont:dateFont
         lineBreakMode:UILineBreakModeTailTruncation
             alignment:UITextAlignmentLeft];
     
-    [@"Thursday" drawInRect:CGRectMake(105, 45, 80, 20)
+    [[weekday stringFromDate:now] drawInRect:CGRectMake(105, 45, 80, 20)
                    withFont:dayFont
               lineBreakMode:UILineBreakModeTailTruncation
                   alignment:UITextAlignmentLeft];
     
-    [@"Mar 2013" drawInRect:CGRectMake(105, 65, 80, 20)
+    [[NSString stringWithFormat:@"%d %d", month, year] drawInRect:CGRectMake(105, 65, 80, 20)
                    withFont:monthYearFont
               lineBreakMode:UILineBreakModeTailTruncation
                   alignment:UITextAlignmentLeft];
     
-    [@"Risk Assesment for Sigma-Aldrich" drawInRect:CGRectMake(40, 105, 630, 20)
+    [_project.project_ProjectNumber drawInRect:CGRectMake(40, 105, 630, 20)
                                            withFont:titleFont
                                       lineBreakMode:UILineBreakModeTailTruncation
                                           alignment:UITextAlignmentLeft];
     
-    [@"Sigma-Aldrich" drawInRect:CGRectMake(40, 135, 630, 20)
-                        withFont:clientFont
-                   lineBreakMode:UILineBreakModeTailTruncation
-                       alignment:UITextAlignmentLeft];
+    [_project.project_ClientName drawInRect:CGRectMake(40, 135, 630, 20)
+                                   withFont:clientFont
+                              lineBreakMode:UILineBreakModeTailTruncation
+                                  alignment:UITextAlignmentLeft];
     
-    [@"Conduct On-site Investigation, Risk Assessment, Building Material Review (Lead, erial RevieMold, Asbestos). Conduct Onerial Revietion, Risk Assessment, Building Material Review (Lead, Mold, Asbestos), Building Material Review (Lead, Mold, Asbestos), Building Material Review (Lead, Mold, Asbestos), Building Material Review (Lead, Mold, Asbestos)."
-     drawInRect:CGRectMake(40, 180, 630, 60)
-     withFont:font14Regular
-     lineBreakMode:UILineBreakModeTailTruncation
-     alignment:UITextAlignmentLeft];
+    [_project.project_ProjectDescription drawInRect:CGRectMake(40, 180, 630, 60)
+                                           withFont:font14Regular
+                                      lineBreakMode:UILineBreakModeTailTruncation
+                                          alignment:UITextAlignmentLeft];
     
     [clockImage drawInRect:CGRectMake(40, 270, 25, 25)];
     
@@ -179,7 +190,7 @@
                      lineBreakMode:UILineBreakModeTailTruncation
                          alignment:UITextAlignmentLeft];
     
-    [@"013XYZ Lab" drawInRect:CGRectMake(368, 282, 100, 20)
+    [_project.project_LabName drawInRect:CGRectMake(368, 282, 100, 20)
                      withFont:font14Bold
                 lineBreakMode:UILineBreakModeTailTruncation
                     alignment:UITextAlignmentLeft];
@@ -208,26 +219,26 @@
                      lineBreakMode:UILineBreakModeTailTruncation
                          alignment:UITextAlignmentLeft];
     
-    [@"Sean Beckley" drawInRect:CGRectMake(78, 377, 100, 20)
+    [[NSString stringWithFormat:@"%@ %@", _project.project_ContactFirstName, _project.project_ContactLastName] drawInRect:CGRectMake(78, 377, 100, 20)
                   withFont:font14Bold
              lineBreakMode:UILineBreakModeTailTruncation
                  alignment:UITextAlignmentLeft];
     
     [mapImage drawInRect:CGRectMake(200, 365, 25, 25)];
 
-    [@"3951 Westerre Parkway, Suite 350" drawInRect:CGRectMake(238, 362, 250, 10)
+    [_project.project_LocationAddress drawInRect:CGRectMake(238, 362, 250, 10)
                           withFont:font14Regular
                      lineBreakMode:UILineBreakModeTailTruncation
                          alignment:UITextAlignmentLeft];
     
-    [@"Richmond, VA 23233" drawInRect:CGRectMake(238, 379, 250, 10)
+    [_project.project_LocationAddress2 drawInRect:CGRectMake(238, 379, 250, 10)
                      withFont:font14Regular
                 lineBreakMode:UILineBreakModeTailTruncation
                     alignment:UITextAlignmentLeft];
     
     [phoneImage drawInRect:CGRectMake(40, 420, 25, 25)];
 
-    [@"(808) 717-421" drawInRect:CGRectMake(78, 423, 100, 20)
+    [_project.project_ContactPhoneNumber drawInRect:CGRectMake(78, 423, 100, 20)
                        withFont:font14Bold
                   lineBreakMode:UILineBreakModeTailTruncation
                       alignment:UITextAlignmentLeft];
