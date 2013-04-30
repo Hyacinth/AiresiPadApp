@@ -40,6 +40,7 @@
         self.backgroundColor = [UIColor clearColor];
         
         self.layer.cornerRadius = 8.0f;
+        self.layer.masksToBounds = YES;
         self.layer.shadowRadius = 15.0f;
         self.layer.shadowOpacity = 0.75f;
         self.layer.shadowColor = [UIColor blackColor].CGColor;
@@ -50,9 +51,8 @@
         blueLayer.frame = CGRectMake(0, 0, self.bounds.size.width, 6.0f);
         blueLayer.backgroundColor = [UIColor colorWithRed:0 green:138.0f/255.0f blue:255.0f/255.0f alpha:1.0f].CGColor;
         [self.layer insertSublayer:blueLayer atIndex:0];
-        
+        // mask for corner radius
         UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:blueLayer.bounds byRoundingCorners:(UIRectCornerTopLeft | UIRectCornerTopRight) cornerRadii:CGSizeMake(6.0, 6.0)];
-        
         CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];
         maskLayer.frame = blueLayer.bounds;
         maskLayer.path = maskPath.CGPath;
@@ -111,12 +111,8 @@
     
     // Get the current context so we can draw.
     CGContextRef context = UIGraphicsGetCurrentContext();
-    
-    CGRect myRect = rect;
-    myRect.origin.y += 6.0f;
-    myRect.size.height -= 12.0f;
-    CGPoint startPoint = CGPointMake(CGRectGetMidX(myRect), CGRectGetMinY(myRect));
-    CGPoint endPoint = CGPointMake(CGRectGetMidX(myRect), CGRectGetMaxY(myRect));
+    CGPoint startPoint = CGPointMake(CGRectGetMidX(rect), CGRectGetMinY(rect));
+    CGPoint endPoint = CGPointMake(CGRectGetMidX(rect), CGRectGetMaxY(rect));
     CGContextDrawLinearGradient(context, gradient, startPoint, endPoint, 0);
     CGGradientRelease(gradient), gradient = NULL;
     
@@ -204,7 +200,6 @@
     CGContextAddLineToPoint(context, 650, 331); //draw to this point
     // and now draw the Path!
     CGContextStrokePath(context);
-    
     
     [contactImage drawInRect:CGRectMake(40, 365, 25, 25)];
 
