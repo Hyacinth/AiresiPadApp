@@ -46,4 +46,28 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_LOGIN_SUCCESS object:self];
 }
 
+-(void)parseChemicalList:(NSData *)jsonData
+{
+    NSError *error;
+    NSDictionary * config = [[CJSONDeserializer deserializer] deserializeAsDictionary:jsonData error:&error];
+	NSArray *projectDetails = [config objectForKey:@"d"];
+    NSLog(@"Chemical Data:%@ %@",[projectDetails class ],projectDetails);
+}
+
+-(void)parseDeviceTypeList:(NSData *)jsonData
+{
+    NSError *error;
+    NSDictionary * config = [[CJSONDeserializer deserializer] deserializeAsDictionary:jsonData error:&error];
+	NSArray *projectDetails = [config objectForKey:@"d"];
+    NSLog(@"Device Type Data:%@ %@",[projectDetails class ],projectDetails);
+}
+
+-(void)parseProtectionEquipmentList:(NSData *)jsonData
+{
+    NSError *error;
+    NSDictionary * config = [[CJSONDeserializer deserializer] deserializeAsDictionary:jsonData error:&error];
+	NSArray *projectDetails = [config objectForKey:@"d"];
+    NSLog(@"Equipment Data:%@ %@",[projectDetails class ],projectDetails);
+}
+
 @end

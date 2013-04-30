@@ -119,7 +119,7 @@
     [httpClient setDefaultHeader:@"username" value:username];
     [httpClient setDefaultHeader:@"password" value:password];
     
-    NSDictionary *path = [AiresService objectForKey:@"Path"];
+    NSDictionary *path = [AiresService objectForKey:@"Service Path"];
     NSString *repativeURL = [path objectForKey:@"Login"];
     
     NSMutableURLRequest *request = [httpClient requestWithMethod:@"GET" path:repativeURL parameters:nil];
@@ -131,7 +131,8 @@
          [[mSingleton getJSONParser] performSelectorOnMainThread:@selector(parseLoginDetails:) withObject:responseObject waitUntilDone:YES];
          [self fetchProjectsforUser];
          
-     }failure:^(AFHTTPRequestOperation *operation, NSError *error)
+     }
+                                     failure:^(AFHTTPRequestOperation *operation, NSError *error)
      {
          NSLog(@"Error: %@", error);
          [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_LOGIN_FAILED object:self];
@@ -153,7 +154,7 @@
     [httpClient setDefaultHeader:@"Accept" value:@"application/json;odata=verbose"];
     [httpClient setDefaultHeader:@"access_token" value:[[mSingleton getSecurityManager] getValueForKey:LOGIN_ACCESSTOKEN]];
     
-    NSDictionary *path = [AiresService objectForKey:@"Path"];
+    NSDictionary *path = [AiresService objectForKey:@"Service Path"];
     NSString *repativeURL = [path objectForKey:@"Project"];
     
     NSMutableURLRequest *request = [httpClient requestWithMethod:@"GET" path:repativeURL parameters:nil];
@@ -165,6 +166,10 @@
          NSLog(@"Response: %@", [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding]);
          
          [[mSingleton getJSONParser] performSelectorOnMainThread:@selector(parseUserProjectData:) withObject:responseObject waitUntilDone:YES];
+        
+         [self performSelectorOnMainThread:@selector(getChemicalsList) withObject:nil waitUntilDone:YES];
+         [self performSelectorOnMainThread:@selector(getDeviceTypesList) withObject:nil waitUntilDone:YES];
+         [self performSelectorOnMainThread:@selector(getProtectionEquipmentsList) withObject:nil waitUntilDone:YES];
          
      }
                                      failure:^(AFHTTPRequestOperation *operation, NSError *error)
@@ -190,7 +195,7 @@
     [httpClient setDefaultHeader:@"Accept" value:@"application/json;odata=verbose"];
     [httpClient setDefaultHeader:@"access_token" value:[[mSingleton getSecurityManager] getValueForKey:LOGIN_ACCESSTOKEN]];
     
-    NSDictionary *path = [AiresService objectForKey:@"Path"];
+    NSDictionary *path = [AiresService objectForKey:@"Service Path"];
     NSString *repativeURL = [path objectForKey:@"Logout"];
     
     NSMutableURLRequest *request = [httpClient requestWithMethod:@"GET" path:repativeURL parameters:nil];
@@ -202,7 +207,8 @@
          NSLog(@"Response: %@", [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding]);
          [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_LOGOUT_SUCCESS object:self];
          
-     }failure:^(AFHTTPRequestOperation *operation, NSError *error)
+     }
+                                     failure:^(AFHTTPRequestOperation *operation, NSError *error)
      {
          NSLog(@"Error: %@", error);
          [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_LOGOUT_FAILED object:self];
@@ -212,6 +218,109 @@
     ;
     [operation start];
     
+}
+
+-(void)getChemicalsList
+{
+    NSString *URLString = [AiresService objectForKey:@"Data Service URL"];
+    if (!URLString)
+        return;
+    
+    NSURL *url = [NSURL URLWithString:URLString];
+    AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:url];
+    [httpClient registerHTTPOperationClass:[AFJSONRequestOperation class]];
+    [httpClient setDefaultHeader:@"Accept" value:@"application/json;odata=verbose"];
+    [httpClient setDefaultHeader:@"access_token" value:[[mSingleton getSecurityManager] getValueForKey:LOGIN_ACCESSTOKEN]];
+    
+    NSDictionary *path = [AiresService objectForKey:@"Data Service Path"];
+    NSString *repativeURL = [path objectForKey:@"Chemicals"];
+    
+    NSMutableURLRequest *request = [httpClient requestWithMethod:@"GET" path:repativeURL parameters:nil];
+    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+    [httpClient registerHTTPOperationClass:[AFHTTPRequestOperation class]];
+    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject)
+     {
+         // Print the response body in text
+         NSLog(@"Chemicals: %@", [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding]);
+         [[mSingleton getJSONParser] performSelectorOnMainThread:@selector(parseChemicalList:) withObject:responseObject waitUntilDone:YES];
+         
+     }
+                                     failure:^(AFHTTPRequestOperation *operation, NSError *error)
+     {
+         NSLog(@"Error: %@", error);
+         
+     }];
+    
+    ;
+    [operation start];
+}
+
+-(void)getDeviceTypesList
+{
+    NSString *URLString = [AiresService objectForKey:@"Data Service URL"];
+    if (!URLString)
+        return;
+    
+    NSURL *url = [NSURL URLWithString:URLString];
+    AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:url];
+    [httpClient registerHTTPOperationClass:[AFJSONRequestOperation class]];
+    [httpClient setDefaultHeader:@"Accept" value:@"application/json;odata=verbose"];
+    [httpClient setDefaultHeader:@"access_token" value:[[mSingleton getSecurityManager] getValueForKey:LOGIN_ACCESSTOKEN]];
+    
+    NSDictionary *path = [AiresService objectForKey:@"Data Service Path"];
+    NSString *repativeURL = [path objectForKey:@"Device Types"];
+    
+    NSMutableURLRequest *request = [httpClient requestWithMethod:@"GET" path:repativeURL parameters:nil];
+    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+    [httpClient registerHTTPOperationClass:[AFHTTPRequestOperation class]];
+    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject)
+     {
+         // Print the response body in text
+         NSLog(@"DeviceTypes: %@", [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding]);
+         [[mSingleton getJSONParser] performSelectorOnMainThread:@selector(parseDeviceTypeList:) withObject:responseObject waitUntilDone:YES];
+     }
+                                     failure:^(AFHTTPRequestOperation *operation, NSError *error)
+     {
+         NSLog(@"Error: %@", error);
+         
+     }];
+    
+    ;
+    [operation start];
+}
+
+-(void)getProtectionEquipmentsList
+{
+    NSString *URLString = [AiresService objectForKey:@"Data Service URL"];
+    if (!URLString)
+        return;
+    
+    NSURL *url = [NSURL URLWithString:URLString];
+    AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:url];
+    [httpClient registerHTTPOperationClass:[AFJSONRequestOperation class]];
+    [httpClient setDefaultHeader:@"Accept" value:@"application/json;odata=verbose"];
+    [httpClient setDefaultHeader:@"access_token" value:[[mSingleton getSecurityManager] getValueForKey:LOGIN_ACCESSTOKEN]];
+    
+    NSDictionary *path = [AiresService objectForKey:@"Data Service Path"];
+    NSString *repativeURL = [path objectForKey:@"Protection Equipments"];
+    
+    NSMutableURLRequest *request = [httpClient requestWithMethod:@"GET" path:repativeURL parameters:nil];
+    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+    [httpClient registerHTTPOperationClass:[AFHTTPRequestOperation class]];
+    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject)
+     {
+         // Print the response body in text
+         NSLog(@"ProtectionEquipment: %@", [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding]);
+         [[mSingleton getJSONParser] performSelectorOnMainThread:@selector(parseProtectionEquipmentList:) withObject:responseObject waitUntilDone:YES];
+     }
+                                     failure:^(AFHTTPRequestOperation *operation, NSError *error)
+     {
+         NSLog(@"Error: %@", error);
+         
+     }];
+    
+    ;
+    [operation start];
 }
 
 @end

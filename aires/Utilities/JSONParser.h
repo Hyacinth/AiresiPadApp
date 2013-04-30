@@ -15,4 +15,8 @@
 
 -(void)parseLoginDetails:(NSData *)jsonData;
 -(void)parseUserProjectData:(NSData *)jsonData;
+
+-(void)parseProtectionEquipmentList:(NSData *)jsonData;
+-(void)parseDeviceTypeList:(NSData *)jsonData;
+-(void)parseChemicalList:(NSData *)jsonData;
 @end

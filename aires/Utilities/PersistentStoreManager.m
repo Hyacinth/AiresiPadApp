@@ -288,7 +288,7 @@
                 mProject.project_TurnAroundTime = [dict objectForKey:@"TurnaroundTime"];
             if (![[dict valueForKey:@"ProjectId"] isKindOfClass:[NSNull class]])
                 mProject.projectID = (NSNumber *)[dict objectForKey:@"ProjectId"] ;
-
+            
             [[self getAiresUser] addAiresProjectObject:mProject];
             [[self mainContext] save:nil];
             
@@ -359,7 +359,9 @@
         [self storeSampleTotalMeasurementDetails:Measurements forSample:mSample];
         
         [self storeSampleChemicalDetails:SampleChemicals forSample:mSample];
-        [self storeSampleProtectionEquipmentDetails:SampleChemicals forSample:mSample];
+        
+        NSArray *PPE = [dict objectForKey:@"SamplePPEs"];
+        [self storeSampleProtectionEquipmentDetails:PPE forSample:mSample];
     }
 }
 
@@ -516,10 +518,10 @@
                                                                  insertNewObjectForEntityForName:@"SampleProtectionEquipment"
                                                                  inManagedObjectContext:[self mainContext]];
         
-        //if (![[dict valueForKey:@""] isKindOfClass:[NSNull class]])
-        //            mSampleProtectionEquipment.sampleProtectionEquipment_Name = nil;
-        //   if (![[dict valueForKey:@""] isKindOfClass:[NSNull class]])
-        //            mSampleProtectionEquipment.sampleProtectionEquipmentID = nil;
+        if (![[dict valueForKey:@"PPE"] isKindOfClass:[NSNull class]])
+            mSampleProtectionEquipment.sampleProtectionEquipment_Name = [dict valueForKey:@"PPE"];
+        if (![[dict valueForKey:@"PPEId"] isKindOfClass:[NSNull class]])
+            mSampleProtectionEquipment.sampleProtectionEquipmentID = [dict valueForKey:@"PPEId"];
         
         [sample addAiresSampleProtectionEquipmentObject:mSampleProtectionEquipment];
         [[self mainContext] save:nil];

@@ -4,7 +4,7 @@
 <dict>
 	<key>Root URL</key>
 	<string>http://192.168.6.18/AiresStaging/config.txt</string>
-	<key>Path</key>
+	<key>Service Path</key>
 	<dict>
 		<key>Logout</key>
 		<string>Logout</string>
@@ -12,6 +12,17 @@
 		<string>ProjectDetails</string>
 		<key>Login</key>
 		<string>Login</string>
+	</dict>
+	<key>Data Service URL</key>
+	<string>http://192.168.6.18/AiresStaging/DataServices/AiresDataService.svc</string>
+	<key>Data Service Path</key>
+	<dict>
+		<key>Chemicals</key>
+		<string>Chemicals</string>
+		<key>Device Types</key>
+		<string>DeviceTypes</string>
+		<key>Protection Equipments</key>
+		<string>PPEs</string>
 	</dict>
 </dict>
 </plist>
