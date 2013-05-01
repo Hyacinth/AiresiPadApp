@@ -62,7 +62,20 @@
 
     _projectsArray = [[NSMutableArray alloc] init];
     [_projectsArray addObjectsFromArray:[[mSingleton getPersistentStoreManager] getUserProjects]];
+
+    _activeProjectsCarousel.alpha = 0.0f;
+    _completedProjectsCarousel.alpha = 0.0f;
+    [self performSelector:@selector(loadCarousel) withObject:nil afterDelay:0.5];
+}
+
+-(void)loadCarousel
+{
+    [UIView animateWithDuration:0.15 animations:^{
+        _activeProjectsCarousel.alpha = 1.0f;
+        _completedProjectsCarousel.alpha = 1.0f;
+    }];
     [_activeProjectsCarousel reloadData];
+    [_completedProjectsCarousel reloadData];
 }
 
 -(void)awakeFromNib

@@ -59,7 +59,7 @@
     
     CGRect logoFrame = airesLogoImageView.frame;
     logoFrame.origin.y = 78.0f;
-    
+
     [UIView animateWithDuration:0.45
                      animations:^{
                          airesLogoImageView.frame = logoFrame;

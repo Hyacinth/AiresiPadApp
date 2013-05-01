@@ -60,7 +60,7 @@
     
     _samplesCarousel.type = iCarouselTypeLinear;
     _samplesCarousel.bounceDistance = 0.25f;
-    _samplesCarousel.scrollSpeed = 0.6f;
+    _samplesCarousel.scrollSpeed = 0.75f;
 }
 
 -(IBAction)homeButtonPressed:(id)sender
@@ -127,7 +127,7 @@
             label.shadowOffset = CGSizeMake(0, 2);
             [sView addSubview:label];
             
-            UILabel *sLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 27, 60, 15)];
+            UILabel *sLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 28, 60, 15)];
             sLabel.backgroundColor = [UIColor clearColor];
             sLabel.text = @"Sample";
             sLabel.font = [UIFont fontWithName:@"ProximaNova-Bold" size:10.0f];
