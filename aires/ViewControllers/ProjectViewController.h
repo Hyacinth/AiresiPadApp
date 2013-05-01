@@ -21,6 +21,5 @@
 @property (weak, nonatomic) IBOutlet UIImageView *sampleSubHeaderView;
 @property (weak, nonatomic) IBOutlet UIButton *adjustSampleAreaButton;
 @property (weak, nonatomic) IBOutlet UIButton *addSampleButton;
-@property (weak, nonatomic) IBOutlet iCarousel *samplesCarousel;
 
 @end

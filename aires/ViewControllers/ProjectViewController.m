@@ -14,6 +14,8 @@
 {
     BOOL bProjectDetailsVisible;
     NSUInteger selectedSampleNumber;
+    NSUInteger numberOfVisibleSamples;
+    iCarousel *samplesCarousel;
 }
 
 @end
@@ -60,12 +62,18 @@
     
     bProjectDetailsVisible = YES;
     
-    _samplesCarousel.type = iCarouselTypeLinear;
-    _samplesCarousel.bounceDistance = 0.25f;
-    _samplesCarousel.scrollSpeed = 0.75f;
+    samplesCarousel = [[iCarousel alloc] initWithFrame:CGRectMake(300, 88, 724, 53)];
+    samplesCarousel.backgroundColor = [UIColor clearColor];
+    samplesCarousel.type = iCarouselTypeLinear;
+    samplesCarousel.bounceDistance = 0.25f;
+    samplesCarousel.scrollSpeed = 0.75f;
+    samplesCarousel.dataSource = self;
+    samplesCarousel.delegate = self;
+    [self.view  insertSubview:samplesCarousel belowSubview:_projectDetailView];
     
     selectedSampleNumber = 1;
-    [_samplesCarousel reloadData];
+    numberOfVisibleSamples = 14;
+    [samplesCarousel reloadData];
 }
 
 -(IBAction)homeButtonPressed:(id)sender
@@ -91,10 +99,38 @@
                          _sampleSubHeaderView.frame = CGRectMake(bProjectDetailsVisible?0:301.0f, 44.0f, bProjectDetailsVisible?1024.0f:724.0f, 44.0f);
                          _adjustSampleAreaButton.frame = CGRectMake(bProjectDetailsVisible?3.0f:303.0f, 45.0f, 50.0f, 32.0f);
                          _samplesLabel.frame = CGRectMake(bProjectDetailsVisible?466.0f:616.0f, 50.0f, 93.0f, 21.0f);
+                         samplesCarousel.frame = CGRectMake(bProjectDetailsVisible?0:300.0f, 88.0f, bProjectDetailsVisible?1024.0f:724.0f, 53.0f);
+                         samplesCarousel.alpha = 0;
                      }
                      completion:^(BOOL finished) {
+                         numberOfVisibleSamples = bProjectDetailsVisible?20:14;
+                         [samplesCarousel removeFromSuperview];
+                         samplesCarousel = nil;
+                                                  
+                         samplesCarousel = [[iCarousel alloc] initWithFrame:CGRectMake(bProjectDetailsVisible?0:300.0f, 88.0f, bProjectDetailsVisible?1024.0f:724.0f, 53.0f)];
+                         samplesCarousel.backgroundColor = [UIColor clearColor];
+                         samplesCarousel.type = iCarouselTypeLinear;
+                         samplesCarousel.bounceDistance = 0.25f;
+                         samplesCarousel.scrollSpeed = 0.75f;
+                         samplesCarousel.dataSource = self;
+                         samplesCarousel.delegate = self;
+                         samplesCarousel.alpha = 0;
+                         [self.view  insertSubview:samplesCarousel belowSubview:_projectDetailView];
+                         [samplesCarousel reloadData];
+                         
+                         [UIView animateWithDuration:0.25 animations:^{
+                             samplesCarousel.alpha = 1.0f;
+                         }];
+
                          bProjectDetailsVisible = !bProjectDetailsVisible;
+
+                         //[self performSelector:@selector(reloadCarousel) withObject:nil afterDelay:0.25];
                      }];
+}
+
+-(void)reloadCarousel
+{
+    [samplesCarousel reloadData];
 }
 
 #pragma mark - iCarousel datasource
@@ -109,12 +145,12 @@
     if (view == nil)
     {
         // content view
-        UIView *aView = [[UIView alloc] initWithFrame:_samplesCarousel.bounds];
+        UIView *aView = [[UIView alloc] initWithFrame:samplesCarousel.bounds];
         
-        for (int i=0; i<14; i++)
+        for (int i=0; i<numberOfVisibleSamples; i++)
         {            
-            SampleTileView *tileView = [[SampleTileView alloc] initWithFrame:CGRectMake((i*51), 0, 52, 52)];
-            NSUInteger sampleNumber = (index*14)+i+1;
+            SampleTileView *tileView = [[SampleTileView alloc] initWithFrame:CGRectMake((i*((numberOfVisibleSamples==14)?51:50.5)), 0, 52, 52)];
+            NSUInteger sampleNumber = (index*numberOfVisibleSamples)+i+1;
             tileView.tag = sampleNumber;
             [tileView setSampleId:@"Sample"];
             [tileView setSampleNumber:sampleNumber];
@@ -125,7 +161,8 @@
         }
         
         return aView;
-    }
+   }
+    view.frame = samplesCarousel.bounds;
     return view;
 }
 
@@ -136,7 +173,7 @@
     if(selectedSampleNumber == number)
         return;
     
-    SampleTileView *tileView = (SampleTileView*)[_samplesCarousel viewWithTag:selectedSampleNumber];
+    SampleTileView *tileView = (SampleTileView*)[samplesCarousel viewWithTag:selectedSampleNumber];
     if(tileView && [tileView isKindOfClass:[SampleTileView class]])
     {
         [tileView setSampleSelected:NO];
@@ -159,7 +196,6 @@
     [self setSampleSubHeaderView:nil];
     [self setAdjustSampleAreaButton:nil];
     [self setAddSampleButton:nil];
-    [self setSamplesCarousel:nil];
     [super viewDidUnload];
 }
 

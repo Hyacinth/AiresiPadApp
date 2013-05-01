@@ -38,7 +38,7 @@
     _completedProjectsCarousel.bounceDistance = 0.25f;
     _completedProjectsCarousel.scrollSpeed = 0.6f;
     
-    [self addGradeintToCarousel];
+    //[self addGradeintToCarousel];
     
     _searchView.layer.cornerRadius = 15.0f;
     
