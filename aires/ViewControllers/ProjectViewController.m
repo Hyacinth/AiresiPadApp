@@ -8,10 +8,12 @@
 
 #import "ProjectViewController.h"
 #import "ProjectDetailView.h"
+#import "SampleTileView.h"
 
 @interface ProjectViewController ()
 {
     BOOL bProjectDetailsVisible;
+    NSUInteger selectedSampleNumber;
 }
 
 @end
@@ -61,6 +63,9 @@
     _samplesCarousel.type = iCarouselTypeLinear;
     _samplesCarousel.bounceDistance = 0.25f;
     _samplesCarousel.scrollSpeed = 0.75f;
+    
+    selectedSampleNumber = 1;
+    [_samplesCarousel reloadData];
 }
 
 -(IBAction)homeButtonPressed:(id)sender
@@ -107,37 +112,16 @@
         UIView *aView = [[UIView alloc] initWithFrame:_samplesCarousel.bounds];
         
         for (int i=0; i<14; i++)
-        {
-            // content view
-            UIView *sView = [[UIView alloc] initWithFrame:CGRectMake((i*51), 0, 52, 52)];
-            
-            UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-            button.frame = CGRectMake(8, 0, 47, 52);
-            [button setImage:[UIImage imageNamed:@"btn_sample_filled_unsel.png"] forState:UIControlStateNormal];
-            [button setImage:[UIImage imageNamed:@"btn_sample_filled_sel.png"] forState:UIControlStateSelected];
-            [sView addSubview:button];
-            [button addTarget:self action:@selector(buttonSelected:) forControlEvents:UIControlEventTouchUpInside];
-            
-            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, 30, 20)];
-            label.backgroundColor = [UIColor clearColor];
-            label.text = [NSString stringWithFormat:@"%d", (index*14) + (i+1)];
-            label.font = [UIFont fontWithName:@"ProximaNova-Bold" size:24.0f];
-            label.textColor = [UIColor colorWithRed:81.0f/255.0f green:93.0f/255.0f blue:125.0f/255.0f alpha:1.0f];
-            label.shadowColor = [UIColor whiteColor];
-            label.shadowOffset = CGSizeMake(0, 2);
-            [sView addSubview:label];
-            
-            UILabel *sLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 28, 60, 15)];
-            sLabel.backgroundColor = [UIColor clearColor];
-            sLabel.text = @"Sample";
-            sLabel.font = [UIFont fontWithName:@"ProximaNova-Bold" size:10.0f];
-            sLabel.textColor = [UIColor colorWithRed:122.0f/255.0f green:147.0f/255.0f blue:171.0f/255.0f alpha:1.0f];
-            sLabel.shadowColor = [UIColor whiteColor];
-            sLabel.shadowOffset = CGSizeMake(0, 1);
-            sLabel.textAlignment = UITextAlignmentCenter;
-            [sView addSubview:sLabel];
-
-            [aView addSubview:sView];
+        {            
+            SampleTileView *tileView = [[SampleTileView alloc] initWithFrame:CGRectMake((i*51), 0, 52, 52)];
+            NSUInteger sampleNumber = (index*14)+i+1;
+            tileView.tag = sampleNumber;
+            [tileView setSampleId:@"Sample"];
+            [tileView setSampleNumber:sampleNumber];
+            [tileView setSampleCompletedStatus:sampleNumber%3==0?YES:NO];
+            [tileView setSampleSelected:(sampleNumber==selectedSampleNumber)?YES:NO];
+            tileView.delegate = self;
+            [aView addSubview:tileView];
         }
         
         return aView;
@@ -145,17 +129,23 @@
     return view;
 }
 
--(void)buttonSelected:(UIButton*)button
+#pragma mark - SampleTileViewDelegate
+
+-(void)sampleNumberSelected:(NSUInteger)number
 {
-    [button setSelected:!button.isSelected];
+    if(selectedSampleNumber == number)
+        return;
+    
+    SampleTileView *tileView = (SampleTileView*)[_samplesCarousel viewWithTag:selectedSampleNumber];
+    if(tileView && [tileView isKindOfClass:[SampleTileView class]])
+    {
+        [tileView setSampleSelected:NO];
+    }
+    
+    selectedSampleNumber = number;
 }
 
-#pragma mark - iCarousel delegate
-
--(void)carousel:(iCarousel *)aCarousel didSelectItemAtIndex:(NSInteger)index
-{
-
-}
+#pragma mark - Memory warning
 
 - (void)didReceiveMemoryWarning
 {

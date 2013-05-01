@@ -110,7 +110,7 @@
     
     gradientMask.startPoint = CGPointMake(0.0, CGRectGetMidY(_activeProjectsCarousel.frame));
     gradientMask.endPoint = CGPointMake(1.0, CGRectGetMidY(_activeProjectsCarousel.frame));
-    CGFloat fadePoint = 210.0f/_activeProjectsCarousel.frame.size.width;
+    CGFloat fadePoint = 180.0f/_activeProjectsCarousel.frame.size.width;
     [gradientMask setColors: [NSArray arrayWithObjects: transparent, opaque, opaque, transparent, nil]];
     [gradientMask setLocations: [NSArray arrayWithObjects:
                                  [NSNumber numberWithDouble: 0.0],

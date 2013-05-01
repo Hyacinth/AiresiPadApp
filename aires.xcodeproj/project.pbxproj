@@ -10,6 +10,7 @@
 		8439D369172911140053278E /* LoginFieldsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8439D368172911140053278E /* LoginFieldsView.m */; };
 		84AF07B317280974006F8756 /* AiresService.plist in Resources */ = {isa = PBXBuildFile; fileRef = 84AF07B217280974006F8756 /* AiresService.plist */; };
 		84EBF217172E92D700986667 /* ProjectDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 84EBF216172E92D600986667 /* ProjectDetailView.m */; };
+		84ECA92117311A8C00CAAE51 /* SampleTileView.m in Sources */ = {isa = PBXBuildFile; fileRef = 84ECA92017311A8C00CAAE51 /* SampleTileView.m */; };
 		84F623FA1727DAD700FD5D7E /* Default-Landscape@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 84F623F81727DAD700FD5D7E /* Default-Landscape@2x~ipad.png */; };
 		84F623FB1727DAD700FD5D7E /* Default-Landscape~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 84F623F91727DAD700FD5D7E /* Default-Landscape~ipad.png */; };
 		84F624021727F97700FD5D7E /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 84F624001727F97700FD5D7E /* icon.png */; };
@@ -200,6 +201,8 @@
 		84AF07B217280974006F8756 /* AiresService.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = AiresService.plist; sourceTree = "<group>"; };
 		84EBF215172E92D600986667 /* ProjectDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProjectDetailView.h; sourceTree = "<group>"; };
 		84EBF216172E92D600986667 /* ProjectDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProjectDetailView.m; sourceTree = "<group>"; };
+		84ECA91F17311A8B00CAAE51 /* SampleTileView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SampleTileView.h; sourceTree = "<group>"; };
+		84ECA92017311A8C00CAAE51 /* SampleTileView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SampleTileView.m; sourceTree = "<group>"; };
 		84F623F81727DAD700FD5D7E /* Default-Landscape@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape@2x~ipad.png"; sourceTree = "<group>"; };
 		84F623F91727DAD700FD5D7E /* Default-Landscape~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape~ipad.png"; sourceTree = "<group>"; };
 		84F624001727F97700FD5D7E /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
@@ -636,6 +639,8 @@
 				98B42508172689A000D15811 /* DashboardViewController.xib */,
 				84EBF215172E92D600986667 /* ProjectDetailView.h */,
 				84EBF216172E92D600986667 /* ProjectDetailView.m */,
+				84ECA91F17311A8B00CAAE51 /* SampleTileView.h */,
+				84ECA92017311A8C00CAAE51 /* SampleTileView.m */,
 				98B4250F172689A000D15811 /* ProjectViewController.h */,
 				98B42510172689A100D15811 /* ProjectViewController.m */,
 				98B42511172689A100D15811 /* ProjectViewController.xib */,
@@ -1066,6 +1071,7 @@
 				84EBF217172E92D700986667 /* ProjectDetailView.m in Sources */,
 				98A7D1D5172FD0B1008794FE /* DeviceType.m in Sources */,
 				98FF59A9172FD78C002CF862 /* Model.xcdatamodel in Sources */,
+				84ECA92117311A8C00CAAE51 /* SampleTileView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

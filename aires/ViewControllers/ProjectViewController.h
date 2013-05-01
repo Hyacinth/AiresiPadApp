@@ -8,10 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "iCarousel.h"
+#import "SampleTileView.h"
 
 @class ProjectDetailView;
 
-@interface ProjectViewController : UIViewController<iCarouselDataSource, iCarouselDelegate>
+@interface ProjectViewController : UIViewController<iCarouselDataSource, iCarouselDelegate, SampleTileViewDelegate>
 
 @property (retain, nonatomic) IBOutlet UIButton *homeButton;
 @property (retain, nonatomic) IBOutlet UIButton *reportButton;
