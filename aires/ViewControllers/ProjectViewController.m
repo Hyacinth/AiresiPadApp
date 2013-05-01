@@ -106,13 +106,13 @@
         // content view
         UIView *aView = [[UIView alloc] initWithFrame:_samplesCarousel.bounds];
         
-        for (int i=0; i<12; i++)
+        for (int i=0; i<14; i++)
         {
             // content view
-            UIView *sView = [[UIView alloc] initWithFrame:CGRectMake((i*60), 0, 60, 52)];
+            UIView *sView = [[UIView alloc] initWithFrame:CGRectMake((i*51), 0, 52, 52)];
             
             UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-            button.frame = CGRectMake(7, 0, 47, 52);
+            button.frame = CGRectMake(8, 0, 47, 52);
             [button setImage:[UIImage imageNamed:@"btn_sample_filled_unsel.png"] forState:UIControlStateNormal];
             [button setImage:[UIImage imageNamed:@"btn_sample_filled_sel.png"] forState:UIControlStateSelected];
             [sView addSubview:button];
@@ -120,7 +120,7 @@
             
             UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, 30, 20)];
             label.backgroundColor = [UIColor clearColor];
-            label.text = [NSString stringWithFormat:@"%d", (index*12) + (i+1)];
+            label.text = [NSString stringWithFormat:@"%d", (index*14) + (i+1)];
             label.font = [UIFont fontWithName:@"ProximaNova-Bold" size:24.0f];
             label.textColor = [UIColor colorWithRed:81.0f/255.0f green:93.0f/255.0f blue:125.0f/255.0f alpha:1.0f];
             label.shadowColor = [UIColor whiteColor];

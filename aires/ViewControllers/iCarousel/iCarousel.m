@@ -448,11 +448,6 @@ NSComparisonResult compareViewDepth(UIView *view1, UIView *view2, iCarousel *sel
             fadeMin = 0.0f;
             break;
         }
-        case iCarouselTypeAires:
-        {
-            fadeMax = 0.5f;
-            break;
-        }
         default:
         {
             //do nothing

@@ -38,7 +38,7 @@
     _completedProjectsCarousel.bounceDistance = 0.25f;
     _completedProjectsCarousel.scrollSpeed = 0.6f;
     
-    //[self addGradeintToCarousel];
+    [self addGradeintToCarousel];
     
     _searchView.layer.cornerRadius = 15.0f;
     
@@ -70,7 +70,7 @@
 
 -(void)loadCarousel
 {
-    [UIView animateWithDuration:0.15 animations:^{
+    [UIView animateWithDuration:0.3 animations:^{
         _activeProjectsCarousel.alpha = 1.0f;
         _completedProjectsCarousel.alpha = 1.0f;
     }];
