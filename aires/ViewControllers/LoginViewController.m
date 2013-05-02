@@ -8,12 +8,32 @@
 
 #import "LoginViewController.h"
 #import "AiresSingleton.h"
+#import "KSCustomPopoverBackgroundView.h"
+#import "PreviewReportViewController.h"
 
 #define mSingleton 	((AiresSingleton *) [AiresSingleton getSingletonInstance])
 
 @interface LoginViewController (private)
 
 -(void)adjustLoginFieldFrame:(BOOL)flag;
+
+@end
+
+@implementation UINavigationBar (CustomImage)
+- (void)drawRect:(CGRect)rect {
+    UIImage *image = [UIImage imageNamed: @"popover-black-bcg-image"];
+    [image drawInRect:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
+}
+
+-(void)setBackgroundImage:(UIImage*)image{
+    if(image == NULL){ //might be called with NULL argument
+        return;
+    }
+    UIImageView *aTabBarBackground = [[UIImageView alloc]initWithImage:image];
+    aTabBarBackground.frame = CGRectMake(0,0,self.frame.size.width,self.frame.size.height);
+    [self addSubview:aTabBarBackground];
+    [self sendSubviewToBack:aTabBarBackground];
+}
 
 @end
 
@@ -77,7 +97,9 @@
     
     //[self preLoadLoginSettings];
     if (isLoggingIn)
+    {
         [loginFieldsView showLoadingMessage:@"Signing in..."];
+    }
     [self performSelector:@selector(preLoadLoginSettings) withObject:nil afterDelay:1.5];
 }
 
@@ -93,6 +115,14 @@
         //If user deletes the app and reinstalls
         if(![[mSingleton getPersistentStoreManager] getAiresUser])
         {
+            if(![mSingleton isConnectedToInternet])
+            {
+                UIAlertView *noNetworkAlert = [[UIAlertView alloc] initWithTitle:@"Connection error" message:@"Unable to connect.\n Check your internet connection and try again." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+                [noNetworkAlert show];
+                return;
+            }
+            [self setElementsEnabled:FALSE];
+
             NSString *user = [[mSingleton getSecurityManager] getValueForKey:LOGIN_USERNAME];
             NSString *pwd = [[mSingleton getSecurityManager] getValueForKey:LOGIN_PASSWORD];
             [[mSingleton getWebServiceManager] loginWithUserName:user andpassword:pwd];
@@ -174,6 +204,8 @@
         return;
     }
     
+    [self setElementsEnabled:FALSE];
+
     [loginFieldsView showLoadingMessage:@"Signing in..."];
     [self.view endEditing:YES];
     [self performSelector:@selector(changingMessage) withObject:nil afterDelay:1.0];
@@ -216,14 +248,18 @@
         mLoginSettingsViewController = [[LoginSettingsViewController alloc] init];
     
     UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:mLoginSettingsViewController];
+    //[[navController navigationBar] setBackgroundImage:[UIImage imageNamed:@"nav_bar"]];
+
     if(!popover)
         popover = [[UIPopoverController alloc]initWithContentViewController:navController];
     
     [popover setContentViewController:navController];
     [popover setPopoverContentSize:CGSizeMake(300, 216)];
     [popover setDelegate:self];
-    
+    //popover.popoverBackgroundViewClass = [KSCustomPopoverBackgroundView class];
+
     [popover presentPopoverFromRect:settingsButton.bounds inView:settingsButton permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
+
 }
 
 #pragma mark-
@@ -269,10 +305,19 @@
     [self onLogin];
 }
 
+-(void)setElementsEnabled:(BOOL)flag
+{
+    NSArray *viewsArray = [self.view subviews];
+    
+    for (UIView *view in viewsArray) 
+        [view setUserInteractionEnabled:flag];
+}
+
 #pragma mark-
 #pragma mark Notification Handler
 - (void) localNotificationhandler:(NSNotification *) notification
 {
+    [self setElementsEnabled:TRUE];
     if ([[notification name] isEqualToString:NOTIFICATION_LOGIN_FAILED])
     {
         [welcomeLabel setTextColor:[UIColor redColor]];
@@ -281,6 +326,7 @@
     }
     else if ([[notification name] isEqualToString:NOTIFICATION_LOGIN_SUCCESS])
     {
+        
         if(!mDashboardViewController)
             mDashboardViewController = [[DashboardViewController alloc] initWithNibName:@"DashboardViewController" bundle:nil];
         
@@ -293,6 +339,19 @@
          addAnimation:transition forKey:kCATransition];
         
         [self.navigationController pushViewController:mDashboardViewController animated:NO];
+        /*
+        PreviewReportViewController *mPreviewReportViewController = [[PreviewReportViewController alloc] initWithNibName:@"PreviewReportViewController" bundle:nil];
+        CATransition* transition = [CATransition animation];
+        transition.duration = 0.25;
+        transition.type = kCATransitionFade;
+        transition.subtype = kCATransitionFromRight;
+        
+        [self.navigationController.view.layer
+         addAnimation:transition forKey:kCATransition];
+        
+        [self.navigationController pushViewController:mPreviewReportViewController animated:NO];
+         */
+
     }
     else if ([[notification name] isEqualToString:NOTIFICATION_ENVIRONMENT_FAILED])
     {

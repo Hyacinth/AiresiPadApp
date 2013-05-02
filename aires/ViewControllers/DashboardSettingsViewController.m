@@ -152,7 +152,8 @@
         case 0:
             break;
         case 1:
-            [[mSingleton getWebServiceManager] logout];
+            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_LOGOUT_SUCCESS object:self];
+            //[[mSingleton getWebServiceManager] logout];
             break;
             
         default:

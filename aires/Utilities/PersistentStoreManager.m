@@ -200,8 +200,6 @@
         mUser.user_FirstName = [dict valueForKey:@"FirstName"];
     if (![[dict valueForKey:@"UserId"] isKindOfClass:[NSNull class]])
         mUser.user_Id = [dict valueForKey:@"UserId"];
-    //    if ([dict valueForKey:@"FirstName"])
-    //        mUser.user_Image = [dict valueForKey:@"FirstName"];
     if (![[dict valueForKey:@"iOSDeviceId"] isKindOfClass:[NSNull class]])
         mUser.user_iOSDeviceId = [dict valueForKey:@"iOSDeviceId"];
     if (![[dict valueForKey:@"LastName"] isKindOfClass:[NSNull class]])
@@ -564,11 +562,11 @@
             mSampleChemical.sampleChemical_TLVTWAFlag = [dict objectForKey:@"TLVTWAFlag"];
         if (![[dict valueForKey:@"ChemicalId"] isKindOfClass:[NSNull class]])
             mSampleChemical.sampleChemicalID = [dict objectForKey:@"ChemicalId"];
-       
+        
         mSampleChemical.contentType = @"ListData";
         [[self mainContext] save:nil];
     }
-
+    
 }
 
 -(NSArray *)getChemicalList
@@ -591,7 +589,7 @@
     {
         DeviceType *mDeviceType = [NSEntityDescription
                                    insertNewObjectForEntityForName:@"DeviceType"
-                                                                 inManagedObjectContext:[self mainContext]];
+                                   inManagedObjectContext:[self mainContext]];
         
         if (![[dict valueForKey:@"TypeName"] isKindOfClass:[NSNull class]])
             mDeviceType.deviceType_DeviceTypeName = [dict valueForKey:@"TypeName"];
@@ -603,7 +601,7 @@
         mDeviceType.contentType = @"ListData";
         [[self mainContext] save:nil];
     }
-
+    
 }
 
 -(NSArray *)getDeviceTypeList
@@ -618,7 +616,7 @@
         }
     }
     return finalResult;
-
+    
 }
 
 -(void)saveProtectionEquipmentList:(NSArray *)equipmentArray
@@ -637,7 +635,7 @@
         mSampleProtectionEquipment.contentType = @"ListData";
         [[self mainContext] save:nil];
     }
-
+    
 }
 -(NSArray *)getProtectionEquipmentList
 {

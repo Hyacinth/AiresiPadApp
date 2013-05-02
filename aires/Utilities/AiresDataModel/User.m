@@ -15,7 +15,6 @@
 @dynamic user_CertificationId;
 @dynamic user_FirstName;
 @dynamic user_Id;
-@dynamic user_Image;
 @dynamic user_iOSDeviceId;
 @dynamic user_LastName;
 @dynamic user_LoginName;

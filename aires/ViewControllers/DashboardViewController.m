@@ -126,11 +126,21 @@
     if(!mDashboardSettingsViewController)
         mDashboardSettingsViewController = [[DashboardSettingsViewController alloc] init];
     
+//    if(!mChemicalsListViewController)
+//        mChemicalsListViewController = [[ChemicalsListViewController alloc] init];
+//   
+//    mChemicalsListViewController.listContent = [[mSingleton getPersistentStoreManager] getChemicalList];
+//    
+//    if(!mPPEListViewController)
+//        mPPEListViewController = [[PPEListViewController alloc] init];
+//    
+//    mPPEListViewController.listContent = [[mSingleton getPersistentStoreManager] getProtectionEquipmentList];
+
     if(!popover)
         popover = [[UIPopoverController alloc]initWithContentViewController:mDashboardSettingsViewController];
     
     [popover setContentViewController:mDashboardSettingsViewController];
-    [popover setPopoverContentSize:CGSizeMake(340, 130)];
+    [popover setPopoverContentSize:CGSizeMake(320, 135)];
     [popover setDelegate:self];
     
     [popover presentPopoverFromRect:self.btnSettings.bounds inView:self.btnSettings permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];

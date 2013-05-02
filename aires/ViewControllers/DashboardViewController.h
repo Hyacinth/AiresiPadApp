@@ -9,11 +9,15 @@
 #import <UIKit/UIKit.h>
 #import "iCarousel.h"
 #import "DashboardSettingsViewController.h"
+#import "ChemicalsListViewController.h"
+#import "PPEListViewController.h"
 
 @interface DashboardViewController : UIViewController<iCarouselDataSource, iCarouselDelegate, iCarouselDeprecated, UIPopoverControllerDelegate>
 {
     UIPopoverController *popover;
     DashboardSettingsViewController *mDashboardSettingsViewController;
+    ChemicalsListViewController *mChemicalsListViewController;
+    PPEListViewController *mPPEListViewController;
 }
 
 @property(nonatomic,retain) IBOutlet iCarousel *activeProjectsCarousel;

@@ -44,6 +44,23 @@
 		989B043D17295C83001D3FFD /* Project.m in Sources */ = {isa = PBXBuildFile; fileRef = 98B68CDE172913770065D411 /* Project.m */; };
 		98A241E317211620001A14F0 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98A241E217211620001A14F0 /* CoreData.framework */; };
 		98A7D1D5172FD0B1008794FE /* DeviceType.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A7D1D4172FD0B1008794FE /* DeviceType.m */; };
+		98B0B4B01730DB3F003FDCFD /* ChemicalsListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98B0B4AE1730DB3F003FDCFD /* ChemicalsListViewController.m */; };
+		98B0B4B11730DB3F003FDCFD /* ChemicalsListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98B0B4AF1730DB3F003FDCFD /* ChemicalsListViewController.xib */; };
+		98B0B4B51730F102003FDCFD /* PPEListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98B0B4B31730F102003FDCFD /* PPEListViewController.m */; };
+		98B0B4B61730F102003FDCFD /* PPEListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98B0B4B41730F102003FDCFD /* PPEListViewController.xib */; };
+		98B0B4B917311DFF003FDCFD /* KSCustomPopoverBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = 98B0B4B817311DFD003FDCFD /* KSCustomPopoverBackgroundView.m */; };
+		98B0B4BF1731216A003FDCFD /* popover-black-bcg-image.png in Resources */ = {isa = PBXBuildFile; fileRef = 98B0B4BA17312165003FDCFD /* popover-black-bcg-image.png */; };
+		98B0B4C01731216A003FDCFD /* popover-black-bottom-arrow-image.png in Resources */ = {isa = PBXBuildFile; fileRef = 98B0B4BB17312166003FDCFD /* popover-black-bottom-arrow-image.png */; };
+		98B0B4C11731216A003FDCFD /* popover-black-left-arrow-image.png in Resources */ = {isa = PBXBuildFile; fileRef = 98B0B4BC17312167003FDCFD /* popover-black-left-arrow-image.png */; };
+		98B0B4C21731216A003FDCFD /* popover-black-right-arrow-image.png in Resources */ = {isa = PBXBuildFile; fileRef = 98B0B4BD17312168003FDCFD /* popover-black-right-arrow-image.png */; };
+		98B0B4C31731216A003FDCFD /* popover-black-top-arrow-image.png in Resources */ = {isa = PBXBuildFile; fileRef = 98B0B4BE17312169003FDCFD /* popover-black-top-arrow-image.png */; };
+		98B0B4C917312179003FDCFD /* popover-black-bcg-image@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 98B0B4C417312174003FDCFD /* popover-black-bcg-image@2x.png */; };
+		98B0B4CA17312179003FDCFD /* popover-black-bottom-arrow-image@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 98B0B4C517312175003FDCFD /* popover-black-bottom-arrow-image@2x.png */; };
+		98B0B4CB17312179003FDCFD /* popover-black-left-arrow-image@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 98B0B4C617312176003FDCFD /* popover-black-left-arrow-image@2x.png */; };
+		98B0B4CC17312179003FDCFD /* popover-black-right-arrow-image@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 98B0B4C717312177003FDCFD /* popover-black-right-arrow-image@2x.png */; };
+		98B0B4CD17312179003FDCFD /* popover-black-top-arrow-image@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 98B0B4C817312178003FDCFD /* popover-black-top-arrow-image@2x.png */; };
+		98B0B4D1173123FA003FDCFD /* PreviewReportViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98B0B4CF173123F6003FDCFD /* PreviewReportViewController.m */; };
+		98B0B4D2173123FA003FDCFD /* PreviewReportViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98B0B4D0173123F8003FDCFD /* PreviewReportViewController.xib */; };
 		98B37B6317153B5C00F78A54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 98659CB1170DA3FD00A0DEF8 /* main.m */; };
 		98B37B6D17153B9E00F78A54 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 98B37B6717153B9E00F78A54 /* InfoPlist.strings */; };
 		98B37B7317153BAF00F78A54 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 98B37B7217153BAF00F78A54 /* AppDelegate.m */; };
@@ -172,6 +189,8 @@
 		98BA957917255B5900858A36 /* ProximaNova-BoldIt.otf in Resources */ = {isa = PBXBuildFile; fileRef = 98BA957517255B5900858A36 /* ProximaNova-BoldIt.otf */; };
 		98BA957A17255B5900858A36 /* ProximaNova-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 98BA957617255B5900858A36 /* ProximaNova-Regular.otf */; };
 		98BA957B17255B5900858A36 /* ProximaNova-RegularItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 98BA957717255B5900858A36 /* ProximaNova-RegularItalic.otf */; };
+		98C7871917324387008F80DD /* PreviewReportCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 98C7871817324386008F80DD /* PreviewReportCell.m */; };
+		98C7871B173243B8008F80DD /* PreviewReportCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98C7871A173243B7008F80DD /* PreviewReportCell.xib */; };
 		98DDACA7172E48F10031308B /* SampleProtectionEquipment.m in Sources */ = {isa = PBXBuildFile; fileRef = 98DDACA6172E48F10031308B /* SampleProtectionEquipment.m */; };
 		98E23B8F171FD7C500FFAD4A /* CJSONDataSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 98E23B86171FD7C500FFAD4A /* CJSONDataSerializer.m */; };
 		98E23B90171FD7C500FFAD4A /* CJSONDeserializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 98E23B88171FD7C500FFAD4A /* CJSONDeserializer.m */; };
@@ -262,6 +281,27 @@
 		98A241E217211620001A14F0 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		98A7D1D3172FD0B1008794FE /* DeviceType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceType.h; sourceTree = "<group>"; };
 		98A7D1D4172FD0B1008794FE /* DeviceType.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceType.m; sourceTree = "<group>"; };
+		98B0B4AD1730DB3F003FDCFD /* ChemicalsListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChemicalsListViewController.h; sourceTree = "<group>"; };
+		98B0B4AE1730DB3F003FDCFD /* ChemicalsListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChemicalsListViewController.m; sourceTree = "<group>"; };
+		98B0B4AF1730DB3F003FDCFD /* ChemicalsListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChemicalsListViewController.xib; sourceTree = "<group>"; };
+		98B0B4B21730F102003FDCFD /* PPEListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPEListViewController.h; sourceTree = "<group>"; };
+		98B0B4B31730F102003FDCFD /* PPEListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPEListViewController.m; sourceTree = "<group>"; };
+		98B0B4B41730F102003FDCFD /* PPEListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PPEListViewController.xib; sourceTree = "<group>"; };
+		98B0B4B717311DFC003FDCFD /* KSCustomPopoverBackgroundView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSCustomPopoverBackgroundView.h; sourceTree = "<group>"; };
+		98B0B4B817311DFD003FDCFD /* KSCustomPopoverBackgroundView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSCustomPopoverBackgroundView.m; sourceTree = "<group>"; };
+		98B0B4BA17312165003FDCFD /* popover-black-bcg-image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "popover-black-bcg-image.png"; sourceTree = "<group>"; };
+		98B0B4BB17312166003FDCFD /* popover-black-bottom-arrow-image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "popover-black-bottom-arrow-image.png"; sourceTree = "<group>"; };
+		98B0B4BC17312167003FDCFD /* popover-black-left-arrow-image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "popover-black-left-arrow-image.png"; sourceTree = "<group>"; };
+		98B0B4BD17312168003FDCFD /* popover-black-right-arrow-image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "popover-black-right-arrow-image.png"; sourceTree = "<group>"; };
+		98B0B4BE17312169003FDCFD /* popover-black-top-arrow-image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "popover-black-top-arrow-image.png"; sourceTree = "<group>"; };
+		98B0B4C417312174003FDCFD /* popover-black-bcg-image@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "popover-black-bcg-image@2x.png"; sourceTree = "<group>"; };
+		98B0B4C517312175003FDCFD /* popover-black-bottom-arrow-image@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "popover-black-bottom-arrow-image@2x.png"; sourceTree = "<group>"; };
+		98B0B4C617312176003FDCFD /* popover-black-left-arrow-image@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "popover-black-left-arrow-image@2x.png"; sourceTree = "<group>"; };
+		98B0B4C717312177003FDCFD /* popover-black-right-arrow-image@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "popover-black-right-arrow-image@2x.png"; sourceTree = "<group>"; };
+		98B0B4C817312178003FDCFD /* popover-black-top-arrow-image@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "popover-black-top-arrow-image@2x.png"; sourceTree = "<group>"; };
+		98B0B4CE173123F5003FDCFD /* PreviewReportViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreviewReportViewController.h; sourceTree = "<group>"; };
+		98B0B4CF173123F6003FDCFD /* PreviewReportViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreviewReportViewController.m; sourceTree = "<group>"; };
+		98B0B4D0173123F8003FDCFD /* PreviewReportViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PreviewReportViewController.xib; sourceTree = "<group>"; };
 		98B37B6817153B9E00F78A54 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		98B37B7117153BAF00F78A54 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		98B37B7217153BAF00F78A54 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -398,6 +438,9 @@
 		98BA957517255B5900858A36 /* ProximaNova-BoldIt.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ProximaNova-BoldIt.otf"; sourceTree = "<group>"; };
 		98BA957617255B5900858A36 /* ProximaNova-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ProximaNova-Regular.otf"; sourceTree = "<group>"; };
 		98BA957717255B5900858A36 /* ProximaNova-RegularItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ProximaNova-RegularItalic.otf"; sourceTree = "<group>"; };
+		98C7871717324386008F80DD /* PreviewReportCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreviewReportCell.h; sourceTree = "<group>"; };
+		98C7871817324386008F80DD /* PreviewReportCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreviewReportCell.m; sourceTree = "<group>"; };
+		98C7871A173243B7008F80DD /* PreviewReportCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PreviewReportCell.xib; sourceTree = "<group>"; };
 		98DDACA5172E48F10031308B /* SampleProtectionEquipment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SampleProtectionEquipment.h; sourceTree = "<group>"; };
 		98DDACA6172E48F10031308B /* SampleProtectionEquipment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SampleProtectionEquipment.m; sourceTree = "<group>"; };
 		98E23B85171FD7C500FFAD4A /* CJSONDataSerializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CJSONDataSerializer.h; sourceTree = "<group>"; };
@@ -621,6 +664,8 @@
 		98B37B6617153B9E00F78A54 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				98B0B4B717311DFC003FDCFD /* KSCustomPopoverBackgroundView.h */,
+				98B0B4B817311DFD003FDCFD /* KSCustomPopoverBackgroundView.m */,
 				988410B21715439500A1ED57 /* LoginViewController.h */,
 				988410B31715439500A1ED57 /* LoginViewController.m */,
 				988410B41715439500A1ED57 /* LoginViewController.xib */,
@@ -647,6 +692,18 @@
 				98B68CD81728EEF10065D411 /* DashboardSettingsViewController.h */,
 				98B68CD91728EEF10065D411 /* DashboardSettingsViewController.m */,
 				98B68CDA1728EEF10065D411 /* DashboardSettingsViewController.xib */,
+				98B0B4AD1730DB3F003FDCFD /* ChemicalsListViewController.h */,
+				98B0B4AE1730DB3F003FDCFD /* ChemicalsListViewController.m */,
+				98B0B4AF1730DB3F003FDCFD /* ChemicalsListViewController.xib */,
+				98B0B4B21730F102003FDCFD /* PPEListViewController.h */,
+				98B0B4B31730F102003FDCFD /* PPEListViewController.m */,
+				98B0B4B41730F102003FDCFD /* PPEListViewController.xib */,
+				98B0B4CE173123F5003FDCFD /* PreviewReportViewController.h */,
+				98B0B4CF173123F6003FDCFD /* PreviewReportViewController.m */,
+				98B0B4D0173123F8003FDCFD /* PreviewReportViewController.xib */,
+				98C7871717324386008F80DD /* PreviewReportCell.h */,
+				98C7871817324386008F80DD /* PreviewReportCell.m */,
+				98C7871A173243B7008F80DD /* PreviewReportCell.xib */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -673,6 +730,11 @@
 			isa = PBXGroup;
 			children = (
 				98B4251A17268A3200D15811 /* @2x */,
+				98B0B4BA17312165003FDCFD /* popover-black-bcg-image.png */,
+				98B0B4BB17312166003FDCFD /* popover-black-bottom-arrow-image.png */,
+				98B0B4BC17312167003FDCFD /* popover-black-left-arrow-image.png */,
+				98B0B4BD17312168003FDCFD /* popover-black-right-arrow-image.png */,
+				98B0B4BE17312169003FDCFD /* popover-black-top-arrow-image.png */,
 				98B4255417268A3300D15811 /* background.png */,
 				98B4255517268A3300D15811 /* bg_completedprojects.png */,
 				98B4255617268A3300D15811 /* bg_subheader.png */,
@@ -736,6 +798,11 @@
 		98B4251A17268A3200D15811 /* @2x */ = {
 			isa = PBXGroup;
 			children = (
+				98B0B4C417312174003FDCFD /* popover-black-bcg-image@2x.png */,
+				98B0B4C517312175003FDCFD /* popover-black-bottom-arrow-image@2x.png */,
+				98B0B4C617312176003FDCFD /* popover-black-left-arrow-image@2x.png */,
+				98B0B4C717312177003FDCFD /* popover-black-right-arrow-image@2x.png */,
+				98B0B4C817312178003FDCFD /* popover-black-top-arrow-image@2x.png */,
 				98B4251B17268A3200D15811 /* background@2x.png */,
 				98B4251C17268A3200D15811 /* bg_completedprojects@2x.png */,
 				98B4251D17268A3200D15811 /* bg_subheader@2x.png */,
@@ -1010,6 +1077,20 @@
 				84F624031727F97700FD5D7E /* icon@2x.png in Resources */,
 				84AF07B317280974006F8756 /* AiresService.plist in Resources */,
 				98B68CDC1728EEF10065D411 /* DashboardSettingsViewController.xib in Resources */,
+				98B0B4B11730DB3F003FDCFD /* ChemicalsListViewController.xib in Resources */,
+				98B0B4B61730F102003FDCFD /* PPEListViewController.xib in Resources */,
+				98B0B4BF1731216A003FDCFD /* popover-black-bcg-image.png in Resources */,
+				98B0B4C01731216A003FDCFD /* popover-black-bottom-arrow-image.png in Resources */,
+				98B0B4C11731216A003FDCFD /* popover-black-left-arrow-image.png in Resources */,
+				98B0B4C21731216A003FDCFD /* popover-black-right-arrow-image.png in Resources */,
+				98B0B4C31731216A003FDCFD /* popover-black-top-arrow-image.png in Resources */,
+				98B0B4C917312179003FDCFD /* popover-black-bcg-image@2x.png in Resources */,
+				98B0B4CA17312179003FDCFD /* popover-black-bottom-arrow-image@2x.png in Resources */,
+				98B0B4CB17312179003FDCFD /* popover-black-left-arrow-image@2x.png in Resources */,
+				98B0B4CC17312179003FDCFD /* popover-black-right-arrow-image@2x.png in Resources */,
+				98B0B4CD17312179003FDCFD /* popover-black-top-arrow-image@2x.png in Resources */,
+				98B0B4D2173123FA003FDCFD /* PreviewReportViewController.xib in Resources */,
+				98C7871B173243B8008F80DD /* PreviewReportCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1071,7 +1152,15 @@
 				84EBF217172E92D700986667 /* ProjectDetailView.m in Sources */,
 				98A7D1D5172FD0B1008794FE /* DeviceType.m in Sources */,
 				98FF59A9172FD78C002CF862 /* Model.xcdatamodel in Sources */,
+<<<<<<< HEAD
 				84ECA92117311A8C00CAAE51 /* SampleTileView.m in Sources */,
+=======
+				98B0B4B01730DB3F003FDCFD /* ChemicalsListViewController.m in Sources */,
+				98B0B4B51730F102003FDCFD /* PPEListViewController.m in Sources */,
+				98B0B4B917311DFF003FDCFD /* KSCustomPopoverBackgroundView.m in Sources */,
+				98B0B4D1173123FA003FDCFD /* PreviewReportViewController.m in Sources */,
+				98C7871917324387008F80DD /* PreviewReportCell.m in Sources */,
+>>>>>>> Report preview and data model modifications
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

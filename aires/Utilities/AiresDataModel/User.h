@@ -16,7 +16,6 @@
 @property (nonatomic, retain) NSNumber * user_CertificationId;
 @property (nonatomic, retain) NSString * user_FirstName;
 @property (nonatomic, retain) NSNumber * user_Id;
-@property (nonatomic, retain) NSData * user_Image;
 @property (nonatomic, retain) NSNumber * user_iOSDeviceId;
 @property (nonatomic, retain) NSString * user_LastName;
 @property (nonatomic, retain) NSString * user_LoginName;

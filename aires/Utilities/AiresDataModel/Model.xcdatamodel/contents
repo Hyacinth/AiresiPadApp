@@ -82,20 +82,19 @@
         <attribute name="user_CertificationId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="user_FirstName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="user_Id" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
-        <attribute name="user_Image" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="user_iOSDeviceId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="user_LastName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="user_LoginName" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="airesProject" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Project" inverseName="fromUser" inverseEntity="Project" syncable="YES"/>
     </entity>
     <elements>
+        <element name="DeviceType" positionX="-4221" positionY="-324" width="128" height="103"/>
         <element name="Project" positionX="-4491" positionY="-658" width="171" height="330"/>
         <element name="Sample" positionX="-4266" positionY="-657" width="180" height="255"/>
         <element name="SampleChemical" positionX="-4050" positionY="-765" width="171" height="193"/>
         <element name="SampleMeasurement" positionX="-3987" positionY="-567" width="243" height="133"/>
         <element name="SampleProtectionEquipment" positionX="-3933" positionY="-432" width="252" height="103"/>
         <element name="SampleTotalMeasurement" positionX="-3951" positionY="-342" width="225" height="118"/>
-        <element name="User" positionX="-4671" positionY="-481" width="128" height="165"/>
-        <element name="DeviceType" positionX="-4221" positionY="-324" width="128" height="103"/>
+        <element name="User" positionX="-4671" positionY="-481" width="128" height="150"/>
     </elements>
 </model>
