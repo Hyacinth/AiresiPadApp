@@ -74,6 +74,134 @@
     selectedSampleNumber = 1;
     numberOfVisibleSamples = 14;
     [samplesCarousel reloadData];
+    
+    _sampleDetailsLabel.font = [UIFont fontWithName:@"ProximaNova-Bold" size:14.0f];
+    _sampleIdLabel.font = [UIFont fontWithName:@"ProximaNova-Regular" size:14.0f];
+    _meaurementsLabel.font = [UIFont fontWithName:@"ProximaNova-Bold" size:14.0f];
+    
+    _samplesScrollView.contentSize = CGSizeMake(712, 700);
+    
+    // top blue line
+    CALayer *blueLayer = [CALayer layer];
+    blueLayer.frame = CGRectMake(0, 0, 1012, 6.0f);
+    blueLayer.backgroundColor = [UIColor colorWithRed:0 green:138.0f/255.0f blue:255.0f/255.0f alpha:1.0f].CGColor;
+    [_sampleDetailsView.layer insertSublayer:blueLayer atIndex:0];
+    _sampleDetailsView.layer.masksToBounds = YES;
+    
+    CALayer *blueLayer1 = [CALayer layer];
+    blueLayer1.frame = CGRectMake(0, 0, 1012.0f, 6.0f);
+    blueLayer1.backgroundColor = [UIColor colorWithRed:0 green:138.0f/255.0f blue:255.0f/255.0f alpha:1.0f].CGColor;
+    [_sampleMeasurementsView.layer insertSublayer:blueLayer1 atIndex:0];
+    _sampleMeasurementsView.layer.masksToBounds = YES;
+    
+    UIColor *grayColor = [UIColor colorWithRed:178.0f/255.0f green:178.0f/255.0f blue:178.0f/255.0f alpha:1.0f];
+    _sampleTypeView.layer.borderColor = grayColor.CGColor;
+    _sampleTypeView.layer.borderWidth = 1.0f;
+    _sampleTypeView.layer.cornerRadius = 5.0f;
+    //_sampleTypeView.layer.masksToBounds = YES;
+    _operationalAreaView.layer.borderColor = grayColor.CGColor;
+    _operationalAreaView.layer.borderWidth = 1.0f;
+    _operationalAreaView.layer.cornerRadius = 5.0f;
+    //_operationalAreaView.layer.masksToBounds = YES;
+    _notesView.layer.borderColor = grayColor.CGColor;
+    _notesView.layer.borderWidth = 1.0f;
+    _notesView.layer.cornerRadius = 5.0f;
+   // _notesView.layer.masksToBounds = YES;
+    _commentsView.layer.borderColor = grayColor.CGColor;
+    _commentsView.layer.borderWidth = 1.0f;
+    _commentsView.layer.cornerRadius = 5.0f;
+    //_commentsView.layer.masksToBounds = YES;
+    
+    _chemicalPPEView.layer.borderColor = grayColor.CGColor;
+    _chemicalPPEView.layer.borderWidth = 1.0f;
+    _chemicalPPEView.layer.cornerRadius = 5.0f;
+    
+    UIFont *labelFont = [UIFont fontWithName:@"ProximaNova-Bold" size:12.0f];
+    _sampleTypeLabel.font = labelFont;
+    _employeeNameLabel.font = labelFont;
+    _deviceTypeLabel.font = labelFont;
+    _employeeJobLabel.font = labelFont;
+    _operationalAreaLabel.font = labelFont;
+    _notesLabel.font = labelFont;
+    _commentsLabel.font = labelFont;
+    _labelTWA.font =[UIFont fontWithName:@"ProximaNova-Bold" size:14.0f];
+    _labelSTEL.font =[UIFont fontWithName:@"ProximaNova-Bold" size:14.0f];
+    _labelCieling.font = [UIFont fontWithName:@"ProximaNova-Bold" size:14.0f];
+    
+    /*// mask for corner radius
+    UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:_sampleTypeLabel.bounds byRoundingCorners:(UIRectCornerTopLeft) cornerRadii:CGSizeMake(5.0, 5.0)];
+    CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];
+    maskLayer.frame = _sampleTypeLabel.bounds;
+    maskLayer.path = maskPath.CGPath;
+    _sampleTypeLabel.layer.mask = maskLayer;
+    
+    UIBezierPath *maskPath1 = [UIBezierPath bezierPathWithRoundedRect:_employeeNameLabel.bounds byRoundingCorners:(UIRectCornerTopLeft | UIRectCornerBottomLeft) cornerRadii:CGSizeMake(5.0, 5.0)];
+    
+    CAShapeLayer *maskLayer1 = [CAShapeLayer layer];
+    maskLayer1.frame = _employeeNameLabel.bounds;
+    maskLayer1.path = maskPath1.CGPath;
+    _employeeNameLabel.layer.mask = maskLayer1;
+    
+    CAShapeLayer *maskLayer2 = [CAShapeLayer layer];
+    maskLayer2.frame = _operationalAreaLabel.bounds;
+    maskLayer2.path = maskPath1.CGPath;
+    _operationalAreaLabel.layer.mask = maskLayer2;
+    
+    CAShapeLayer *maskLayer3 = [CAShapeLayer layer];
+    maskLayer3.frame = _notesLabel.bounds;
+    maskLayer3.path = maskPath1.CGPath;
+    _notesLabel.layer.mask = maskLayer3;
+    
+    CAShapeLayer *maskLayer4 = [CAShapeLayer layer];
+    maskLayer4.frame = _commentsLabel.bounds;
+    maskLayer4.path = maskPath1.CGPath;
+    _commentsLabel.layer.mask = maskLayer4;*/
+    
+    
+    CALayer *grayLine = [CALayer layer];
+    grayLine.frame = CGRectMake(0, _sampleTypeView.bounds.size.height/2, _sampleTypeView.bounds.size.width, 1.0f);
+    grayLine.backgroundColor = grayColor.CGColor;
+    [_sampleTypeView.layer addSublayer:grayLine];
+    
+    CALayer *grayLine1 = [CALayer layer];
+    grayLine1.frame = CGRectMake(112, 0, 1.0f, _sampleTypeView.bounds.size.height);
+    grayLine1.backgroundColor = grayColor.CGColor;
+    [_sampleTypeView.layer insertSublayer:grayLine1 atIndex:0];
+    
+    CALayer *grayLine2 = [CALayer layer];
+    grayLine2.frame = CGRectMake(340, 0, 1.0f, _sampleTypeView.bounds.size.height);
+    grayLine2.backgroundColor = grayColor.CGColor;
+    [_sampleTypeView.layer insertSublayer:grayLine2 atIndex:0];
+    
+    CALayer *grayLine3 = [CALayer layer];
+    grayLine3.frame = CGRectMake(453, 0, 1.0f, _sampleTypeView.bounds.size.height);
+    grayLine3.backgroundColor = grayColor.CGColor;
+    [_sampleTypeView.layer insertSublayer:grayLine3 atIndex:0];
+    
+    CALayer *grayLine4 = [CALayer layer];
+    grayLine4.frame = CGRectMake(112, 0, 1.0f, _operationalAreaView.bounds.size.height);
+    grayLine4.backgroundColor = grayColor.CGColor;
+    [_operationalAreaView.layer insertSublayer:grayLine4 atIndex:0];
+    
+    CALayer *grayLine5 = [CALayer layer];
+    grayLine5.frame = CGRectMake(112, 0, 1.0f, _notesView.bounds.size.height);
+    grayLine5.backgroundColor = grayColor.CGColor;
+    [_notesView.layer insertSublayer:grayLine5 atIndex:0];
+    
+    CALayer *grayLine6 = [CALayer layer];
+    grayLine6.frame = CGRectMake(112, 0, 1.0f, _commentsView.bounds.size.height);
+    grayLine6.backgroundColor = grayColor.CGColor;
+    [_commentsView.layer insertSublayer:grayLine6 atIndex:0];
+    
+    CALayer *grayLine7 = [CALayer layer];
+    grayLine7.frame = CGRectMake(341, 0, 1.0f, _chemicalPPEView.bounds.size.height);
+    grayLine7.backgroundColor = grayColor.CGColor;
+    [_chemicalPPEView.layer addSublayer:grayLine7];
+    
+    CALayer *grayLine8 = [CALayer layer];
+    grayLine8.frame = CGRectMake(0, 44.0f, _chemicalPPEView.bounds.size.width, 1.0f);
+    grayLine8.backgroundColor = grayColor.CGColor;
+    [_chemicalPPEView.layer addSublayer:grayLine8];
 }
 
 -(IBAction)homeButtonPressed:(id)sender
@@ -101,12 +229,17 @@
                          _samplesLabel.frame = CGRectMake(bProjectDetailsVisible?466.0f:616.0f, 50.0f, 93.0f, 21.0f);
                          samplesCarousel.frame = CGRectMake(bProjectDetailsVisible?0:300.0f, 88.0f, bProjectDetailsVisible?1024.0f:724.0f, 53.0f);
                          samplesCarousel.alpha = 0;
+                         
+                         _sampleDetailsView.frame = CGRectMake(bProjectDetailsVisible?6:306.0f, 141.0f, bProjectDetailsVisible?1012.0f:712.0f, 523.0f);
+                         _sampleDetailsCollapseButton.frame = CGRectMake(bProjectDetailsVisible?966:666.0f, 6.0f, 46.0f, 42.0f);
+                         _sampleMeasurementsView.frame = CGRectMake(bProjectDetailsVisible?6:306.0f, 670.0f, bProjectDetailsVisible?1012.0f:712.0f, 44.0f);
+                        _addMesaurementButton.frame = CGRectMake(bProjectDetailsVisible?966:666.0f, 6.0f, 46.0f, 42.0f);
                      }
                      completion:^(BOOL finished) {
                          numberOfVisibleSamples = bProjectDetailsVisible?20:14;
                          [samplesCarousel removeFromSuperview];
                          samplesCarousel = nil;
-                                                  
+                         
                          samplesCarousel = [[iCarousel alloc] initWithFrame:CGRectMake(bProjectDetailsVisible?0:300.0f, 88.0f, bProjectDetailsVisible?1024.0f:724.0f, 53.0f)];
                          samplesCarousel.backgroundColor = [UIColor clearColor];
                          samplesCarousel.type = iCarouselTypeLinear;
@@ -121,9 +254,12 @@
                          [UIView animateWithDuration:0.25 animations:^{
                              samplesCarousel.alpha = 1.0f;
                          }];
-
+                         
                          bProjectDetailsVisible = !bProjectDetailsVisible;
-
+                         
+                         NSUInteger curIndex = selectedSampleNumber/numberOfVisibleSamples;
+                         [samplesCarousel scrollToItemAtIndex:curIndex animated:NO];
+                         
                          //[self performSelector:@selector(reloadCarousel) withObject:nil afterDelay:0.25];
                      }];
 }
@@ -131,6 +267,61 @@
 -(void)reloadCarousel
 {
     [samplesCarousel reloadData];
+}
+
+-(IBAction)sampleDetailsCollapse:(id)sender
+{
+    UIButton *button = (UIButton*)sender;
+    CGFloat alpha = 0;
+    CGRect frame = _sampleDetailsView.frame;
+    CGRect frame1 = _sampleMeasurementsView.frame;
+    CGFloat angle = 0;
+    if(frame.size.height == 523.0f)
+    {
+        frame.size.height = 48.0f;
+        frame1.origin.y = 195.0f;
+        frame1.size.height = 519.0f;
+        angle = M_PI;
+        alpha = 0;
+    }
+    else
+    {
+        frame.size.height = 523.0f;
+        frame1.origin.y = 670.0f;
+        frame1.size.height = 44.0f;
+        angle = 0;
+        alpha = 1.0f;
+    }
+    
+    [UIView animateWithDuration:0.3
+                     animations:^{
+                         button.transform = CGAffineTransformMakeRotation(-angle);
+                         
+                         _sampleDetailsView.frame = frame;
+                         _sampleMeasurementsView.frame = frame1;
+                         
+                         _sampleTypeView.alpha = alpha;
+                         _operationalAreaView.alpha = alpha;
+                         _notesView.alpha = alpha;
+                         _commentsLabel.alpha = alpha;
+                         _btnTWACheck.alpha = alpha;
+                         _btnSTELCheck.alpha = alpha;
+                         _btnCielingCheck.alpha= alpha;
+                         _labelTWA.alpha =alpha;
+                         _labelSTEL.alpha =alpha;
+                         _labelCieling.alpha = alpha;
+                     }];
+}
+
+-(IBAction)addMeasurement:(id)sender
+{
+    
+}
+
+-(IBAction)checkButtonPressed:(id)sender
+{
+    UIButton *button = (UIButton*)sender;
+    [button setSelected:!button.isSelected];
 }
 
 #pragma mark - iCarousel datasource
@@ -148,7 +339,7 @@
         UIView *aView = [[UIView alloc] initWithFrame:samplesCarousel.bounds];
         
         for (int i=0; i<numberOfVisibleSamples; i++)
-        {            
+        {
             SampleTileView *tileView = [[SampleTileView alloc] initWithFrame:CGRectMake((i*((numberOfVisibleSamples==14)?51:50.5)), 0, 52, 52)];
             NSUInteger sampleNumber = (index*numberOfVisibleSamples)+i+1;
             tileView.tag = sampleNumber;
@@ -161,7 +352,7 @@
         }
         
         return aView;
-   }
+    }
     view.frame = samplesCarousel.bounds;
     return view;
 }
@@ -196,6 +387,32 @@
     [self setSampleSubHeaderView:nil];
     [self setAdjustSampleAreaButton:nil];
     [self setAddSampleButton:nil];
+    [self setSampleDetailsView:nil];
+    [self setSampleMeasurementsView:nil];
+    [self setSampleDetailsLabel:nil];
+    [self setMeaurementsLabel:nil];
+    [self setSampleIdLabel:nil];
+    [self setSampleDetailsCollapseButton:nil];
+    [self setAddMesaurementButton:nil];
+    [self setSampleTypeView:nil];
+    [self setOperationalAreaView:nil];
+    [self setNotesView:nil];
+    [self setCommentsView:nil];
+    [self setSampleTypeLabel:nil];
+    [self setEmployeeNameLabel:nil];
+    [self setOperationalAreaLabel:nil];
+    [self setNotesLabel:nil];
+    [self setCommentsLabel:nil];
+    [self setDeviceTypeLabel:nil];
+    [self setEmployeeJobLabel:nil];
+    [self setSamplesScrollView:nil];
+    [self setChemicalPPEView:nil];
+    [self setBtnTWACheck:nil];
+    [self setBtnSTELCheck:nil];
+    [self setBtnCielingCheck:nil];
+    [self setLabelTWA:nil];
+    [self setLabelSTEL:nil];
+    [self setLabelCieling:nil];
     [super viewDidUnload];
 }
 
