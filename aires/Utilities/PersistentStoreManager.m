@@ -370,7 +370,7 @@
     NSArray *results = [[self mainContext] executeFetchRequest:request error:nil];
     NSMutableArray *finalResult = [NSMutableArray arrayWithArray:results];
     for (Sample *mSample in results) {
-        if ([mSample.fromProject.project_ProjectNumber isEqualToString:project.project_ProjectNumber]) {
+        if (![mSample.fromProject.project_ProjectNumber isEqualToString:project.project_ProjectNumber]) {
             [finalResult removeObject:mSample];
         }
     }
@@ -416,7 +416,7 @@
     NSArray *results = [[self mainContext] executeFetchRequest:request error:nil];
     NSMutableArray *finalResult = [NSMutableArray arrayWithArray:results];
     for (SampleChemical *mSampleChemical in results) {
-        if ([mSampleChemical.fromSample.sample_SampleId isEqualToNumber:sample.sample_SampleId]) {
+        if (![mSampleChemical.fromSample.sample_SampleId isEqualToNumber:sample.sample_SampleId]) {
             [finalResult removeObject:mSampleChemical];
         }
     }
@@ -442,23 +442,29 @@
         if (![[dict valueForKey:@"MeasurementId"] isKindOfClass:[NSNull class]])
             mSampleTotalMeasurement.sampleTotalMeasurementID = [dict objectForKey:@"MeasurementId"];
         
-        //[sample addAiresSampleTotalMeasurementObject:mSampleTotalMeasurement];
+        sample.airesSampleTotalMeasurement = mSampleTotalMeasurement;
         [[self mainContext] save:nil];
     }
 }
 
--(NSArray *)getSampleTotalMeasurementforSample:(Sample *)sample
+-(SampleTotalMeasurement *)getSampleTotalMeasurementforSample:(Sample *)sample
 {
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     [request setEntity:[NSEntityDescription entityForName:@"SampleTotalMeasurement" inManagedObjectContext:[self mainContext]]];
     NSArray *results = [[self mainContext] executeFetchRequest:request error:nil];
     NSMutableArray *finalResult = [NSMutableArray arrayWithArray:results];
     for (SampleTotalMeasurement *mSampleTotalMeasurement in results) {
-        if ([mSampleTotalMeasurement.fromSample.sample_SampleId isEqualToNumber:sample.sample_SampleId]) {
+        if (![mSampleTotalMeasurement.fromSample.sample_SampleId isEqualToNumber:sample.sample_SampleId]) {
             [finalResult removeObject:mSampleTotalMeasurement];
         }
     }
-    return finalResult;
+    if([finalResult count] > 0)
+    {
+        SampleTotalMeasurement *mSampleTotalMeasurement = (SampleTotalMeasurement *)[finalResult objectAtIndex:0];
+        return mSampleTotalMeasurement;
+    }
+    
+    return nil;
 }
 
 #pragma mark -
@@ -495,7 +501,7 @@
     NSArray *results = [[self mainContext] executeFetchRequest:request error:nil];
     NSMutableArray *finalResult = [NSMutableArray arrayWithArray:results];
     for (SampleMeasurement *mSampleMeasurement in results) {
-        if ([mSampleMeasurement.fromSample.sample_SampleId isEqualToNumber:sample.sample_SampleId]) {
+        if (![mSampleMeasurement.fromSample.sample_SampleId isEqualToNumber:sample.sample_SampleId]) {
             [finalResult removeObject:mSampleMeasurement];
         }
     }
@@ -529,7 +535,7 @@
     NSArray *results = [[self mainContext] executeFetchRequest:request error:nil];
     NSMutableArray *finalResult = [NSMutableArray arrayWithArray:results];
     for (SampleProtectionEquipment *mSampleProtectionEquipment in results) {
-        if ([mSampleProtectionEquipment.fromSample.sample_SampleId isEqualToNumber:sample.sample_SampleId]) {
+        if (![mSampleProtectionEquipment.fromSample.sample_SampleId isEqualToNumber:sample.sample_SampleId]) {
             [finalResult removeObject:mSampleProtectionEquipment];
         }
     }

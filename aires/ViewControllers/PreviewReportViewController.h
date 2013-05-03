@@ -9,6 +9,14 @@
 #import <UIKit/UIKit.h>
 #import "Project.h"
 
+
+#define kBorderInset            20.0
+#define kBorderWidth            1.0
+#define kMarginInset            10.0
+
+//Line drawing
+#define kLineWidth              1.0
+
 @interface PreviewReportViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 {
     UIFont *font12Regular;
@@ -21,6 +29,8 @@
 
     Project *currentProject;
     NSArray *samplesArray;
+
+    CGSize pageSize;
 }
 
 @property (strong, nonatomic) Project *currentProject;

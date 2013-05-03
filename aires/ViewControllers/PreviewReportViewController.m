@@ -10,6 +10,7 @@
 #import "PreviewReportCell.h"
 #import "Sample.h"
 #import "AiresSingleton.h"
+#import <QuartzCore/QuartzCore.h>
 
 #define mSingleton 	((AiresSingleton *) [AiresSingleton getSingletonInstance])
 
@@ -31,6 +32,7 @@
 
 - (void)viewDidLoad
 {
+    
     [super viewDidLoad];
     if(!font12Regular)
         font12Regular = [[UIFont alloc] init];
@@ -115,10 +117,15 @@
     if(!self.projectDescLabel)
         self.projectDescLabel = [[UILabel alloc] init];
     [self.projectDescLabel setFont:font14Regular];
-    
-    [self updateReport:currentProject];
 
     // Do any additional setup after loading the view from its nib.
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self resetViewFrames];
+    [self updateReport:currentProject];
 }
 
 -(void)updateReport:(Project *)project
@@ -148,7 +155,30 @@
 
 - (IBAction)onSendEmail:(id)sender
 {
+    NSString *fileName = @"Report.pdf";
+    NSMutableData *pdfData = [NSMutableData data];
+    CGRect contentRect = CGRectMake(0, 0, self.baseScrollView.contentSize.width, self.baseScrollView.contentSize.height);
+
+    // Points the pdf converter to the mutable data object and to the UIView to be converted
+    UIGraphicsBeginPDFContextToData(pdfData, contentRect, nil);
+    UIGraphicsBeginPDFPage();
+    CGContextRef pdfContext = UIGraphicsGetCurrentContext();
     
+    [self.baseScrollView.layer renderInContext:pdfContext];
+    
+    // remove PDF rendering context
+    UIGraphicsEndPDFContext();
+    
+    // Retrieves the document directories from the iOS device
+    NSArray* documentDirectories = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask,YES);
+    
+    NSString* documentDirectory = [documentDirectories objectAtIndex:0];
+    NSString* documentDirectoryFilename = [documentDirectory stringByAppendingPathComponent:fileName];
+    
+    // instructs the mutable data object to write its context to a file on disk
+    [pdfData writeToFile:documentDirectoryFilename atomically:YES];
+    NSLog(@"documentDirectoryFileName: %@",documentDirectoryFilename);
+
 }
 
 - (IBAction)onClosePreview:(id)sender
@@ -161,6 +191,15 @@
     
 }
 
+-(void)resetViewFrames
+{
+    [self.baseScrollView setScrollEnabled:FALSE];
+    [self.baseScrollView setBounces:FALSE];
+    CGRect frame = self.projectDetailsTable.frame;
+    [self.projectDetailsTable setFrame:CGRectMake(frame.origin.x, 229.0f, frame.size.width, 449.0f)];
+    [self.baseScrollView setContentSize:CGSizeMake(1024, 704)];
+}
+
 #pragma mark -
 #pragma mark UITableView data source and delegate methods
 
@@ -171,7 +210,16 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-	return ([samplesArray count] + 15);
+    CGRect tableFrame = tableView.frame;
+    CGFloat updateValue = ([samplesArray count] +1) * 40;
+    [tableView setFrame:CGRectMake(tableFrame.origin.x, tableFrame.origin.y, tableFrame.size.width, updateValue)];
+    updateValue = updateValue - tableFrame.size.height;
+    if (updateValue > 0)
+    {
+        [self.baseScrollView setContentSize:CGSizeMake(self.baseScrollView.contentSize.width, self.baseScrollView.contentSize.height + updateValue)];
+        [self.baseScrollView setScrollEnabled:TRUE];
+    }
+    return ([samplesArray count] + 1);
 }
 
 
@@ -203,14 +251,15 @@
     }
     
     if (indexPath.row != 0) {
-        Sample *currentSample = [samplesArray objectAtIndex:indexPath.row];
+        Sample *currentSample = [samplesArray objectAtIndex:(indexPath.row -1)];
         cell.SampleID.text = [currentSample.sample_SampleId stringValue];
         cell.DateSampled.text = nil;
         cell.SampleType.text = nil;
         cell.DeviceType.text = currentSample.sample_DeviceTypeName;
-        cell.AirVolume.text = [currentSample.airesSampleTotalMeasurement.sampleTotalMeasurement_TotalVolume stringValue];
-        cell.PassiveMonitors.text = [currentSample.airesSampleTotalMeasurement.sampleTotalMeasurement_TotalMinutes stringValue];
-        cell.Area.text = [currentSample.airesSampleTotalMeasurement.sampleTotalMeasurement_TotalArea stringValue];
+        SampleTotalMeasurement *totalMeasurement = [[mSingleton getPersistentStoreManager] getSampleTotalMeasurementforSample:currentSample];
+        cell.AirVolume.text = [totalMeasurement.sampleTotalMeasurement_TotalVolume stringValue];
+        cell.PassiveMonitors.text = [totalMeasurement.sampleTotalMeasurement_TotalMinutes stringValue];
+        cell.Area.text = [totalMeasurement.sampleTotalMeasurement_TotalArea stringValue];
         cell.AnalysisRequested.text = nil;
     }
     return cell;

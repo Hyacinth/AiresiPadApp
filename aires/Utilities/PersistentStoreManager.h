@@ -54,7 +54,7 @@
 
 //For SampleTotalMeasurement
 -(void)storeSampleTotalMeasurementDetails:(NSArray *)sampleTotalMeaseurement forSample:(Sample *)sample;
--(NSArray *)getSampleTotalMeasurementforSample:(Sample *)sample;
+-(SampleTotalMeasurement *)getSampleTotalMeasurementforSample:(Sample *)sample;
 
 //For SampleMeasurement
 -(void)storeSampleMeasurementDetails:(NSArray *)sampleMeaseurement forSample:(Sample *)sample;
