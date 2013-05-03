@@ -18,9 +18,14 @@
 {
     PreviewReportViewController *mPreviewReportViewController;
     Project *currentProject;
+    NSMutableArray *chemicalsArray;
+    NSMutableArray *ppeArray;
 }
 
 @property (retain, nonatomic) Project *currentProject;
+
+@property (retain, nonatomic) NSMutableArray *chemicalsArray;
+@property (retain, nonatomic) NSMutableArray *ppeArray;
 
 @property (retain, nonatomic) IBOutlet UIButton *homeButton;
 @property (retain, nonatomic) IBOutlet UIButton *reportButton;
@@ -60,6 +65,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *labelTWA;
 @property (weak, nonatomic) IBOutlet UILabel *labelSTEL;
 @property (weak, nonatomic) IBOutlet UILabel *labelCieling;
+@property (weak, nonatomic) IBOutlet UITableView *chemicalsTableView;
+@property (weak, nonatomic) IBOutlet UITableView *ppeTableView;
+@property (weak, nonatomic) IBOutlet UIView *flagsView;
 
 -(IBAction)checkButtonPressed:(id)sender;
 - (IBAction)onGeneratePreview:(id)sender;

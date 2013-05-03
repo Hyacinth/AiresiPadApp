@@ -107,7 +107,7 @@
     _notesView.layer.borderColor = grayColor.CGColor;
     _notesView.layer.borderWidth = 1.0f;
     _notesView.layer.cornerRadius = 5.0f;
-   // _notesView.layer.masksToBounds = YES;
+    // _notesView.layer.masksToBounds = YES;
     _commentsView.layer.borderColor = grayColor.CGColor;
     _commentsView.layer.borderWidth = 1.0f;
     _commentsView.layer.cornerRadius = 5.0f;
@@ -128,36 +128,6 @@
     _labelTWA.font =[UIFont fontWithName:@"ProximaNova-Bold" size:14.0f];
     _labelSTEL.font =[UIFont fontWithName:@"ProximaNova-Bold" size:14.0f];
     _labelCieling.font = [UIFont fontWithName:@"ProximaNova-Bold" size:14.0f];
-    
-    /*// mask for corner radius
-    UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:_sampleTypeLabel.bounds byRoundingCorners:(UIRectCornerTopLeft) cornerRadii:CGSizeMake(5.0, 5.0)];
-    CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];
-    maskLayer.frame = _sampleTypeLabel.bounds;
-    maskLayer.path = maskPath.CGPath;
-    _sampleTypeLabel.layer.mask = maskLayer;
-    
-    UIBezierPath *maskPath1 = [UIBezierPath bezierPathWithRoundedRect:_employeeNameLabel.bounds byRoundingCorners:(UIRectCornerTopLeft | UIRectCornerBottomLeft) cornerRadii:CGSizeMake(5.0, 5.0)];
-    
-    CAShapeLayer *maskLayer1 = [CAShapeLayer layer];
-    maskLayer1.frame = _employeeNameLabel.bounds;
-    maskLayer1.path = maskPath1.CGPath;
-    _employeeNameLabel.layer.mask = maskLayer1;
-    
-    CAShapeLayer *maskLayer2 = [CAShapeLayer layer];
-    maskLayer2.frame = _operationalAreaLabel.bounds;
-    maskLayer2.path = maskPath1.CGPath;
-    _operationalAreaLabel.layer.mask = maskLayer2;
-    
-    CAShapeLayer *maskLayer3 = [CAShapeLayer layer];
-    maskLayer3.frame = _notesLabel.bounds;
-    maskLayer3.path = maskPath1.CGPath;
-    _notesLabel.layer.mask = maskLayer3;
-    
-    CAShapeLayer *maskLayer4 = [CAShapeLayer layer];
-    maskLayer4.frame = _commentsLabel.bounds;
-    maskLayer4.path = maskPath1.CGPath;
-    _commentsLabel.layer.mask = maskLayer4;*/
-    
     
     CALayer *grayLine = [CALayer layer];
     grayLine.frame = CGRectMake(0, _sampleTypeView.bounds.size.height/2, _sampleTypeView.bounds.size.width, 1.0f);
@@ -194,6 +164,24 @@
     grayLine6.backgroundColor = grayColor.CGColor;
     [_commentsView.layer insertSublayer:grayLine6 atIndex:0];
     
+    _chemicalsArray = [[NSMutableArray alloc] initWithObjects:@"Formaldehyde", @"Methylene Chloride", @"Ethylene Oxide", @"Ethanol", @"Zinc Phosphate", @"Oxylene", nil];
+    _ppeArray = [[NSMutableArray alloc] initWithObjects:@"Safety Goggles", @"Mask", @"Apron", nil];
+    
+    [_chemicalsTableView reloadData];
+    [_ppeTableView reloadData];
+    
+    NSUInteger chemicalsCount = _chemicalsArray.count;
+    NSUInteger ppeCount = _ppeArray.count;
+    NSUInteger moreCount = chemicalsCount>ppeCount?chemicalsCount:ppeCount;
+    
+    CGRect chemicalPPEFrame = _chemicalPPEView.frame;
+    chemicalPPEFrame.size.height = 44.0f/*title*/ + (40.0f/*row height*/ * moreCount);
+    _chemicalPPEView.frame = chemicalPPEFrame;
+    
+    CGRect flagsViewFrame = _flagsView.frame;
+    flagsViewFrame.origin.y = _chemicalPPEView.frame.origin.y + _chemicalPPEView.frame.size.height + 20.0f;
+    _flagsView.frame = flagsViewFrame;
+    
     CALayer *grayLine7 = [CALayer layer];
     grayLine7.frame = CGRectMake(341, 0, 1.0f, _chemicalPPEView.bounds.size.height);
     grayLine7.backgroundColor = grayColor.CGColor;
@@ -203,6 +191,9 @@
     grayLine8.frame = CGRectMake(0, 44.0f, _chemicalPPEView.bounds.size.width, 1.0f);
     grayLine8.backgroundColor = grayColor.CGColor;
     [_chemicalPPEView.layer addSublayer:grayLine8];
+    
+    
+    _samplesScrollView.contentSize = CGSizeMake(_samplesScrollView.frame.size.width, _samplesScrollView.frame.size.height + ( _flagsView.frame.origin.y + _flagsView.frame.size.height + 20.0f - _samplesScrollView.frame.size.height));
 }
 
 -(IBAction)homeButtonPressed:(id)sender
@@ -234,7 +225,7 @@
                          _sampleDetailsView.frame = CGRectMake(bProjectDetailsVisible?6:306.0f, 141.0f, bProjectDetailsVisible?1012.0f:712.0f, 523.0f);
                          _sampleDetailsCollapseButton.frame = CGRectMake(bProjectDetailsVisible?966:666.0f, 6.0f, 46.0f, 42.0f);
                          _sampleMeasurementsView.frame = CGRectMake(bProjectDetailsVisible?6:306.0f, 670.0f, bProjectDetailsVisible?1012.0f:712.0f, 44.0f);
-                        _addMesaurementButton.frame = CGRectMake(bProjectDetailsVisible?966:666.0f, 6.0f, 46.0f, 42.0f);
+                         _addMesaurementButton.frame = CGRectMake(bProjectDetailsVisible?966:666.0f, 6.0f, 46.0f, 42.0f);
                      }
                      completion:^(BOOL finished) {
                          numberOfVisibleSamples = bProjectDetailsVisible?20:14;
@@ -284,6 +275,20 @@
         frame1.size.height = 519.0f;
         angle = M_PI;
         alpha = 0;
+        [UIView animateWithDuration:0.2
+                         animations:^{
+                             _sampleTypeView.alpha = alpha;
+                             _operationalAreaView.alpha = alpha;
+                             _notesView.alpha = alpha;
+                             _commentsView.alpha = alpha;
+                             _btnTWACheck.alpha = alpha;
+                             _chemicalPPEView.alpha = alpha;
+                             _btnSTELCheck.alpha = alpha;
+                             _btnCielingCheck.alpha= alpha;
+                             _labelTWA.alpha =alpha;
+                             _labelSTEL.alpha =alpha;
+                             _labelCieling.alpha = alpha;
+                         }];
     }
     else
     {
@@ -292,25 +297,38 @@
         frame1.size.height = 44.0f;
         angle = 0;
         alpha = 1.0f;
+        [UIView animateWithDuration:0.2
+                              delay:0.2f
+                            options:UIViewAnimationOptionBeginFromCurrentState
+                         animations:^{
+                             _sampleTypeView.alpha = alpha;
+                             _operationalAreaView.alpha = alpha;
+                             _notesView.alpha = alpha;
+                             _commentsView.alpha = alpha;
+                             _btnTWACheck.alpha = alpha;
+                             _chemicalPPEView.alpha = alpha;
+                             _btnSTELCheck.alpha = alpha;
+                             _btnCielingCheck.alpha= alpha;
+                             _labelTWA.alpha =alpha;
+                             _labelSTEL.alpha =alpha;
+                             _labelCieling.alpha = alpha;
+                         }
+                         completion:^(BOOL finished) {
+                             
+                         }];
     }
     
     [UIView animateWithDuration:0.3
+                          delay:alpha==0?0.1f:0
+                        options:UIViewAnimationOptionBeginFromCurrentState
                      animations:^{
                          button.transform = CGAffineTransformMakeRotation(-angle);
                          
                          _sampleDetailsView.frame = frame;
                          _sampleMeasurementsView.frame = frame1;
+                     }
+                     completion:^(BOOL finished) {
                          
-                         _sampleTypeView.alpha = alpha;
-                         _operationalAreaView.alpha = alpha;
-                         _notesView.alpha = alpha;
-                         _commentsLabel.alpha = alpha;
-                         _btnTWACheck.alpha = alpha;
-                         _btnSTELCheck.alpha = alpha;
-                         _btnCielingCheck.alpha= alpha;
-                         _labelTWA.alpha =alpha;
-                         _labelSTEL.alpha =alpha;
-                         _labelCieling.alpha = alpha;
                      }];
 }
 
@@ -330,7 +348,7 @@
     if(!mPreviewReportViewController)
         mPreviewReportViewController = [[PreviewReportViewController alloc] initWithNibName:@"PreviewReportViewController" bundle:nil];
     [mPreviewReportViewController setCurrentProject:currentProject];
-   
+    
     CATransition* transition = [CATransition animation];
     transition.duration = 0.5;
     transition.type = kCATransitionFade;
@@ -340,7 +358,23 @@
      addAnimation:transition forKey:kCATransition];
     
     [self.navigationController pushViewController:mPreviewReportViewController animated:YES];
- 
+    
+}
+
+#pragma mark - SampleTileViewDelegate
+
+-(void)sampleNumberSelected:(NSUInteger)number
+{
+    if(selectedSampleNumber == number)
+        return;
+    
+    SampleTileView *tileView = (SampleTileView*)[samplesCarousel viewWithTag:selectedSampleNumber];
+    if(tileView && [tileView isKindOfClass:[SampleTileView class]])
+    {
+        [tileView setSampleSelected:NO];
+    }
+    
+    selectedSampleNumber = number;
 }
 
 #pragma mark - iCarousel datasource
@@ -376,20 +410,41 @@
     return view;
 }
 
-#pragma mark - SampleTileViewDelegate
+#pragma mark -
+#pragma mark UITableView data source and delegate methods
 
--(void)sampleNumberSelected:(NSUInteger)number
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    if(selectedSampleNumber == number)
-        return;
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+	return (tableView==_chemicalsTableView)?_chemicalsArray.count:_ppeArray.count;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 40.0f;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	static NSString *kCellID = @"ValueCell";
+	
+	UITableViewCell *cell = (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:kCellID];
+	if (cell == nil)
+	{
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+        cell.textLabel.font = [UIFont fontWithName:@"ProximaNova-Regular" size:14.0f];
+        cell.textLabel.textAlignment = UITextAlignmentLeft;
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;        
+	}
     
-    SampleTileView *tileView = (SampleTileView*)[samplesCarousel viewWithTag:selectedSampleNumber];
-    if(tileView && [tileView isKindOfClass:[SampleTileView class]])
-    {
-        [tileView setSampleSelected:NO];
-    }
+    cell.textLabel.text = (tableView==_chemicalsTableView)?[_chemicalsArray objectAtIndex:indexPath.row]:
+    [_ppeArray objectAtIndex:indexPath.row];
     
-    selectedSampleNumber = number;
+    return cell;
 }
 
 #pragma mark - Memory warning
@@ -432,6 +487,9 @@
     [self setLabelTWA:nil];
     [self setLabelSTEL:nil];
     [self setLabelCieling:nil];
+    [self setChemicalsTableView:nil];
+    [self setPpeTableView:nil];
+    [self setFlagsView:nil];
     [super viewDidUnload];
 }
 
