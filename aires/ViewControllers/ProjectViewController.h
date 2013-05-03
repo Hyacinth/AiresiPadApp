@@ -18,8 +18,6 @@
 {
     PreviewReportViewController *mPreviewReportViewController;
     Project *currentProject;
-    NSMutableArray *chemicalsArray;
-    NSMutableArray *ppeArray;
 }
 
 @property (retain, nonatomic) Project *currentProject;
@@ -48,14 +46,21 @@
 @property (weak, nonatomic) IBOutlet UIScrollView *samplesScrollView;
 
 @property (weak, nonatomic) IBOutlet UILabel *sampleTypeLabel;
+@property (weak, nonatomic) IBOutlet UILabel *sampleTypeValueLabel;
 @property (weak, nonatomic) IBOutlet UILabel *employeeNameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *employeeNameValueLabel;
 @property (weak, nonatomic) IBOutlet UILabel *deviceTypeLabel;
+@property (weak, nonatomic) IBOutlet UILabel *deviceTypeValueLabel;
 @property (weak, nonatomic) IBOutlet UILabel *employeeJobLabel;
 
+@property (weak, nonatomic) IBOutlet UILabel *employeeJobValueLabel;
 
 @property (weak, nonatomic) IBOutlet UILabel *operationalAreaLabel;
+@property (weak, nonatomic) IBOutlet UILabel *operationalAreaValueLabel;
 @property (weak, nonatomic) IBOutlet UILabel *notesLabel;
+@property (weak, nonatomic) IBOutlet UILabel *notesValueLabel;
 @property (weak, nonatomic) IBOutlet UILabel *commentsLabel;
+@property (weak, nonatomic) IBOutlet UILabel *commentsValueLabel;
 
 @property (weak, nonatomic) IBOutlet UIView *chemicalPPEView;
 

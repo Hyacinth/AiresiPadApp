@@ -76,9 +76,14 @@
     numberOfVisibleSamples = 14;
     [samplesCarousel reloadData];
     
-    _sampleDetailsLabel.font = [UIFont fontWithName:@"ProximaNova-Bold" size:14.0f];
-    _sampleIdLabel.font = [UIFont fontWithName:@"ProximaNova-Regular" size:14.0f];
-    _meaurementsLabel.font = [UIFont fontWithName:@"ProximaNova-Bold" size:14.0f];
+    UIFont *font14px = [UIFont fontWithName:@"ProximaNova-Regular" size:14.0f];
+    UIFont *fontBold14px = [UIFont fontWithName:@"ProximaNova-Bold" size:14.0f];
+    UIFont *fontBold12px = [UIFont fontWithName:@"ProximaNova-Bold" size:12.0f];
+    
+    
+    _sampleDetailsLabel.font = fontBold14px;
+    _sampleIdLabel.font = font14px;
+    _meaurementsLabel.font = fontBold14px;
     
     _samplesScrollView.contentSize = CGSizeMake(712, 700);
     
@@ -117,17 +122,23 @@
     _chemicalPPEView.layer.borderWidth = 1.0f;
     _chemicalPPEView.layer.cornerRadius = 5.0f;
     
-    UIFont *labelFont = [UIFont fontWithName:@"ProximaNova-Bold" size:12.0f];
-    _sampleTypeLabel.font = labelFont;
-    _employeeNameLabel.font = labelFont;
-    _deviceTypeLabel.font = labelFont;
-    _employeeJobLabel.font = labelFont;
-    _operationalAreaLabel.font = labelFont;
-    _notesLabel.font = labelFont;
-    _commentsLabel.font = labelFont;
-    _labelTWA.font =[UIFont fontWithName:@"ProximaNova-Bold" size:14.0f];
-    _labelSTEL.font =[UIFont fontWithName:@"ProximaNova-Bold" size:14.0f];
-    _labelCieling.font = [UIFont fontWithName:@"ProximaNova-Bold" size:14.0f];
+    _sampleTypeLabel.font = fontBold12px;;
+    _sampleTypeValueLabel.font = font14px;
+    _employeeNameLabel.font = fontBold12px;
+    _employeeNameValueLabel.font = font14px;
+    _deviceTypeLabel.font = fontBold12px;
+    _deviceTypeValueLabel.font = font14px;
+    _employeeJobLabel.font = fontBold12px;
+    _employeeJobValueLabel.font = font14px;
+    _operationalAreaLabel.font = fontBold12px;
+    _operationalAreaValueLabel.font = font14px;
+    _notesLabel.font = fontBold12px;
+    _notesValueLabel.font = font14px;
+    _commentsLabel.font = fontBold12px;
+    _commentsValueLabel.font = font14px;
+    _labelTWA.font = fontBold14px;
+    _labelSTEL.font = fontBold14px;
+    _labelCieling.font = fontBold14px;
     
     CALayer *grayLine = [CALayer layer];
     grayLine.frame = CGRectMake(0, _sampleTypeView.bounds.size.height/2, _sampleTypeView.bounds.size.width, 1.0f);
@@ -191,7 +202,6 @@
     grayLine8.frame = CGRectMake(0, 44.0f, _chemicalPPEView.bounds.size.width, 1.0f);
     grayLine8.backgroundColor = grayColor.CGColor;
     [_chemicalPPEView.layer addSublayer:grayLine8];
-    
     
     _samplesScrollView.contentSize = CGSizeMake(_samplesScrollView.frame.size.width, _samplesScrollView.frame.size.height + ( _flagsView.frame.origin.y + _flagsView.frame.size.height + 20.0f - _samplesScrollView.frame.size.height));
 }
@@ -438,7 +448,7 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
         cell.textLabel.font = [UIFont fontWithName:@"ProximaNova-Regular" size:14.0f];
         cell.textLabel.textAlignment = UITextAlignmentLeft;
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;        
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
 	}
     
     cell.textLabel.text = (tableView==_chemicalsTableView)?[_chemicalsArray objectAtIndex:indexPath.row]:
@@ -490,6 +500,13 @@
     [self setChemicalsTableView:nil];
     [self setPpeTableView:nil];
     [self setFlagsView:nil];
+    [self setSampleTypeValueLabel:nil];
+    [self setEmployeeNameValueLabel:nil];
+    [self setDeviceTypeValueLabel:nil];
+    [self setEmployeeJobValueLabel:nil];
+    [self setOperationalAreaValueLabel:nil];
+    [self setNotesValueLabel:nil];
+    [self setCommentsValueLabel:nil];
     [super viewDidUnload];
 }
 
