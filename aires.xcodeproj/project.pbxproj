@@ -1152,15 +1152,12 @@
 				84EBF217172E92D700986667 /* ProjectDetailView.m in Sources */,
 				98A7D1D5172FD0B1008794FE /* DeviceType.m in Sources */,
 				98FF59A9172FD78C002CF862 /* Model.xcdatamodel in Sources */,
-<<<<<<< HEAD
 				84ECA92117311A8C00CAAE51 /* SampleTileView.m in Sources */,
-=======
 				98B0B4B01730DB3F003FDCFD /* ChemicalsListViewController.m in Sources */,
 				98B0B4B51730F102003FDCFD /* PPEListViewController.m in Sources */,
 				98B0B4B917311DFF003FDCFD /* KSCustomPopoverBackgroundView.m in Sources */,
 				98B0B4D1173123FA003FDCFD /* PreviewReportViewController.m in Sources */,
 				98C7871917324387008F80DD /* PreviewReportCell.m in Sources */,
->>>>>>> Report preview and data model modifications
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -193,6 +193,8 @@
     if(aCarousel == _activeProjectsCarousel && index == _activeProjectsCarousel.currentItemIndex)
     {
         ProjectViewController *projectVC = [[ProjectViewController alloc] initWithNibName:@"ProjectViewController" bundle:nil];
+        Project *currentProject = (Project*)[_projectsArray objectAtIndex:index];
+        [projectVC setCurrentProject:currentProject];
         [self.navigationController pushViewController:projectVC animated:NO];
         
         [UIView transitionFromView:self.view

@@ -75,8 +75,6 @@
 
 -(void)updateReport:(Project *)project
 {
-    if(!currentProject)
-        currentProject = [[Project alloc] init];
     currentProject = project;
     
     if(!samplesArray)
@@ -125,7 +123,7 @@
 	PreviewReportCell *cell = (PreviewReportCell *)[tableView dequeueReusableCellWithIdentifier:kCellID];
 	if (cell == nil)
 	{
-        NSArray *topLevelObjects = [[NSBundle mainBundle] loadNibNamed:@"PreviewReportCell"owner:nil options:nil];
+        NSArray *topLevelObjects = [[NSBundle mainBundle] loadNibNamed:@"PreviewReportCell"owner:self options:nil];
         cell = (PreviewReportCell *)[topLevelObjects objectAtIndex:0];
 	}
     
