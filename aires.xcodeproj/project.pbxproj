@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		8439D369172911140053278E /* LoginFieldsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8439D368172911140053278E /* LoginFieldsView.m */; };
 		84AF07B317280974006F8756 /* AiresService.plist in Resources */ = {isa = PBXBuildFile; fileRef = 84AF07B217280974006F8756 /* AiresService.plist */; };
+		84D2E81C1733827300E3704E /* ProjectViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84D2E81B1733827300E3704E /* ProjectViewController.xib */; };
 		84EBF217172E92D700986667 /* ProjectDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 84EBF216172E92D600986667 /* ProjectDetailView.m */; };
 		84ECA92117311A8C00CAAE51 /* SampleTileView.m in Sources */ = {isa = PBXBuildFile; fileRef = 84ECA92017311A8C00CAAE51 /* SampleTileView.m */; };
 		84F623FA1727DAD700FD5D7E /* Default-Landscape@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 84F623F81727DAD700FD5D7E /* Default-Landscape@2x~ipad.png */; };
@@ -70,7 +71,6 @@
 		98B42515172689A100D15811 /* CompletedProjectTileView.m in Sources */ = {isa = PBXBuildFile; fileRef = 98B4250C172689A000D15811 /* CompletedProjectTileView.m */; };
 		98B42516172689A100D15811 /* DashboardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98B4250E172689A000D15811 /* DashboardViewController.m */; };
 		98B42517172689A100D15811 /* ProjectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98B42510172689A100D15811 /* ProjectViewController.m */; };
-		98B42518172689A100D15811 /* ProjectViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98B42511172689A100D15811 /* ProjectViewController.xib */; };
 		98B4258D17268A3300D15811 /* background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 98B4251B17268A3200D15811 /* background@2x.png */; };
 		98B4258E17268A3300D15811 /* bg_completedprojects@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 98B4251C17268A3200D15811 /* bg_completedprojects@2x.png */; };
 		98B4258F17268A3300D15811 /* bg_subheader@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 98B4251D17268A3200D15811 /* bg_subheader@2x.png */; };
@@ -218,6 +218,7 @@
 		8439D367172911140053278E /* LoginFieldsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginFieldsView.h; sourceTree = "<group>"; };
 		8439D368172911140053278E /* LoginFieldsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginFieldsView.m; sourceTree = "<group>"; };
 		84AF07B217280974006F8756 /* AiresService.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = AiresService.plist; sourceTree = "<group>"; };
+		84D2E81B1733827300E3704E /* ProjectViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProjectViewController.xib; sourceTree = "<group>"; };
 		84EBF215172E92D600986667 /* ProjectDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProjectDetailView.h; sourceTree = "<group>"; };
 		84EBF216172E92D600986667 /* ProjectDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProjectDetailView.m; sourceTree = "<group>"; };
 		84ECA91F17311A8B00CAAE51 /* SampleTileView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SampleTileView.h; sourceTree = "<group>"; };
@@ -316,7 +317,6 @@
 		98B4250E172689A000D15811 /* DashboardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DashboardViewController.m; sourceTree = "<group>"; };
 		98B4250F172689A000D15811 /* ProjectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProjectViewController.h; sourceTree = "<group>"; };
 		98B42510172689A100D15811 /* ProjectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProjectViewController.m; sourceTree = "<group>"; };
-		98B42511172689A100D15811 /* ProjectViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProjectViewController.xib; sourceTree = "<group>"; };
 		98B4251B17268A3200D15811 /* background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "background@2x.png"; sourceTree = "<group>"; };
 		98B4251C17268A3200D15811 /* bg_completedprojects@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg_completedprojects@2x.png"; sourceTree = "<group>"; };
 		98B4251D17268A3200D15811 /* bg_subheader@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg_subheader@2x.png"; sourceTree = "<group>"; };
@@ -688,7 +688,7 @@
 				84ECA92017311A8C00CAAE51 /* SampleTileView.m */,
 				98B4250F172689A000D15811 /* ProjectViewController.h */,
 				98B42510172689A100D15811 /* ProjectViewController.m */,
-				98B42511172689A100D15811 /* ProjectViewController.xib */,
+				84D2E81B1733827300E3704E /* ProjectViewController.xib */,
 				98B68CD81728EEF10065D411 /* DashboardSettingsViewController.h */,
 				98B68CD91728EEF10065D411 /* DashboardSettingsViewController.m */,
 				98B68CDA1728EEF10065D411 /* DashboardSettingsViewController.xib */,
@@ -959,7 +959,6 @@
 				98BA957A17255B5900858A36 /* ProximaNova-Regular.otf in Resources */,
 				98BA957B17255B5900858A36 /* ProximaNova-RegularItalic.otf in Resources */,
 				98B42513172689A100D15811 /* DashboardViewController.xib in Resources */,
-				98B42518172689A100D15811 /* ProjectViewController.xib in Resources */,
 				98B4258D17268A3300D15811 /* background@2x.png in Resources */,
 				98B4258E17268A3300D15811 /* bg_completedprojects@2x.png in Resources */,
 				98B4258F17268A3300D15811 /* bg_subheader@2x.png in Resources */,
@@ -1091,6 +1090,7 @@
 				98B0B4CD17312179003FDCFD /* popover-black-top-arrow-image@2x.png in Resources */,
 				98B0B4D2173123FA003FDCFD /* PreviewReportViewController.xib in Resources */,
 				98C7871B173243B8008F80DD /* PreviewReportCell.xib in Resources */,
+				84D2E81C1733827300E3704E /* ProjectViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
