@@ -23,25 +23,30 @@
     NSArray *samplesArray;
 }
 
-@property (weak, nonatomic) IBOutlet UIButton *closeButton;
-@property (weak, nonatomic) IBOutlet UIButton *unlockButton;
-@property (weak, nonatomic) IBOutlet UIButton *sendMailButton;
-@property (weak, nonatomic) IBOutlet UIScrollView *baseScrollView;
-@property (weak, nonatomic) IBOutlet UILabel *dateLabel;
-@property (weak, nonatomic) IBOutlet UILabel *dayLabel;
-@property (weak, nonatomic) IBOutlet UILabel *monthLabel;
-@property (weak, nonatomic) IBOutlet UILabel *TTLabel;
-@property (weak, nonatomic) IBOutlet UILabel *labLabel;
-@property (weak, nonatomic) IBOutlet UILabel *qcLabel;
-@property (weak, nonatomic) IBOutlet UILabel *cpLabel;
-@property (weak, nonatomic) IBOutlet UILabel *ttValuelabel;
-@property (weak, nonatomic) IBOutlet UILabel *labValueLabel;
-@property (weak, nonatomic) IBOutlet UILabel *qcValueLabel;
-@property (weak, nonatomic) IBOutlet UILabel *qpValueLabel;
-@property (weak, nonatomic) IBOutlet UILabel *projectNameLabel;
-@property (weak, nonatomic) IBOutlet UILabel *projectDescLabel;
-@property (weak, nonatomic) IBOutlet UITableView *projectDetailsTable;
+@property (strong, nonatomic) Project *currentProject;
+
+@property (strong, nonatomic) IBOutlet UIButton *closeButton;
+@property (strong, nonatomic) IBOutlet UIButton *unlockButton;
+@property (strong, nonatomic) IBOutlet UIButton *sendMailButton;
+@property (strong, nonatomic) IBOutlet UIScrollView *baseScrollView;
+@property (strong, nonatomic) IBOutlet UILabel *dateLabel;
+@property (strong, nonatomic) IBOutlet UILabel *dayLabel;
+@property (strong, nonatomic) IBOutlet UILabel *monthLabel;
+@property (strong, nonatomic) IBOutlet UILabel *TTLabel;
+@property (strong, nonatomic) IBOutlet UILabel *labLabel;
+@property (strong, nonatomic) IBOutlet UILabel *qcLabel;
+@property (strong, nonatomic) IBOutlet UILabel *cpLabel;
+@property (strong, nonatomic) IBOutlet UILabel *ttValuelabel;
+@property (strong, nonatomic) IBOutlet UILabel *labValueLabel;
+@property (strong, nonatomic) IBOutlet UILabel *qcValueLabel;
+@property (strong, nonatomic) IBOutlet UILabel *qpValueLabel;
+@property (strong, nonatomic) IBOutlet UILabel *projectNameLabel;
+@property (strong, nonatomic) IBOutlet UILabel *projectDescLabel;
+@property (strong, nonatomic) IBOutlet UITableView *projectDetailsTable;
 
 -(void)updateReport:(Project *)project;
+- (IBAction)onSendEmail:(id)sender;
+- (IBAction)onClosePreview:(id)sender;
+- (IBAction)onUnlockProject:(id)sender;
 
 @end

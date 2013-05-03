@@ -1281,6 +1281,15 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
+						<string key="label">onGeneratePreview:</string>
+						<reference key="source" ref="573174606"/>
+						<reference key="destination" ref="841351856"/>
+						<int key="IBEventType">7</int>
+					</object>
+					<int key="connectionID">99</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchEventConnection" key="connection">
 						<string key="label">homeButtonPressed:</string>
 						<reference key="source" ref="362423759"/>
 						<reference key="destination" ref="841351856"/>
@@ -1688,7 +1697,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">98</int>
+			<int key="maxID">99</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -1704,16 +1713,36 @@
 					<string key="className">ProjectViewController</string>
 					<string key="superclassName">UIViewController</string>
 					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="addMeasurement:">id</string>
+						<string key="adjustSamplesArea:">id</string>
 						<string key="checkButtonPressed:">id</string>
 						<string key="homeButtonPressed:">id</string>
+						<string key="onGeneratePreview:">id</string>
+						<string key="sampleDetailsCollapse:">id</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="addMeasurement:">
+							<string key="name">addMeasurement:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="adjustSamplesArea:">
+							<string key="name">adjustSamplesArea:</string>
+							<string key="candidateClassName">id</string>
+						</object>
 						<object class="IBActionInfo" key="checkButtonPressed:">
 							<string key="name">checkButtonPressed:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="homeButtonPressed:">
 							<string key="name">homeButtonPressed:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="onGeneratePreview:">
+							<string key="name">onGeneratePreview:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="sampleDetailsCollapse:">
+							<string key="name">sampleDetailsCollapse:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 					</dictionary>

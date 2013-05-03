@@ -9,10 +9,18 @@
 #import <UIKit/UIKit.h>
 #import "iCarousel.h"
 #import "SampleTileView.h"
+#import "PreviewReportViewController.h"
+#import "Project.h"
 
 @class ProjectDetailView;
 
 @interface ProjectViewController : UIViewController<iCarouselDataSource, iCarouselDelegate, SampleTileViewDelegate>
+{
+    PreviewReportViewController *mPreviewReportViewController;
+    Project *currentProject;
+}
+
+@property (retain, nonatomic) Project *currentProject;
 
 @property (retain, nonatomic) IBOutlet UIButton *homeButton;
 @property (retain, nonatomic) IBOutlet UIButton *reportButton;
@@ -54,6 +62,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *labelCieling;
 
 -(IBAction)checkButtonPressed:(id)sender;
+- (IBAction)onGeneratePreview:(id)sender;
 
 
 @end

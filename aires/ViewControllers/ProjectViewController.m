@@ -21,6 +21,7 @@
 @end
 
 @implementation ProjectViewController
+@synthesize currentProject;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -322,6 +323,24 @@
 {
     UIButton *button = (UIButton*)sender;
     [button setSelected:!button.isSelected];
+}
+
+- (IBAction)onGeneratePreview:(id)sender
+{
+    if(!mPreviewReportViewController)
+        mPreviewReportViewController = [[PreviewReportViewController alloc] initWithNibName:@"PreviewReportViewController" bundle:nil];
+    [mPreviewReportViewController setCurrentProject:currentProject];
+   
+    CATransition* transition = [CATransition animation];
+    transition.duration = 0.5;
+    transition.type = kCATransitionFade;
+    transition.subtype = kCATransitionFromRight;
+    
+    [self.navigationController.view.layer
+     addAnimation:transition forKey:kCATransition];
+    
+    [self.navigationController pushViewController:mPreviewReportViewController animated:YES];
+ 
 }
 
 #pragma mark - iCarousel datasource
