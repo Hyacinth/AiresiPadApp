@@ -21,12 +21,13 @@
 }
 
 @property (retain, nonatomic) Project *currentProject;
-
+@property (retain, nonatomic) NSMutableArray *samplesArray;
 @property (retain, nonatomic) NSMutableArray *chemicalsArray;
 @property (retain, nonatomic) NSMutableArray *ppeArray;
 
 @property (retain, nonatomic) IBOutlet UIButton *homeButton;
 @property (retain, nonatomic) IBOutlet UIButton *reportButton;
+@property (weak, nonatomic) IBOutlet UILabel *projectTitleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *samplesLabel;
 @property (weak, nonatomic) IBOutlet ProjectDetailView *projectDetailView;
 @property (weak, nonatomic) IBOutlet UIImageView *sampleSubHeaderView;

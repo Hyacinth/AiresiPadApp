@@ -9,6 +9,10 @@
 #import "ProjectViewController.h"
 #import "ProjectDetailView.h"
 #import "SampleTileView.h"
+#import "Sample.h"
+#import "AiresSingleton.h"
+
+#define mSingleton 	((AiresSingleton *) [AiresSingleton getSingletonInstance])
 
 @interface ProjectViewController ()
 {
@@ -41,7 +45,10 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    
+    _projectTitleLabel.text = currentProject.project_ProjectNumber;
+
+    _projectDetailView.project = currentProject;
+
     [_homeButton.titleLabel setFont:[UIFont fontWithName:@"ProximaNova-Bold" size:12.0]];
     [_samplesLabel setFont:[UIFont fontWithName:@"ProximaNova-Bold" size:20.0]];
     
@@ -93,12 +100,6 @@
     blueLayer.backgroundColor = [UIColor colorWithRed:0 green:138.0f/255.0f blue:255.0f/255.0f alpha:1.0f].CGColor;
     [_sampleDetailsView.layer insertSublayer:blueLayer atIndex:0];
     _sampleDetailsView.layer.masksToBounds = YES;
-    
-    CALayer *blueLayer1 = [CALayer layer];
-    blueLayer1.frame = CGRectMake(0, 0, 1012.0f, 6.0f);
-    blueLayer1.backgroundColor = [UIColor colorWithRed:0 green:138.0f/255.0f blue:255.0f/255.0f alpha:1.0f].CGColor;
-    [_sampleMeasurementsView.layer insertSublayer:blueLayer1 atIndex:0];
-    _sampleMeasurementsView.layer.masksToBounds = YES;
     
     UIColor *grayColor = [UIColor colorWithRed:178.0f/255.0f green:178.0f/255.0f blue:178.0f/255.0f alpha:1.0f];
     _sampleTypeView.layer.borderColor = grayColor.CGColor;
@@ -204,6 +205,9 @@
     [_chemicalPPEView.layer addSublayer:grayLine8];
     
     _samplesScrollView.contentSize = CGSizeMake(_samplesScrollView.frame.size.width, _samplesScrollView.frame.size.height + ( _flagsView.frame.origin.y + _flagsView.frame.size.height + 20.0f - _samplesScrollView.frame.size.height));
+    
+    _samplesArray = [[NSMutableArray alloc] init];
+    [_samplesArray addObjectsFromArray:[[mSingleton getPersistentStoreManager] getSampleforProject:currentProject]];
 }
 
 -(IBAction)homeButtonPressed:(id)sender
@@ -391,7 +395,7 @@
 
 - (NSUInteger)numberOfItemsInCarousel:(iCarousel *)aCarousel
 {
-    return 2;
+    return (_samplesArray.count / numberOfVisibleSamples) + 1;
 }
 
 - (UIView *)carousel:(iCarousel *)aCarousel viewForItemAtIndex:(NSUInteger)index reusingView:(UIView*)view
@@ -401,7 +405,7 @@
         // content view
         UIView *aView = [[UIView alloc] initWithFrame:samplesCarousel.bounds];
         
-        for (int i=0; i<numberOfVisibleSamples; i++)
+        for (int i=0; i<_samplesArray.count; i++)
         {
             SampleTileView *tileView = [[SampleTileView alloc] initWithFrame:CGRectMake((i*((numberOfVisibleSamples==14)?51:50.5)), 0, 52, 52)];
             NSUInteger sampleNumber = (index*numberOfVisibleSamples)+i+1;

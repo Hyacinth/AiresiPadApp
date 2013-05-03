@@ -7,6 +7,7 @@
 //
 
 #import "ProjectDetailView.h"
+#import "Project.h"
 #import <QuartzCore/QuartzCore.h>
 
 @interface ProjectDetailView ()
@@ -74,7 +75,6 @@
     [self addSubview:emailButton];
     
     [emailButton setImage:[UIImage imageNamed:@"email.png"] forState:UIControlStateNormal];
-    [emailButton setTitle:@"seanbeckley@gmail.com" forState:UIControlStateNormal];
     [emailButton setTitleColor:[UIColor colorWithRed:28.0f/255.0f green:34.0f/255.0f blue:39.0f/255.0f alpha:1.0f] forState:UIControlStateNormal];
     [emailButton.titleLabel setFont:font14Bold];
     
@@ -82,6 +82,12 @@
     
     emailButton.imageEdgeInsets = UIEdgeInsetsMake(0, 10, 0, 0);
     emailButton.titleEdgeInsets = UIEdgeInsetsMake(0, 20, 0, 0);
+}
+
+-(void)setProject:(Project *)project
+{
+    _project = project;
+    [emailButton setTitle:_project.project_ContactEmail forState:UIControlStateNormal];
 }
 
 - (void)drawRect:(CGRect)rect
@@ -122,17 +128,17 @@
               lineBreakMode:UILineBreakModeTailTruncation
                   alignment:UITextAlignmentLeft];
     
-    [@"Risk Assesment for Sigma-Aldrich" drawInRect:CGRectMake(20, 85, 260, 20)
+    [_project.project_ProjectNumber drawInRect:CGRectMake(20, 85, 260, 20)
                                            withFont:titleFont
                                       lineBreakMode:UILineBreakModeTailTruncation
                                           alignment:UITextAlignmentLeft];
     
-    [@"Sigma-Aldrich" drawInRect:CGRectMake(20, 107, 260, 15)
+    [_project.project_ClientName drawInRect:CGRectMake(20, 107, 260, 15)
                         withFont:clientFont
                    lineBreakMode:UILineBreakModeTailTruncation
                        alignment:UITextAlignmentLeft];
     
-    [@"Conduct On-site Investigation, Risk Assessment, Building Material Review (Lead, erial RevieMold, Asbestos). Conduct Onerial Revietion, Risk Assessment, Building Material Review (Lead, Mold, Asbestos), Building Material Review (Lead, Mold, Asbestos), Building Material Review (Lead, Mold, Asbestos), Building Material Review (Lead, Mold, Asbestos)."
+    [_project.project_ProjectDescription
      drawInRect:CGRectMake(20, 145, 250, 80)
      withFont:font12Regular
      lineBreakMode:UILineBreakModeTailTruncation
@@ -157,7 +163,7 @@
                      lineBreakMode:UILineBreakModeTailTruncation
                          alignment:UITextAlignmentLeft];
     
-    [@"Eric Smith" drawInRect:CGRectMake(60, 313, 100, 10)
+    [_project.project_QCPerson drawInRect:CGRectMake(60, 313, 100, 10)
                      withFont:font14Bold
                 lineBreakMode:UILineBreakModeTailTruncation
                     alignment:UITextAlignmentLeft];
@@ -167,7 +173,7 @@
          lineBreakMode:UILineBreakModeTailTruncation
              alignment:UITextAlignmentLeft];
     
-    [@"013XYZ Lab" drawInRect:CGRectMake(165, 313, 100, 10)
+    [_project.project_LabName drawInRect:CGRectMake(165, 313, 100, 10)
                      withFont:font14Bold
                 lineBreakMode:UILineBreakModeTailTruncation
                     alignment:UITextAlignmentLeft];
@@ -179,26 +185,26 @@
                     lineBreakMode:UILineBreakModeTailTruncation
                         alignment:UITextAlignmentLeft];
     
-    [@"Sean Beckley" drawInRect:CGRectMake(60, 493, 100, 20)
+    [[NSString stringWithFormat:@"%@ %@", _project.project_ContactFirstName, _project.project_ContactLastName] drawInRect:CGRectMake(60, 493, 100, 20)
                        withFont:font14Bold
                   lineBreakMode:UILineBreakModeTailTruncation
                       alignment:UITextAlignmentLeft];
     
     [mapImage drawInRect:CGRectMake(20, 535, 25, 25)];
     
-    [@"3951 Westerre Parkway, Suite 350" drawInRect:CGRectMake(60, 532, 250, 10)
+    [_project.project_LocationAddress drawInRect:CGRectMake(60, 532, 250, 10)
                                            withFont:font14Regular
                                       lineBreakMode:UILineBreakModeTailTruncation
                                           alignment:UITextAlignmentLeft];
     
-    [@"Richmond, VA 23233" drawInRect:CGRectMake(60, 548, 250, 10)
+    [_project.project_LocationAddress2 drawInRect:CGRectMake(60, 548, 250, 10)
                              withFont:font14Regular
                         lineBreakMode:UILineBreakModeTailTruncation
                             alignment:UITextAlignmentLeft];
     
     [phoneImage drawInRect:CGRectMake(20, 585, 25, 25)];
     
-    [@"(808) 717-421" drawInRect:CGRectMake(60, 590, 100, 10)
+    [_project.project_ContactPhoneNumber drawInRect:CGRectMake(60, 590, 100, 10)
                         withFont:font14Bold
                    lineBreakMode:UILineBreakModeTailTruncation
                        alignment:UITextAlignmentLeft];
