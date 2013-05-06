@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "Project.h"
+#import <MessageUI/MessageUI.h>
 
 
 #define kBorderInset            20.0
@@ -17,7 +18,7 @@
 //Line drawing
 #define kLineWidth              1.0
 
-@interface PreviewReportViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
+@interface PreviewReportViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, MFMailComposeViewControllerDelegate>
 {
     UIFont *font12Regular;
     UIFont *font14Regular;

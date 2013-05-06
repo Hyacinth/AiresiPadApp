@@ -117,7 +117,7 @@
     if(!self.projectDescLabel)
         self.projectDescLabel = [[UILabel alloc] init];
     [self.projectDescLabel setFont:font14Regular];
-
+    
     // Do any additional setup after loading the view from its nib.
 }
 
@@ -158,7 +158,7 @@
     NSString *fileName = @"Report.pdf";
     NSMutableData *pdfData = [NSMutableData data];
     CGRect contentRect = CGRectMake(0, 0, self.baseScrollView.contentSize.width, self.baseScrollView.contentSize.height);
-
+    
     // Points the pdf converter to the mutable data object and to the UIView to be converted
     UIGraphicsBeginPDFContextToData(pdfData, contentRect, nil);
     UIGraphicsBeginPDFPage();
@@ -178,7 +178,54 @@
     // instructs the mutable data object to write its context to a file on disk
     [pdfData writeToFile:documentDirectoryFilename atomically:YES];
     NSLog(@"documentDirectoryFileName: %@",documentDirectoryFilename);
+    [self showMailPanel];
+    
+}
 
+-(void)showMailPanel
+{
+    MFMailComposeViewController *mailComposeViewController = [[MFMailComposeViewController alloc] init];
+    
+    mailComposeViewController.mailComposeDelegate = self;
+    [mailComposeViewController setToRecipients:[NSArray arrayWithObjects:@"email1",nil]];
+    [mailComposeViewController setSubject:@"Report"];
+    [mailComposeViewController setMessageBody:@"your body" isHTML:YES];
+   
+    NSString *fileName = @"Report.pdf";
+    NSArray* documentDirectories = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask,YES);
+    NSString* documentDirectory = [documentDirectories objectAtIndex:0];
+    NSString* documentDirectoryFilename = [documentDirectory stringByAppendingPathComponent:fileName];
+    NSData *file = nil;
+    if ([[NSFileManager defaultManager] fileExistsAtPath:documentDirectoryFilename])
+        file = [[NSData alloc] initWithContentsOfFile:documentDirectoryFilename];
+    
+    [mailComposeViewController addAttachmentData:file mimeType:@"application/pdf" fileName:@"SomeFile.pdf"];
+    [self.navigationController presentModalViewController:mailComposeViewController animated:YES];
+}
+
+
+- (void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error
+{
+    // Notifies users about errors associated with the interface
+    switch (result)
+    {
+        case MFMailComposeResultCancelled:
+            NSLog(@"Result: canceled");
+            break;
+        case MFMailComposeResultSaved:
+            NSLog(@"Result: saved");
+            break;
+        case MFMailComposeResultSent:
+            NSLog(@"Result: sent");
+            break;
+        case MFMailComposeResultFailed:
+            NSLog(@"Result: failed");
+            break;
+        default:
+            NSLog(@"Result: not sent");
+            break;
+    }
+    [controller dismissModalViewControllerAnimated:YES];
 }
 
 - (IBAction)onClosePreview:(id)sender
@@ -191,9 +238,9 @@
                     completion:^(BOOL finished){
                         /* do something on animation completion */
                     }];
-
-  [self.navigationController popViewControllerAnimated:NO];
-
+    
+    [self.navigationController popViewControllerAnimated:NO];
+    
 }
 
 - (IBAction)onUnlockProject:(id)sender
@@ -235,14 +282,14 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	static NSString *kCellID = @"PreviewReportCell";
-	
-	PreviewReportCell *cell = (PreviewReportCell *)[tableView dequeueReusableCellWithIdentifier:kCellID];
-	if (cell == nil)
-	{
+    static NSString *kCellID = @"PreviewReportCell";
+    
+    PreviewReportCell *cell = (PreviewReportCell *)[tableView dequeueReusableCellWithIdentifier:kCellID];
+    if (cell == nil)
+    {
         NSArray *topLevelObjects = [[NSBundle mainBundle] loadNibNamed:@"PreviewReportCell"owner:self options:nil];
         cell = (PreviewReportCell *)[topLevelObjects objectAtIndex:0];
-	}
+    }
     
     UIColor *textColor = [UIColor colorWithRed:28.0f/255.0f green:34.0f/255.0f blue:39.0f/255.0f alpha:1];
     [cell setCellTextColor:textColor];
