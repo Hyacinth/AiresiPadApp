@@ -183,7 +183,17 @@
 
 - (IBAction)onClosePreview:(id)sender
 {
-    [self.navigationController popViewControllerAnimated:YES];
+    UIViewController *vc = [self.navigationController.viewControllers objectAtIndex:self.navigationController.viewControllers.count-2];
+    [UIView transitionFromView:self.view
+                        toView:vc.view
+                      duration:0.75
+                       options:UIViewAnimationOptionTransitionFlipFromLeft
+                    completion:^(BOOL finished){
+                        /* do something on animation completion */
+                    }];
+
+  [self.navigationController popViewControllerAnimated:NO];
+
 }
 
 - (IBAction)onUnlockProject:(id)sender

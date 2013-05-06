@@ -98,6 +98,7 @@
     //[self preLoadLoginSettings];
     if (isLoggingIn)
     {
+        [self setElementsEnabled:FALSE];
         [loginFieldsView showLoadingMessage:@"Signing in..."];
     }
     [self performSelector:@selector(preLoadLoginSettings) withObject:nil afterDelay:1.5];
@@ -121,7 +122,6 @@
                 [noNetworkAlert show];
                 return;
             }
-            [self setElementsEnabled:FALSE];
 
             NSString *user = [[mSingleton getSecurityManager] getValueForKey:LOGIN_USERNAME];
             NSString *pwd = [[mSingleton getSecurityManager] getValueForKey:LOGIN_PASSWORD];
@@ -339,19 +339,7 @@
          addAnimation:transition forKey:kCATransition];
         
         [self.navigationController pushViewController:mDashboardViewController animated:NO];
-        /*
-        PreviewReportViewController *mPreviewReportViewController = [[PreviewReportViewController alloc] initWithNibName:@"PreviewReportViewController" bundle:nil];
-        CATransition* transition = [CATransition animation];
-        transition.duration = 0.25;
-        transition.type = kCATransitionFade;
-        transition.subtype = kCATransitionFromRight;
         
-        [self.navigationController.view.layer
-         addAnimation:transition forKey:kCATransition];
-        
-        [self.navigationController pushViewController:mPreviewReportViewController animated:NO];
-         */
-
     }
     else if ([[notification name] isEqualToString:NOTIFICATION_ENVIRONMENT_FAILED])
     {

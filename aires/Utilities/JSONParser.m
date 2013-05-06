@@ -49,6 +49,8 @@
     [[mSingleton getWebServiceManager] getProtectionEquipmentsList];
 
     [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_LOGIN_SUCCESS object:self];
+    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_FETCH_PROJECT_SUCCESS object:self];
+
 }
 
 -(void)parseChemicalList:(NSData *)jsonData

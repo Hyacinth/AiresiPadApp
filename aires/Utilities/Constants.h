@@ -30,3 +30,6 @@
 
 #define NOTIFICATION_ENVIRONMENT_FAILED      @"notification_environment_failed"
 #define NOTIFICATION_ENVIRONMENT_SUCCESS     @"notification_environment_success"
+
+#define NOTIFICATION_FETCH_PROJECT_FAILED    @"notification_fetch_project_failed"
+#define NOTIFICATION_FETCH_PROJECT_SUCCESS   @"notification_fetch_project_success"

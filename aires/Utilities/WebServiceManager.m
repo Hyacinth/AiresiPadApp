@@ -175,6 +175,8 @@
      {
          NSLog(@"Error: %@", error);
          [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_LOGIN_FAILED object:self];
+         [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_FETCH_PROJECT_FAILED object:self];
+
      }];
     
     ;

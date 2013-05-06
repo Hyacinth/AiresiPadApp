@@ -11,13 +11,17 @@
 #import "DashboardSettingsViewController.h"
 #import "ChemicalsListViewController.h"
 #import "PPEListViewController.h"
+#import "PreviewReportViewController.h"
+#import "ProjectListViewController.h"
 
-@interface DashboardViewController : UIViewController<iCarouselDataSource, iCarouselDelegate, iCarouselDeprecated, UIPopoverControllerDelegate>
+@interface DashboardViewController : UIViewController<iCarouselDataSource, iCarouselDelegate, iCarouselDeprecated, UIPopoverControllerDelegate, UITextFieldDelegate, ProjectListDelegate>
 {
     UIPopoverController *popover;
     DashboardSettingsViewController *mDashboardSettingsViewController;
     ChemicalsListViewController *mChemicalsListViewController;
     PPEListViewController *mPPEListViewController;
+    PreviewReportViewController *mPreviewReportViewController;
+    ProjectListViewController *mProjectListViewController;
 }
 
 @property(nonatomic,retain) IBOutlet iCarousel *activeProjectsCarousel;
@@ -34,8 +38,11 @@
 @property (retain, nonatomic) IBOutlet UIButton *btnSettings;
 @property (retain, nonatomic) IBOutlet UIButton *btnRefresh;
 
+@property (retain, nonatomic) IBOutlet UIScrollView *loadingView;
+
 @property (retain, nonatomic) NSMutableArray *projectsArray;
 
--(IBAction)onSettings:(id)sender;
+- (IBAction)onSettings:(id)sender;
+- (IBAction)onRefreshData:(id)sender;
 
 @end

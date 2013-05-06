@@ -70,6 +70,12 @@
     
     bProjectDetailsVisible = YES;
     
+    _samplesArray = [[NSMutableArray alloc] init];
+    [_samplesArray addObjectsFromArray:[[mSingleton getPersistentStoreManager] getSampleforProject:currentProject]];
+
+    selectedSampleNumber = 1;
+    numberOfVisibleSamples = 14;
+
     samplesCarousel = [[iCarousel alloc] initWithFrame:CGRectMake(300, 88, 724, 53)];
     samplesCarousel.backgroundColor = [UIColor clearColor];
     samplesCarousel.type = iCarouselTypeLinear;
@@ -79,9 +85,7 @@
     samplesCarousel.delegate = self;
     [self.view  insertSubview:samplesCarousel belowSubview:_projectDetailView];
     
-    selectedSampleNumber = 1;
-    numberOfVisibleSamples = 14;
-    [samplesCarousel reloadData];
+       [samplesCarousel reloadData];
     
     UIFont *font14px = [UIFont fontWithName:@"ProximaNova-Regular" size:14.0f];
     UIFont *fontBold14px = [UIFont fontWithName:@"ProximaNova-Bold" size:14.0f];
@@ -206,9 +210,7 @@
     
     _samplesScrollView.contentSize = CGSizeMake(_samplesScrollView.frame.size.width, _samplesScrollView.frame.size.height + ( _flagsView.frame.origin.y + _flagsView.frame.size.height + 20.0f - _samplesScrollView.frame.size.height));
     
-    _samplesArray = [[NSMutableArray alloc] init];
-    [_samplesArray addObjectsFromArray:[[mSingleton getPersistentStoreManager] getSampleforProject:currentProject]];
-}
+    }
 
 -(IBAction)homeButtonPressed:(id)sender
 {
@@ -363,16 +365,15 @@
         mPreviewReportViewController = [[PreviewReportViewController alloc] initWithNibName:@"PreviewReportViewController" bundle:nil];
     [mPreviewReportViewController setCurrentProject:currentProject];
     
-    CATransition* transition = [CATransition animation];
-    transition.duration = 0.5;
-    transition.type = kCATransitionFade;
-    transition.subtype = kCATransitionFromRight;
-    
-    [self.navigationController.view.layer
-     addAnimation:transition forKey:kCATransition];
-    
-    [self.navigationController pushViewController:mPreviewReportViewController animated:YES];
-    
+    [self.navigationController pushViewController:mPreviewReportViewController animated:NO];
+    [UIView transitionFromView:self.view
+                        toView:mPreviewReportViewController.view
+                      duration:0.75
+                       options:UIViewAnimationOptionTransitionFlipFromRight
+                    completion:^(BOOL finished){
+                        /* do something on animation completion */
+                    }];
+
 }
 
 #pragma mark - SampleTileViewDelegate

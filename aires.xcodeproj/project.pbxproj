@@ -49,6 +49,8 @@
 		9887016C172533D1007FB144 /* PersistentStoreManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9887016B172533D1007FB144 /* PersistentStoreManager.m */; };
 		989B043D17295C83001D3FFD /* Project.m in Sources */ = {isa = PBXBuildFile; fileRef = 98B68CDE172913770065D411 /* Project.m */; };
 		98A241E317211620001A14F0 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98A241E217211620001A14F0 /* CoreData.framework */; };
+		98A5E92A17377EED008A3A84 /* ProjectListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A5E92817377EED008A3A84 /* ProjectListViewController.m */; };
+		98A5E92B17377EED008A3A84 /* ProjectListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98A5E92917377EED008A3A84 /* ProjectListViewController.xib */; };
 		98A7D1D5172FD0B1008794FE /* DeviceType.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A7D1D4172FD0B1008794FE /* DeviceType.m */; };
 		98B0B4B01730DB3F003FDCFD /* ChemicalsListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98B0B4AE1730DB3F003FDCFD /* ChemicalsListViewController.m */; };
 		98B0B4B11730DB3F003FDCFD /* ChemicalsListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98B0B4AF1730DB3F003FDCFD /* ChemicalsListViewController.xib */; };
@@ -289,6 +291,9 @@
 		9887016A172533D0007FB144 /* PersistentStoreManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersistentStoreManager.h; sourceTree = "<group>"; };
 		9887016B172533D1007FB144 /* PersistentStoreManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersistentStoreManager.m; sourceTree = "<group>"; };
 		98A241E217211620001A14F0 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		98A5E92717377EEC008A3A84 /* ProjectListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProjectListViewController.h; sourceTree = "<group>"; };
+		98A5E92817377EED008A3A84 /* ProjectListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProjectListViewController.m; sourceTree = "<group>"; };
+		98A5E92917377EED008A3A84 /* ProjectListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProjectListViewController.xib; sourceTree = "<group>"; };
 		98A7D1D3172FD0B1008794FE /* DeviceType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceType.h; sourceTree = "<group>"; };
 		98A7D1D4172FD0B1008794FE /* DeviceType.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceType.m; sourceTree = "<group>"; };
 		98B0B4AD1730DB3F003FDCFD /* ChemicalsListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChemicalsListViewController.h; sourceTree = "<group>"; };
@@ -690,6 +695,9 @@
 				98B4250D172689A000D15811 /* DashboardViewController.h */,
 				98B4250E172689A000D15811 /* DashboardViewController.m */,
 				98B42508172689A000D15811 /* DashboardViewController.xib */,
+				98A5E92717377EEC008A3A84 /* ProjectListViewController.h */,
+				98A5E92817377EED008A3A84 /* ProjectListViewController.m */,
+				98A5E92917377EED008A3A84 /* ProjectListViewController.xib */,
 				84EBF215172E92D600986667 /* ProjectDetailView.h */,
 				84EBF216172E92D600986667 /* ProjectDetailView.m */,
 				84ECA91F17311A8B00CAAE51 /* SampleTileView.h */,
@@ -1107,6 +1115,7 @@
 				84D2E82217338DAF00E3704E /* ico_collapse_up_pressed.png in Resources */,
 				84D2E82517338DBF00E3704E /* ico_collapse_up_nor@2x.png in Resources */,
 				84D2E82617338DBF00E3704E /* ico_collapse_up_pressed@2x.png in Resources */,
+				98A5E92B17377EED008A3A84 /* ProjectListViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1174,6 +1183,7 @@
 				98B0B4B917311DFF003FDCFD /* KSCustomPopoverBackgroundView.m in Sources */,
 				98B0B4D1173123FA003FDCFD /* PreviewReportViewController.m in Sources */,
 				98C7871917324387008F80DD /* PreviewReportCell.m in Sources */,
+				98A5E92A17377EED008A3A84 /* ProjectListViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

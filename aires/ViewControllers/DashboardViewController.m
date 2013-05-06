@@ -54,18 +54,33 @@
     [_btnSettings setBackgroundImage:bgimage forState:UIControlStateHighlighted];
     [_btnRefresh setBackgroundImage:bgimage forState:UIControlStateHighlighted];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(localNotificationhandler:) name:NOTIFICATION_LOGOUT_FAILED object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(localNotificationhandler:) name:NOTIFICATION_LOGOUT_SUCCESS object:nil];
     
     User *tempUser = [[mSingleton getPersistentStoreManager] getAiresUser];
     [_usernameLabel setText:[NSString stringWithFormat:@"%@ %@",tempUser.user_FirstName,tempUser.user_LastName]];
-
+    
     _projectsArray = [[NSMutableArray alloc] init];
     [_projectsArray addObjectsFromArray:[[mSingleton getPersistentStoreManager] getUserProjects]];
-
+    
     _activeProjectsCarousel.alpha = 0.0f;
     _completedProjectsCarousel.alpha = 0.0f;
     [self performSelector:@selector(loadCarousel) withObject:nil afterDelay:0.5];
+}
+
+-(void) viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(localNotificationhandler:) name:NOTIFICATION_LOGOUT_FAILED object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(localNotificationhandler:) name:NOTIFICATION_LOGOUT_SUCCESS object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(localNotificationhandler:) name:NOTIFICATION_FETCH_PROJECT_FAILED object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(localNotificationhandler:) name:NOTIFICATION_FETCH_PROJECT_SUCCESS object:nil];
+}
+
+-(void) viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 -(void)loadCarousel
@@ -87,6 +102,8 @@
     [_usernameLabel setFont:[UIFont fontWithName:@"ProximaNova-Bold" size:14.0f]];
     [_airesLabel setFont:[UIFont fontWithName:@"ProximaNova-Bold" size:20.0f]];
     [_searchField setFont:[UIFont fontWithName:@"ProximaNova-Regular" size:14.0f]];
+    [_searchField setDelegate:self];
+    [_loadingView setHidden:TRUE];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -126,16 +143,6 @@
     if(!mDashboardSettingsViewController)
         mDashboardSettingsViewController = [[DashboardSettingsViewController alloc] init];
     
-//    if(!mChemicalsListViewController)
-//        mChemicalsListViewController = [[ChemicalsListViewController alloc] init];
-//   
-//    mChemicalsListViewController.listContent = [[mSingleton getPersistentStoreManager] getChemicalList];
-//    
-//    if(!mPPEListViewController)
-//        mPPEListViewController = [[PPEListViewController alloc] init];
-//    
-//    mPPEListViewController.listContent = [[mSingleton getPersistentStoreManager] getProtectionEquipmentList];
-
     if(!popover)
         popover = [[UIPopoverController alloc]initWithContentViewController:mDashboardSettingsViewController];
     
@@ -144,6 +151,19 @@
     [popover setDelegate:self];
     
     [popover presentPopoverFromRect:self.btnSettings.bounds inView:self.btnSettings permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
+}
+
+- (IBAction)onRefreshData:(id)sender
+{
+    if(![mSingleton isConnectedToInternet])
+    {
+        UIAlertView *noNetworkAlert = [[UIAlertView alloc] initWithTitle:@"Connection error" message:@"Unable to connect.\n Check your internet connection and try again." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+        [noNetworkAlert show];
+        return;
+    }
+
+    [_loadingView setHidden:FALSE];
+    [[mSingleton getWebServiceManager] fetchProjectsforUser];
 }
 
 #pragma mark - iCarousel datasource
@@ -158,7 +178,7 @@
     if(aCarousel == _activeProjectsCarousel)
     {
         if (view == nil)
-        {            
+        {
             // content view
             ActiveProjectTileView *tileView = [[ActiveProjectTileView alloc] initWithFrame:CGRectMake(0, 0, 690, 480)];
             tileView.project = (Project*)[_projectsArray objectAtIndex:index];
@@ -179,7 +199,7 @@
                 // content view
                 CompletedProjectTileView *tileView = [[CompletedProjectTileView alloc] initWithFrame:CGRectMake(i*256, 0, 256, 154)];
                 [aView addSubview:tileView];
-            }            
+            }
             return aView;
         }
         return view;
@@ -207,11 +227,113 @@
     }
     else if(aCarousel == _completedProjectsCarousel && index == _completedProjectsCarousel.currentItemIndex)
     {
+        if(!mPreviewReportViewController)
+            mPreviewReportViewController = [[PreviewReportViewController alloc] initWithNibName:@"PreviewReportViewController" bundle:nil];
+        Project *currentProject = (Project*)[_projectsArray objectAtIndex:index];
+        [mPreviewReportViewController setCurrentProject:currentProject];
+    
+        [self.navigationController pushViewController:mPreviewReportViewController animated:NO];
+        [UIView transitionFromView:self.view
+                            toView:mPreviewReportViewController.view
+                          duration:0.75
+                           options:UIViewAnimationOptionTransitionFlipFromRight
+                        completion:^(BOOL finished){
+                            /* do something on animation completion */
+                        }];
+
         
     }
     else
     {
         
+    }
+}
+
+#pragma mark-
+#pragma mark TextFiled Delegate
+- (void)textFieldDidBeginEditing:(UITextField *)textField
+{
+    if (textField == _searchField)
+    {
+        if(!mProjectListViewController)
+            mProjectListViewController = [[ProjectListViewController alloc] initWithNibName:@"ProjectListViewController" bundle:nil];
+        mProjectListViewController.listContent = [[mSingleton getPersistentStoreManager] getUserProjects];
+        mProjectListViewController.delegate = self;
+        [mProjectListViewController filterContentForSearchText:_searchField.text scope:nil];
+        
+        if(!popover)
+            popover = [[UIPopoverController alloc]initWithContentViewController:mProjectListViewController];
+        
+        [popover setContentViewController:mProjectListViewController];
+        [popover setPopoverContentSize:CGSizeMake(320, 180)];
+        [popover setDelegate:self];
+        
+        [popover presentPopoverFromRect:_searchField.bounds inView:_searchField permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
+    }
+}
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    if (textField == _searchField)
+        [mProjectListViewController filterContentForSearchText:[textField.text stringByReplacingCharactersInRange:range withString:string] scope:nil];
+    
+    return YES;
+}
+
+#pragma mark-
+#pragma mark TextFiled Delegate
+- (BOOL)popoverControllerShouldDismissPopover:(UIPopoverController *)popoverController
+{
+    return YES;
+}
+
+- (void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController
+{
+    if([popoverController.contentViewController isMemberOfClass:[mProjectListViewController class]])
+    {
+        NSLog(@"mProjectListViewController");
+        [_searchField resignFirstResponder];
+    }
+    else if([popoverController.contentViewController isMemberOfClass:[mDashboardSettingsViewController class]])
+    {
+        NSLog(@"mDashboardSettingsViewController");
+    }
+}
+
+#pragma mark-
+#pragma mark ProjectList Delegate
+- (void)selectedProject:(Project*)proj
+{
+    [popover dismissPopoverAnimated:NO];
+    if([proj.project_CompletedFlag boolValue])
+    {
+        if(!mPreviewReportViewController)
+            mPreviewReportViewController = [[PreviewReportViewController alloc] initWithNibName:@"PreviewReportViewController" bundle:nil];
+        [mPreviewReportViewController setCurrentProject:proj];
+        
+        [self.navigationController pushViewController:mPreviewReportViewController animated:NO];
+        [UIView transitionFromView:self.view
+                            toView:mPreviewReportViewController.view
+                          duration:0.75
+                           options:UIViewAnimationOptionTransitionFlipFromRight
+                        completion:^(BOOL finished){
+                            /* do something on animation completion */
+                        }];
+    }
+    else
+    {
+        ProjectViewController *projectVC = [[ProjectViewController alloc] initWithNibName:@"ProjectViewController" bundle:nil];
+        [projectVC setCurrentProject:proj];
+        [self.navigationController pushViewController:projectVC animated:NO];
+        
+        [UIView transitionFromView:self.view
+                            toView:projectVC.view
+                          duration:0.75
+                           options:UIViewAnimationOptionTransitionFlipFromRight
+                        completion:^(BOOL finished){
+                            /* do something on animation completion */
+                        }];
+
     }
 }
 
@@ -228,13 +350,29 @@
         [[mSingleton getSecurityManager] deleteValueForKey:LOGIN_ACCESSTOKEN];
         [[mSingleton getSecurityManager] deleteValueForKey:LOGIN_ACCESSTOKEN_TIME];
         [popover dismissPopoverAnimated:YES];
-
+        
         CATransition* transition = [CATransition animation];
         transition.duration = 0.25;
         transition.type = kCATransitionFade;
         transition.subtype = kCATransitionFromRight;
         [self.navigationController.view.layer addAnimation:transition forKey:kCATransition];
         [self.navigationController popViewControllerAnimated:NO];
+    }
+    else if ([[notification name] isEqualToString:NOTIFICATION_FETCH_PROJECT_FAILED])
+    {
+        [_loadingView setHidden:TRUE];
+        UIAlertView *failedAlert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Unable to reload data.\n Check your internet connection or try again later." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+        [failedAlert show];
+
+    }
+    else if ([[notification name] isEqualToString:NOTIFICATION_FETCH_PROJECT_SUCCESS])
+    {
+        [_projectsArray removeAllObjects];
+        [_projectsArray addObjectsFromArray:[[mSingleton getPersistentStoreManager] getUserProjects]];
+        _activeProjectsCarousel.alpha = 0.0f;
+        _completedProjectsCarousel.alpha = 0.0f;
+        [self loadCarousel];
+        [_loadingView setHidden:TRUE];
     }
 }
 
