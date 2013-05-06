@@ -8,8 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		8439D369172911140053278E /* LoginFieldsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8439D368172911140053278E /* LoginFieldsView.m */; };
+		84A735401737D0F0000BD714 /* ProjectViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84A7353F1737D0F0000BD714 /* ProjectViewController.xib */; };
 		84AF07B317280974006F8756 /* AiresService.plist in Resources */ = {isa = PBXBuildFile; fileRef = 84AF07B217280974006F8756 /* AiresService.plist */; };
-		84D2E81C1733827300E3704E /* ProjectViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84D2E81B1733827300E3704E /* ProjectViewController.xib */; };
 		84D2E81E17338D0C00E3704E /* PreviewReportViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84D2E81D17338D0C00E3704E /* PreviewReportViewController.xib */; };
 		84D2E82117338DAF00E3704E /* ico_collapse_up_nor.png in Resources */ = {isa = PBXBuildFile; fileRef = 84D2E81F17338DAF00E3704E /* ico_collapse_up_nor.png */; };
 		84D2E82217338DAF00E3704E /* ico_collapse_up_pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 84D2E82017338DAF00E3704E /* ico_collapse_up_pressed.png */; };
@@ -223,8 +223,8 @@
 /* Begin PBXFileReference section */
 		8439D367172911140053278E /* LoginFieldsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginFieldsView.h; sourceTree = "<group>"; };
 		8439D368172911140053278E /* LoginFieldsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginFieldsView.m; sourceTree = "<group>"; };
+		84A7353F1737D0F0000BD714 /* ProjectViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProjectViewController.xib; sourceTree = "<group>"; };
 		84AF07B217280974006F8756 /* AiresService.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = AiresService.plist; sourceTree = "<group>"; };
-		84D2E81B1733827300E3704E /* ProjectViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProjectViewController.xib; sourceTree = "<group>"; };
 		84D2E81D17338D0C00E3704E /* PreviewReportViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PreviewReportViewController.xib; sourceTree = "<group>"; };
 		84D2E81F17338DAF00E3704E /* ico_collapse_up_nor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ico_collapse_up_nor.png; sourceTree = "<group>"; };
 		84D2E82017338DAF00E3704E /* ico_collapse_up_pressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ico_collapse_up_pressed.png; sourceTree = "<group>"; };
@@ -704,7 +704,7 @@
 				84ECA92017311A8C00CAAE51 /* SampleTileView.m */,
 				98B4250F172689A000D15811 /* ProjectViewController.h */,
 				98B42510172689A100D15811 /* ProjectViewController.m */,
-				84D2E81B1733827300E3704E /* ProjectViewController.xib */,
+				84A7353F1737D0F0000BD714 /* ProjectViewController.xib */,
 				98B68CD81728EEF10065D411 /* DashboardSettingsViewController.h */,
 				98B68CD91728EEF10065D411 /* DashboardSettingsViewController.m */,
 				98B68CDA1728EEF10065D411 /* DashboardSettingsViewController.xib */,
@@ -1109,13 +1109,13 @@
 				98B0B4CC17312179003FDCFD /* popover-black-right-arrow-image@2x.png in Resources */,
 				98B0B4CD17312179003FDCFD /* popover-black-top-arrow-image@2x.png in Resources */,
 				98C7871B173243B8008F80DD /* PreviewReportCell.xib in Resources */,
-				84D2E81C1733827300E3704E /* ProjectViewController.xib in Resources */,
 				84D2E81E17338D0C00E3704E /* PreviewReportViewController.xib in Resources */,
 				84D2E82117338DAF00E3704E /* ico_collapse_up_nor.png in Resources */,
 				84D2E82217338DAF00E3704E /* ico_collapse_up_pressed.png in Resources */,
 				84D2E82517338DBF00E3704E /* ico_collapse_up_nor@2x.png in Resources */,
 				84D2E82617338DBF00E3704E /* ico_collapse_up_pressed@2x.png in Resources */,
 				98A5E92B17377EED008A3A84 /* ProjectListViewController.xib in Resources */,
+				84A735401737D0F0000BD714 /* ProjectViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

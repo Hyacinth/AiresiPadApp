@@ -72,10 +72,10 @@
     
     _samplesArray = [[NSMutableArray alloc] init];
     [_samplesArray addObjectsFromArray:[[mSingleton getPersistentStoreManager] getSampleforProject:currentProject]];
-
+    
     selectedSampleNumber = 1;
     numberOfVisibleSamples = 14;
-
+    
     samplesCarousel = [[iCarousel alloc] initWithFrame:CGRectMake(300, 88, 724, 53)];
     samplesCarousel.backgroundColor = [UIColor clearColor];
     samplesCarousel.type = iCarouselTypeLinear;
@@ -83,14 +83,11 @@
     samplesCarousel.scrollSpeed = 0.75f;
     samplesCarousel.dataSource = self;
     samplesCarousel.delegate = self;
-    [self.view  insertSubview:samplesCarousel belowSubview:_projectDetailView];
-    
-       [samplesCarousel reloadData];
+    [self.view  insertSubview:samplesCarousel belowSubview:_projectDetailView];    
     
     UIFont *font14px = [UIFont fontWithName:@"ProximaNova-Regular" size:14.0f];
     UIFont *fontBold14px = [UIFont fontWithName:@"ProximaNova-Bold" size:14.0f];
     UIFont *fontBold12px = [UIFont fontWithName:@"ProximaNova-Bold" size:12.0f];
-    
     
     _sampleDetailsLabel.font = fontBold14px;
     _sampleIdLabel.font = font14px;
@@ -104,7 +101,8 @@
     blueLayer.backgroundColor = [UIColor colorWithRed:0 green:138.0f/255.0f blue:255.0f/255.0f alpha:1.0f].CGColor;
     [_sampleDetailsView.layer insertSublayer:blueLayer atIndex:0];
     _sampleDetailsView.layer.masksToBounds = YES;
-    
+    _sampleMeasurementsView.layer.masksToBounds = YES;
+        
     UIColor *grayColor = [UIColor colorWithRed:178.0f/255.0f green:178.0f/255.0f blue:178.0f/255.0f alpha:1.0f];
     _sampleTypeView.layer.borderColor = grayColor.CGColor;
     _sampleTypeView.layer.borderWidth = 1.0f;
@@ -127,6 +125,10 @@
     _chemicalPPEView.layer.borderWidth = 1.0f;
     _chemicalPPEView.layer.cornerRadius = 5.0f;
     
+    _measurementsView.layer.borderColor = grayColor.CGColor;
+    _measurementsView.layer.borderWidth = 1.0f;
+    _measurementsView.layer.cornerRadius = 5.0f;
+    
     _sampleTypeLabel.font = fontBold12px;;
     _sampleTypeValueLabel.font = font14px;
     _employeeNameLabel.font = fontBold12px;
@@ -144,6 +146,10 @@
     _labelTWA.font = fontBold14px;
     _labelSTEL.font = fontBold14px;
     _labelCieling.font = fontBold14px;
+    _onTimeLabel.font = fontBold12px;
+    _offTimeLabel.font = fontBold12px;
+    _onFlowRateLabel.font = fontBold12px;
+    _offFlowRateLabel.font = fontBold12px;
     
     CALayer *grayLine = [CALayer layer];
     grayLine.frame = CGRectMake(0, _sampleTypeView.bounds.size.height/2, _sampleTypeView.bounds.size.width, 1.0f);
@@ -210,7 +216,50 @@
     
     _samplesScrollView.contentSize = CGSizeMake(_samplesScrollView.frame.size.width, _samplesScrollView.frame.size.height + ( _flagsView.frame.origin.y + _flagsView.frame.size.height + 20.0f - _samplesScrollView.frame.size.height));
     
-    }
+    UIImage *addMeasurementImage = [UIImage imageNamed:@"btn_contact_bg.png"];
+    addMeasurementImage = [addMeasurementImage stretchableImageWithLeftCapWidth:addMeasurementImage.size.width/2 topCapHeight:addMeasurementImage.size.height/2];
+    [_addMesaurementButton setBackgroundImage:addMeasurementImage forState:UIControlStateNormal];
+    [_addMesaurementButton.titleLabel setFont:font14px];
+    
+    //[_addMesaurementButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
+    
+    //_addMesaurementButton.titleEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 10);
+    //_addMesaurementButton.imageEdgeInsets = UIEdgeInsetsMake(0, 5, 0, 0);
+    
+    CGRect measurementsViewFrame = _measurementsView.frame;
+    measurementsViewFrame.size.height = 30.0f/*header height*/ + 15/*no. of measurements*/ * 44.0f/*row height*/;
+    _measurementsView.frame = measurementsViewFrame;
+    
+    CGRect measurementsTableViewFrame = _measurementsTableView.frame;
+    measurementsTableViewFrame.size.height = 15/*no. of measurements*/ * 44.0f/*row height*/;
+    _measurementsTableView.frame = measurementsTableViewFrame;
+    
+    CGRect totalMeasurementsViewFrame = _totalMeasurementsView.frame;
+    totalMeasurementsViewFrame.origin.y = measurementsViewFrame.origin.y + measurementsViewFrame.size.height + 20.0f;
+    _totalMeasurementsView.frame = totalMeasurementsViewFrame;
+    
+    CALayer *grayLine9 = [CALayer layer];
+    grayLine9.frame = CGRectMake(170, 0, 1.0f, _measurementsView.bounds.size.height);
+    grayLine9.backgroundColor = grayColor.CGColor;
+    [_measurementsView.layer addSublayer:grayLine9];
+    
+    CALayer *grayLine10 = [CALayer layer];
+    grayLine10.frame = CGRectMake(341, 0, 1.0f, _measurementsView.bounds.size.height);
+    grayLine10.backgroundColor = grayColor.CGColor;
+    [_measurementsView.layer addSublayer:grayLine10];
+    
+    CALayer *grayLine11 = [CALayer layer];
+    grayLine11.frame = CGRectMake(512, 0, 1.0f, _measurementsView.bounds.size.height);
+    grayLine11.backgroundColor = grayColor.CGColor;
+    [_measurementsView.layer addSublayer:grayLine11];
+    
+    CALayer *grayLine12 = [CALayer layer];
+    grayLine12.frame = CGRectMake(0, 30, _measurementsView.bounds.size.width, 1.0f);
+    grayLine12.backgroundColor = grayColor.CGColor;
+    [_measurementsView.layer addSublayer:grayLine12];
+    
+    _measurementsScrollView.contentSize = CGSizeMake(_measurementsScrollView.frame.size.width, _measurementsScrollView.frame.size.height + ( _totalMeasurementsView.frame.origin.y + _totalMeasurementsView.frame.size.height + 20.0f - _measurementsScrollView.frame.size.height));
+}
 
 -(IBAction)homeButtonPressed:(id)sender
 {
@@ -241,7 +290,7 @@
                          _sampleDetailsView.frame = CGRectMake(bProjectDetailsVisible?6:306.0f, 141.0f, bProjectDetailsVisible?1012.0f:712.0f, 523.0f);
                          _sampleDetailsCollapseButton.frame = CGRectMake(bProjectDetailsVisible?966:666.0f, 6.0f, 46.0f, 42.0f);
                          _sampleMeasurementsView.frame = CGRectMake(bProjectDetailsVisible?6:306.0f, 670.0f, bProjectDetailsVisible?1012.0f:712.0f, 44.0f);
-                         _addMesaurementButton.frame = CGRectMake(bProjectDetailsVisible?966:666.0f, 6.0f, 46.0f, 42.0f);
+                         _addMesaurementButton.frame = CGRectMake(bProjectDetailsVisible?927:627.0f, 6.0f, 70.0f, 35.0f);
                      }
                      completion:^(BOOL finished) {
                          numberOfVisibleSamples = bProjectDetailsVisible?20:14;
@@ -293,17 +342,13 @@
         alpha = 0;
         [UIView animateWithDuration:0.2
                          animations:^{
-                             _sampleTypeView.alpha = alpha;
-                             _operationalAreaView.alpha = alpha;
-                             _notesView.alpha = alpha;
-                             _commentsView.alpha = alpha;
-                             _btnTWACheck.alpha = alpha;
-                             _chemicalPPEView.alpha = alpha;
-                             _btnSTELCheck.alpha = alpha;
-                             _btnCielingCheck.alpha= alpha;
-                             _labelTWA.alpha =alpha;
-                             _labelSTEL.alpha =alpha;
-                             _labelCieling.alpha = alpha;
+                             _samplesScrollView.alpha = alpha;
+                         }
+                         completion:^(BOOL finished) {
+                             [UIView animateWithDuration:0.5
+                                              animations:^{
+                                                  _measurementsScrollView.alpha = 1.0f;
+                                              }];
                          }];
     }
     else
@@ -313,21 +358,17 @@
         frame1.size.height = 44.0f;
         angle = 0;
         alpha = 1.0f;
+
+        [UIView animateWithDuration:0.1
+                         animations:^{
+                             _measurementsScrollView.alpha = 0;
+                         }];
+        
         [UIView animateWithDuration:0.2
                               delay:0.2f
                             options:UIViewAnimationOptionBeginFromCurrentState
                          animations:^{
-                             _sampleTypeView.alpha = alpha;
-                             _operationalAreaView.alpha = alpha;
-                             _notesView.alpha = alpha;
-                             _commentsView.alpha = alpha;
-                             _btnTWACheck.alpha = alpha;
-                             _chemicalPPEView.alpha = alpha;
-                             _btnSTELCheck.alpha = alpha;
-                             _btnCielingCheck.alpha= alpha;
-                             _labelTWA.alpha =alpha;
-                             _labelSTEL.alpha =alpha;
-                             _labelCieling.alpha = alpha;
+                             _samplesScrollView.alpha = alpha;
                          }
                          completion:^(BOOL finished) {
                              
@@ -339,9 +380,9 @@
                         options:UIViewAnimationOptionBeginFromCurrentState
                      animations:^{
                          button.transform = CGAffineTransformMakeRotation(-angle);
-                         
                          _sampleDetailsView.frame = frame;
                          _sampleMeasurementsView.frame = frame1;
+                         _measurementsScrollView.frame = CGRectMake(0, 57, 712, 452);
                      }
                      completion:^(BOOL finished) {
                          
@@ -435,31 +476,110 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-	return (tableView==_chemicalsTableView)?_chemicalsArray.count:_ppeArray.count;
+    if(tableView==_chemicalsTableView)
+    {
+        return _chemicalsArray.count;
+    }
+    else if (tableView==_ppeTableView)
+    {
+        return _ppeArray.count;
+    }
+    else
+    {
+        // measurementsTableView
+        return 15;
+    }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 40.0f;
+    if(tableView==_chemicalsTableView || tableView==_ppeTableView)
+    {
+        return 40.0f;
+    }
+    else
+    {
+        // measurementsTableView
+        return 44.0f;
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	static NSString *kCellID = @"ValueCell";
-	
-	UITableViewCell *cell = (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:kCellID];
-	if (cell == nil)
-	{
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
-        cell.textLabel.font = [UIFont fontWithName:@"ProximaNova-Regular" size:14.0f];
-        cell.textLabel.textAlignment = UITextAlignmentLeft;
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-	}
+    if(tableView==_chemicalsTableView || tableView==_ppeTableView)
+    {
+        static NSString *kCellID = @"ChemicalPPEValueCell";
+        
+        UITableViewCell *cell = (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:kCellID];
+        if (cell == nil)
+        {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+            cell.textLabel.font = [UIFont fontWithName:@"ProximaNova-Regular" size:14.0f];
+            cell.textLabel.textAlignment = UITextAlignmentLeft;
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        }
+        
+        cell.textLabel.text = (tableView==_chemicalsTableView)?[_chemicalsArray objectAtIndex:indexPath.row]:
+        [_ppeArray objectAtIndex:indexPath.row];
+        
+        return cell;
+    }
+    else
+    {
+        // measurementsTableView
+        static NSString *kCellID = @"MeasurementValueCell";
+        
+        UITableViewCell *cell = (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:kCellID];
+        if (cell == nil)
+        {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+            cell.textLabel.textAlignment = UITextAlignmentLeft;
+            cell.selectionStyle = UITableViewCellSelectionStyleGray;
+            
+            UIFont *font14px = [UIFont fontWithName:@"ProximaNova-Regular" size:14.0f];
+            UIColor *textColor = [UIColor colorWithRed:28.0f/255.0f green:34.0f/255.0f blue:39.0f/255.0f alpha:1.0f];
+            
+            UILabel *onTimeLabel = [[UILabel alloc] initWithFrame:CGRectMake(8, 0, 160, cell.contentView.bounds.size.height)];
+            onTimeLabel.backgroundColor = [UIColor clearColor];
+            onTimeLabel.font = font14px;
+            onTimeLabel.textColor = textColor;
+            onTimeLabel.text = @"12:30 pm";
+            [cell.contentView addSubview:onTimeLabel];
+            
+            UILabel *offTimeLabel = [[UILabel alloc] initWithFrame:CGRectMake(179, 0, 160, cell.contentView.bounds.size.height)];
+            offTimeLabel.backgroundColor = [UIColor clearColor];
+            offTimeLabel.font = font14px;
+            offTimeLabel.textColor = textColor;
+            offTimeLabel.text = @"12:40 pm";
+            [cell.contentView addSubview:offTimeLabel];
+        
+            UILabel *onFlowRateLabel = [[UILabel alloc] initWithFrame:CGRectMake(350, 0, 160, cell.contentView.bounds.size.height)];
+            onFlowRateLabel.backgroundColor = [UIColor clearColor];
+            onFlowRateLabel.font = font14px;
+            onFlowRateLabel.textColor = textColor;
+            onFlowRateLabel.text = @"0.5";
+            [cell.contentView addSubview:onFlowRateLabel];
+            
+            UILabel *offFlowRateLabel = [[UILabel alloc] initWithFrame:CGRectMake(521, 0, 160, cell.contentView.bounds.size.height)];
+            offFlowRateLabel.backgroundColor = [UIColor clearColor];
+            offFlowRateLabel.font = font14px;
+            offFlowRateLabel.textColor = textColor;
+            offFlowRateLabel.text = @"0.75";
+            [cell.contentView addSubview:offFlowRateLabel];
+        }
+        
+        return cell;
+    }
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    cell.textLabel.text = (tableView==_chemicalsTableView)?[_chemicalsArray objectAtIndex:indexPath.row]:
-    [_ppeArray objectAtIndex:indexPath.row];
-    
-    return cell;
+    if(tableView==_measurementsTableView)
+    {
+        
+    }
 }
 
 #pragma mark - Memory warning
@@ -512,6 +632,14 @@
     [self setOperationalAreaValueLabel:nil];
     [self setNotesValueLabel:nil];
     [self setCommentsValueLabel:nil];
+    [self setMeasurementsView:nil];
+    [self setMeasurementsTableView:nil];
+    [self setOnTimeLabel:nil];
+    [self setOffTimeLabel:nil];
+    [self setOnFlowRateLabel:nil];
+    [self setOffFlowRateLabel:nil];
+    [self setTotalMeasurementsView:nil];
+    [self setMeasurementsScrollView:nil];
     [super viewDidUnload];
 }
 

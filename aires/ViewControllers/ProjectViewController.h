@@ -74,6 +74,14 @@
 @property (weak, nonatomic) IBOutlet UITableView *chemicalsTableView;
 @property (weak, nonatomic) IBOutlet UITableView *ppeTableView;
 @property (weak, nonatomic) IBOutlet UIView *flagsView;
+@property (weak, nonatomic) IBOutlet UIScrollView *measurementsScrollView;
+@property (weak, nonatomic) IBOutlet UIView *measurementsView;
+@property (weak, nonatomic) IBOutlet UITableView *measurementsTableView;
+@property (weak, nonatomic) IBOutlet UILabel *onTimeLabel;
+@property (weak, nonatomic) IBOutlet UILabel *offTimeLabel;
+@property (weak, nonatomic) IBOutlet UILabel *onFlowRateLabel;
+@property (weak, nonatomic) IBOutlet UILabel *offFlowRateLabel;
+@property (weak, nonatomic) IBOutlet UIView *totalMeasurementsView;
 
 -(IBAction)checkButtonPressed:(id)sender;
 - (IBAction)onGeneratePreview:(id)sender;
