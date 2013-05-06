@@ -11,6 +11,8 @@
 #import "SampleTileView.h"
 #import "Sample.h"
 #import "AiresSingleton.h"
+#import "ChemicalsListViewController.h"
+#import "PPEListViewController.h"
 
 #define mSingleton 	((AiresSingleton *) [AiresSingleton getSingletonInstance])
 
@@ -20,6 +22,7 @@
     NSUInteger selectedSampleNumber;
     NSUInteger numberOfVisibleSamples;
     iCarousel *samplesCarousel;
+    UIPopoverController *popover;
 }
 
 @end
@@ -387,6 +390,39 @@
                      completion:^(BOOL finished) {
                          
                      }];
+}
+
+-(IBAction)addChemical:(id)sender
+{
+    UIButton *button = (UIButton*)sender;
+    ChemicalsListViewController * chemicalListVC = [[ChemicalsListViewController alloc] initWithNibName:@"ChemicalsListViewController" bundle:nil];
+    
+    if(!popover)
+     popover = [[UIPopoverController alloc] initWithContentViewController:chemicalListVC];
+    else
+    [popover setContentViewController:chemicalListVC];
+    
+    [popover setPopoverContentSize:CGSizeMake(320, 500)];
+    [popover setDelegate:self];
+    
+    [popover presentPopoverFromRect:button.bounds inView:button permittedArrowDirections:UIPopoverArrowDirectionLeft animated:YES];
+
+}
+
+-(IBAction)addPPE:(id)sender
+{
+    UIButton *button = (UIButton*)sender;
+    PPEListViewController * ppeListVC = [[PPEListViewController alloc] initWithNibName:@"PPEListViewController" bundle:nil];
+    
+    if(!popover)
+        popover = [[UIPopoverController alloc] initWithContentViewController:ppeListVC];
+    else
+        [popover setContentViewController:ppeListVC];
+    
+    [popover setPopoverContentSize:CGSizeMake(320, 300)];
+    [popover setDelegate:self];
+    
+    [popover presentPopoverFromRect:button.bounds inView:button permittedArrowDirections:UIPopoverArrowDirectionDown animated:YES];
 }
 
 -(IBAction)addMeasurement:(id)sender
