@@ -396,6 +396,7 @@
 {
     UIButton *button = (UIButton*)sender;
     ChemicalsListViewController * chemicalListVC = [[ChemicalsListViewController alloc] initWithNibName:@"ChemicalsListViewController" bundle:nil];
+    chemicalListVC.listContent = [[mSingleton getPersistentStoreManager] getChemicalList];
     
     if(!popover)
      popover = [[UIPopoverController alloc] initWithContentViewController:chemicalListVC];
@@ -413,7 +414,7 @@
 {
     UIButton *button = (UIButton*)sender;
     PPEListViewController * ppeListVC = [[PPEListViewController alloc] initWithNibName:@"PPEListViewController" bundle:nil];
-    
+    ppeListVC.listContent = [[mSingleton getPersistentStoreManager] getProtectionEquipmentList];
     if(!popover)
         popover = [[UIPopoverController alloc] initWithContentViewController:ppeListVC];
     else

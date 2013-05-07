@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		8439D369172911140053278E /* LoginFieldsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8439D368172911140053278E /* LoginFieldsView.m */; };
+		84812C571738CCCF00A3D5F1 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84812C561738CCCF00A3D5F1 /* MessageUI.framework */; };
 		84A735401737D0F0000BD714 /* ProjectViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84A7353F1737D0F0000BD714 /* ProjectViewController.xib */; };
 		84AF07B317280974006F8756 /* AiresService.plist in Resources */ = {isa = PBXBuildFile; fileRef = 84AF07B217280974006F8756 /* AiresService.plist */; };
 		84D2E81E17338D0C00E3704E /* PreviewReportViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84D2E81D17338D0C00E3704E /* PreviewReportViewController.xib */; };
@@ -223,6 +224,7 @@
 /* Begin PBXFileReference section */
 		8439D367172911140053278E /* LoginFieldsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginFieldsView.h; sourceTree = "<group>"; };
 		8439D368172911140053278E /* LoginFieldsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginFieldsView.m; sourceTree = "<group>"; };
+		84812C561738CCCF00A3D5F1 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		84A7353F1737D0F0000BD714 /* ProjectViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProjectViewController.xib; sourceTree = "<group>"; };
 		84AF07B217280974006F8756 /* AiresService.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = AiresService.plist; sourceTree = "<group>"; };
 		84D2E81D17338D0C00E3704E /* PreviewReportViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PreviewReportViewController.xib; sourceTree = "<group>"; };
@@ -500,6 +502,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				84812C571738CCCF00A3D5F1 /* MessageUI.framework in Frameworks */,
 				98B4260017268A8800D15811 /* QuartzCore.framework in Frameworks */,
 				98A241E317211620001A14F0 /* CoreData.framework in Frameworks */,
 				98E33F0F1717D20800466E0F /* MobileCoreServices.framework in Frameworks */,
@@ -559,6 +562,7 @@
 				98E33F0C1717D19800466E0F /* SystemConfiguration.framework */,
 				98E33F0E1717D20800466E0F /* MobileCoreServices.framework */,
 				988410B01715417A00A1ED57 /* Security.framework */,
+				84812C561738CCCF00A3D5F1 /* MessageUI.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -687,7 +691,6 @@
 				988411421715686100A1ED57 /* LoginSettingsViewController.h */,
 				988411431715686200A1ED57 /* LoginSettingsViewController.m */,
 				988411441715686200A1ED57 /* LoginSettingsViewController.xib */,
-				98B42505172689A000D15811 /* iCarousel */,
 				98B42509172689A000D15811 /* ActiveProjectTileView.h */,
 				98B4250A172689A000D15811 /* ActiveProjectTileView.m */,
 				98B4250B172689A000D15811 /* CompletedProjectTileView.h */,
@@ -720,6 +723,7 @@
 				98C7871717324386008F80DD /* PreviewReportCell.h */,
 				98C7871817324386008F80DD /* PreviewReportCell.m */,
 				98C7871A173243B7008F80DD /* PreviewReportCell.xib */,
+				98B42505172689A000D15811 /* iCarousel */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
