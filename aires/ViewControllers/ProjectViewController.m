@@ -262,6 +262,25 @@
     [_measurementsView.layer addSublayer:grayLine12];
     
     _measurementsScrollView.contentSize = CGSizeMake(_measurementsScrollView.frame.size.width, _measurementsScrollView.frame.size.height + ( _totalMeasurementsView.frame.origin.y + _totalMeasurementsView.frame.size.height + 20.0f - _measurementsScrollView.frame.size.height));
+    
+    [_btnTWACheck setSelected:NO];
+    [_btnSTELCheck setSelected:NO];
+    [_btnCielingCheck setSelected:NO];
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillShow)
+                                                 name:UIKeyboardWillShowNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillHide)
+                                                 name:UIKeyboardWillHideNotification
+                                               object:nil];   
 }
 
 -(IBAction)homeButtonPressed:(id)sender
@@ -428,7 +447,23 @@
 
 -(IBAction)addMeasurement:(id)sender
 {
+    UIView *dullView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1024, 768)];
+    dullView.tag = 999;
+    dullView.backgroundColor = [UIColor colorWithWhite:0.1 alpha:0.9];
+    dullView.alpha = 0;
+    [self.view addSubview:dullView];
     
+    NSArray *topLevelObjects = [[NSBundle mainBundle] loadNibNamed:@"MeasurementAddEditView"owner:self options:nil];
+    MeasurementAddEditView *measurementView = (MeasurementAddEditView *)[topLevelObjects objectAtIndex:0];
+    measurementView.delegate = self;
+    measurementView.editMode = NO;
+    measurementView.center = dullView.center;
+    [dullView addSubview:measurementView];
+    
+    [UIView animateWithDuration:0.25
+                     animations:^{
+                         dullView.alpha = 1.0f;
+                     }];
 }
 
 -(IBAction)checkButtonPressed:(id)sender
@@ -468,6 +503,11 @@
     }
     
     selectedSampleNumber = number;
+    
+    Sample *sample = [_samplesArray objectAtIndex:selectedSampleNumber];
+    [_btnTWACheck setSelected:NO];
+    [_btnSTELCheck setSelected:NO];
+    [_btnCielingCheck setSelected:NO];
 }
 
 #pragma mark - iCarousel datasource
@@ -615,8 +655,75 @@
     
     if(tableView==_measurementsTableView)
     {
+        UIView *dullView = [[UIView alloc] initWithFrame:self.view.bounds];
+        dullView.tag = 999;
+        dullView.backgroundColor = [UIColor colorWithWhite:0.1 alpha:0.9];
+        dullView.alpha = 0;
+        [self.view addSubview:dullView];
         
+        NSArray *topLevelObjects = [[NSBundle mainBundle] loadNibNamed:@"MeasurementAddEditView"owner:self options:nil];
+        MeasurementAddEditView *measurementView = (MeasurementAddEditView *)[topLevelObjects objectAtIndex:0];
+        measurementView.delegate = self;
+        measurementView.editMode = TRUE;
+        measurementView.center = dullView.center;
+        [dullView addSubview:measurementView];
+        
+        [UIView animateWithDuration:0.25
+                         animations:^{
+                             dullView.alpha = 1.0f;
+                         }];
     }
+}
+
+#pragma mark - MeasurementAddEditProtocol
+
+-(void)measurementsDonePressed
+{
+    UIView *dullView = (UIView*)[self.view viewWithTag:999];
+    if(!dullView)
+        return;
+    
+    [UIView animateWithDuration:0.25
+                     animations:^{
+                         dullView.alpha = 0;
+                     }
+                     completion:^(BOOL finished) {
+                         [dullView removeFromSuperview];
+                     }];
+}
+
+-(void)measurementsCancelPressed
+{
+    UIView *dullView = (UIView*)[self.view viewWithTag:999];
+    [dullView removeFromSuperview];
+    dullView = nil;
+}
+
+-(void)measurementsDeletePressed
+{
+    
+}
+
+#pragma mark - Keyboard
+
+-(void)keyboardWillShow
+{
+    UIView *dullView = (UIView*)[self.view viewWithTag:999];
+    [UIView animateWithDuration:0.25
+                     animations:^{
+                         CGRect frame = self.view.bounds;
+                         frame.origin.y -= 100.0f;
+                         dullView.frame = frame;
+                     }];
+}
+
+-(void)keyboardWillHide
+{
+    UIView *dullView = (UIView*)[self.view viewWithTag:999];
+    [UIView animateWithDuration:0.25
+                     animations:^{
+                         dullView.frame = self.view.bounds;
+                     }];
 }
 
 #pragma mark - Memory warning
