@@ -13,9 +13,11 @@
 #import "Sample.h"
 #import "SampleChemical.h"
 #import "SampleMeasurement.h"
-#import "SampleTotalMeasurement.h"
 #import "SampleProtectionEquipment.h"
 #import "DeviceType.h"
+#import "Client.h"
+#import "Contact.h"
+#import "Lab.h"
 
 @interface PersistentStoreManager : NSObject
 {
@@ -51,10 +53,6 @@
 //For SampleChemical
 -(void)storeSampleChemicalDetails:(NSArray *)sampleChemical forSample:(Sample *)sample;
 -(NSArray *)getSampleChemicalforSample:(Sample *)sample;
-
-//For SampleTotalMeasurement
--(void)storeSampleTotalMeasurementDetails:(NSArray *)sampleTotalMeaseurement forSample:(Sample *)sample;
--(SampleTotalMeasurement *)getSampleTotalMeasurementforSample:(Sample *)sample;
 
 //For SampleMeasurement
 -(void)storeSampleMeasurementDetails:(NSArray *)sampleMeaseurement forSample:(Sample *)sample;

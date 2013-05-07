@@ -16,5 +16,6 @@
 @dynamic sampleProtectionEquipmentID;
 @dynamic fromSample;
 @dynamic contentType;
+@dynamic deleted;
 
 @end

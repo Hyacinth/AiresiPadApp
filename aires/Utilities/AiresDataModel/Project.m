@@ -9,7 +9,9 @@
 #import "Project.h"
 #import "Sample.h"
 #import "User.h"
-
+#import "Contact.h"
+#import "Lab.h"
+#import "Client.h"
 
 @implementation Project
 
@@ -32,7 +34,16 @@
 @dynamic project_QCPerson;
 @dynamic project_TurnAroundTime;
 @dynamic projectID;
+@dynamic clientID;
+@dynamic labID;
 @dynamic airesSample;
 @dynamic fromUser;
+@dynamic project_CreatedBy;
+@dynamic project_createdOn;
+@dynamic contactID;
+@dynamic consultantId;
+@dynamic airesClient;
+@dynamic airesContact;
+@dynamic airesLab;
 
 @end

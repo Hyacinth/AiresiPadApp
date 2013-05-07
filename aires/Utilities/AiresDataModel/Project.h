@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class Sample, User;
+@class Sample, User, Contact, Lab, Client;
 
 @interface Project : NSManagedObject
 
@@ -32,8 +32,19 @@
 @property (nonatomic, retain) NSString * project_QCPerson;
 @property (nonatomic, retain) NSDate *   project_TurnAroundTime;
 @property (nonatomic, retain) NSNumber * projectID;
+@property (nonatomic, retain) NSNumber * clientID;
+@property (nonatomic, retain) NSNumber * labID;
+@property (nonatomic, retain) NSString * project_CreatedBy;
+@property (nonatomic, retain) NSNumber * contactID;
+@property (nonatomic, retain) NSString * project_createdOn;
+@property (nonatomic, retain) NSNumber * consultantId;
+
 @property (nonatomic, retain) NSSet *airesSample;
 @property (nonatomic, retain) User *fromUser;
+@property (nonatomic, retain) Contact *airesContact;
+@property (nonatomic, retain) Lab *airesLab;
+@property (nonatomic, retain) Client *airesClient;
+
 @end
 
 @interface Project (CoreDataGeneratedAccessors)
@@ -42,5 +53,14 @@
 - (void)removeAiresSampleObject:(Sample *)value;
 - (void)addAiresSample:(NSSet *)values;
 - (void)removeAiresSample:(NSSet *)values;
+
+- (void)addAiresContactObject:(Contact *)value;
+- (void)removeAiresContactObject:(Contact *)value;
+
+- (void)addAiresLabObject:(Lab *)value;
+- (void)removeAiresLabObject:(Lab *)value;
+
+- (void)addAiresClientObject:(Client *)value;
+- (void)removeAiresClientObject:(Client *)value;
 
 @end

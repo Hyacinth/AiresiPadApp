@@ -15,7 +15,7 @@
 
 @property (nonatomic, retain) NSNumber * labID;
 @property (nonatomic, retain) NSString * lab_labEmail;
-@property (nonatomic, retain) NSDate * lab_CreatedOn;
+@property (nonatomic, retain) NSString * lab_CreatedOn;
 @property (nonatomic, retain) NSString * lab_LabName;
 @property (nonatomic, retain) Project *fromProject;
 

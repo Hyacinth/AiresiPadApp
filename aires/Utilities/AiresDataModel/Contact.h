@@ -15,7 +15,7 @@
 
 @property (nonatomic, retain) NSNumber * contactID;
 @property (nonatomic, retain) NSNumber * contact_ClientId;
-@property (nonatomic, retain) NSDate * contact_CreatedOn;
+@property (nonatomic, retain) NSString * contact_CreatedOn;
 @property (nonatomic, retain) NSString * contact_Client;
 @property (nonatomic, retain) NSString * contact_PhoneNumber;
 @property (nonatomic, retain) NSString * contact_MobileNumber;

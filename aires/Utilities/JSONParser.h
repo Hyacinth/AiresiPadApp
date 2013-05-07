@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Project.h"
 
 @interface JSONParser : NSObject
 {
@@ -19,4 +20,6 @@
 -(void)parseProtectionEquipmentList:(NSData *)jsonData;
 -(void)parseDeviceTypeList:(NSData *)jsonData;
 -(void)parseChemicalList:(NSData *)jsonData;
+
+-(void)createJsonforProject:(Project *)proj;
 @end

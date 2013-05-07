@@ -26,6 +26,7 @@
 @property (nonatomic, retain) NSSet *    airesSampleMeasurement;
 @property (nonatomic, retain) NSSet *    airesSampleProtectionEquipment;
 @property (nonatomic, retain) SampleTotalMeasurement *airesSampleTotalMeasurement;
+
 @property (nonatomic, retain) Project *fromProject;
 @end
 
@@ -45,10 +46,5 @@
 - (void)removeAiresSampleProtectionEquipmentObject:(SampleProtectionEquipment *)value;
 - (void)addAiresSampleProtectionEquipment:(NSSet *)values;
 - (void)removeAiresSampleProtectionEquipment:(NSSet *)values;
-
-- (void)addAiresSampleTotalMeasurementObject:(SampleTotalMeasurement *)value;
-- (void)removeAiresSampleTotalMeasurementObject:(SampleTotalMeasurement *)value;
-- (void)addAiresSampleTotalMeasurement:(NSSet *)values;
-- (void)removeAiresSampleTotalMeasurement:(NSSet *)values;
 
 @end

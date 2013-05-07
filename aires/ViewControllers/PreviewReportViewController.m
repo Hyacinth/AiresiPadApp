@@ -313,10 +313,10 @@
         cell.DateSampled.text = nil;
         cell.SampleType.text = nil;
         cell.DeviceType.text = currentSample.sample_DeviceTypeName;
-        SampleTotalMeasurement *totalMeasurement = [[mSingleton getPersistentStoreManager] getSampleTotalMeasurementforSample:currentSample];
-        cell.AirVolume.text = [totalMeasurement.sampleTotalMeasurement_TotalVolume stringValue];
-        cell.PassiveMonitors.text = [totalMeasurement.sampleTotalMeasurement_TotalMinutes stringValue];
-        cell.Area.text = [totalMeasurement.sampleTotalMeasurement_TotalArea stringValue];
+        SampleMeasurement *totalMeasurement = [[[mSingleton getPersistentStoreManager] getSampleMeasurementforSample:currentSample] objectAtIndex:0];
+        cell.AirVolume.text = [totalMeasurement.sampleMeasurement_TotalVolume stringValue];
+        cell.PassiveMonitors.text = [totalMeasurement.sampleMeasurement_TotalMinutes stringValue];
+        cell.Area.text = [totalMeasurement.sampleMeasurement_TotalArea stringValue];
         cell.AnalysisRequested.text = nil;
     }
     return cell;

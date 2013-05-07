@@ -286,12 +286,83 @@
                 mProject.project_TurnAroundTime = [dict objectForKey:@"TurnaroundTime"];
             if (![[dict valueForKey:@"ProjectId"] isKindOfClass:[NSNull class]])
                 mProject.projectID = (NSNumber *)[dict objectForKey:@"ProjectId"] ;
+            if (![[dict valueForKey:@"ClientId"] isKindOfClass:[NSNull class]])
+                mProject.projectID = (NSNumber *)[dict objectForKey:@"ClientId"] ;
+            if (![[dict valueForKey:@"LabId"] isKindOfClass:[NSNull class]])
+                mProject.projectID = (NSNumber *)[dict objectForKey:@"LabId"] ;
             if (![[dict valueForKey:@"QCPerson"] isKindOfClass:[NSNull class]])
                 mProject.project_QCPerson = [dict objectForKey:@"QCPerson"];
-            
+            if (![[dict valueForKey:@"ContactId"] isKindOfClass:[NSNull class]])
+                mProject.projectID = (NSNumber *)[dict objectForKey:@"ContactId"] ;
+            if (![[dict valueForKey:@"CreatedBy"] isKindOfClass:[NSNull class]])
+                mProject.project_CreatedBy = [dict objectForKey:@"CreatedBy"];
+            if (![[dict valueForKey:@"CreatedOn"] isKindOfClass:[NSNull class]])
+                mProject.project_createdOn = [dict objectForKey:@"CreatedOn"] ;
+
             [[self getAiresUser] addAiresProjectObject:mProject];
             [[self mainContext] save:nil];
             
+            //Save Contact details
+            Contact *mContact = [NSEntityDescription
+                                 insertNewObjectForEntityForName:@"Contact"
+                                 inManagedObjectContext:[self mainContext]];
+            
+            if (![[contact valueForKey:@"FirstName"] isKindOfClass:[NSNull class]])
+                mContact.contact_Firstname = [contact objectForKey:@"FirstName"];
+            if (![[contact valueForKey:@"LastName"] isKindOfClass:[NSNull class]])
+                mContact.contact_LastName = [contact objectForKey:@"LastName"];
+            if (![[contact valueForKey:@"PhoneNumber"] isKindOfClass:[NSNull class]])
+                mContact.contact_PhoneNumber = [contact objectForKey:@"PhoneNumber"];
+            if (![[contact valueForKey:@"Email"] isKindOfClass:[NSNull class]])
+                mContact.contact_Email = [contact objectForKey:@"Email"];
+            if (![[contact valueForKey:@"CreatedOn"] isKindOfClass:[NSNull class]])
+                mContact.contact_CreatedOn = [contact objectForKey:@"CreatedOn"];
+            if (![[contact valueForKey:@"MobileNumber"] isKindOfClass:[NSNull class]])
+                mContact.contact_MobileNumber = [contact objectForKey:@"MobileNumber"];
+            if (![[contact valueForKey:@"ContactId"] isKindOfClass:[NSNull class]])
+                mContact.contactID = [contact objectForKey:@"ContactId"];
+            if (![[contact valueForKey:@"ClientId"] isKindOfClass:[NSNull class]])
+                mContact.contact_ClientId = [contact objectForKey:@"ClientId"];
+           
+            mProject.airesContact = mContact;
+            [[self mainContext] save:nil];
+
+            //Save Client details
+            Client *mClient = [NSEntityDescription
+                                 insertNewObjectForEntityForName:@"Client"
+                                 inManagedObjectContext:[self mainContext]];
+            
+            if (![[client valueForKey:@"ClientCity"] isKindOfClass:[NSNull class]])
+                mClient.client_City = [client objectForKey:@"ClientCity"];
+            if (![[client valueForKey:@"ClientId"] isKindOfClass:[NSNull class]])
+                mClient.clientID = [client objectForKey:@"ClientId"];
+            if (![[client valueForKey:@"ClientName"] isKindOfClass:[NSNull class]])
+                mClient.client_Name = [client objectForKey:@"ClientName"];
+            if (![[client valueForKey:@"ClientState"] isKindOfClass:[NSNull class]])
+                mClient.client_State = [client objectForKey:@"ClientState"];
+            if (![[client valueForKey:@"CreatedOn"] isKindOfClass:[NSNull class]])
+                mClient.client_CreateOn = [client objectForKey:@"CreatedOn"];
+            
+            mProject.airesClient = mClient;
+            [[self mainContext] save:nil];
+
+            //Save Lab details
+            Lab *mLab = [NSEntityDescription
+                               insertNewObjectForEntityForName:@"Lab"
+                               inManagedObjectContext:[self mainContext]];
+            
+            if (![[lab valueForKey:@"LabEmail"] isKindOfClass:[NSNull class]])
+                mLab.lab_labEmail = [lab objectForKey:@"LabEmail"];
+            if (![[lab valueForKey:@"CreatedOn"] isKindOfClass:[NSNull class]])
+                mLab.lab_CreatedOn = [lab objectForKey:@"CreatedOn"];
+            if (![[lab valueForKey:@"LabId"] isKindOfClass:[NSNull class]])
+                mLab.labID = (NSNumber *)[lab objectForKey:@"LabId"];
+            if (![[lab valueForKey:@"LabName"] isKindOfClass:[NSNull class]])
+                mLab.lab_LabName = [lab objectForKey:@"LabName"];
+
+            mProject.airesLab = mLab;
+            [[self mainContext] save:nil];
+
             NSArray *Samples = [dict objectForKey:@"Samples"];
             [self storeSampleDetails:Samples forProject:mProject];
         }
@@ -354,7 +425,7 @@
         [self storeSampleChemicalDetails:SampleChemicals forSample:mSample];
         
         NSArray *Measurements = [dict objectForKey:@"Measurements"];
-        [self storeSampleTotalMeasurementDetails:Measurements forSample:mSample];
+        [self storeSampleMeasurementDetails:Measurements forSample:mSample];
         
         [self storeSampleChemicalDetails:SampleChemicals forSample:mSample];
         
@@ -403,7 +474,9 @@
             mSampleChemical.sampleChemical_TLVTWAFlag = [dict objectForKey:@"TLVTWAFlag"];
         if (![[dict valueForKey:@"ChemicalId"] isKindOfClass:[NSNull class]])
             mSampleChemical.sampleChemicalID = [dict objectForKey:@"ChemicalId"];
-        
+        if (![[dict valueForKey:@"Deleted"] isKindOfClass:[NSNull class]])
+            mSampleChemical.deleted = [dict objectForKey:@"Deleted"];
+
         [sample addAiresSampleChemicalObject:mSampleChemical];
         [[self mainContext] save:nil];
     }
@@ -424,50 +497,6 @@
 }
 
 #pragma mark -
-#pragma mark SampleTotalMeasuremen DataModel methods
--(void)storeSampleTotalMeasurementDetails:(NSArray *)sampleTotalMeaseurement forSample:(Sample *)sample
-{
-    for (NSDictionary *dict in sampleTotalMeaseurement)
-    {
-        SampleTotalMeasurement *mSampleTotalMeasurement = [NSEntityDescription
-                                                           insertNewObjectForEntityForName:@"SampleTotalMeasurement"
-                                                           inManagedObjectContext:[self mainContext]];
-        
-        if (![[dict valueForKey:@"Area"] isKindOfClass:[NSNull class]])
-            mSampleTotalMeasurement.sampleTotalMeasurement_TotalArea = [dict objectForKey:@"Area"];
-        if (![[dict valueForKey:@"Minutes"] isKindOfClass:[NSNull class]])
-            mSampleTotalMeasurement.sampleTotalMeasurement_TotalMinutes = [dict objectForKey:@"Minutes"];
-        if (![[dict valueForKey:@"Volume"] isKindOfClass:[NSNull class]])
-            mSampleTotalMeasurement.sampleTotalMeasurement_TotalVolume = [dict objectForKey:@"Volume"];
-        if (![[dict valueForKey:@"MeasurementId"] isKindOfClass:[NSNull class]])
-            mSampleTotalMeasurement.sampleTotalMeasurementID = [dict objectForKey:@"MeasurementId"];
-        
-        sample.airesSampleTotalMeasurement = mSampleTotalMeasurement;
-        [[self mainContext] save:nil];
-    }
-}
-
--(SampleTotalMeasurement *)getSampleTotalMeasurementforSample:(Sample *)sample
-{
-    NSFetchRequest *request = [[NSFetchRequest alloc] init];
-    [request setEntity:[NSEntityDescription entityForName:@"SampleTotalMeasurement" inManagedObjectContext:[self mainContext]]];
-    NSArray *results = [[self mainContext] executeFetchRequest:request error:nil];
-    NSMutableArray *finalResult = [NSMutableArray arrayWithArray:results];
-    for (SampleTotalMeasurement *mSampleTotalMeasurement in results) {
-        if (![mSampleTotalMeasurement.fromSample.sample_SampleId isEqualToNumber:sample.sample_SampleId]) {
-            [finalResult removeObject:mSampleTotalMeasurement];
-        }
-    }
-    if([finalResult count] > 0)
-    {
-        SampleTotalMeasurement *mSampleTotalMeasurement = (SampleTotalMeasurement *)[finalResult objectAtIndex:0];
-        return mSampleTotalMeasurement;
-    }
-    
-    return nil;
-}
-
-#pragma mark -
 #pragma mark SampleMeasurement DataModel methods
 -(void)storeSampleMeasurementDetails:(NSArray *)sampleMeaseurement forSample:(Sample *)sample
 {
@@ -476,7 +505,6 @@
         SampleMeasurement *mSampleMeasurement = [NSEntityDescription
                                                  insertNewObjectForEntityForName:@"SampleMeasurement"
                                                  inManagedObjectContext:[self mainContext]];
-        
         if (![[dict valueForKey:@"OffFlowRate"] isKindOfClass:[NSNull class]])
             mSampleMeasurement.sampleMeasurement_OffFlowRate = [dict objectForKey:@"OffFlowRate"];
         if (![[dict valueForKey:@"OffTime"] isKindOfClass:[NSNull class]])
@@ -485,9 +513,17 @@
             mSampleMeasurement.sampleMeasurement_OnFlowRate = [dict objectForKey:@"OnFlowRate"];
         if (![[dict valueForKey:@"OnTime"] isKindOfClass:[NSNull class]])
             mSampleMeasurement.sampleMeasurement_OnTime = [dict objectForKey:@"OnTime"];
+        if (![[dict valueForKey:@"Area"] isKindOfClass:[NSNull class]])
+            mSampleMeasurement.sampleMeasurement_TotalArea = [dict objectForKey:@"Area"];
+        if (![[dict valueForKey:@"Minutes"] isKindOfClass:[NSNull class]])
+            mSampleMeasurement.sampleMeasurement_TotalMinutes = [dict objectForKey:@"Minutes"];
+        if (![[dict valueForKey:@"Volume"] isKindOfClass:[NSNull class]])
+            mSampleMeasurement.sampleMeasurement_TotalVolume = [dict objectForKey:@"Volume"];
         if (![[dict valueForKey:@"MeasurementId"] isKindOfClass:[NSNull class]])
             mSampleMeasurement.sampleMesurementID = [dict objectForKey:@"MeasurementId"];
-        
+        if (![[dict valueForKey:@"Deleted"] isKindOfClass:[NSNull class]])
+            mSampleMeasurement.deleted = [dict objectForKey:@"Deleted"];
+
         [sample addAiresSampleMeasurementObject:mSampleMeasurement];
         [[self mainContext] save:nil];
     }
@@ -522,7 +558,9 @@
             mSampleProtectionEquipment.sampleProtectionEquipment_Name = [dict valueForKey:@"PPE"];
         if (![[dict valueForKey:@"PPEId"] isKindOfClass:[NSNull class]])
             mSampleProtectionEquipment.sampleProtectionEquipmentID = [dict valueForKey:@"PPEId"];
-        
+        if (![[dict valueForKey:@"Deleted"] isKindOfClass:[NSNull class]])
+            mSampleProtectionEquipment.deleted = [dict objectForKey:@"Deleted"];
+
         [sample addAiresSampleProtectionEquipmentObject:mSampleProtectionEquipment];
         [[self mainContext] save:nil];
     }

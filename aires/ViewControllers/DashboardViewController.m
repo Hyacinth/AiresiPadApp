@@ -373,6 +373,7 @@
         _completedProjectsCarousel.alpha = 0.0f;
         [self loadCarousel];
         [_loadingView setHidden:TRUE];
+        [[mSingleton getJSONParser] createJsonforProject:[_projectsArray objectAtIndex:0]];
     }
 }
 

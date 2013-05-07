@@ -48,6 +48,9 @@
 		988411AF171587AC00A1ED57 /* UIImageView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 988411A6171587AC00A1ED57 /* UIImageView+AFNetworking.m */; };
 		988701691725325E007FB144 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 988701681725325E007FB144 /* User.m */; };
 		9887016C172533D1007FB144 /* PersistentStoreManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9887016B172533D1007FB144 /* PersistentStoreManager.m */; };
+		989354B5173908830048C670 /* Client.m in Sources */ = {isa = PBXBuildFile; fileRef = 989354B4173908820048C670 /* Client.m */; };
+		989354B8173908860048C670 /* Lab.m in Sources */ = {isa = PBXBuildFile; fileRef = 989354B7173908850048C670 /* Lab.m */; };
+		989354BB173908870048C670 /* Contact.m in Sources */ = {isa = PBXBuildFile; fileRef = 989354BA173908860048C670 /* Contact.m */; };
 		989B043D17295C83001D3FFD /* Project.m in Sources */ = {isa = PBXBuildFile; fileRef = 98B68CDE172913770065D411 /* Project.m */; };
 		98A241E317211620001A14F0 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98A241E217211620001A14F0 /* CoreData.framework */; };
 		98A5E92A17377EED008A3A84 /* ProjectListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A5E92817377EED008A3A84 /* ProjectListViewController.m */; };
@@ -217,7 +220,6 @@
 		98FDD36F172A7F13001A9295 /* Sample.m in Sources */ = {isa = PBXBuildFile; fileRef = 98FDD36E172A7F13001A9295 /* Sample.m */; };
 		98FDD372172A93A1001A9295 /* SampleChemical.m in Sources */ = {isa = PBXBuildFile; fileRef = 98FDD371172A93A1001A9295 /* SampleChemical.m */; };
 		98FDD375172A9940001A9295 /* SampleMeasurement.m in Sources */ = {isa = PBXBuildFile; fileRef = 98FDD374172A9940001A9295 /* SampleMeasurement.m */; };
-		98FDD378172A9941001A9295 /* SampleTotalMeasurement.m in Sources */ = {isa = PBXBuildFile; fileRef = 98FDD377172A9941001A9295 /* SampleTotalMeasurement.m */; };
 		98FF59A9172FD78C002CF862 /* Model.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 98FF59A8172FD78C002CF862 /* Model.xcdatamodel */; };
 /* End PBXBuildFile section */
 
@@ -292,6 +294,13 @@
 		988701681725325E007FB144 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		9887016A172533D0007FB144 /* PersistentStoreManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersistentStoreManager.h; sourceTree = "<group>"; };
 		9887016B172533D1007FB144 /* PersistentStoreManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersistentStoreManager.m; sourceTree = "<group>"; };
+		989354B21738DBE90048C670 /* File */ = {isa = PBXFileReference; lastKnownFileType = text; name = File; path = ../../../Desktop/File; sourceTree = "<group>"; };
+		989354B3173908810048C670 /* Client.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Client.h; sourceTree = "<group>"; };
+		989354B4173908820048C670 /* Client.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Client.m; sourceTree = "<group>"; };
+		989354B6173908840048C670 /* Lab.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Lab.h; sourceTree = "<group>"; };
+		989354B7173908850048C670 /* Lab.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Lab.m; sourceTree = "<group>"; };
+		989354B9173908860048C670 /* Contact.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Contact.h; sourceTree = "<group>"; };
+		989354BA173908860048C670 /* Contact.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Contact.m; sourceTree = "<group>"; };
 		98A241E217211620001A14F0 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		98A5E92717377EEC008A3A84 /* ProjectListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProjectListViewController.h; sourceTree = "<group>"; };
 		98A5E92817377EED008A3A84 /* ProjectListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProjectListViewController.m; sourceTree = "<group>"; };
@@ -492,8 +501,6 @@
 		98FDD371172A93A1001A9295 /* SampleChemical.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SampleChemical.m; sourceTree = "<group>"; };
 		98FDD373172A9940001A9295 /* SampleMeasurement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SampleMeasurement.h; sourceTree = "<group>"; };
 		98FDD374172A9940001A9295 /* SampleMeasurement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SampleMeasurement.m; sourceTree = "<group>"; };
-		98FDD376172A9941001A9295 /* SampleTotalMeasurement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SampleTotalMeasurement.h; sourceTree = "<group>"; };
-		98FDD377172A9941001A9295 /* SampleTotalMeasurement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SampleTotalMeasurement.m; sourceTree = "<group>"; };
 		98FF59A8172FD78C002CF862 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -633,14 +640,18 @@
 				98FDD36E172A7F13001A9295 /* Sample.m */,
 				98FDD370172A93A1001A9295 /* SampleChemical.h */,
 				98FDD371172A93A1001A9295 /* SampleChemical.m */,
-				98FDD376172A9941001A9295 /* SampleTotalMeasurement.h */,
-				98FDD377172A9941001A9295 /* SampleTotalMeasurement.m */,
 				98FDD373172A9940001A9295 /* SampleMeasurement.h */,
 				98FDD374172A9940001A9295 /* SampleMeasurement.m */,
 				98DDACA5172E48F10031308B /* SampleProtectionEquipment.h */,
 				98DDACA6172E48F10031308B /* SampleProtectionEquipment.m */,
 				98A7D1D3172FD0B1008794FE /* DeviceType.h */,
 				98A7D1D4172FD0B1008794FE /* DeviceType.m */,
+				989354B9173908860048C670 /* Contact.h */,
+				989354BA173908860048C670 /* Contact.m */,
+				989354B6173908840048C670 /* Lab.h */,
+				989354B7173908850048C670 /* Lab.m */,
+				989354B3173908810048C670 /* Client.h */,
+				989354B4173908820048C670 /* Client.m */,
 			);
 			path = AiresDataModel;
 			sourceTree = "<group>";
@@ -674,6 +685,7 @@
 				98E23BA7171FF4B200FFAD4A /* JSONParser.m */,
 				9887016A172533D0007FB144 /* PersistentStoreManager.h */,
 				9887016B172533D1007FB144 /* PersistentStoreManager.m */,
+				989354B21738DBE90048C670 /* File */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -1176,7 +1188,6 @@
 				98FDD36F172A7F13001A9295 /* Sample.m in Sources */,
 				98FDD372172A93A1001A9295 /* SampleChemical.m in Sources */,
 				98FDD375172A9940001A9295 /* SampleMeasurement.m in Sources */,
-				98FDD378172A9941001A9295 /* SampleTotalMeasurement.m in Sources */,
 				98DDACA7172E48F10031308B /* SampleProtectionEquipment.m in Sources */,
 				84EBF217172E92D700986667 /* ProjectDetailView.m in Sources */,
 				98A7D1D5172FD0B1008794FE /* DeviceType.m in Sources */,
@@ -1188,6 +1199,9 @@
 				98B0B4D1173123FA003FDCFD /* PreviewReportViewController.m in Sources */,
 				98C7871917324387008F80DD /* PreviewReportCell.m in Sources */,
 				98A5E92A17377EED008A3A84 /* ProjectListViewController.m in Sources */,
+				989354B5173908830048C670 /* Client.m in Sources */,
+				989354B8173908860048C670 /* Lab.m in Sources */,
+				989354BB173908870048C670 /* Contact.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
