@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		8439D369172911140053278E /* LoginFieldsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8439D368172911140053278E /* LoginFieldsView.m */; };
 		84812C571738CCCF00A3D5F1 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84812C561738CCCF00A3D5F1 /* MessageUI.framework */; };
+		84812C7E1739272A00A3D5F1 /* MeasurementAddEditView.m in Sources */ = {isa = PBXBuildFile; fileRef = 84812C791739272A00A3D5F1 /* MeasurementAddEditView.m */; };
+		84812C7F1739272A00A3D5F1 /* MeasurementAddEditView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84812C7A1739272A00A3D5F1 /* MeasurementAddEditView.xib */; };
+		84812C801739272A00A3D5F1 /* TimePickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84812C7C1739272A00A3D5F1 /* TimePickerViewController.m */; };
+		84812C811739272A00A3D5F1 /* TimePickerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84812C7D1739272A00A3D5F1 /* TimePickerViewController.xib */; };
 		84A735401737D0F0000BD714 /* ProjectViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84A7353F1737D0F0000BD714 /* ProjectViewController.xib */; };
 		84AF07B317280974006F8756 /* AiresService.plist in Resources */ = {isa = PBXBuildFile; fileRef = 84AF07B217280974006F8756 /* AiresService.plist */; };
 		84D2E81E17338D0C00E3704E /* PreviewReportViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84D2E81D17338D0C00E3704E /* PreviewReportViewController.xib */; };
@@ -227,6 +231,12 @@
 		8439D367172911140053278E /* LoginFieldsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginFieldsView.h; sourceTree = "<group>"; };
 		8439D368172911140053278E /* LoginFieldsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginFieldsView.m; sourceTree = "<group>"; };
 		84812C561738CCCF00A3D5F1 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		84812C781739272A00A3D5F1 /* MeasurementAddEditView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MeasurementAddEditView.h; sourceTree = "<group>"; };
+		84812C791739272A00A3D5F1 /* MeasurementAddEditView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MeasurementAddEditView.m; sourceTree = "<group>"; };
+		84812C7A1739272A00A3D5F1 /* MeasurementAddEditView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MeasurementAddEditView.xib; sourceTree = "<group>"; };
+		84812C7B1739272A00A3D5F1 /* TimePickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimePickerViewController.h; sourceTree = "<group>"; };
+		84812C7C1739272A00A3D5F1 /* TimePickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimePickerViewController.m; sourceTree = "<group>"; };
+		84812C7D1739272A00A3D5F1 /* TimePickerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TimePickerViewController.xib; sourceTree = "<group>"; };
 		84A7353F1737D0F0000BD714 /* ProjectViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProjectViewController.xib; sourceTree = "<group>"; };
 		84AF07B217280974006F8756 /* AiresService.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = AiresService.plist; sourceTree = "<group>"; };
 		84D2E81D17338D0C00E3704E /* PreviewReportViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PreviewReportViewController.xib; sourceTree = "<group>"; };
@@ -720,6 +730,12 @@
 				98B4250F172689A000D15811 /* ProjectViewController.h */,
 				98B42510172689A100D15811 /* ProjectViewController.m */,
 				84A7353F1737D0F0000BD714 /* ProjectViewController.xib */,
+				84812C781739272A00A3D5F1 /* MeasurementAddEditView.h */,
+				84812C791739272A00A3D5F1 /* MeasurementAddEditView.m */,
+				84812C7A1739272A00A3D5F1 /* MeasurementAddEditView.xib */,
+				84812C7B1739272A00A3D5F1 /* TimePickerViewController.h */,
+				84812C7C1739272A00A3D5F1 /* TimePickerViewController.m */,
+				84812C7D1739272A00A3D5F1 /* TimePickerViewController.xib */,
 				98B68CD81728EEF10065D411 /* DashboardSettingsViewController.h */,
 				98B68CD91728EEF10065D411 /* DashboardSettingsViewController.m */,
 				98B68CDA1728EEF10065D411 /* DashboardSettingsViewController.xib */,
@@ -1132,6 +1148,8 @@
 				84D2E82617338DBF00E3704E /* ico_collapse_up_pressed@2x.png in Resources */,
 				98A5E92B17377EED008A3A84 /* ProjectListViewController.xib in Resources */,
 				84A735401737D0F0000BD714 /* ProjectViewController.xib in Resources */,
+				84812C7F1739272A00A3D5F1 /* MeasurementAddEditView.xib in Resources */,
+				84812C811739272A00A3D5F1 /* TimePickerViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1202,6 +1220,8 @@
 				989354B5173908830048C670 /* Client.m in Sources */,
 				989354B8173908860048C670 /* Lab.m in Sources */,
 				989354BB173908870048C670 /* Contact.m in Sources */,
+				84812C7E1739272A00A3D5F1 /* MeasurementAddEditView.m in Sources */,
+				84812C801739272A00A3D5F1 /* TimePickerViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
