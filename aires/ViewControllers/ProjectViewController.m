@@ -230,11 +230,11 @@
     //_addMesaurementButton.imageEdgeInsets = UIEdgeInsetsMake(0, 5, 0, 0);
     
     CGRect measurementsViewFrame = _measurementsView.frame;
-    measurementsViewFrame.size.height = 30.0f/*header height*/ + 15/*no. of measurements*/ * 44.0f/*row height*/;
+    measurementsViewFrame.size.height = 30.0f/*header height*/ + 6/*no. of measurements*/ * 44.0f/*row height*/;
     _measurementsView.frame = measurementsViewFrame;
     
     CGRect measurementsTableViewFrame = _measurementsTableView.frame;
-    measurementsTableViewFrame.size.height = 15/*no. of measurements*/ * 44.0f/*row height*/;
+    measurementsTableViewFrame.size.height = 6/*no. of measurements*/ * 44.0f/*row height*/;
     _measurementsTableView.frame = measurementsTableViewFrame;
     
     CGRect totalMeasurementsViewFrame = _totalMeasurementsView.frame;
@@ -267,7 +267,7 @@
     [_btnSTELCheck setSelected:NO];
     [_btnCielingCheck setSelected:NO];
     
-    [self updateSampleNumber:0];
+    [self updateSampleNumber:0 animate:NO];
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -285,8 +285,20 @@
                                                object:nil];   
 }
 
--(void)updateSampleNumber:(NSUInteger)index
+-(void)updateSampleNumber:(NSUInteger)index animate:(BOOL)anim
 {
+    if(anim)
+    {
+        CATransition *transition = [CATransition animation];
+        transition.duration = 0.25;
+        transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+        transition.type = kCATransitionPush;
+        transition.subtype = index>selectedSampleNumber?kCATransitionFromRight:kCATransitionFromLeft;
+        transition.delegate = self;
+        [_sampleDetailsView.layer addAnimation:transition forKey:nil];
+        [_sampleMeasurementsView.layer addAnimation:transition forKey:nil];
+    }
+    
     Sample *sample = [_samplesArray objectAtIndex:index];
     
     _sampleTypeValueLabel.text = sample.sample_SampleNumber;
@@ -297,14 +309,14 @@
     _notesValueLabel.text = sample.sample_Notes;
     _commentsValueLabel.text = sample.sample_Comments;
     
-    [_chemicalsArray removeAllObjects];
-    [_chemicalsArray addObjectsFromArray:[[mSingleton getPersistentStoreManager] getSampleChemicalforSample:sample]];
+    //[_chemicalsArray removeAllObjects];
+    //[_chemicalsArray addObjectsFromArray:[[mSingleton getPersistentStoreManager] getSampleChemicalforSample:sample]];
     
     //[_ppeArray removeAllObjects];
     //[_ppeArray addObjectsFromArray:[[mSingleton getPersistentStoreManager] getSampleProtectionEquipmentforSample:sample]];
     
-    [_chemicalsTableView reloadData];
-    [_ppeTableView reloadData];
+    //[_chemicalsTableView reloadData];
+    //[_ppeTableView reloadData];
 }
 
 -(IBAction)homeButtonPressed:(id)sender
@@ -526,12 +538,12 @@
         [tileView setSampleSelected:NO];
     }
     
-    selectedSampleNumber = number;
-    
-    [self updateSampleNumber:number-1];
+    [self updateSampleNumber:number-1 animate:YES];
     [_btnTWACheck setSelected:NO];
     [_btnSTELCheck setSelected:NO];
     [_btnCielingCheck setSelected:NO];
+    
+    selectedSampleNumber = number;
 }
 
 #pragma mark - iCarousel datasource
@@ -588,7 +600,7 @@
     else
     {
         // measurementsTableView
-        return 15;
+        return 6;
     }
 }
 
