@@ -1359,7 +1359,7 @@
 												<string key="NSFrame">{{150, 6}, {81, 21}}</string>
 												<reference key="NSSuperview" ref="20155516"/>
 												<reference key="NSWindow"/>
-												<reference key="NSNextKeyView" ref="923234564"/>
+												<reference key="NSNextKeyView" ref="869076994"/>
 												<string key="NSReuseIdentifierKey">_NS:9</string>
 												<bool key="IBUIOpaque">NO</bool>
 												<bool key="IBUIClipsSubviews">YES</bool>
@@ -1380,10 +1380,10 @@
 											<object class="IBUILabel" id="923234564">
 												<reference key="NSNextResponder" ref="20155516"/>
 												<int key="NSvFlags">292</int>
-												<string key="NSFrame">{{278, 6}, {81, 21}}</string>
+												<string key="NSFrame">{{299, 6}, {81, 21}}</string>
 												<reference key="NSSuperview" ref="20155516"/>
 												<reference key="NSWindow"/>
-												<reference key="NSNextKeyView" ref="688273406"/>
+												<reference key="NSNextKeyView" ref="994913599"/>
 												<string key="NSReuseIdentifierKey">_NS:9</string>
 												<bool key="IBUIOpaque">NO</bool>
 												<bool key="IBUIClipsSubviews">YES</bool>
@@ -1435,10 +1435,10 @@
 											<object class="IBUILabel" id="415254252">
 												<reference key="NSNextResponder" ref="20155516"/>
 												<int key="NSvFlags">292</int>
-												<string key="NSFrame">{{145, 35}, {54, 52}}</string>
+												<string key="NSFrame">{{145, 35}, {111, 52}}</string>
 												<reference key="NSSuperview" ref="20155516"/>
 												<reference key="NSWindow"/>
-												<reference key="NSNextKeyView" ref="869076994"/>
+												<reference key="NSNextKeyView" ref="756971798"/>
 												<string key="NSReuseIdentifierKey">_NS:9</string>
 												<bool key="IBUIOpaque">NO</bool>
 												<bool key="IBUIClipsSubviews">YES</bool>
@@ -1459,10 +1459,10 @@
 											<object class="IBUILabel" id="756971798">
 												<reference key="NSNextResponder" ref="20155516"/>
 												<int key="NSvFlags">292</int>
-												<string key="NSFrame">{{274, 35}, {74, 52}}</string>
+												<string key="NSFrame">{{299, 35}, {127, 52}}</string>
 												<reference key="NSSuperview" ref="20155516"/>
 												<reference key="NSWindow"/>
-												<reference key="NSNextKeyView" ref="994913599"/>
+												<reference key="NSNextKeyView"/>
 												<string key="NSReuseIdentifierKey">_NS:9</string>
 												<bool key="IBUIOpaque">NO</bool>
 												<bool key="IBUIClipsSubviews">YES</bool>
@@ -1483,17 +1483,17 @@
 											<object class="IBUILabel" id="869076994">
 												<reference key="NSNextResponder" ref="20155516"/>
 												<int key="NSvFlags">292</int>
-												<string key="NSFrame">{{199, 59}, {29, 21}}</string>
+												<string key="NSFrame">{{230, 6}, {34, 21}}</string>
 												<reference key="NSSuperview" ref="20155516"/>
 												<reference key="NSWindow"/>
-												<reference key="NSNextKeyView" ref="756971798"/>
+												<reference key="NSNextKeyView" ref="923234564"/>
 												<string key="NSReuseIdentifierKey">_NS:9</string>
 												<bool key="IBUIOpaque">NO</bool>
 												<bool key="IBUIClipsSubviews">YES</bool>
 												<int key="IBUIContentMode">7</int>
 												<bool key="IBUIUserInteractionEnabled">NO</bool>
 												<string key="targetRuntimeIdentifier">IBIPadFramework</string>
-												<string key="IBUIText">CFM</string>
+												<string key="IBUIText">(CFM)</string>
 												<object class="NSColor" key="IBUITextColor">
 													<int key="NSColorSpace">1</int>
 													<bytes key="NSRGB">MC4xMDk4MDM5MjE2IDAuMTMzMzMzMzMzMyAwLjE1Mjk0MTE3NjUAA</bytes>
@@ -1514,16 +1514,17 @@
 											<object class="IBUILabel" id="994913599">
 												<reference key="NSNextResponder" ref="20155516"/>
 												<int key="NSvFlags">292</int>
-												<string key="NSFrame">{{351, 59}, {29, 21}}</string>
+												<string key="NSFrame">{{364, 6}, {37, 21}}</string>
 												<reference key="NSSuperview" ref="20155516"/>
 												<reference key="NSWindow"/>
+												<reference key="NSNextKeyView" ref="688273406"/>
 												<string key="NSReuseIdentifierKey">_NS:9</string>
 												<bool key="IBUIOpaque">NO</bool>
 												<bool key="IBUIClipsSubviews">YES</bool>
 												<int key="IBUIContentMode">7</int>
 												<bool key="IBUIUserInteractionEnabled">NO</bool>
 												<string key="targetRuntimeIdentifier">IBIPadFramework</string>
-												<string key="IBUIText">Sq ft.</string>
+												<string key="IBUIText">(Sq ft.)</string>
 												<object class="NSColor" key="IBUITextColor">
 													<int key="NSColorSpace">1</int>
 													<bytes key="NSRGB">MC4xMDk4MDM5MjE2IDAuMTMzMzMzMzMzMyAwLjE1Mjk0MTE3NjUAA</bytes>
@@ -1544,7 +1545,7 @@
 										<string key="targetRuntimeIdentifier">IBIPadFramework</string>
 									</object>
 								</array>
-								<string key="NSFrame">{{0, 57}, {712, 452}}</string>
+								<string key="NSFrame">{{0, -414}, {712, 452}}</string>
 								<reference key="NSSuperview" ref="296255916"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="889185807"/>
@@ -2546,14 +2547,14 @@
 						<int key="objectID">140</int>
 						<reference key="object" ref="20155516"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="994913599"/>
-							<reference ref="869076994"/>
 							<reference ref="756971798"/>
 							<reference ref="415254252"/>
 							<reference ref="688273406"/>
 							<reference ref="923234564"/>
 							<reference ref="482304276"/>
 							<reference ref="20323898"/>
+							<reference ref="869076994"/>
+							<reference ref="994913599"/>
 						</array>
 						<reference key="parent" ref="1054427101"/>
 					</object>
@@ -2702,46 +2703,16 @@
 					<string key="className">ProjectViewController</string>
 					<string key="superclassName">UIViewController</string>
 					<dictionary class="NSMutableDictionary" key="actions">
-						<string key="addChemical:">id</string>
-						<string key="addMeasurement:">id</string>
-						<string key="addPPE:">id</string>
-						<string key="adjustSamplesArea:">id</string>
 						<string key="checkButtonPressed:">id</string>
-						<string key="homeButtonPressed:">id</string>
 						<string key="onGeneratePreview:">id</string>
-						<string key="sampleDetailsCollapse:">id</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
-						<object class="IBActionInfo" key="addChemical:">
-							<string key="name">addChemical:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="addMeasurement:">
-							<string key="name">addMeasurement:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="addPPE:">
-							<string key="name">addPPE:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="adjustSamplesArea:">
-							<string key="name">adjustSamplesArea:</string>
-							<string key="candidateClassName">id</string>
-						</object>
 						<object class="IBActionInfo" key="checkButtonPressed:">
 							<string key="name">checkButtonPressed:</string>
 							<string key="candidateClassName">id</string>
 						</object>
-						<object class="IBActionInfo" key="homeButtonPressed:">
-							<string key="name">homeButtonPressed:</string>
-							<string key="candidateClassName">id</string>
-						</object>
 						<object class="IBActionInfo" key="onGeneratePreview:">
 							<string key="name">onGeneratePreview:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="sampleDetailsCollapse:">
-							<string key="name">sampleDetailsCollapse:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 					</dictionary>

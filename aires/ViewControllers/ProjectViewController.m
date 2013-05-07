@@ -266,6 +266,8 @@
     [_btnTWACheck setSelected:NO];
     [_btnSTELCheck setSelected:NO];
     [_btnCielingCheck setSelected:NO];
+    
+    [self updateSampleNumber:0];
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -281,6 +283,28 @@
                                              selector:@selector(keyboardWillHide)
                                                  name:UIKeyboardWillHideNotification
                                                object:nil];   
+}
+
+-(void)updateSampleNumber:(NSUInteger)index
+{
+    Sample *sample = [_samplesArray objectAtIndex:index];
+    
+    _sampleTypeValueLabel.text = sample.sample_SampleNumber;
+    _deviceTypeValueLabel.text = sample.sample_DeviceTypeName;
+    _employeeNameValueLabel.text = sample.sample_EmployeeName;
+    _employeeJobValueLabel.text = sample.sample_EmployeeJob;
+    _operationalAreaValueLabel.text = sample.sample_OperationArea;
+    _notesValueLabel.text = sample.sample_Notes;
+    _commentsValueLabel.text = sample.sample_Comments;
+    
+    [_chemicalsArray removeAllObjects];
+    [_chemicalsArray addObjectsFromArray:[[mSingleton getPersistentStoreManager] getSampleChemicalforSample:sample]];
+    
+    //[_ppeArray removeAllObjects];
+    //[_ppeArray addObjectsFromArray:[[mSingleton getPersistentStoreManager] getSampleProtectionEquipmentforSample:sample]];
+    
+    [_chemicalsTableView reloadData];
+    [_ppeTableView reloadData];
 }
 
 -(IBAction)homeButtonPressed:(id)sender
@@ -504,7 +528,7 @@
     
     selectedSampleNumber = number;
     
-    Sample *sample = [_samplesArray objectAtIndex:selectedSampleNumber];
+    [self updateSampleNumber:number-1];
     [_btnTWACheck setSelected:NO];
     [_btnSTELCheck setSelected:NO];
     [_btnCielingCheck setSelected:NO];
