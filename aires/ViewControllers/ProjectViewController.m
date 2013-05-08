@@ -30,19 +30,7 @@
 @implementation ProjectViewController
 @synthesize currentProject;
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    return UIInterfaceOrientationIsLandscape(interfaceOrientation);
-}
+#pragma mark - View loading methods
 
 - (void)viewDidLoad
 {
@@ -191,77 +179,15 @@
     
     _chemicalsArray = [[NSMutableArray alloc] initWithObjects:@"Formaldehyde", @"Methylene Chloride", @"Ethylene Oxide", @"Ethanol", @"Zinc Phosphate", @"Oxylene", nil];
     _ppeArray = [[NSMutableArray alloc] initWithObjects:@"Safety Goggles", @"Mask", @"Apron", nil];
-    
-    [_chemicalsTableView reloadData];
-    [_ppeTableView reloadData];
-    
-    NSUInteger chemicalsCount = _chemicalsArray.count;
-    NSUInteger ppeCount = _ppeArray.count;
-    NSUInteger moreCount = chemicalsCount>ppeCount?chemicalsCount:ppeCount;
-    
-    CGRect chemicalPPEFrame = _chemicalPPEView.frame;
-    chemicalPPEFrame.size.height = 44.0f/*title*/ + (40.0f/*row height*/ * moreCount);
-    _chemicalPPEView.frame = chemicalPPEFrame;
-    
-    CGRect flagsViewFrame = _flagsView.frame;
-    flagsViewFrame.origin.y = _chemicalPPEView.frame.origin.y + _chemicalPPEView.frame.size.height + 20.0f;
-    _flagsView.frame = flagsViewFrame;
-    
-    CALayer *grayLine7 = [CALayer layer];
-    grayLine7.frame = CGRectMake(341, 0, 1.0f, _chemicalPPEView.bounds.size.height);
-    grayLine7.backgroundColor = grayColor.CGColor;
-    [_chemicalPPEView.layer addSublayer:grayLine7];
-    
-    CALayer *grayLine8 = [CALayer layer];
-    grayLine8.frame = CGRectMake(0, 44.0f, _chemicalPPEView.bounds.size.width, 1.0f);
-    grayLine8.backgroundColor = grayColor.CGColor;
-    [_chemicalPPEView.layer addSublayer:grayLine8];
-    
-    _samplesScrollView.contentSize = CGSizeMake(_samplesScrollView.frame.size.width, _samplesScrollView.frame.size.height + ( _flagsView.frame.origin.y + _flagsView.frame.size.height + 20.0f - _samplesScrollView.frame.size.height));
+    [self updateChemicalPPETable];
     
     UIImage *addMeasurementImage = [UIImage imageNamed:@"btn_contact_bg.png"];
     addMeasurementImage = [addMeasurementImage stretchableImageWithLeftCapWidth:addMeasurementImage.size.width/2 topCapHeight:addMeasurementImage.size.height/2];
     [_addMesaurementButton setBackgroundImage:addMeasurementImage forState:UIControlStateNormal];
     [_addMesaurementButton.titleLabel setFont:font14px];
-    
-    //[_addMesaurementButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
-    
-    //_addMesaurementButton.titleEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 10);
-    //_addMesaurementButton.imageEdgeInsets = UIEdgeInsetsMake(0, 5, 0, 0);
-    
-    CGRect measurementsViewFrame = _measurementsView.frame;
-    measurementsViewFrame.size.height = 30.0f/*header height*/ + 6/*no. of measurements*/ * 44.0f/*row height*/;
-    _measurementsView.frame = measurementsViewFrame;
-    
-    CGRect measurementsTableViewFrame = _measurementsTableView.frame;
-    measurementsTableViewFrame.size.height = 6/*no. of measurements*/ * 44.0f/*row height*/;
-    _measurementsTableView.frame = measurementsTableViewFrame;
-    
-    CGRect totalMeasurementsViewFrame = _totalMeasurementsView.frame;
-    totalMeasurementsViewFrame.origin.y = measurementsViewFrame.origin.y + measurementsViewFrame.size.height + 20.0f;
-    _totalMeasurementsView.frame = totalMeasurementsViewFrame;
-    
-    CALayer *grayLine9 = [CALayer layer];
-    grayLine9.frame = CGRectMake(170, 0, 1.0f, _measurementsView.bounds.size.height);
-    grayLine9.backgroundColor = grayColor.CGColor;
-    [_measurementsView.layer addSublayer:grayLine9];
-    
-    CALayer *grayLine10 = [CALayer layer];
-    grayLine10.frame = CGRectMake(341, 0, 1.0f, _measurementsView.bounds.size.height);
-    grayLine10.backgroundColor = grayColor.CGColor;
-    [_measurementsView.layer addSublayer:grayLine10];
-    
-    CALayer *grayLine11 = [CALayer layer];
-    grayLine11.frame = CGRectMake(512, 0, 1.0f, _measurementsView.bounds.size.height);
-    grayLine11.backgroundColor = grayColor.CGColor;
-    [_measurementsView.layer addSublayer:grayLine11];
-    
-    CALayer *grayLine12 = [CALayer layer];
-    grayLine12.frame = CGRectMake(0, 30, _measurementsView.bounds.size.width, 1.0f);
-    grayLine12.backgroundColor = grayColor.CGColor;
-    [_measurementsView.layer addSublayer:grayLine12];
-    
-    _measurementsScrollView.contentSize = CGSizeMake(_measurementsScrollView.frame.size.width, _measurementsScrollView.frame.size.height + ( _totalMeasurementsView.frame.origin.y + _totalMeasurementsView.frame.size.height + 20.0f - _measurementsScrollView.frame.size.height));
+
+    _measurementsArray = [[NSMutableArray alloc] initWithObjects:@"m1", @"m1", @"m1", @"m1", @"m1", @"m1",  nil];
+    [self updateMeasurementTable];
     
     [_btnTWACheck setSelected:NO];
     [_btnSTELCheck setSelected:NO];
@@ -285,39 +211,12 @@
                                                object:nil];   
 }
 
--(void)updateSampleNumber:(NSUInteger)index animate:(BOOL)anim
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    if(anim)
-    {
-        CATransition *transition = [CATransition animation];
-        transition.duration = 0.25;
-        transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
-        transition.type = kCATransitionPush;
-        transition.subtype = index>selectedSampleNumber?kCATransitionFromRight:kCATransitionFromLeft;
-        transition.delegate = self;
-        [_sampleDetailsView.layer addAnimation:transition forKey:nil];
-        [_sampleMeasurementsView.layer addAnimation:transition forKey:nil];
-    }
-    
-    Sample *sample = [_samplesArray objectAtIndex:index];
-    
-    _sampleTypeValueLabel.text = sample.sample_SampleNumber;
-    _deviceTypeValueLabel.text = sample.sample_DeviceTypeName;
-    _employeeNameValueLabel.text = sample.sample_EmployeeName;
-    _employeeJobValueLabel.text = sample.sample_EmployeeJob;
-    _operationalAreaValueLabel.text = sample.sample_OperationArea;
-    _notesValueLabel.text = sample.sample_Notes;
-    _commentsValueLabel.text = sample.sample_Comments;
-    
-    //[_chemicalsArray removeAllObjects];
-    //[_chemicalsArray addObjectsFromArray:[[mSingleton getPersistentStoreManager] getSampleChemicalforSample:sample]];
-    
-    //[_ppeArray removeAllObjects];
-    //[_ppeArray addObjectsFromArray:[[mSingleton getPersistentStoreManager] getSampleProtectionEquipmentforSample:sample]];
-    
-    //[_chemicalsTableView reloadData];
-    //[_ppeTableView reloadData];
+    return UIInterfaceOrientationIsLandscape(interfaceOrientation);
 }
+
+#pragma mark - Button actions
 
 -(IBAction)homeButtonPressed:(id)sender
 {
@@ -374,14 +273,7 @@
                          
                          NSUInteger curIndex = selectedSampleNumber/numberOfVisibleSamples;
                          [samplesCarousel scrollToItemAtIndex:curIndex animated:NO];
-                         
-                         //[self performSelector:@selector(reloadCarousel) withObject:nil afterDelay:0.25];
-                     }];
-}
-
--(void)reloadCarousel
-{
-    [samplesCarousel reloadData];
+                    }];
 }
 
 -(IBAction)sampleDetailsCollapse:(id)sender
@@ -449,6 +341,10 @@
 
 -(IBAction)addChemical:(id)sender
 {
+    [_chemicalsArray addObject:@"New Chemical"];
+    [self updateChemicalPPETable];
+    return;
+    
     UIButton *button = (UIButton*)sender;
     ChemicalsListViewController * chemicalListVC = [[ChemicalsListViewController alloc] initWithNibName:@"ChemicalsListViewController" bundle:nil];
     chemicalListVC.listContent = [[mSingleton getPersistentStoreManager] getChemicalList];
@@ -462,11 +358,14 @@
     [popover setDelegate:self];
     
     [popover presentPopoverFromRect:button.bounds inView:button permittedArrowDirections:UIPopoverArrowDirectionLeft animated:YES];
-
 }
 
 -(IBAction)addPPE:(id)sender
 {
+    [_ppeArray addObject:@"New Chemical"];
+    [self updateChemicalPPETable];
+    return;
+    
     UIButton *button = (UIButton*)sender;
     PPEListViewController * ppeListVC = [[PPEListViewController alloc] initWithNibName:@"PPEListViewController" bundle:nil];
     ppeListVC.listContent = [[mSingleton getPersistentStoreManager] getProtectionEquipmentList];
@@ -522,28 +421,116 @@
                     completion:^(BOOL finished){
                         /* do something on animation completion */
                     }];
-
+    
 }
 
-#pragma mark - SampleTileViewDelegate
+#pragma mark - Samples, Chemicals, PPEs and Measurements updates
 
--(void)sampleNumberSelected:(NSUInteger)number
+-(void)updateSampleNumber:(NSUInteger)index animate:(BOOL)anim
 {
-    if(selectedSampleNumber == number)
-        return;
-    
-    SampleTileView *tileView = (SampleTileView*)[samplesCarousel viewWithTag:selectedSampleNumber];
-    if(tileView && [tileView isKindOfClass:[SampleTileView class]])
+    if(anim)
     {
-        [tileView setSampleSelected:NO];
+        CATransition *transition = [CATransition animation];
+        transition.duration = 0.25;
+        transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+        transition.type = kCATransitionPush;
+        transition.subtype = index>selectedSampleNumber?kCATransitionFromRight:kCATransitionFromLeft;
+        transition.delegate = self;
+        [_sampleDetailsView.layer addAnimation:transition forKey:nil];
+        [_sampleMeasurementsView.layer addAnimation:transition forKey:nil];
     }
     
-    [self updateSampleNumber:number-1 animate:YES];
-    [_btnTWACheck setSelected:NO];
-    [_btnSTELCheck setSelected:NO];
-    [_btnCielingCheck setSelected:NO];
+    Sample *sample = [_samplesArray objectAtIndex:index];
     
-    selectedSampleNumber = number;
+    _sampleTypeValueLabel.text = sample.sample_SampleNumber;
+    _deviceTypeValueLabel.text = sample.sample_DeviceTypeName;
+    _employeeNameValueLabel.text = sample.sample_EmployeeName;
+    _employeeJobValueLabel.text = sample.sample_EmployeeJob;
+    _operationalAreaValueLabel.text = sample.sample_OperationArea;
+    _notesValueLabel.text = sample.sample_Notes;
+    _commentsValueLabel.text = sample.sample_Comments;
+    
+    //[_chemicalsArray removeAllObjects];
+    //[_chemicalsArray addObjectsFromArray:[[mSingleton getPersistentStoreManager] getSampleChemicalforSample:sample]];
+    
+    //[_ppeArray removeAllObjects];
+    //[_ppeArray addObjectsFromArray:[[mSingleton getPersistentStoreManager] getSampleProtectionEquipmentforSample:sample]];
+    
+    //[_chemicalsTableView reloadData];
+    //[_ppeTableView reloadData];
+}
+
+-(void)updateChemicalPPETable
+{
+    [_chemicalsTableView reloadData];
+    [_ppeTableView reloadData];
+    
+    UIColor *grayColor = [UIColor colorWithRed:178.0f/255.0f green:178.0f/255.0f blue:178.0f/255.0f alpha:1.0f];
+    
+    NSUInteger chemicalsCount = _chemicalsArray.count;
+    NSUInteger ppeCount = _ppeArray.count;
+    NSUInteger moreCount = chemicalsCount>ppeCount?chemicalsCount:ppeCount;
+    
+    CGRect chemicalPPEFrame = _chemicalPPEView.frame;
+    chemicalPPEFrame.size.height = 44.0f/*title*/ + (40.0f/*row height*/ * moreCount);
+    _chemicalPPEView.frame = chemicalPPEFrame;
+    
+    CGRect flagsViewFrame = _flagsView.frame;
+    flagsViewFrame.origin.y = _chemicalPPEView.frame.origin.y + _chemicalPPEView.frame.size.height + 20.0f;
+    _flagsView.frame = flagsViewFrame;
+    
+    CALayer *grayLine7 = [CALayer layer];
+    grayLine7.frame = CGRectMake(341, 0, 1.0f, _chemicalPPEView.bounds.size.height);
+    grayLine7.backgroundColor = grayColor.CGColor;
+    [_chemicalPPEView.layer addSublayer:grayLine7];
+    
+    CALayer *grayLine8 = [CALayer layer];
+    grayLine8.frame = CGRectMake(0, 44.0f, _chemicalPPEView.bounds.size.width, 1.0f);
+    grayLine8.backgroundColor = grayColor.CGColor;
+    [_chemicalPPEView.layer addSublayer:grayLine8];
+    
+    _samplesScrollView.contentSize = CGSizeMake(_samplesScrollView.frame.size.width, _samplesScrollView.frame.size.height + ( _flagsView.frame.origin.y + _flagsView.frame.size.height + 20.0f - _samplesScrollView.frame.size.height));
+}
+
+-(void)updateMeasurementTable
+{
+    [_measurementsTableView reloadData];
+    
+    UIColor *grayColor = [UIColor colorWithRed:178.0f/255.0f green:178.0f/255.0f blue:178.0f/255.0f alpha:1.0f];
+
+    CGRect measurementsViewFrame = _measurementsView.frame;
+    measurementsViewFrame.size.height = 30.0f/*header height*/ + _measurementsArray.count/*no. of measurements*/ * 44.0f/*row height*/;
+    _measurementsView.frame = measurementsViewFrame;
+    
+    CGRect measurementsTableViewFrame = _measurementsTableView.frame;
+    measurementsTableViewFrame.size.height = _measurementsArray.count/*no. of measurements*/ * 44.0f/*row height*/;
+    _measurementsTableView.frame = measurementsTableViewFrame;
+    
+    CGRect totalMeasurementsViewFrame = _totalMeasurementsView.frame;
+    totalMeasurementsViewFrame.origin.y = measurementsViewFrame.origin.y + measurementsViewFrame.size.height + 20.0f;
+    _totalMeasurementsView.frame = totalMeasurementsViewFrame;
+    
+    CALayer *grayLine9 = [CALayer layer];
+    grayLine9.frame = CGRectMake(170, 0, 1.0f, _measurementsView.bounds.size.height);
+    grayLine9.backgroundColor = grayColor.CGColor;
+    [_measurementsView.layer addSublayer:grayLine9];
+    
+    CALayer *grayLine10 = [CALayer layer];
+    grayLine10.frame = CGRectMake(341, 0, 1.0f, _measurementsView.bounds.size.height);
+    grayLine10.backgroundColor = grayColor.CGColor;
+    [_measurementsView.layer addSublayer:grayLine10];
+    
+    CALayer *grayLine11 = [CALayer layer];
+    grayLine11.frame = CGRectMake(512, 0, 1.0f, _measurementsView.bounds.size.height);
+    grayLine11.backgroundColor = grayColor.CGColor;
+    [_measurementsView.layer addSublayer:grayLine11];
+    
+    CALayer *grayLine12 = [CALayer layer];
+    grayLine12.frame = CGRectMake(0, 30, _measurementsView.bounds.size.width, 1.0f);
+    grayLine12.backgroundColor = grayColor.CGColor;
+    [_measurementsView.layer addSublayer:grayLine12];
+    
+    _measurementsScrollView.contentSize = CGSizeMake(_measurementsScrollView.frame.size.width, _measurementsScrollView.frame.size.height + ( _totalMeasurementsView.frame.origin.y + _totalMeasurementsView.frame.size.height + 20.0f - _measurementsScrollView.frame.size.height));
 }
 
 #pragma mark - iCarousel datasource
@@ -600,7 +587,7 @@
     else
     {
         // measurementsTableView
-        return 6;
+        return _measurementsArray.count;
     }
 }
 
@@ -711,6 +698,27 @@
     }
 }
 
+#pragma mark - SampleTileViewDelegate
+
+-(void)sampleNumberSelected:(NSUInteger)number
+{
+    if(selectedSampleNumber == number)
+        return;
+    
+    SampleTileView *tileView = (SampleTileView*)[samplesCarousel viewWithTag:selectedSampleNumber];
+    if(tileView && [tileView isKindOfClass:[SampleTileView class]])
+    {
+        [tileView setSampleSelected:NO];
+    }
+    
+    [self updateSampleNumber:number-1 animate:YES];
+    [_btnTWACheck setSelected:NO];
+    [_btnSTELCheck setSelected:NO];
+    [_btnCielingCheck setSelected:NO];
+    
+    selectedSampleNumber = number;
+}
+
 #pragma mark - MeasurementAddEditProtocol
 
 -(void)measurementsDonePressed
@@ -726,6 +734,9 @@
                      completion:^(BOOL finished) {
                          [dullView removeFromSuperview];
                      }];
+    
+    [_measurementsArray addObject:@"m1"];
+    [self updateMeasurementTable];
 }
 
 -(void)measurementsCancelPressed

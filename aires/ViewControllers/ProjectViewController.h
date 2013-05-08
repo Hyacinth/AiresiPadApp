@@ -25,6 +25,7 @@
 @property (retain, nonatomic) NSMutableArray *samplesArray;
 @property (retain, nonatomic) NSMutableArray *chemicalsArray;
 @property (retain, nonatomic) NSMutableArray *ppeArray;
+@property (retain, nonatomic) NSMutableArray *measurementsArray;
 
 @property (retain, nonatomic) IBOutlet UIButton *homeButton;
 @property (retain, nonatomic) IBOutlet UIButton *reportButton;
@@ -85,7 +86,7 @@
 @property (weak, nonatomic) IBOutlet UIView *totalMeasurementsView;
 
 -(IBAction)checkButtonPressed:(id)sender;
-- (IBAction)onGeneratePreview:(id)sender;
+-(IBAction)onGeneratePreview:(id)sender;
 
 
 @end
