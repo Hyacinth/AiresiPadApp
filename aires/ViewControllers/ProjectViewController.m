@@ -27,6 +27,7 @@
 {
     BOOL bProjectDetailsVisible;
     BOOL bEditingNotes;
+    BOOL bSampleDetailsCollapsed;
     NSUInteger selectedSampleNumber;
     NSUInteger numberOfVisibleSamples;
     iCarousel *samplesCarousel;
@@ -348,16 +349,20 @@
 
 -(IBAction)sampleDetailsCollapse:(id)sender
 {
-    UIButton *button = (UIButton*)sender;
+    [self collapseSampleDetail:!bSampleDetailsCollapsed];
+}
+
+-(void)collapseSampleDetail:(BOOL)collapse
+{
     CGFloat alpha = 0;
-    CGRect frame = _sampleDetailsView.frame;
-    CGRect frame1 = _sampleMeasurementsView.frame;
+    CGRect sampleDetailsFrame = _sampleDetailsView.frame;
+    CGRect _sampleMeasurementsFrame = _sampleMeasurementsView.frame;
     CGFloat angle = 0;
-    if(frame.size.height == 523.0f)
+    if(collapse)
     {
-        frame.size.height = 48.0f;
-        frame1.origin.y = 195.0f;
-        frame1.size.height = 519.0f;
+        sampleDetailsFrame.size.height = 48.0f;
+        _sampleMeasurementsFrame.origin.y = 195.0f;
+        _sampleMeasurementsFrame.size.height = 519.0f;
         angle = M_PI;
         alpha = 0;
         [UIView animateWithDuration:0.2
@@ -373,9 +378,9 @@
     }
     else
     {
-        frame.size.height = 523.0f;
-        frame1.origin.y = 670.0f;
-        frame1.size.height = 44.0f;
+        sampleDetailsFrame.size.height = 523.0f;
+        _sampleMeasurementsFrame.origin.y = 670.0f;
+        _sampleMeasurementsFrame.size.height = 44.0f;
         angle = 0;
         alpha = 1.0f;
         
@@ -399,14 +404,16 @@
                           delay:alpha==0?0.1f:0
                         options:UIViewAnimationOptionBeginFromCurrentState
                      animations:^{
-                         button.transform = CGAffineTransformMakeRotation(-angle);
-                         _sampleDetailsView.frame = frame;
-                         _sampleMeasurementsView.frame = frame1;
+                         _sampleDetailsCollapseButton.transform = CGAffineTransformMakeRotation(-angle);
+                         _sampleDetailsView.frame = sampleDetailsFrame;
+                         _sampleMeasurementsView.frame = _sampleMeasurementsFrame;
                          _measurementsScrollView.frame = CGRectMake(0, 57, 712, 452);
                      }
                      completion:^(BOOL finished) {
                          
                      }];
+    
+    bSampleDetailsCollapsed = collapse;
 }
 
 -(IBAction)addChemical:(id)sender
@@ -456,6 +463,11 @@
 
 -(IBAction)addMeasurement:(id)sender
 {
+    if(!bSampleDetailsCollapsed)
+    {
+        [self collapseSampleDetail:YES];
+    }
+    
     [self showMeasurementEditAddView:NO];
 }
 

@@ -89,6 +89,11 @@
 
 -(IBAction)checkButtonPressed:(id)sender;
 -(IBAction)onGeneratePreview:(id)sender;
-
+-(IBAction)homeButtonPressed:(id)sender;
+-(IBAction)adjustSamplesArea:(id)sender;
+-(IBAction)sampleDetailsCollapse:(id)sender;
+-(IBAction)addChemical:(id)sender;
+-(IBAction)addPPE:(id)sender;
+-(IBAction)addMeasurement:(id)sender;
 
 @end
