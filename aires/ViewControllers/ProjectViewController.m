@@ -14,6 +14,7 @@
 #import "ChemicalsListViewController.h"
 #import "PPEListViewController.h"
 
+#define FADE_VIEW_TAG 999
 #define mSingleton 	((AiresSingleton *) [AiresSingleton getSingletonInstance])
 
 @interface ProjectViewController ()
@@ -388,22 +389,27 @@
 
 -(IBAction)addMeasurement:(id)sender
 {
-    UIView *dullView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1024, 768)];
-    dullView.tag = 999;
-    dullView.backgroundColor = [UIColor colorWithWhite:0.1 alpha:0.9];
-    dullView.alpha = 0;
-    [self.view addSubview:dullView];
+    [self showMeasurementEditAddView:NO];
+}
+
+-(void)showMeasurementEditAddView:(BOOL)editMode
+{
+    UIView *fadeMeasurementAddEditView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1024, 768)];
+    fadeMeasurementAddEditView.tag = FADE_VIEW_TAG;
+    fadeMeasurementAddEditView.backgroundColor = [UIColor colorWithWhite:0.1 alpha:0.9];
+    fadeMeasurementAddEditView.alpha = 0;
+    [self.view addSubview:fadeMeasurementAddEditView];
     
     NSArray *topLevelObjects = [[NSBundle mainBundle] loadNibNamed:@"MeasurementAddEditView"owner:self options:nil];
     MeasurementAddEditView *measurementView = (MeasurementAddEditView *)[topLevelObjects objectAtIndex:0];
     measurementView.delegate = self;
-    measurementView.editMode = NO;
-    measurementView.center = dullView.center;
-    [dullView addSubview:measurementView];
+    measurementView.editMode = editMode;
+    measurementView.center = fadeMeasurementAddEditView.center;
+    [fadeMeasurementAddEditView addSubview:measurementView];
     
     [UIView animateWithDuration:0.25
                      animations:^{
-                         dullView.alpha = 1.0f;
+                         fadeMeasurementAddEditView.alpha = 1.0f;
                      }];
 }
 
@@ -658,23 +664,7 @@
     
     if(tableView==_measurementsTableView)
     {
-        UIView *dullView = [[UIView alloc] initWithFrame:self.view.bounds];
-        dullView.tag = 999;
-        dullView.backgroundColor = [UIColor colorWithWhite:0.1 alpha:0.9];
-        dullView.alpha = 0;
-        [self.view addSubview:dullView];
-        
-        NSArray *topLevelObjects = [[NSBundle mainBundle] loadNibNamed:@"MeasurementAddEditView"owner:self options:nil];
-        MeasurementAddEditView *measurementView = (MeasurementAddEditView *)[topLevelObjects objectAtIndex:0];
-        measurementView.delegate = self;
-        measurementView.editMode = TRUE;
-        measurementView.center = dullView.center;
-        [dullView addSubview:measurementView];
-        
-        [UIView animateWithDuration:0.25
-                         animations:^{
-                             dullView.alpha = 1.0f;
-                         }];
+        [self showMeasurementEditAddView:YES];
     }
 }
 
@@ -703,41 +693,41 @@
 
 -(void)measurementsAddPressed
 {
-    [self removeMeasurentEditView];
+    [self removeMeasurementEditView];
     [_measurementsArray addObject:@"m1"];
     [self updateMeasurementTable];
 }
 
 -(void)measurementsDonePressed
 {
-    [self removeMeasurentEditView];
+    [self removeMeasurementEditView];
     [self updateMeasurementTable];
 }
 
 -(void)measurementsCancelPressed
 {
-    [self removeMeasurentEditView];
+    [self removeMeasurementEditView];
 }
 
 -(void)measurementsDeletePressed
 {
-    [self removeMeasurentEditView];
+    [self removeMeasurementEditView];
     [_measurementsArray removeLastObject];
     [self updateMeasurementTable];
 }
 
--(void)removeMeasurentEditView
+-(void)removeMeasurementEditView
 {
-    UIView *dullView = (UIView*)[self.view viewWithTag:999];
-    if(!dullView)
+    UIView *fadeMeasurementAddEditView = (UIView*)[self.view viewWithTag:FADE_VIEW_TAG];
+    if(!fadeMeasurementAddEditView)
         return;
     
     [UIView animateWithDuration:0.25
                      animations:^{
-                         dullView.alpha = 0;
+                         fadeMeasurementAddEditView.alpha = 0;
                      }
                      completion:^(BOOL finished) {
-                         [dullView removeFromSuperview];
+                         [fadeMeasurementAddEditView removeFromSuperview];
                      }];
 }
 
@@ -745,21 +735,21 @@
 
 -(void)keyboardWillShow
 {
-    UIView *dullView = (UIView*)[self.view viewWithTag:999];
+    UIView *fadeMeasurementAddEditView = (UIView*)[self.view viewWithTag:FADE_VIEW_TAG];
     [UIView animateWithDuration:0.25
                      animations:^{
                          CGRect frame = self.view.bounds;
                          frame.origin.y -= 100.0f;
-                         dullView.frame = frame;
+                         fadeMeasurementAddEditView.frame = frame;
                      }];
 }
 
 -(void)keyboardWillHide
 {
-    UIView *dullView = (UIView*)[self.view viewWithTag:999];
+    UIView *fadeMeasurementAddEditView = (UIView*)[self.view viewWithTag:FADE_VIEW_TAG];
     [UIView animateWithDuration:0.25
                      animations:^{
-                         dullView.frame = self.view.bounds;
+                         fadeMeasurementAddEditView.frame = self.view.bounds;
                      }];
 }
 
