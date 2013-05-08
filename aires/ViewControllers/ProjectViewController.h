@@ -10,13 +10,14 @@
 #import "iCarousel.h"
 #import "SampleTileView.h"
 #import "PreviewReportViewController.h"
+#import "TextEditView.h"
 #import "MeasurementAddEditView.h"
 #import "Project.h"
 #import "TabularColumnView.h"
 
 @class ProjectDetailView;
 
-@interface ProjectViewController : UIViewController<iCarouselDataSource, iCarouselDelegate, SampleTileViewDelegate, UIPopoverControllerDelegate, MeasurementAddEditProtocol>
+@interface ProjectViewController : UIViewController<iCarouselDataSource, iCarouselDelegate, SampleTileViewDelegate, UIPopoverControllerDelegate, TextEditProtocol, MeasurementAddEditProtocol>
 {
     PreviewReportViewController *mPreviewReportViewController;
     Project *currentProject;

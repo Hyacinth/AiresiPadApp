@@ -26,10 +26,12 @@
 @interface ProjectViewController ()
 {
     BOOL bProjectDetailsVisible;
+    BOOL bEditingNotes;
     NSUInteger selectedSampleNumber;
     NSUInteger numberOfVisibleSamples;
     iCarousel *samplesCarousel;
     UIPopoverController *popover;
+    Sample *currentSample;
 }
 
 @end
@@ -207,6 +209,24 @@
     [_btnCielingCheck setSelected:NO];
     
     [self updateSampleNumber:0 animate:NO];
+    
+    UITapGestureRecognizer *notesTapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(notesTapped)];
+    [_notesValueLabel addGestureRecognizer:notesTapGesture];
+    
+    UITapGestureRecognizer *commentTapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(commentsTapped)];
+    [_commentsValueLabel addGestureRecognizer:commentTapGesture];
+}
+
+-(void)notesTapped
+{
+    bEditingNotes = YES;
+    [self showTextEditView];
+}
+
+-(void)commentsTapped
+{
+    bEditingNotes = NO;
+    [self showTextEditView];
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -230,6 +250,43 @@
 }
 
 #pragma mark - Button actions
+
+-(void)showTextEditView
+{
+    UIView *fadeTextEditView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1024, 768)];
+    fadeTextEditView.tag = FADE_VIEW_TAG;
+    fadeTextEditView.backgroundColor = [UIColor colorWithWhite:0.1 alpha:0.9];
+    fadeTextEditView.alpha = 0;
+    [self.view addSubview:fadeTextEditView];
+    
+    NSArray *topLevelObjects = [[NSBundle mainBundle] loadNibNamed:@"TextEditView"owner:self options:nil];
+    TextEditView *textEditView = (TextEditView *)[topLevelObjects objectAtIndex:0];
+    textEditView.delegate = self;
+    textEditView.center = fadeTextEditView.center;
+    [textEditView setText:bEditingNotes?currentSample.sample_Notes:currentSample.sample_Comments];
+    [textEditView setTitle:bEditingNotes?@"Edit Notes":@"Edit Comments"];
+    [fadeTextEditView addSubview:textEditView];
+    
+    [UIView animateWithDuration:0.25
+                     animations:^{
+                         fadeTextEditView.alpha = 1.0f;
+                     }];
+}
+
+-(void)removeTextEditView
+{
+    UIView *fadeTextEditView = (UIView*)[self.view viewWithTag:FADE_VIEW_TAG];
+    if(!fadeTextEditView)
+        return;
+    
+    [UIView animateWithDuration:0.25
+                     animations:^{
+                         fadeTextEditView.alpha = 0;
+                     }
+                     completion:^(BOOL finished) {
+                         [fadeTextEditView removeFromSuperview];
+                     }];
+}
 
 -(IBAction)homeButtonPressed:(id)sender
 {
@@ -463,7 +520,7 @@
     }
     
     Sample *sample = [_samplesArray objectAtIndex:index];
-    
+    currentSample = sample;
     _sampleTypeValueLabel.text = sample.sample_SampleNumber;
     _deviceTypeValueLabel.text = sample.sample_DeviceTypeName;
     _employeeNameValueLabel.text = sample.sample_EmployeeName;
@@ -501,8 +558,6 @@
     
     [_chemicalPPEView updateDividerLines];
     
-    NSLog(@"Layers Count = %d", _chemicalPPEView.layer.sublayers.count);
-    
     _samplesScrollView.contentSize = CGSizeMake(_samplesScrollView.frame.size.width, _samplesScrollView.frame.size.height + ( _flagsView.frame.origin.y + _flagsView.frame.size.height + 20.0f - _samplesScrollView.frame.size.height));
 }
 
@@ -523,8 +578,6 @@
     _totalMeasurementsView.frame = totalMeasurementsViewFrame;
     
     [_measurementsView updateDividerLines];
-    
-    NSLog(@"Layers Count = %d", _measurementsView.layer.sublayers.count);
     
     _measurementsScrollView.contentSize = CGSizeMake(_measurementsScrollView.frame.size.width, _measurementsScrollView.frame.size.height + ( _totalMeasurementsView.frame.origin.y + _totalMeasurementsView.frame.size.height + 20.0f - _measurementsScrollView.frame.size.height));
 }
@@ -711,6 +764,26 @@
     [_btnCielingCheck setSelected:NO];
     
     selectedSampleNumber = number;
+}
+
+#pragma mark - MeasurementAddEditProtocol
+-(void)textEditDonePressed:(NSString *)text
+{
+    [self removeTextEditView];
+    
+    if(bEditingNotes)
+    {
+        _notesValueLabel.text = text;
+    }
+    else
+    {
+        _commentsValueLabel.text = text;
+    }
+}
+
+-(void)textEditCancelPressed
+{
+    [self removeTextEditView];
 }
 
 #pragma mark - MeasurementAddEditProtocol
