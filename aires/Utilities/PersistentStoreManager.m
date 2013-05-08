@@ -399,6 +399,7 @@
                            insertNewObjectForEntityForName:@"Sample"
                            inManagedObjectContext:[self mainContext]];
         
+        
         if (![[dict valueForKey:@"Comments"] isKindOfClass:[NSNull class]])
             mSample.sample_Comments = [dict objectForKey:@"Comments"];
         if (![[dict valueForKey:@"DeviceType"] isKindOfClass:[NSNull class]])
@@ -415,12 +416,41 @@
             mSample.sample_SampleId = [dict objectForKey:@"SampleId"];
         if (![[dict valueForKey:@"SampleNumber"] isKindOfClass:[NSNull class]])
             mSample.sample_SampleNumber = [dict objectForKey:@"SampleNumber"];
-        if (![[dict valueForKey:@"SampleId"] isKindOfClass:[NSNull class]])
-            mSample.sampleID = [dict objectForKey:@"SampleId"];
-        
+        if (![[dict valueForKey:@"CreatedOn"] isKindOfClass:[NSNull class]])
+            mSample.createdOn = [dict objectForKey:@"CreatedOn"];
+        if (![[dict valueForKey:@"DeviceType"] isKindOfClass:[NSNull class]])
+            mSample.deviceType = [dict objectForKey:@"DeviceType"];
+        if (![[dict valueForKey:@"Volume"] isKindOfClass:[NSNull class]])
+            mSample.volume = [dict objectForKey:@"Volume"];
+        if (![[dict valueForKey:@"Minutes"] isKindOfClass:[NSNull class]])
+            mSample.minutes = [dict objectForKey:@"Minutes"];
+        if (![[dict valueForKey:@"Area"] isKindOfClass:[NSNull class]])
+            mSample.area = [dict objectForKey:@"Area"];
+        if (![[dict valueForKey:@"DeviceTypeId"] isKindOfClass:[NSNull class]])
+            mSample.deviceTypeId = [dict objectForKey:@"DeviceTypeId"];
+        if (![[dict valueForKey:@"PPEId"] isKindOfClass:[NSNull class]])
+            mSample.ppeID = [dict objectForKey:@"PPEId"];
+        if (![[dict valueForKey:@"ProjectId"] isKindOfClass:[NSNull class]])
+            mSample.projectId = [dict objectForKey:@"SampleId"];
+
+                
         [project addAiresSampleObject:mSample];
         [[self mainContext] save:nil];
         
+        NSDictionary *sampleType = [dict objectForKey:@"SampleType"];
+        
+        SampleType *mSampleType = [NSEntityDescription
+                                   insertNewObjectForEntityForName:@"SampleType"
+                                   inManagedObjectContext:[self mainContext]];
+        
+        if (![[sampleType valueForKey:@"SampleTypeId"] isKindOfClass:[NSNull class]])
+            mSampleType.sampleTypeID = [sampleType objectForKey:@"SampleTypeId"];
+        if (![[sampleType valueForKey:@"SampleTypeName"] isKindOfClass:[NSNull class]])
+            mSampleType.sampleTypeName = [sampleType objectForKey:@"SampleTypeName"];
+        
+        mSample.airesSampleType = mSampleType;
+        [[self mainContext] save:nil];
+
         NSArray *SampleChemicals = [dict objectForKey:@"SampleChemicals"];
         [self storeSampleChemicalDetails:SampleChemicals forSample:mSample];
         
@@ -474,6 +504,8 @@
             mSampleChemical.sampleChemical_TLVTWAFlag = [dict objectForKey:@"TLVTWAFlag"];
         if (![[dict valueForKey:@"ChemicalId"] isKindOfClass:[NSNull class]])
             mSampleChemical.sampleChemicalID = [dict objectForKey:@"ChemicalId"];
+        if (![[dict valueForKey:@"SampleId"] isKindOfClass:[NSNull class]])
+            mSampleChemical.sampleID = [dict objectForKey:@"SampleId"];
         if (![[dict valueForKey:@"Deleted"] isKindOfClass:[NSNull class]])
             mSampleChemical.deleted = [dict objectForKey:@"Deleted"];
 
@@ -521,6 +553,8 @@
             mSampleMeasurement.sampleMeasurement_TotalVolume = [dict objectForKey:@"Volume"];
         if (![[dict valueForKey:@"MeasurementId"] isKindOfClass:[NSNull class]])
             mSampleMeasurement.sampleMesurementID = [dict objectForKey:@"MeasurementId"];
+        if (![[dict valueForKey:@"SampleId"] isKindOfClass:[NSNull class]])
+            mSampleMeasurement.sampleID = [dict objectForKey:@"SampleId"];
         if (![[dict valueForKey:@"Deleted"] isKindOfClass:[NSNull class]])
             mSampleMeasurement.deleted = [dict objectForKey:@"Deleted"];
 
@@ -560,6 +594,8 @@
             mSampleProtectionEquipment.sampleProtectionEquipmentID = [dict valueForKey:@"PPEId"];
         if (![[dict valueForKey:@"Deleted"] isKindOfClass:[NSNull class]])
             mSampleProtectionEquipment.deleted = [dict objectForKey:@"Deleted"];
+        if (![[dict valueForKey:@"SampleId"] isKindOfClass:[NSNull class]])
+            mSampleProtectionEquipment.sampleID = [dict valueForKey:@"SampleId"];
 
         [sample addAiresSampleProtectionEquipmentObject:mSampleProtectionEquipment];
         [[self mainContext] save:nil];

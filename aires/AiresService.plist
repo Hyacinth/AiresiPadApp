@@ -17,6 +17,8 @@
 	<string>http://192.168.6.18/AiresStaging/DataServices/AiresDataService.svc</string>
 	<key>Data Service Path</key>
 	<dict>
+		<key>Projects</key>
+		<string>Projects</string>
 		<key>Chemicals</key>
 		<string>Chemicals</string>
 		<key>Device Types</key>

@@ -163,6 +163,7 @@
     }
 
     [_loadingView setHidden:FALSE];
+    [[mSingleton getPersistentStoreManager] resetCoreData];
     [[mSingleton getWebServiceManager] fetchProjectsforUser];
 }
 
@@ -363,7 +364,6 @@
         [_loadingView setHidden:TRUE];
         UIAlertView *failedAlert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Unable to reload data.\n Check your internet connection or try again later." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
         [failedAlert show];
-
     }
     else if ([[notification name] isEqualToString:NOTIFICATION_FETCH_PROJECT_SUCCESS])
     {
@@ -373,7 +373,9 @@
         _completedProjectsCarousel.alpha = 0.0f;
         [self loadCarousel];
         [_loadingView setHidden:TRUE];
-        [[mSingleton getJSONParser] createJsonforProject:[_projectsArray objectAtIndex:0]];
+        //[[mSingleton getWebServiceManager] postProject:[_projectsArray objectAtIndex:1]];
+       // [[mSingleton getWebServiceManager] unlockProject:[_projectsArray objectAtIndex:0]];
+
     }
 }
 

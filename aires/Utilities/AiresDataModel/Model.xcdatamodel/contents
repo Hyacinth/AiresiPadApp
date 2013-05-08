@@ -66,6 +66,13 @@
         <relationship name="fromUser" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="airesProject" inverseEntity="User" syncable="YES"/>
     </entity>
     <entity name="Sample" representedClassName="Sample" syncable="YES">
+        <attribute name="area" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="createdOn" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="deviceType" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="deviceTypeId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="minutes" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="ppeID" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="projectId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="sample_Comments" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="sample_DeviceTypeName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="sample_EmployeeJob" optional="YES" attributeType="String" syncable="YES"/>
@@ -75,9 +82,11 @@
         <attribute name="sample_SampleId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="sample_SampleNumber" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="sampleID" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="volume" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <relationship name="airesSampleChemical" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="SampleChemical" inverseName="fromSample" inverseEntity="SampleChemical" syncable="YES"/>
         <relationship name="airesSampleMeasurement" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="SampleMeasurement" inverseName="fromSample" inverseEntity="SampleMeasurement" syncable="YES"/>
         <relationship name="airesSampleProtectionEquipment" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="SampleProtectionEquipment" inverseName="fromSample" inverseEntity="SampleProtectionEquipment" syncable="YES"/>
+        <relationship name="airesSampleType" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="SampleType" inverseName="fromSample" inverseEntity="SampleType" syncable="YES"/>
         <relationship name="fromProject" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Project" inverseName="airesSample" inverseEntity="Project" syncable="YES"/>
     </entity>
     <entity name="SampleChemical" representedClassName="SampleChemical" syncable="YES">
@@ -91,10 +100,12 @@
         <attribute name="sampleChemical_TLVSTELFlag" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="sampleChemical_TLVTWAFlag" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="sampleChemicalID" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="sampleID" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <relationship name="fromSample" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Sample" inverseName="airesSampleChemical" inverseEntity="Sample" syncable="YES"/>
     </entity>
     <entity name="SampleMeasurement" representedClassName="SampleMeasurement" syncable="YES">
         <attribute name="deleted" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="sampleID" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="sampleMeasurement_OffFlowRate" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="sampleMeasurement_OffTime" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="sampleMeasurement_OnFlowRate" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
@@ -108,9 +119,15 @@
     <entity name="SampleProtectionEquipment" representedClassName="SampleProtectionEquipment" syncable="YES">
         <attribute name="contentType" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="deleted" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="sampleID" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="sampleProtectionEquipment_Name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="sampleProtectionEquipmentID" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <relationship name="fromSample" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Sample" inverseName="airesSampleProtectionEquipment" inverseEntity="Sample" syncable="YES"/>
+    </entity>
+    <entity name="SampleType" representedClassName="SampleType" syncable="YES">
+        <attribute name="sampleTypeID" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="sampleTypeName" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="fromSample" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Sample" inverseName="airesSampleType" inverseEntity="Sample" syncable="YES"/>
     </entity>
     <entity name="User" representedClassName="User" syncable="YES">
         <attribute name="user_CertificationId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
@@ -122,15 +139,16 @@
         <relationship name="airesProject" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Project" inverseName="fromUser" inverseEntity="Project" syncable="YES"/>
     </entity>
     <elements>
-        <element name="DeviceType" positionX="-4248" positionY="-396" width="128" height="103"/>
+        <element name="Client" positionX="-4664" positionY="-133" width="128" height="133"/>
+        <element name="Contact" positionX="-4131" positionY="-247" width="128" height="193"/>
+        <element name="DeviceType" positionX="-4284" positionY="-364" width="128" height="103"/>
+        <element name="Lab" positionX="-4734" positionY="-270" width="128" height="118"/>
         <element name="Project" positionX="-4491" positionY="-658" width="171" height="493"/>
-        <element name="Sample" positionX="-4266" positionY="-657" width="180" height="240"/>
-        <element name="SampleChemical" positionX="-4050" positionY="-765" width="171" height="208"/>
-        <element name="SampleMeasurement" positionX="-3987" positionY="-567" width="243" height="193"/>
-        <element name="SampleProtectionEquipment" positionX="-3933" positionY="-432" width="252" height="118"/>
+        <element name="Sample" positionX="-4284" positionY="-765" width="180" height="373"/>
+        <element name="SampleChemical" positionX="-4050" positionY="-819" width="171" height="223"/>
+        <element name="SampleMeasurement" positionX="-3960" positionY="-585" width="243" height="210"/>
+        <element name="SampleProtectionEquipment" positionX="-3888" positionY="-324" width="252" height="135"/>
         <element name="User" positionX="-4671" positionY="-481" width="128" height="150"/>
-        <element name="Client" positionX="-4691" positionY="-162" width="128" height="133"/>
-        <element name="Contact" positionX="-4070" positionY="-310" width="128" height="193"/>
-        <element name="Lab" positionX="-4763" positionY="-297" width="128" height="118"/>
+        <element name="SampleType" positionX="-4050" positionY="-351" width="128" height="88"/>
     </elements>
 </model>

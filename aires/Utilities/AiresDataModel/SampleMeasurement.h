@@ -23,5 +23,7 @@
 @property (nonatomic, retain) NSNumber * sampleMeasurement_TotalVolume;
 @property (nonatomic, retain) Sample *fromSample;
 @property (nonatomic, retain) NSNumber *deleted;
+@property (nonatomic, retain) NSNumber * sampleID;
+
 
 @end

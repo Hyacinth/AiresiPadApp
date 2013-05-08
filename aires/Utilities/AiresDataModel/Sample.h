@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class Project, SampleChemical, SampleMeasurement, SampleProtectionEquipment, SampleTotalMeasurement;
+@class Project, SampleChemical, SampleMeasurement, SampleProtectionEquipment, SampleTotalMeasurement, SampleType;
 
 @interface Sample : NSManagedObject
 
@@ -26,8 +26,17 @@
 @property (nonatomic, retain) NSSet *    airesSampleMeasurement;
 @property (nonatomic, retain) NSSet *    airesSampleProtectionEquipment;
 @property (nonatomic, retain) SampleTotalMeasurement *airesSampleTotalMeasurement;
+@property (nonatomic, retain) NSNumber * area;
+@property (nonatomic, retain) NSNumber * minutes;
+@property (nonatomic, retain) NSNumber * volume;
+@property (nonatomic, retain) NSNumber * deviceTypeId;
+@property (nonatomic, retain) NSNumber * ppeID;
+@property (nonatomic, retain) NSNumber * projectId;
+@property (nonatomic, retain) NSString * deviceType;
+@property (nonatomic, retain) NSString * createdOn;
 
 @property (nonatomic, retain) Project *fromProject;
+@property (nonatomic, retain) SampleType *airesSampleType;
 @end
 
 @interface Sample (CoreDataGeneratedAccessors)

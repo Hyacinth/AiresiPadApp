@@ -21,5 +21,7 @@
 -(void)parseDeviceTypeList:(NSData *)jsonData;
 -(void)parseChemicalList:(NSData *)jsonData;
 
--(void)createJsonforProject:(Project *)proj;
+-(NSData *)JsonToPostProject:(Project *)proj;
+-(NSData *)JsonToUnlockProject:(Project *)proj;
+
 @end

@@ -18,6 +18,7 @@
 #import "Client.h"
 #import "Contact.h"
 #import "Lab.h"
+#import "SampleType.h"
 
 @interface PersistentStoreManager : NSObject
 {

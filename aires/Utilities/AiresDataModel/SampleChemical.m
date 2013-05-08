@@ -23,5 +23,5 @@
 @dynamic fromSample;
 @dynamic contentType;
 @dynamic deleted;
-
+@dynamic sampleID;
 @end

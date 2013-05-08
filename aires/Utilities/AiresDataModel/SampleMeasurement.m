@@ -22,5 +22,6 @@
 @dynamic sampleMesurementID;
 @dynamic fromSample;
 @dynamic deleted;
+@dynamic sampleID;
 
 @end

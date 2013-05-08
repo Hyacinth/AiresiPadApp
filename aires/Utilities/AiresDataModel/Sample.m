@@ -11,7 +11,7 @@
 #import "SampleChemical.h"
 #import "SampleMeasurement.h"
 #import "SampleProtectionEquipment.h"
-
+#import "SampleType.h"
 
 @implementation Sample
 
@@ -29,5 +29,14 @@
 @dynamic airesSampleProtectionEquipment;
 @dynamic airesSampleTotalMeasurement;
 @dynamic fromProject;
+@dynamic area;
+@dynamic volume;
+@dynamic minutes;
+@dynamic ppeID;
+@dynamic projectId;
+@dynamic deviceType;
+@dynamic deviceTypeId;
+@dynamic createdOn;
+@dynamic airesSampleType;
 
 @end

@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Project.h"
 
 @interface WebServiceManager : NSObject
 {
@@ -17,6 +18,8 @@
 -(void)getEnvironment;
 -(void)loginWithUserName:(NSString *)username andpassword:(NSString *)password;
 -(void)fetchProjectsforUser;
+-(void)postProject:(Project *)proj;
+-(void)unlockProject:(Project *)proj;
 -(void)logout;
 
 -(void)getChemicalsList;
