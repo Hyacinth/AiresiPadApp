@@ -15,6 +15,12 @@
 #import "PPEListViewController.h"
 
 #define FADE_VIEW_TAG 999
+
+#define MEASUREMENT_ONTIME_TAG  1000
+#define MEASUREMENT_OFFTIME_TAG  1001
+#define MEASUREMENT_ONFLOWRATE_TAG  1002
+#define MEASUREMENT_OFFFLOWRATE_TAG  1003
+
 #define mSingleton 	((AiresSingleton *) [AiresSingleton getSingletonInstance])
 
 @interface ProjectViewController ()
@@ -38,9 +44,9 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     _projectTitleLabel.text = currentProject.project_ProjectNumber;
-
+    
     _projectDetailView.project = currentProject;
-
+    
     [_homeButton.titleLabel setFont:[UIFont fontWithName:@"ProximaNova-Bold" size:12.0]];
     [_samplesLabel setFont:[UIFont fontWithName:@"ProximaNova-Bold" size:20.0]];
     
@@ -75,7 +81,7 @@
     samplesCarousel.scrollSpeed = 0.75f;
     samplesCarousel.dataSource = self;
     samplesCarousel.delegate = self;
-    [self.view  insertSubview:samplesCarousel belowSubview:_projectDetailView];    
+    [self.view  insertSubview:samplesCarousel belowSubview:_projectDetailView];
     
     UIFont *font14px = [UIFont fontWithName:@"ProximaNova-Regular" size:14.0f];
     UIFont *fontBold14px = [UIFont fontWithName:@"ProximaNova-Bold" size:14.0f];
@@ -94,7 +100,7 @@
     [_sampleDetailsView.layer insertSublayer:blueLayer atIndex:0];
     _sampleDetailsView.layer.masksToBounds = YES;
     _sampleMeasurementsView.layer.masksToBounds = YES;
-        
+    
     UIColor *grayColor = [UIColor colorWithRed:178.0f/255.0f green:178.0f/255.0f blue:178.0f/255.0f alpha:1.0f];
     _sampleTypeView.layer.borderColor = grayColor.CGColor;
     _sampleTypeView.layer.borderWidth = 1.0f;
@@ -192,7 +198,7 @@
     addMeasurementImage = [addMeasurementImage stretchableImageWithLeftCapWidth:addMeasurementImage.size.width/2 topCapHeight:addMeasurementImage.size.height/2];
     [_addMesaurementButton setBackgroundImage:addMeasurementImage forState:UIControlStateNormal];
     [_addMesaurementButton.titleLabel setFont:font14px];
-
+    
     _measurementsArray = [[NSMutableArray alloc] initWithObjects:@"m1", @"m1", @"m1", @"m1", @"m1", @"m1",  nil];
     [self updateMeasurementTable];
     
@@ -206,7 +212,7 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-
+    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillShow)
                                                  name:UIKeyboardWillShowNotification
@@ -215,7 +221,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillHide)
                                                  name:UIKeyboardWillHideNotification
-                                               object:nil];   
+                                               object:nil];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -280,7 +286,7 @@
                          
                          NSUInteger curIndex = selectedSampleNumber/numberOfVisibleSamples;
                          [samplesCarousel scrollToItemAtIndex:curIndex animated:NO];
-                    }];
+                     }];
 }
 
 -(IBAction)sampleDetailsCollapse:(id)sender
@@ -315,7 +321,7 @@
         frame1.size.height = 44.0f;
         angle = 0;
         alpha = 1.0f;
-
+        
         [UIView animateWithDuration:0.1
                          animations:^{
                              _measurementsScrollView.alpha = 0;
@@ -350,6 +356,8 @@
 {
     [_chemicalsArray addObject:@"New Chemical"];
     [self updateChemicalPPETable];
+    CGPoint bottomOffset = CGPointMake(0, _samplesScrollView.contentSize.height - _samplesScrollView.bounds.size.height);
+    [_samplesScrollView setContentOffset:bottomOffset animated:YES];
     return;
     
     UIButton *button = (UIButton*)sender;
@@ -357,9 +365,9 @@
     chemicalListVC.listContent = [[mSingleton getPersistentStoreManager] getChemicalList];
     
     if(!popover)
-     popover = [[UIPopoverController alloc] initWithContentViewController:chemicalListVC];
+        popover = [[UIPopoverController alloc] initWithContentViewController:chemicalListVC];
     else
-    [popover setContentViewController:chemicalListVC];
+        [popover setContentViewController:chemicalListVC];
     
     [popover setPopoverContentSize:CGSizeMake(320, 500)];
     [popover setDelegate:self];
@@ -371,6 +379,8 @@
 {
     [_ppeArray addObject:@"New Chemical"];
     [self updateChemicalPPETable];
+    CGPoint bottomOffset = CGPointMake(0, _samplesScrollView.contentSize.height - _samplesScrollView.bounds.size.height);
+    [_samplesScrollView setContentOffset:bottomOffset animated:YES];
     return;
     
     UIButton *button = (UIButton*)sender;
@@ -476,7 +486,7 @@
 {
     [_chemicalsTableView reloadData];
     [_ppeTableView reloadData];
-        
+    
     NSUInteger chemicalsCount = _chemicalsArray.count;
     NSUInteger ppeCount = _ppeArray.count;
     NSUInteger moreCount = chemicalsCount>ppeCount?chemicalsCount:ppeCount;
@@ -515,7 +525,7 @@
     [_measurementsView updateDividerLines];
     
     NSLog(@"Layers Count = %d", _measurementsView.layer.sublayers.count);
-
+    
     _measurementsScrollView.contentSize = CGSizeMake(_measurementsScrollView.frame.size.width, _measurementsScrollView.frame.size.height + ( _totalMeasurementsView.frame.origin.y + _totalMeasurementsView.frame.size.height + 20.0f - _measurementsScrollView.frame.size.height));
 }
 
@@ -599,7 +609,7 @@
         UITableViewCell *cell = (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:kCellID];
         if (cell == nil)
         {
-            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kCellID];
             cell.textLabel.font = [UIFont fontWithName:@"ProximaNova-Regular" size:14.0f];
             cell.textLabel.textAlignment = UITextAlignmentLeft;
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -613,19 +623,20 @@
     else
     {
         // measurementsTableView
-        static NSString *kCellID = @"MeasurementValueCell";
+        static NSString *kMeasurementCellID = @"MeasurementValueCell";
         
-        UITableViewCell *cell = (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:kCellID];
+        UITableViewCell *cell = (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:kMeasurementCellID];
         if (cell == nil)
         {
-            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kMeasurementCellID];
             cell.textLabel.textAlignment = UITextAlignmentLeft;
             cell.selectionStyle = UITableViewCellSelectionStyleGray;
             
             UIFont *font14px = [UIFont fontWithName:@"ProximaNova-Regular" size:14.0f];
             UIColor *textColor = [UIColor colorWithRed:28.0f/255.0f green:34.0f/255.0f blue:39.0f/255.0f alpha:1.0f];
-
+            
             UILabel *onTimeLabel = [[UILabel alloc] initWithFrame:CGRectMake(8, 0, 160, cell.contentView.bounds.size.height)];
+            onTimeLabel.tag = MEASUREMENT_ONTIME_TAG;
             onTimeLabel.backgroundColor = [UIColor clearColor];
             onTimeLabel.font = font14px;
             onTimeLabel.textColor = textColor;
@@ -633,6 +644,7 @@
             [cell.contentView addSubview:onTimeLabel];
             
             UILabel *onFlowRateLabel = [[UILabel alloc] initWithFrame:CGRectMake(179, 0, 160, cell.contentView.bounds.size.height)];
+            onFlowRateLabel.tag = MEASUREMENT_ONFLOWRATE_TAG;
             onFlowRateLabel.backgroundColor = [UIColor clearColor];
             onFlowRateLabel.font = font14px;
             onFlowRateLabel.textColor = textColor;
@@ -640,6 +652,7 @@
             [cell.contentView addSubview:onFlowRateLabel];
             
             UILabel *offTimeLabel = [[UILabel alloc] initWithFrame:CGRectMake(350, 0, 160, cell.contentView.bounds.size.height)];
+            offTimeLabel.tag = MEASUREMENT_OFFTIME_TAG;
             offTimeLabel.backgroundColor = [UIColor clearColor];
             offTimeLabel.font = font14px;
             offTimeLabel.textColor = textColor;
@@ -647,13 +660,24 @@
             [cell.contentView addSubview:offTimeLabel];
             
             UILabel *offFlowRateLabel = [[UILabel alloc] initWithFrame:CGRectMake(521, 0, 160, cell.contentView.bounds.size.height)];
+            offFlowRateLabel.tag = MEASUREMENT_OFFFLOWRATE_TAG;
             offFlowRateLabel.backgroundColor = [UIColor clearColor];
             offFlowRateLabel.font = font14px;
             offFlowRateLabel.textColor = textColor;
             offFlowRateLabel.text = @"0.75";
             [cell.contentView addSubview:offFlowRateLabel];
         }
-        
+        else
+        {
+            UILabel *onTimeLabel = (UILabel*)[cell.contentView viewWithTag:MEASUREMENT_ONTIME_TAG];
+            onTimeLabel.text = @"12:30 pm";
+            UILabel *onFlowRateLabel = (UILabel*)[cell.contentView viewWithTag:MEASUREMENT_ONFLOWRATE_TAG];
+            onFlowRateLabel.text = @"0.5";
+            UILabel *offTimeLabel = (UILabel*)[cell.contentView viewWithTag:MEASUREMENT_OFFTIME_TAG];
+            offTimeLabel.text = @"12:40 pm";
+            UILabel *offFlowRateLabel = (UILabel*)[cell.contentView viewWithTag:MEASUREMENT_OFFFLOWRATE_TAG];
+            offFlowRateLabel.text = @"0.75";
+        }
         return cell;
     }
 }
@@ -696,6 +720,9 @@
     [self removeMeasurementEditView];
     [_measurementsArray addObject:@"m1"];
     [self updateMeasurementTable];
+    
+    CGPoint bottomOffset = CGPointMake(0, _measurementsScrollView.contentSize.height - _measurementsScrollView.bounds.size.height);
+    [_measurementsScrollView setContentOffset:bottomOffset animated:YES];
 }
 
 -(void)measurementsDonePressed
