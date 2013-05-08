@@ -116,9 +116,15 @@
     _chemicalPPEView.layer.borderWidth = 1.0f;
     _chemicalPPEView.layer.cornerRadius = 5.0f;
     
+    _chemicalPPEView.horizontalLineYPos = 44.0f;
+    _chemicalPPEView.numberOfColumns = 2;
+    
     _measurementsView.layer.borderColor = grayColor.CGColor;
     _measurementsView.layer.borderWidth = 1.0f;
     _measurementsView.layer.cornerRadius = 5.0f;
+    
+    _measurementsView.horizontalLineYPos = 30.0f;
+    _measurementsView.numberOfColumns = 4;
     
     _sampleTypeLabel.font = fontBold12px;;
     _sampleTypeValueLabel.font = font14px;
@@ -464,9 +470,7 @@
 {
     [_chemicalsTableView reloadData];
     [_ppeTableView reloadData];
-    
-    UIColor *grayColor = [UIColor colorWithRed:178.0f/255.0f green:178.0f/255.0f blue:178.0f/255.0f alpha:1.0f];
-    
+        
     NSUInteger chemicalsCount = _chemicalsArray.count;
     NSUInteger ppeCount = _ppeArray.count;
     NSUInteger moreCount = chemicalsCount>ppeCount?chemicalsCount:ppeCount;
@@ -479,15 +483,9 @@
     flagsViewFrame.origin.y = _chemicalPPEView.frame.origin.y + _chemicalPPEView.frame.size.height + 20.0f;
     _flagsView.frame = flagsViewFrame;
     
-    CALayer *grayLine7 = [CALayer layer];
-    grayLine7.frame = CGRectMake(341, 0, 1.0f, _chemicalPPEView.bounds.size.height);
-    grayLine7.backgroundColor = grayColor.CGColor;
-    [_chemicalPPEView.layer addSublayer:grayLine7];
+    [_chemicalPPEView updateDividerLines];
     
-    CALayer *grayLine8 = [CALayer layer];
-    grayLine8.frame = CGRectMake(0, 44.0f, _chemicalPPEView.bounds.size.width, 1.0f);
-    grayLine8.backgroundColor = grayColor.CGColor;
-    [_chemicalPPEView.layer addSublayer:grayLine8];
+    NSLog(@"Layers Count = %d", _chemicalPPEView.layer.sublayers.count);
     
     _samplesScrollView.contentSize = CGSizeMake(_samplesScrollView.frame.size.width, _samplesScrollView.frame.size.height + ( _flagsView.frame.origin.y + _flagsView.frame.size.height + 20.0f - _samplesScrollView.frame.size.height));
 }
@@ -496,8 +494,6 @@
 {
     [_measurementsTableView reloadData];
     
-    UIColor *grayColor = [UIColor colorWithRed:178.0f/255.0f green:178.0f/255.0f blue:178.0f/255.0f alpha:1.0f];
-
     CGRect measurementsViewFrame = _measurementsView.frame;
     measurementsViewFrame.size.height = 30.0f/*header height*/ + _measurementsArray.count/*no. of measurements*/ * 44.0f/*row height*/;
     _measurementsView.frame = measurementsViewFrame;
@@ -510,26 +506,10 @@
     totalMeasurementsViewFrame.origin.y = measurementsViewFrame.origin.y + measurementsViewFrame.size.height + 20.0f;
     _totalMeasurementsView.frame = totalMeasurementsViewFrame;
     
-    CALayer *grayLine9 = [CALayer layer];
-    grayLine9.frame = CGRectMake(170, 0, 1.0f, _measurementsView.bounds.size.height);
-    grayLine9.backgroundColor = grayColor.CGColor;
-    [_measurementsView.layer addSublayer:grayLine9];
+    [_measurementsView updateDividerLines];
     
-    CALayer *grayLine10 = [CALayer layer];
-    grayLine10.frame = CGRectMake(341, 0, 1.0f, _measurementsView.bounds.size.height);
-    grayLine10.backgroundColor = grayColor.CGColor;
-    [_measurementsView.layer addSublayer:grayLine10];
-    
-    CALayer *grayLine11 = [CALayer layer];
-    grayLine11.frame = CGRectMake(512, 0, 1.0f, _measurementsView.bounds.size.height);
-    grayLine11.backgroundColor = grayColor.CGColor;
-    [_measurementsView.layer addSublayer:grayLine11];
-    
-    CALayer *grayLine12 = [CALayer layer];
-    grayLine12.frame = CGRectMake(0, 30, _measurementsView.bounds.size.width, 1.0f);
-    grayLine12.backgroundColor = grayColor.CGColor;
-    [_measurementsView.layer addSublayer:grayLine12];
-    
+    NSLog(@"Layers Count = %d", _measurementsView.layer.sublayers.count);
+
     _measurementsScrollView.contentSize = CGSizeMake(_measurementsScrollView.frame.size.width, _measurementsScrollView.frame.size.height + ( _totalMeasurementsView.frame.origin.y + _totalMeasurementsView.frame.size.height + 20.0f - _measurementsScrollView.frame.size.height));
 }
 
@@ -638,7 +618,7 @@
             
             UIFont *font14px = [UIFont fontWithName:@"ProximaNova-Regular" size:14.0f];
             UIColor *textColor = [UIColor colorWithRed:28.0f/255.0f green:34.0f/255.0f blue:39.0f/255.0f alpha:1.0f];
-            
+
             UILabel *onTimeLabel = [[UILabel alloc] initWithFrame:CGRectMake(8, 0, 160, cell.contentView.bounds.size.height)];
             onTimeLabel.backgroundColor = [UIColor clearColor];
             onTimeLabel.font = font14px;
@@ -646,19 +626,19 @@
             onTimeLabel.text = @"12:30 pm";
             [cell.contentView addSubview:onTimeLabel];
             
-            UILabel *offTimeLabel = [[UILabel alloc] initWithFrame:CGRectMake(179, 0, 160, cell.contentView.bounds.size.height)];
-            offTimeLabel.backgroundColor = [UIColor clearColor];
-            offTimeLabel.font = font14px;
-            offTimeLabel.textColor = textColor;
-            offTimeLabel.text = @"12:40 pm";
-            [cell.contentView addSubview:offTimeLabel];
-        
-            UILabel *onFlowRateLabel = [[UILabel alloc] initWithFrame:CGRectMake(350, 0, 160, cell.contentView.bounds.size.height)];
+            UILabel *onFlowRateLabel = [[UILabel alloc] initWithFrame:CGRectMake(179, 0, 160, cell.contentView.bounds.size.height)];
             onFlowRateLabel.backgroundColor = [UIColor clearColor];
             onFlowRateLabel.font = font14px;
             onFlowRateLabel.textColor = textColor;
             onFlowRateLabel.text = @"0.5";
             [cell.contentView addSubview:onFlowRateLabel];
+            
+            UILabel *offTimeLabel = [[UILabel alloc] initWithFrame:CGRectMake(350, 0, 160, cell.contentView.bounds.size.height)];
+            offTimeLabel.backgroundColor = [UIColor clearColor];
+            offTimeLabel.font = font14px;
+            offTimeLabel.textColor = textColor;
+            offTimeLabel.text = @"12:40 pm";
+            [cell.contentView addSubview:offTimeLabel];
             
             UILabel *offFlowRateLabel = [[UILabel alloc] initWithFrame:CGRectMake(521, 0, 160, cell.contentView.bounds.size.height)];
             offFlowRateLabel.backgroundColor = [UIColor clearColor];
@@ -721,7 +701,32 @@
 
 #pragma mark - MeasurementAddEditProtocol
 
+-(void)measurementsAddPressed
+{
+    [self removeMeasurentEditView];
+    [_measurementsArray addObject:@"m1"];
+    [self updateMeasurementTable];
+}
+
 -(void)measurementsDonePressed
+{
+    [self removeMeasurentEditView];
+    [self updateMeasurementTable];
+}
+
+-(void)measurementsCancelPressed
+{
+    [self removeMeasurentEditView];
+}
+
+-(void)measurementsDeletePressed
+{
+    [self removeMeasurentEditView];
+    [_measurementsArray removeLastObject];
+    [self updateMeasurementTable];
+}
+
+-(void)removeMeasurentEditView
 {
     UIView *dullView = (UIView*)[self.view viewWithTag:999];
     if(!dullView)
@@ -734,21 +739,6 @@
                      completion:^(BOOL finished) {
                          [dullView removeFromSuperview];
                      }];
-    
-    [_measurementsArray addObject:@"m1"];
-    [self updateMeasurementTable];
-}
-
--(void)measurementsCancelPressed
-{
-    UIView *dullView = (UIView*)[self.view viewWithTag:999];
-    [dullView removeFromSuperview];
-    dullView = nil;
-}
-
--(void)measurementsDeletePressed
-{
-    
 }
 
 #pragma mark - Keyboard

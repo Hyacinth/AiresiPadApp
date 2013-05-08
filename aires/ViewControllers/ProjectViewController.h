@@ -12,6 +12,7 @@
 #import "PreviewReportViewController.h"
 #import "MeasurementAddEditView.h"
 #import "Project.h"
+#import "TabularColumnView.h"
 
 @class ProjectDetailView;
 
@@ -65,7 +66,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *commentsLabel;
 @property (weak, nonatomic) IBOutlet UILabel *commentsValueLabel;
 
-@property (weak, nonatomic) IBOutlet UIView *chemicalPPEView;
+@property (weak, nonatomic) IBOutlet TabularColumnView *chemicalPPEView;
 
 @property (weak, nonatomic) IBOutlet UIButton *btnTWACheck;
 @property (weak, nonatomic) IBOutlet UIButton *btnSTELCheck;
@@ -77,7 +78,7 @@
 @property (weak, nonatomic) IBOutlet UITableView *ppeTableView;
 @property (weak, nonatomic) IBOutlet UIView *flagsView;
 @property (weak, nonatomic) IBOutlet UIScrollView *measurementsScrollView;
-@property (weak, nonatomic) IBOutlet UIView *measurementsView;
+@property (weak, nonatomic) IBOutlet TabularColumnView *measurementsView;
 @property (weak, nonatomic) IBOutlet UITableView *measurementsTableView;
 @property (weak, nonatomic) IBOutlet UILabel *onTimeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *offTimeLabel;

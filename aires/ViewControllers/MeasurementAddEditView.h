@@ -35,6 +35,7 @@
 
 @protocol MeasurementAddEditProtocol <NSObject>
 
+-(void)measurementsAddPressed;
 -(void)measurementsDonePressed;
 -(void)measurementsCancelPressed;
 -(void)measurementsDeletePressed;

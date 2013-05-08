@@ -20,6 +20,7 @@
 		84D2E82217338DAF00E3704E /* ico_collapse_up_pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 84D2E82017338DAF00E3704E /* ico_collapse_up_pressed.png */; };
 		84D2E82517338DBF00E3704E /* ico_collapse_up_nor@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84D2E82317338DBF00E3704E /* ico_collapse_up_nor@2x.png */; };
 		84D2E82617338DBF00E3704E /* ico_collapse_up_pressed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84D2E82417338DBF00E3704E /* ico_collapse_up_pressed@2x.png */; };
+		84E6AFEF173A29CB00BE8EB6 /* TabularColumnView.m in Sources */ = {isa = PBXBuildFile; fileRef = 84E6AFEE173A29CB00BE8EB6 /* TabularColumnView.m */; };
 		84EBF217172E92D700986667 /* ProjectDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 84EBF216172E92D600986667 /* ProjectDetailView.m */; };
 		84ECA92117311A8C00CAAE51 /* SampleTileView.m in Sources */ = {isa = PBXBuildFile; fileRef = 84ECA92017311A8C00CAAE51 /* SampleTileView.m */; };
 		84F623FA1727DAD700FD5D7E /* Default-Landscape@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 84F623F81727DAD700FD5D7E /* Default-Landscape@2x~ipad.png */; };
@@ -244,6 +245,8 @@
 		84D2E82017338DAF00E3704E /* ico_collapse_up_pressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ico_collapse_up_pressed.png; sourceTree = "<group>"; };
 		84D2E82317338DBF00E3704E /* ico_collapse_up_nor@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ico_collapse_up_nor@2x.png"; sourceTree = "<group>"; };
 		84D2E82417338DBF00E3704E /* ico_collapse_up_pressed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ico_collapse_up_pressed@2x.png"; sourceTree = "<group>"; };
+		84E6AFED173A29CB00BE8EB6 /* TabularColumnView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TabularColumnView.h; sourceTree = "<group>"; };
+		84E6AFEE173A29CB00BE8EB6 /* TabularColumnView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TabularColumnView.m; sourceTree = "<group>"; };
 		84EBF215172E92D600986667 /* ProjectDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProjectDetailView.h; sourceTree = "<group>"; };
 		84EBF216172E92D600986667 /* ProjectDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProjectDetailView.m; sourceTree = "<group>"; };
 		84ECA91F17311A8B00CAAE51 /* SampleTileView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SampleTileView.h; sourceTree = "<group>"; };
@@ -730,6 +733,8 @@
 				98B4250F172689A000D15811 /* ProjectViewController.h */,
 				98B42510172689A100D15811 /* ProjectViewController.m */,
 				84A7353F1737D0F0000BD714 /* ProjectViewController.xib */,
+				84E6AFED173A29CB00BE8EB6 /* TabularColumnView.h */,
+				84E6AFEE173A29CB00BE8EB6 /* TabularColumnView.m */,
 				84812C781739272A00A3D5F1 /* MeasurementAddEditView.h */,
 				84812C791739272A00A3D5F1 /* MeasurementAddEditView.m */,
 				84812C7A1739272A00A3D5F1 /* MeasurementAddEditView.xib */,
@@ -1222,6 +1227,7 @@
 				989354BB173908870048C670 /* Contact.m in Sources */,
 				84812C7E1739272A00A3D5F1 /* MeasurementAddEditView.m in Sources */,
 				84812C801739272A00A3D5F1 /* TimePickerViewController.m in Sources */,
+				84E6AFEF173A29CB00BE8EB6 /* TabularColumnView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
