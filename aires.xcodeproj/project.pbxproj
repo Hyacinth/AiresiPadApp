@@ -23,6 +23,7 @@
 		84E6AFEF173A29CB00BE8EB6 /* TabularColumnView.m in Sources */ = {isa = PBXBuildFile; fileRef = 84E6AFEE173A29CB00BE8EB6 /* TabularColumnView.m */; };
 		84E6AFF4173A54F800BE8EB6 /* TextEditView.m in Sources */ = {isa = PBXBuildFile; fileRef = 84E6AFF2173A54F700BE8EB6 /* TextEditView.m */; };
 		84E6AFF5173A54F800BE8EB6 /* TextEditView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84E6AFF3173A54F700BE8EB6 /* TextEditView.xib */; };
+		84E6AFF8173A721B00BE8EB6 /* SampleType.m in Sources */ = {isa = PBXBuildFile; fileRef = 84E6AFF7173A721B00BE8EB6 /* SampleType.m */; };
 		84EBF217172E92D700986667 /* ProjectDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 84EBF216172E92D600986667 /* ProjectDetailView.m */; };
 		84ECA92117311A8C00CAAE51 /* SampleTileView.m in Sources */ = {isa = PBXBuildFile; fileRef = 84ECA92017311A8C00CAAE51 /* SampleTileView.m */; };
 		84F623FA1727DAD700FD5D7E /* Default-Landscape@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 84F623F81727DAD700FD5D7E /* Default-Landscape@2x~ipad.png */; };
@@ -252,6 +253,8 @@
 		84E6AFF1173A54F700BE8EB6 /* TextEditView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextEditView.h; sourceTree = "<group>"; };
 		84E6AFF2173A54F700BE8EB6 /* TextEditView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextEditView.m; sourceTree = "<group>"; };
 		84E6AFF3173A54F700BE8EB6 /* TextEditView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TextEditView.xib; sourceTree = "<group>"; };
+		84E6AFF6173A721B00BE8EB6 /* SampleType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SampleType.h; sourceTree = "<group>"; };
+		84E6AFF7173A721B00BE8EB6 /* SampleType.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SampleType.m; sourceTree = "<group>"; };
 		84EBF215172E92D600986667 /* ProjectDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProjectDetailView.h; sourceTree = "<group>"; };
 		84EBF216172E92D600986667 /* ProjectDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProjectDetailView.m; sourceTree = "<group>"; };
 		84ECA91F17311A8B00CAAE51 /* SampleTileView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SampleTileView.h; sourceTree = "<group>"; };
@@ -312,7 +315,6 @@
 		988701681725325E007FB144 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		9887016A172533D0007FB144 /* PersistentStoreManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersistentStoreManager.h; sourceTree = "<group>"; };
 		9887016B172533D1007FB144 /* PersistentStoreManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersistentStoreManager.m; sourceTree = "<group>"; };
-		989354B21738DBE90048C670 /* File */ = {isa = PBXFileReference; lastKnownFileType = text; name = File; path = ../../../Desktop/File; sourceTree = "<group>"; };
 		989354B3173908810048C670 /* Client.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Client.h; sourceTree = "<group>"; };
 		989354B4173908820048C670 /* Client.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Client.m; sourceTree = "<group>"; };
 		989354B6173908840048C670 /* Lab.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Lab.h; sourceTree = "<group>"; };
@@ -662,6 +664,8 @@
 				98FDD374172A9940001A9295 /* SampleMeasurement.m */,
 				98DDACA5172E48F10031308B /* SampleProtectionEquipment.h */,
 				98DDACA6172E48F10031308B /* SampleProtectionEquipment.m */,
+				84E6AFF6173A721B00BE8EB6 /* SampleType.h */,
+				84E6AFF7173A721B00BE8EB6 /* SampleType.m */,
 				98A7D1D3172FD0B1008794FE /* DeviceType.h */,
 				98A7D1D4172FD0B1008794FE /* DeviceType.m */,
 				989354B9173908860048C670 /* Contact.h */,
@@ -703,7 +707,6 @@
 				98E23BA7171FF4B200FFAD4A /* JSONParser.m */,
 				9887016A172533D0007FB144 /* PersistentStoreManager.h */,
 				9887016B172533D1007FB144 /* PersistentStoreManager.m */,
-				989354B21738DBE90048C670 /* File */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -1238,6 +1241,7 @@
 				84812C801739272A00A3D5F1 /* TimePickerViewController.m in Sources */,
 				84E6AFEF173A29CB00BE8EB6 /* TabularColumnView.m in Sources */,
 				84E6AFF4173A54F800BE8EB6 /* TextEditView.m in Sources */,
+				84E6AFF8173A721B00BE8EB6 /* SampleType.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
