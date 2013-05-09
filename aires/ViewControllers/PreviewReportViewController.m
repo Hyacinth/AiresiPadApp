@@ -313,11 +313,15 @@
         cell.DateSampled.text = nil;
         cell.SampleType.text = nil;
         cell.DeviceType.text = currentSample.sample_DeviceTypeName;
-        SampleMeasurement *totalMeasurement = [[[mSingleton getPersistentStoreManager] getSampleMeasurementforSample:currentSample] objectAtIndex:0];
-        cell.AirVolume.text = [totalMeasurement.sampleMeasurement_TotalVolume stringValue];
-        cell.PassiveMonitors.text = [totalMeasurement.sampleMeasurement_TotalMinutes stringValue];
-        cell.Area.text = [totalMeasurement.sampleMeasurement_TotalArea stringValue];
-        cell.AnalysisRequested.text = nil;
+        NSArray *measurementsArray = [[mSingleton getPersistentStoreManager] getSampleMeasurementforSample:currentSample];
+        if(measurementsArray && measurementsArray.count>0)
+        {
+            SampleMeasurement *totalMeasurement = [measurementsArray objectAtIndex:0];
+            cell.AirVolume.text = [totalMeasurement.sampleMeasurement_TotalVolume stringValue];
+            cell.PassiveMonitors.text = [totalMeasurement.sampleMeasurement_TotalMinutes stringValue];
+            cell.Area.text = [totalMeasurement.sampleMeasurement_TotalArea stringValue];
+            cell.AnalysisRequested.text = nil;
+        }
     }
     return cell;
 }
