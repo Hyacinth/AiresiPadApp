@@ -197,8 +197,8 @@
     [_addMesaurementButton setBackgroundImage:addMeasurementImage forState:UIControlStateNormal];
     [_addMesaurementButton.titleLabel setFont:font14px];
     
-    _measurementsArray = [[NSMutableArray alloc] initWithObjects:@"m1", @"m1", @"m1", @"m1", @"m1", @"m1",  nil];
-    [self updateMeasurementTable];
+    _measurementsArray = [[NSMutableArray alloc] init];
+    //[self updateMeasurementTable];
     
     [_btnTWACheck setSelected:NO];
     [_btnSTELCheck setSelected:NO];
@@ -533,10 +533,15 @@
     [_ppeArray removeAllObjects];
     [_ppeArray addObjectsFromArray:[[mSingleton getPersistentStoreManager] getSampleProtectionEquipmentforSample:sample]];
     
+    [_measurementsArray removeAllObjects];
+    [_measurementsArray addObjectsFromArray:[[mSingleton getPersistentStoreManager] getSampleMeasurementforSample:sample]];
+    
     [_chemicalsTableView reloadData];
     [_ppeTableView reloadData];
+    [_measurementsTableView reloadData];
     
     [self updateChemicalPPETable];
+    [self updateMeasurementTable];
 }
 
 -(void)updateNotes
@@ -759,6 +764,8 @@
             UIFont *font14px = [UIFont fontWithName:@"ProximaNova-Regular" size:14.0f];
             UIColor *textColor = [UIColor colorWithRed:28.0f/255.0f green:34.0f/255.0f blue:39.0f/255.0f alpha:1.0f];
             
+            SampleMeasurement *measurement = [_measurementsArray objectAtIndex:indexPath.row];
+            
             UILabel *onTimeLabel = [[UILabel alloc] initWithFrame:CGRectMake(8, 0, 160, cell.contentView.bounds.size.height)];
             onTimeLabel.tag = MEASUREMENT_ONTIME_TAG;
             onTimeLabel.backgroundColor = [UIColor clearColor];
@@ -772,7 +779,7 @@
             onFlowRateLabel.backgroundColor = [UIColor clearColor];
             onFlowRateLabel.font = font14px;
             onFlowRateLabel.textColor = textColor;
-            onFlowRateLabel.text = @"0.5";
+            onFlowRateLabel.text = [measurement.sampleMeasurement_OnFlowRate stringValue];
             [cell.contentView addSubview:onFlowRateLabel];
             
             UILabel *offTimeLabel = [[UILabel alloc] initWithFrame:CGRectMake(350, 0, 160, cell.contentView.bounds.size.height)];
@@ -788,19 +795,21 @@
             offFlowRateLabel.backgroundColor = [UIColor clearColor];
             offFlowRateLabel.font = font14px;
             offFlowRateLabel.textColor = textColor;
-            offFlowRateLabel.text = @"0.75";
+            offFlowRateLabel.text = [measurement.sampleMeasurement_OffFlowRate stringValue];
             [cell.contentView addSubview:offFlowRateLabel];
         }
         else
         {
+            SampleMeasurement *measurement = [_measurementsArray objectAtIndex:indexPath.row];
+            
             UILabel *onTimeLabel = (UILabel*)[cell.contentView viewWithTag:MEASUREMENT_ONTIME_TAG];
             onTimeLabel.text = @"12:30 pm";
             UILabel *onFlowRateLabel = (UILabel*)[cell.contentView viewWithTag:MEASUREMENT_ONFLOWRATE_TAG];
-            onFlowRateLabel.text = @"0.5";
+            onFlowRateLabel.text = [measurement.sampleMeasurement_OnFlowRate stringValue];
             UILabel *offTimeLabel = (UILabel*)[cell.contentView viewWithTag:MEASUREMENT_OFFTIME_TAG];
             offTimeLabel.text = @"12:40 pm";
             UILabel *offFlowRateLabel = (UILabel*)[cell.contentView viewWithTag:MEASUREMENT_OFFFLOWRATE_TAG];
-            offFlowRateLabel.text = @"0.75";
+            offFlowRateLabel.text = [measurement.sampleMeasurement_OffFlowRate stringValue];
         }
         return cell;
     }
@@ -890,7 +899,11 @@
 -(void)measurementsAddPressed
 {
     [self removeMeasurementEditView];
-    [_measurementsArray addObject:@"m1"];
+    
+    SampleMeasurement *sampleMeasurement = [[SampleMeasurement alloc] init];
+    //sampleMeasurement.sampleMeasurement_OnTime = [NSNUmber numberWith]
+    [_measurementsArray addObject:sampleMeasurement];
+    [_measurementsTableView reloadData];
     [self updateMeasurementTable];
     
     CGPoint bottomOffset = CGPointMake(0, _measurementsScrollView.contentSize.height - _measurementsScrollView.bounds.size.height);
