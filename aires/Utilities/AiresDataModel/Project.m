@@ -45,5 +45,7 @@
 @dynamic airesClient;
 @dynamic airesContact;
 @dynamic airesLab;
+@dynamic project_TurnAroundTimeId;
+@dynamic userProjects;
 
 @end

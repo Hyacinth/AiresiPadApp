@@ -19,5 +19,6 @@
 @property (nonatomic, retain) NSString * contentType;
 @property (nonatomic, retain) NSNumber *deleted;
 @property (nonatomic, retain) NSNumber * sampleID;
+@property (nonatomic, retain) NSNumber * samplePPEId;
 
 @end

@@ -18,5 +18,6 @@
 @dynamic contentType;
 @dynamic deleted;
 @dynamic sampleID;
+@dynamic samplePPEId;
 
 @end

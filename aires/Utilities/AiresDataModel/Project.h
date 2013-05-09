@@ -19,7 +19,7 @@
 @property (nonatomic, retain) NSString * project_ContactLastName;
 @property (nonatomic, retain) NSString * project_ContactPhoneNumber;
 @property (nonatomic, retain) NSString * project_ContactEmail;
-@property (nonatomic, retain) NSDate *   project_DateOnsite;
+@property (nonatomic, retain) NSString * project_DateOnsite;
 @property (nonatomic, retain) NSString * project_LabEmail;
 @property (nonatomic, retain) NSString * project_LabName;
 @property (nonatomic, retain) NSString * project_LocationAddress;
@@ -38,6 +38,8 @@
 @property (nonatomic, retain) NSNumber * contactID;
 @property (nonatomic, retain) NSString * project_createdOn;
 @property (nonatomic, retain) NSNumber * consultantId;
+@property (nonatomic, retain) NSNumber * project_TurnAroundTimeId;
+@property (nonatomic, retain) NSString * userProjects;
 
 @property (nonatomic, retain) NSSet *airesSample;
 @property (nonatomic, retain) User *fromUser;

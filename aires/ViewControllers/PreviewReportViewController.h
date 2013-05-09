@@ -18,7 +18,7 @@
 //Line drawing
 #define kLineWidth              1.0
 
-@interface PreviewReportViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, MFMailComposeViewControllerDelegate>
+@interface PreviewReportViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, MFMailComposeViewControllerDelegate, UIAlertViewDelegate>
 {
     UIFont *font12Regular;
     UIFont *font14Regular;
@@ -32,6 +32,8 @@
     NSArray *samplesArray;
 
     CGSize pageSize;
+    UIAlertView *noNetworkAlert;
+    UIAlertView *projectResultAlert;
 }
 
 @property (strong, nonatomic) Project *currentProject;
@@ -54,6 +56,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *projectNameLabel;
 @property (strong, nonatomic) IBOutlet UILabel *projectDescLabel;
 @property (strong, nonatomic) IBOutlet UITableView *projectDetailsTable;
+@property (retain, nonatomic) IBOutlet UIScrollView *loadingView;
 
 -(void)updateReport:(Project *)project;
 - (IBAction)onSendEmail:(id)sender;

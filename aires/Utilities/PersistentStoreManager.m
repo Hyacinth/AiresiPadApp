@@ -263,7 +263,7 @@
             if (![[contact valueForKey:@"Email"] isKindOfClass:[NSNull class]])
                 mProject.project_ContactEmail = [contact objectForKey:@"Email"];
             if (![[dict valueForKey:@"DateOnsite"] isKindOfClass:[NSNull class]])
-                mProject.project_DateOnsite = [contact objectForKey:@"DateOnsite"];
+                mProject.project_DateOnsite = [dict objectForKey:@"DateOnsite"];
             if (![[lab valueForKey:@"LabEmail"] isKindOfClass:[NSNull class]])
                 mProject.project_LabEmail = [lab objectForKey:@"LabEmail"];
             if (![[lab valueForKey:@"LabName"] isKindOfClass:[NSNull class]])
@@ -287,18 +287,24 @@
             if (![[dict valueForKey:@"ProjectId"] isKindOfClass:[NSNull class]])
                 mProject.projectID = (NSNumber *)[dict objectForKey:@"ProjectId"] ;
             if (![[dict valueForKey:@"ClientId"] isKindOfClass:[NSNull class]])
-                mProject.projectID = (NSNumber *)[dict objectForKey:@"ClientId"] ;
+                mProject.clientID = (NSNumber *)[dict objectForKey:@"ClientId"] ;
             if (![[dict valueForKey:@"LabId"] isKindOfClass:[NSNull class]])
-                mProject.projectID = (NSNumber *)[dict objectForKey:@"LabId"] ;
+                mProject.labID = (NSNumber *)[dict objectForKey:@"LabId"] ;
             if (![[dict valueForKey:@"QCPerson"] isKindOfClass:[NSNull class]])
                 mProject.project_QCPerson = [dict objectForKey:@"QCPerson"];
             if (![[dict valueForKey:@"ContactId"] isKindOfClass:[NSNull class]])
-                mProject.projectID = (NSNumber *)[dict objectForKey:@"ContactId"] ;
+                mProject.contactID = (NSNumber *)[dict objectForKey:@"ContactId"] ;
             if (![[dict valueForKey:@"CreatedBy"] isKindOfClass:[NSNull class]])
                 mProject.project_CreatedBy = [dict objectForKey:@"CreatedBy"];
             if (![[dict valueForKey:@"CreatedOn"] isKindOfClass:[NSNull class]])
                 mProject.project_createdOn = [dict objectForKey:@"CreatedOn"] ;
-
+            if (![[dict valueForKey:@"TurnaroundTimeId"] isKindOfClass:[NSNull class]])
+                mProject.project_TurnAroundTimeId = [dict objectForKey:@"TurnaroundTimeId"] ;
+            if (![[dict valueForKey:@"ConsultantId"] isKindOfClass:[NSNull class]])
+                mProject.consultantId = [dict objectForKey:@"ConsultantId"] ;
+            
+            mProject.userProjects = @"";
+            
             [[self getAiresUser] addAiresProjectObject:mProject];
             [[self mainContext] save:nil];
             
@@ -323,14 +329,14 @@
                 mContact.contactID = [contact objectForKey:@"ContactId"];
             if (![[contact valueForKey:@"ClientId"] isKindOfClass:[NSNull class]])
                 mContact.contact_ClientId = [contact objectForKey:@"ClientId"];
-           
+            
             mProject.airesContact = mContact;
             [[self mainContext] save:nil];
-
+            
             //Save Client details
             Client *mClient = [NSEntityDescription
-                                 insertNewObjectForEntityForName:@"Client"
-                                 inManagedObjectContext:[self mainContext]];
+                               insertNewObjectForEntityForName:@"Client"
+                               inManagedObjectContext:[self mainContext]];
             
             if (![[client valueForKey:@"ClientCity"] isKindOfClass:[NSNull class]])
                 mClient.client_City = [client objectForKey:@"ClientCity"];
@@ -345,11 +351,11 @@
             
             mProject.airesClient = mClient;
             [[self mainContext] save:nil];
-
+            
             //Save Lab details
             Lab *mLab = [NSEntityDescription
-                               insertNewObjectForEntityForName:@"Lab"
-                               inManagedObjectContext:[self mainContext]];
+                         insertNewObjectForEntityForName:@"Lab"
+                         inManagedObjectContext:[self mainContext]];
             
             if (![[lab valueForKey:@"LabEmail"] isKindOfClass:[NSNull class]])
                 mLab.lab_labEmail = [lab objectForKey:@"LabEmail"];
@@ -359,10 +365,10 @@
                 mLab.labID = (NSNumber *)[lab objectForKey:@"LabId"];
             if (![[lab valueForKey:@"LabName"] isKindOfClass:[NSNull class]])
                 mLab.lab_LabName = [lab objectForKey:@"LabName"];
-
+            
             mProject.airesLab = mLab;
             [[self mainContext] save:nil];
-
+            
             NSArray *Samples = [dict objectForKey:@"Samples"];
             [self storeSampleDetails:Samples forProject:mProject];
         }
@@ -431,9 +437,11 @@
         if (![[dict valueForKey:@"PPEId"] isKindOfClass:[NSNull class]])
             mSample.ppeID = [dict objectForKey:@"PPEId"];
         if (![[dict valueForKey:@"ProjectId"] isKindOfClass:[NSNull class]])
-            mSample.projectId = [dict objectForKey:@"SampleId"];
+            mSample.projectId = [dict objectForKey:@"ProjectId"];
+        if (![[dict valueForKey:@"SampleId"] isKindOfClass:[NSNull class]])
+            mSample.sampleID = [dict objectForKey:@"SampleId"];
 
-                
+        
         [project addAiresSampleObject:mSample];
         [[self mainContext] save:nil];
         
@@ -450,7 +458,7 @@
         
         mSample.airesSampleType = mSampleType;
         [[self mainContext] save:nil];
-
+        
         NSArray *SampleChemicals = [dict objectForKey:@"SampleChemicals"];
         [self storeSampleChemicalDetails:SampleChemicals forSample:mSample];
         
@@ -508,7 +516,7 @@
             mSampleChemical.sampleID = [dict objectForKey:@"SampleId"];
         if (![[dict valueForKey:@"Deleted"] isKindOfClass:[NSNull class]])
             mSampleChemical.deleted = [dict objectForKey:@"Deleted"];
-
+        
         [sample addAiresSampleChemicalObject:mSampleChemical];
         [[self mainContext] save:nil];
     }
@@ -557,7 +565,7 @@
             mSampleMeasurement.sampleID = [dict objectForKey:@"SampleId"];
         if (![[dict valueForKey:@"Deleted"] isKindOfClass:[NSNull class]])
             mSampleMeasurement.deleted = [dict objectForKey:@"Deleted"];
-
+        
         [sample addAiresSampleMeasurementObject:mSampleMeasurement];
         [[self mainContext] save:nil];
     }
@@ -594,8 +602,10 @@
             mSampleProtectionEquipment.sampleProtectionEquipmentID = [dict valueForKey:@"PPEId"];
         if (![[dict valueForKey:@"Deleted"] isKindOfClass:[NSNull class]])
             mSampleProtectionEquipment.deleted = [dict objectForKey:@"Deleted"];
-        if (![[dict valueForKey:@"SampleId"] isKindOfClass:[NSNull class]])
-            mSampleProtectionEquipment.sampleID = [dict valueForKey:@"SampleId"];
+        if (![[dict valueForKey:@"SamplesId"] isKindOfClass:[NSNull class]])
+            mSampleProtectionEquipment.sampleID = [dict valueForKey:@"SamplesId"];
+        if (![[dict valueForKey:@"SamplePPEId"] isKindOfClass:[NSNull class]])
+            mSampleProtectionEquipment.SamplePPEId = [dict valueForKey:@"SamplePPEId"];
 
         [sample addAiresSampleProtectionEquipmentObject:mSampleProtectionEquipment];
         [[self mainContext] save:nil];

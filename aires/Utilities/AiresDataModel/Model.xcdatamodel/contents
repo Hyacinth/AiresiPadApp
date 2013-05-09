@@ -46,7 +46,7 @@
         <attribute name="project_ContactPhoneNumber" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="project_CreatedBy" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="project_createdOn" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="project_DateOnsite" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="project_DateOnsite" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="project_LabEmail" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="project_LabName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="project_LocationAddress" optional="YES" attributeType="String" syncable="YES"/>
@@ -58,7 +58,9 @@
         <attribute name="project_ProjectNumber" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="project_QCPerson" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="project_TurnAroundTime" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="project_TurnAroundTimeId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="projectID" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="userProjects" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="airesClient" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Client" inverseName="fromProject" inverseEntity="Client" syncable="YES"/>
         <relationship name="airesContact" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Contact" inverseName="fromProject" inverseEntity="Contact" syncable="YES"/>
         <relationship name="airesLab" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Lab" inverseName="fromProject" inverseEntity="Lab" syncable="YES"/>
@@ -120,6 +122,7 @@
         <attribute name="contentType" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="deleted" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="sampleID" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="samplePPEId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="sampleProtectionEquipment_Name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="sampleProtectionEquipmentID" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <relationship name="fromSample" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Sample" inverseName="airesSampleProtectionEquipment" inverseEntity="Sample" syncable="YES"/>
@@ -143,12 +146,12 @@
         <element name="Contact" positionX="-4131" positionY="-247" width="128" height="193"/>
         <element name="DeviceType" positionX="-4284" positionY="-364" width="128" height="103"/>
         <element name="Lab" positionX="-4734" positionY="-270" width="128" height="118"/>
-        <element name="Project" positionX="-4491" positionY="-658" width="171" height="493"/>
+        <element name="Project" positionX="-4491" positionY="-658" width="171" height="525"/>
         <element name="Sample" positionX="-4284" positionY="-765" width="180" height="373"/>
         <element name="SampleChemical" positionX="-4050" positionY="-819" width="171" height="223"/>
         <element name="SampleMeasurement" positionX="-3960" positionY="-585" width="243" height="210"/>
-        <element name="SampleProtectionEquipment" positionX="-3888" positionY="-324" width="252" height="135"/>
-        <element name="User" positionX="-4671" positionY="-481" width="128" height="150"/>
+        <element name="SampleProtectionEquipment" positionX="-3888" positionY="-324" width="252" height="150"/>
         <element name="SampleType" positionX="-4050" positionY="-351" width="128" height="88"/>
+        <element name="User" positionX="-4671" positionY="-481" width="128" height="150"/>
     </elements>
 </model>

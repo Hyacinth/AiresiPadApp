@@ -33,3 +33,6 @@
 
 #define NOTIFICATION_FETCH_PROJECT_FAILED    @"notification_fetch_project_failed"
 #define NOTIFICATION_FETCH_PROJECT_SUCCESS   @"notification_fetch_project_success"
+
+#define NOTIFICATION_UNLOCK_PROJECT_FAILED    @"notification_unlock_project_failed"
+#define NOTIFICATION_UNLOCK_PROJECT_SUCCESS   @"notification_unlock_project_success"

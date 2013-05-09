@@ -160,15 +160,17 @@
     else
         [ProjectDetailsDict setValue:@"" forKey:@"QCPerson"];
     
-    if(proj.project_TurnAroundTime)
-        [ProjectDetailsDict setValue:proj.project_TurnAroundTime forKey:@"TurnaroundTimeId"];
+    if(proj.project_TurnAroundTimeId)
+        [ProjectDetailsDict setValue:proj.project_TurnAroundTimeId forKey:@"TurnaroundTimeId"];
     else
         [ProjectDetailsDict setValue:@"" forKey:@"TurnaroundTimeId"];
-    
+   
+    [ProjectDetailsDict setValue:@"" forKey:@"UserProjects"];
+
     if(proj.project_CompletedFlag)
-        [ProjectDetailsDict setValue:proj.project_CompletedFlag forKey:@"CompletedFlag"];
+        [ProjectDetailsDict setValue:[proj.project_CompletedFlag boolValue] ? @"TRUE" : @"FALSE" forKey:@"CompletedFlag"];
     else
-        [ProjectDetailsDict setValue:@"" forKey:@"CompletedFlag"];
+        [ProjectDetailsDict setValue:@"FALSE" forKey:@"CompletedFlag"];
     
     if(proj.project_createdOn)
         [ProjectDetailsDict setValue:proj.project_createdOn forKey:@"CreatedOn"];
@@ -425,14 +427,17 @@
                 [MeasurementDict setValue:@"" forKey:@"Volume"];
             
             if(sampMeas.deleted)
-                [MeasurementDict setValue:sampMeas.deleted forKey:@"Deleted"];
+                [MeasurementDict setValue:[sampMeas.deleted boolValue] ? @"TRUE" : @"FALSE" forKey:@"Deleted"];
             else
-                [MeasurementDict setValue:@"" forKey:@"Deleted"];
+                [MeasurementDict setValue:@"FALSE" forKey:@"Deleted"];
             
             [MeasurementDict setValue:@"" forKey:@"Sample"];
             [measurementArray addObject:MeasurementDict];
         }
-        [SamplesDict setValue:measurementArray forKey:@"Measurements"];//Dict Array
+        if([measurementArray count] > 0)
+            [SamplesDict setValue:measurementArray forKey:@"Measurements"];//Dict Array
+        else
+            [SamplesDict setValue:@"" forKey:@"Measurements"];//Dict Array
         
         NSMutableArray *sampleChemicalArray = [[NSMutableArray alloc] init];
         NSArray *sampleChemicals = [[mSingleton getPersistentStoreManager] getSampleChemicalforSample:samp];
@@ -455,39 +460,39 @@
                 [SampleChemicalDict setValue:@"" forKey:@"ChemicalId"];
             
             if(sampChe.sampleChemical_PELTWAFlag)
-                [SampleChemicalDict setValue:sampChe.sampleChemical_PELTWAFlag forKey:@"PELTWAFlag"];
+                [SampleChemicalDict setValue:[sampChe.sampleChemical_PELTWAFlag boolValue] ? @"TRUE" : @"FALSE" forKey:@"PELTWAFlag"];
             else
-                [SampleChemicalDict setValue:@"" forKey:@"PELTWAFlag"];
+                [SampleChemicalDict setValue:@"FALSE" forKey:@"PELTWAFlag"];
             
             if(sampChe.sampleChemical_PELSTELFlag)
-                [SampleChemicalDict setValue:sampChe.sampleChemical_PELSTELFlag forKey:@"PELSTELFlag"];
+                [SampleChemicalDict setValue:[sampChe.sampleChemical_PELSTELFlag boolValue] ? @"TRUE" : @"FALSE" forKey:@"PELSTELFlag"];
             else
-                [SampleChemicalDict setValue:@"" forKey:@"PELSTELFlag"];
+                [SampleChemicalDict setValue:@"FALSE" forKey:@"PELSTELFlag"];
             
             if(sampChe.sampleChemical_PELCFlag)
-                [SampleChemicalDict setValue:sampChe.sampleChemical_PELCFlag forKey:@"PELCFlag"];
+                [SampleChemicalDict setValue:[sampChe.sampleChemical_PELCFlag boolValue] ? @"TRUE" : @"FALSE" forKey:@"PELCFlag"];
             else
-                [SampleChemicalDict setValue:@"" forKey:@"PELCFlag"];
+                [SampleChemicalDict setValue:@"FALSE" forKey:@"PELCFlag"];
             
             if(sampChe.sampleChemical_TLVTWAFlag)
-                [SampleChemicalDict setValue:sampChe.sampleChemical_TLVTWAFlag forKey:@"TLVTWAFlag"];
+                [SampleChemicalDict setValue:[sampChe.sampleChemical_TLVTWAFlag boolValue] ? @"TRUE" : @"FALSE" forKey:@"TLVTWAFlag"];
             else
-                [SampleChemicalDict setValue:@"" forKey:@"TLVTWAFlag"];
+                [SampleChemicalDict setValue:@"FALSE" forKey:@"TLVTWAFlag"];
             
             if(sampChe.sampleChemical_TLVSTELFlag)
-                [SampleChemicalDict setValue:sampChe.sampleChemical_TLVSTELFlag forKey:@"TLVSTELFlag"];
+                [SampleChemicalDict setValue:[sampChe.sampleChemical_TLVSTELFlag boolValue] ? @"TRUE" : @"FALSE" forKey:@"TLVSTELFlag"];
             else
-                [SampleChemicalDict setValue:@"" forKey:@"TLVSTELFlag"];
+                [SampleChemicalDict setValue:@"FALSE" forKey:@"TLVSTELFlag"];
             
             if(sampChe.sampleChemical_TLVCFlag)
-                [SampleChemicalDict setValue:sampChe.sampleChemical_TLVCFlag forKey:@"TLVCFlag"];
+                [SampleChemicalDict setValue:[sampChe.sampleChemical_TLVCFlag boolValue] ? @"TRUE" : @"FALSE" forKey:@"TLVCFlag"];
             else
-                [SampleChemicalDict setValue:@"" forKey:@"TLVCFlag"];
+                [SampleChemicalDict setValue:@"FALSE" forKey:@"TLVCFlag"];
             
             if(sampChe.deleted)
-                [SampleChemicalDict setValue:sampChe.deleted forKey:@"Deleted"];
+                [SampleChemicalDict setValue:[sampChe.deleted boolValue] ? @"TRUE" : @"FALSE" forKey:@"Deleted"];
             else
-                [SampleChemicalDict setValue:@"" forKey:@"Deleted"];
+                [SampleChemicalDict setValue:@"FALSE" forKey:@"Deleted"];
             
             if(sampChe.sampleChemical_Name)
                 [SampleChemicalDict setValue:sampChe.sampleChemical_Name forKey:@"Chemical"];
@@ -498,7 +503,10 @@
             [SampleChemicalDict setValue:@"" forKey:@"Sample"];
             [sampleChemicalArray addObject:SampleChemicalDict];
         }
-        [SamplesDict setValue:sampleChemicalArray forKey:@"SampleChemicals"];//Dict Array
+        if([sampleChemicalArray count] > 0)
+            [SamplesDict setValue:sampleChemicalArray forKey:@"SampleChemicals"];//Dict Array
+        else
+            [SamplesDict setValue:@"" forKey:@"SampleChemicals"];//Dict Array
         
         NSMutableArray *samplePPEArray = [[NSMutableArray alloc] init];
         NSArray *samplePPE = [[mSingleton getPersistentStoreManager] getSampleProtectionEquipmentforSample:samp];
@@ -506,9 +514,9 @@
         {
             NSMutableDictionary *SamplePPEDict = [[NSMutableDictionary alloc] init];
             if(sampPPE.sampleProtectionEquipmentID)
-                [SamplePPEDict setValue:sampPPE.sampleProtectionEquipmentID forKey:@"SamplePPEId"];
+                [SamplePPEDict setValue:sampPPE.sampleProtectionEquipmentID forKey:@"PPEId"];
             else
-                [SamplePPEDict setValue:@"" forKey:@"SamplePPEId"];
+                [SamplePPEDict setValue:@"" forKey:@"PPEId"];
             
             if(sampPPE.sampleID)
                 [SamplePPEDict setValue:sampPPE.sampleID forKey:@"SamplesId"];
@@ -521,22 +529,29 @@
                 [SamplePPEDict setValue:@"" forKey:@"PPEId"];
             
             if(sampPPE.deleted)
-                [SamplePPEDict setValue:sampPPE.deleted forKey:@"Deleted"];
+                [SamplePPEDict setValue:[sampPPE.deleted boolValue] ? @"TRUE" : @"FALSE" forKey:@"Deleted"];
             else
-                [SamplePPEDict setValue:@"" forKey:@"Deleted"];
+                [SamplePPEDict setValue:@"FALSE" forKey:@"Deleted"];
             
             if(sampPPE.sampleProtectionEquipment_Name)
                 [SamplePPEDict setValue:sampPPE.sampleProtectionEquipment_Name forKey:@"PPE"];
             else
                 [SamplePPEDict setValue:@"" forKey:@"PPE"];
             
+            if(sampPPE.samplePPEId)
+                [SamplePPEDict setValue:sampPPE.samplePPEId forKey:@"SamplePPEId"];
+            else
+                [SamplePPEDict setValue:@"" forKey:@"SamplePPEId"];
+            
             [SamplePPEDict setValue:@"" forKey:@"Sample"];
             [samplePPEArray addObject:SamplePPEDict];
         }
-        [SamplesDict setValue:samplePPEArray forKey:@"SamplePPEs"];//Dict Array
+        if([samplePPEArray count] >0 )
+            [SamplesDict setValue:samplePPEArray forKey:@"SamplePPEs"];//Dict Array
+        else
+            [SamplesDict setValue:@"" forKey:@"SamplePPEs"];//Dict Array
         
         SampleType *sampType = samp.airesSampleType;
-        NSLog(@"ST:%@",sampType.sampleTypeName);
         NSMutableDictionary *SampleTypeDict = [[NSMutableDictionary alloc] init];
         if(sampType.sampleTypeID)
             [SampleTypeDict setValue:sampType.sampleTypeID forKey:@"SampleTypeId"];
@@ -553,37 +568,113 @@
             [SamplesDict setValue:SampleTypeDict forKey:@"SampleType"];//Dictionary
         [samplesArray addObject:SamplesDict];
     }
-    [ProjectDetailsDict setValue:samplesArray forKey:@"Samples"];//Dict Array
+    if([samplesArray count] > 0)
+        [ProjectDetailsDict setValue:samplesArray forKey:@"Samples"];//Dict Array
+    else
+        [ProjectDetailsDict setValue:@"" forKey:@"Samples"];//Dict Array
+    
     [jsonDict setValue:ProjectDetailsDict forKey:@"ProjectDetails"];
-    NSData *jsonData = [[CJSONSerializer serializer] serializeDictionary:jsonDict];
+    NSLog(@"%@",[[CJSONSerializer serializer] serializeDictionary:jsonDict]);
+    NSData *jsonData = [[CJSONDataSerializer serializer] serializeDictionary:jsonDict];
     return jsonData;
 }
 
 -(NSData *)JsonToUnlockProject:(Project *)proj
 {
     NSMutableDictionary *jsonDict = [[NSMutableDictionary alloc] init];
-    [jsonDict setValue:proj.projectID forKey:@"ProjectId"];
-    [jsonDict setValue:proj.clientID forKey:@"ClientId"];
-    [jsonDict setValue:proj.contactID forKey:@"ContactId"];
-    [jsonDict setValue:proj.project_ProjectNumber forKey:@"ProjectNumber"];
-    [jsonDict setValue:proj.project_ProjectDescription forKey:@"ProjectDescription"];
-    [jsonDict setValue:proj.project_DateOnsite forKey:@"DateOnsite"];
-    [jsonDict setValue:proj.project_LocationAddress forKey:@"LocationAddress"];
-    [jsonDict setValue:proj.project_LocationAddress2 forKey:@"LocationAddress2"];
-    [jsonDict setValue:proj.project_LocationCity forKey:@"LocationCity"];
-    [jsonDict setValue:proj.project_LocationState forKey:@"LocationState"];
-    [jsonDict setValue:proj.project_LocationPostalCode forKey:@"LocationPostalCode"];
-    [jsonDict setValue:proj.consultantId forKey:@"ConsultantId"];
-    [jsonDict setValue:proj.labID forKey:@"LabId"];
-    [jsonDict setValue:proj.project_QCPerson forKey:@"QCPerson"];
-    [jsonDict setValue:proj.project_TurnAroundTime forKey:@"TurnaroundTimeId"];
-    [jsonDict setValue:proj.project_CompletedFlag forKey:@"CompletedFlag"];
-    [jsonDict setValue:proj.project_createdOn forKey:@"CreatedOn"];
-    [jsonDict setValue:proj.project_CreatedBy forKey:@"CreatedBy"];
+    if(proj.projectID)
+        [jsonDict setValue:proj.projectID forKey:@"ProjectId"];
+    else
+        [jsonDict setValue:@"" forKey:@"ProjectId"];
     
+    if(proj.clientID)
+        [jsonDict setValue:proj.clientID forKey:@"ClientId"];
+    else
+        [jsonDict setValue:@"" forKey:@"ClientId"];
+    
+    if(proj.contactID)
+        [jsonDict setValue:proj.contactID forKey:@"ContactId"];
+    else
+        [jsonDict setValue:@"" forKey:@"ContactId"];
+    
+    if(proj.project_ProjectNumber)
+        [jsonDict setValue:proj.project_ProjectNumber forKey:@"ProjectNumber"];
+    else
+        [jsonDict setValue:@"" forKey:@"ProjectNumber"];
+    
+    if(proj.project_ProjectDescription)
+        [jsonDict setValue:proj.project_ProjectDescription forKey:@"ProjectDescription"];
+    else
+        [jsonDict setValue:@"" forKey:@"ProjectDescription"];
+    
+    if(proj.project_DateOnsite)
+        [jsonDict setValue:proj.project_DateOnsite forKey:@"DateOnsite"];
+    else
+        [jsonDict setValue:@"" forKey:@"DateOnsite"];
+    
+    if(proj.project_LocationAddress)
+        [jsonDict setValue:proj.project_LocationAddress forKey:@"LocationAddress"];
+    else
+        [jsonDict setValue:@"" forKey:@"LocationAddress"];
+    
+    if(proj.project_LocationAddress2)
+        [jsonDict setValue:proj.project_LocationAddress2 forKey:@"LocationAddress2"];
+    else
+        [jsonDict setValue:@"" forKey:@"LocationAddress2"];
+    
+    if(proj.project_LocationCity)
+        [jsonDict setValue:proj.project_LocationCity forKey:@"LocationCity"];
+    else
+        [jsonDict setValue:@"" forKey:@"LocationCity"];
+    
+    if(proj.project_LocationState)
+        [jsonDict setValue:proj.project_LocationState forKey:@"LocationState"];
+    else
+        [jsonDict setValue:@"" forKey:@"LocationState"];
+    
+    if(proj.project_LocationPostalCode)
+        [jsonDict setValue:proj.project_LocationPostalCode forKey:@"LocationPostalCode"];
+    else
+        [jsonDict setValue:@"" forKey:@"LocationPostalCode"];
+    
+    if(proj.consultantId)
+        [jsonDict setValue:proj.consultantId forKey:@"ConsultantId"];
+    else
+        [jsonDict setValue:@"" forKey:@"ConsultantId"];
+    
+    if(proj.labID)
+        [jsonDict setValue:proj.labID forKey:@"LabId"];
+    else
+        [jsonDict setValue:@"" forKey:@"LabId"];
+    
+    if(proj.project_QCPerson)
+        [jsonDict setValue:proj.project_QCPerson forKey:@"QCPerson"];
+    else
+        [jsonDict setValue:@"" forKey:@"QCPerson"];
+    
+    if(proj.project_TurnAroundTimeId)
+        [jsonDict setValue:proj.project_TurnAroundTimeId forKey:@"TurnaroundTimeId"];
+    else
+        [jsonDict setValue:@"" forKey:@"TurnaroundTimeId"];
+    
+    if(proj.project_CompletedFlag)
+        [jsonDict setValue:[proj.project_CompletedFlag boolValue] ? @"TRUE" : @"FALSE" forKey:@"CompletedFlag"];
+    else
+        [jsonDict setValue:@"FALSE" forKey:@"CompletedFlag"];
+    
+    if(proj.project_createdOn)
+        [jsonDict setValue:proj.project_createdOn forKey:@"CreatedOn"];
+    else
+        [jsonDict setValue:@"" forKey:@"CreatedOn"];
+    
+    if(proj.project_CreatedBy)
+        [jsonDict setValue:proj.project_CreatedBy forKey:@"CreatedBy"];
+    else
+        [jsonDict setValue:@"" forKey:@"CreatedBy"];
+    
+    NSLog(@"%@",[[CJSONSerializer serializer] serializeDictionary:jsonDict]);
     NSData *jsonString = [[CJSONDataSerializer serializer] serializeDictionary:jsonDict];
     return jsonString;
-    
 }
 
 @end

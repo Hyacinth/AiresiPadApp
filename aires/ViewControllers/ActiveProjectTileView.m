@@ -126,27 +126,27 @@
 	// Set the fill color to white.
 	CGContextSetFillColorWithColor(context, [UIColor colorWithRed:28.0f/255.0f green:34.0f/255.0f blue:39.0f/255.0f alpha:1.0f].CGColor);
     
-    NSDate *now = _project.project_DateOnsite;
-    NSDateFormatter *weekday = [[NSDateFormatter alloc] init];
-    [weekday setDateFormat: @"EEEE"];
+//    NSDate *now = _project.project_DateOnsite;
+//    NSDateFormatter *weekday = [[NSDateFormatter alloc] init];
+//    [weekday setDateFormat: @"EEEE"];
+//    
+//    NSDateComponents *components = [[NSCalendar currentCalendar] components:NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit fromDate:_project.project_DateOnsite];    
+//    
+//    NSInteger day = [components day];
+//    NSInteger month = [components month];
+//    NSInteger year = [components year];
     
-    NSDateComponents *components = [[NSCalendar currentCalendar] components:NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit fromDate:_project.project_DateOnsite];    
-    
-    NSInteger day = [components day];
-    NSInteger month = [components month];
-    NSInteger year = [components year];
-    
-    [[NSString stringWithFormat:@"%d", day] drawInRect:CGRectMake(40, 40, 60, 40)
+    [@"25" drawInRect:CGRectMake(40, 40, 60, 40)
              withFont:dateFont
         lineBreakMode:UILineBreakModeTailTruncation
             alignment:UITextAlignmentLeft];
     
-    [[weekday stringFromDate:now] drawInRect:CGRectMake(105, 45, 80, 20)
+    [@"Tuesday" drawInRect:CGRectMake(105, 45, 80, 20)
                    withFont:dayFont
               lineBreakMode:UILineBreakModeTailTruncation
                   alignment:UITextAlignmentLeft];
     
-    [[NSString stringWithFormat:@"%d %d", month, year] drawInRect:CGRectMake(105, 65, 80, 20)
+    [@"Jan, 2013" drawInRect:CGRectMake(105, 65, 80, 20)
                    withFont:monthYearFont
               lineBreakMode:UILineBreakModeTailTruncation
                   alignment:UITextAlignmentLeft];

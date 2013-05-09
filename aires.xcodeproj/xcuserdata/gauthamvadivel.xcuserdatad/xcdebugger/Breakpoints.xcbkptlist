@@ -4,16 +4,16 @@
    version = "1.0">
    <FileBreakpoints>
       <FileBreakpoint
-         shouldBeEnabled = "Yes"
+         shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "aires/AppDelegate/AppDelegate.m"
-         timestampString = "389598059.653111"
+         filePath = "aires/Utilities/PersistentStoreManager.m"
+         timestampString = "389775544.116227"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "45"
-         endingLineNumber = "45"
-         landmarkName = "-test"
+         startingLineNumber = "421"
+         endingLineNumber = "421"
+         landmarkName = "-storeSampleDetails:forProject:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -21,25 +21,12 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "aires/Utilities/JSONParser.m"
-         timestampString = "389619615.35537"
+         timestampString = "389784276.26093"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "236"
-         endingLineNumber = "236"
-         landmarkName = "-createJsonforProject:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "aires/Utilities/PersistentStoreManager.m"
-         timestampString = "389619760.687688"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "523"
-         endingLineNumber = "523"
-         landmarkName = "-storeSampleMeasurementDetails:forSample:"
+         startingLineNumber = "577"
+         endingLineNumber = "577"
+         landmarkName = "-JsonToPostProject:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

@@ -250,10 +250,14 @@
      {
          // Print the response body in text
          NSLog(@"REsponse: %@", [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding]);
+         [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_UNLOCK_PROJECT_SUCCESS object:self];
+
      }
                                      failure:^(AFHTTPRequestOperation *operation, NSError *error)
      {
          NSLog(@"Error: %@", error);
+         [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_UNLOCK_PROJECT_FAILED object:self];
+
          
      }];
     
