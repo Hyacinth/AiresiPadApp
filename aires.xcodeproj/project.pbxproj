@@ -24,6 +24,8 @@
 		84E6AFF4173A54F800BE8EB6 /* TextEditView.m in Sources */ = {isa = PBXBuildFile; fileRef = 84E6AFF2173A54F700BE8EB6 /* TextEditView.m */; };
 		84E6AFF5173A54F800BE8EB6 /* TextEditView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84E6AFF3173A54F700BE8EB6 /* TextEditView.xib */; };
 		84E6AFF8173A721B00BE8EB6 /* SampleType.m in Sources */ = {isa = PBXBuildFile; fileRef = 84E6AFF7173A721B00BE8EB6 /* SampleType.m */; };
+		84EBEB6A173BF26F00A8C71B /* DeviceTypesListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84EBEB68173BF26D00A8C71B /* DeviceTypesListViewController.m */; };
+		84EBEB6B173BF26F00A8C71B /* DeviceTypesListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84EBEB69173BF26E00A8C71B /* DeviceTypesListViewController.xib */; };
 		84EBF217172E92D700986667 /* ProjectDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 84EBF216172E92D600986667 /* ProjectDetailView.m */; };
 		84ECA92117311A8C00CAAE51 /* SampleTileView.m in Sources */ = {isa = PBXBuildFile; fileRef = 84ECA92017311A8C00CAAE51 /* SampleTileView.m */; };
 		84F623FA1727DAD700FD5D7E /* Default-Landscape@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 84F623F81727DAD700FD5D7E /* Default-Landscape@2x~ipad.png */; };
@@ -255,6 +257,9 @@
 		84E6AFF3173A54F700BE8EB6 /* TextEditView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TextEditView.xib; sourceTree = "<group>"; };
 		84E6AFF6173A721B00BE8EB6 /* SampleType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SampleType.h; sourceTree = "<group>"; };
 		84E6AFF7173A721B00BE8EB6 /* SampleType.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SampleType.m; sourceTree = "<group>"; };
+		84EBEB67173BF26C00A8C71B /* DeviceTypesListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceTypesListViewController.h; sourceTree = "<group>"; };
+		84EBEB68173BF26D00A8C71B /* DeviceTypesListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceTypesListViewController.m; sourceTree = "<group>"; };
+		84EBEB69173BF26E00A8C71B /* DeviceTypesListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DeviceTypesListViewController.xib; sourceTree = "<group>"; };
 		84EBF215172E92D600986667 /* ProjectDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProjectDetailView.h; sourceTree = "<group>"; };
 		84EBF216172E92D600986667 /* ProjectDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProjectDetailView.m; sourceTree = "<group>"; };
 		84ECA91F17311A8B00CAAE51 /* SampleTileView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SampleTileView.h; sourceTree = "<group>"; };
@@ -755,6 +760,9 @@
 				98B68CD81728EEF10065D411 /* DashboardSettingsViewController.h */,
 				98B68CD91728EEF10065D411 /* DashboardSettingsViewController.m */,
 				98B68CDA1728EEF10065D411 /* DashboardSettingsViewController.xib */,
+				84EBEB67173BF26C00A8C71B /* DeviceTypesListViewController.h */,
+				84EBEB68173BF26D00A8C71B /* DeviceTypesListViewController.m */,
+				84EBEB69173BF26E00A8C71B /* DeviceTypesListViewController.xib */,
 				98B0B4AD1730DB3F003FDCFD /* ChemicalsListViewController.h */,
 				98B0B4AE1730DB3F003FDCFD /* ChemicalsListViewController.m */,
 				98B0B4AF1730DB3F003FDCFD /* ChemicalsListViewController.xib */,
@@ -1167,6 +1175,7 @@
 				84812C7F1739272A00A3D5F1 /* MeasurementAddEditView.xib in Resources */,
 				84812C811739272A00A3D5F1 /* TimePickerViewController.xib in Resources */,
 				84E6AFF5173A54F800BE8EB6 /* TextEditView.xib in Resources */,
+				84EBEB6B173BF26F00A8C71B /* DeviceTypesListViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1242,6 +1251,7 @@
 				84E6AFEF173A29CB00BE8EB6 /* TabularColumnView.m in Sources */,
 				84E6AFF4173A54F800BE8EB6 /* TextEditView.m in Sources */,
 				84E6AFF8173A721B00BE8EB6 /* SampleType.m in Sources */,
+				84EBEB6A173BF26F00A8C71B /* DeviceTypesListViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

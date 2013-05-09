@@ -16,10 +16,11 @@
 #import "TabularColumnView.h"
 #import "ChemicalsListViewController.h"
 #import "PPEListViewController.h"
+#import "DeviceTypesListViewController.h"
 
 @class ProjectDetailView;
 
-@interface ProjectViewController : UIViewController<iCarouselDataSource, iCarouselDelegate, SampleTileViewDelegate, UIPopoverControllerDelegate, TextEditProtocol, MeasurementAddEditProtocol, ChemicalsListProtocol, PPEListProtocol>
+@interface ProjectViewController : UIViewController<iCarouselDataSource, iCarouselDelegate, SampleTileViewDelegate, UIPopoverControllerDelegate, TextEditProtocol, MeasurementAddEditProtocol, ChemicalsListProtocol, PPEListProtocol, DeviceTypeListProtocol>
 {
     PreviewReportViewController *mPreviewReportViewController;
     Project *currentProject;
@@ -27,6 +28,7 @@
 
 @property (retain, nonatomic) Project *currentProject;
 @property (retain, nonatomic) NSMutableArray *samplesArray;
+@property (retain, nonatomic) NSMutableArray *deviceTypesArray;
 @property (retain, nonatomic) NSMutableArray *chemicalsArray;
 @property (retain, nonatomic) NSMutableArray *ppeArray;
 @property (retain, nonatomic) NSMutableArray *measurementsArray;

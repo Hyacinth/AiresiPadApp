@@ -514,7 +514,6 @@
 												<bool key="IBUIOpaque">NO</bool>
 												<bool key="IBUIClipsSubviews">YES</bool>
 												<int key="IBUIContentMode">7</int>
-												<bool key="IBUIUserInteractionEnabled">NO</bool>
 												<string key="targetRuntimeIdentifier">IBIPadFramework</string>
 												<string key="IBUIText">Impinger</string>
 												<reference key="IBUITextColor" ref="615220879"/>
@@ -1151,7 +1150,6 @@
 								<string key="NSFrame">{{627, 6}, {70, 35}}</string>
 								<reference key="NSSuperview" ref="296255916"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<string key="targetRuntimeIdentifier">IBIPadFramework</string>

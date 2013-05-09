@@ -191,6 +191,7 @@
     
     _chemicalsArray = [[NSMutableArray alloc] init];
     _ppeArray = [[NSMutableArray alloc] init];
+    _deviceTypesArray = [[NSMutableArray alloc] init];
     
     UIImage *addMeasurementImage = [UIImage imageNamed:@"btn_contact_bg.png"];
     addMeasurementImage = [addMeasurementImage stretchableImageWithLeftCapWidth:addMeasurementImage.size.width/2 topCapHeight:addMeasurementImage.size.height/2];
@@ -211,6 +212,10 @@
     
     UITapGestureRecognizer *commentTapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(commentsTapped)];
     [_commentsValueLabel addGestureRecognizer:commentTapGesture];
+    
+    
+    UITapGestureRecognizer *deviceTypeTapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(deviceTypeTapped)];
+    [_deviceTypeValueLabel addGestureRecognizer:deviceTypeTapGesture];
 }
 
 -(void)notesTapped
@@ -223,6 +228,24 @@
 {
     bEditingNotes = NO;
     [self showTextEditView];
+}
+
+-(void)deviceTypeTapped
+{
+    DeviceTypesListViewController * deviceTypeListVC = [[DeviceTypesListViewController alloc] initWithNibName:@"DeviceTypesListViewController" bundle:nil];
+    deviceTypeListVC.listContent = _deviceTypesArray;
+    deviceTypeListVC.selectedDeviceType = nil;
+    deviceTypeListVC.delegate = self;
+    
+    if(!popover)
+        popover = [[UIPopoverController alloc] initWithContentViewController:deviceTypeListVC];
+    else
+        [popover setContentViewController:deviceTypeListVC];
+    
+    [popover setPopoverContentSize:CGSizeMake(320, 244)];
+    [popover setDelegate:self];
+    
+    [popover presentPopoverFromRect:_deviceTypeValueLabel.bounds inView:_deviceTypeValueLabel permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -536,6 +559,9 @@
     [_measurementsArray removeAllObjects];
     [_measurementsArray addObjectsFromArray:[[mSingleton getPersistentStoreManager] getSampleMeasurementforSample:sample]];
     
+    [_deviceTypesArray removeAllObjects];
+    [_deviceTypesArray addObjectsFromArray:[[mSingleton getPersistentStoreManager] getDeviceTypeList]];
+    
     [_chemicalsTableView reloadData];
     [_ppeTableView reloadData];
     [_measurementsTableView reloadData];
@@ -847,6 +873,14 @@
     [_btnCielingCheck setSelected:NO];
     
     selectedSampleNumber = number;
+}
+
+#pragma mark - DeviceTypeListProtocol
+
+-(void)deviceTypeSelected:(DeviceType *)deviceType
+{
+    _deviceTypeValueLabel.text = deviceType.deviceType_DeviceTypeName;
+    [popover dismissPopoverAnimated:YES];
 }
 
 #pragma mark - ChemicalListProtocol
