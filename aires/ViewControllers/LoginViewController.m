@@ -274,12 +274,12 @@
     
     if(flag)
     {
-        labelFrame = CGRectMake(361, 232, 302, 26);
+        labelFrame = CGRectMake(383, 236, 261, 26);
         loginFrame = CGRectMake(352, 294, 322, 88);
     }
     else
     {
-        labelFrame = CGRectMake(361, 298, 302, 26);
+        labelFrame = CGRectMake(383, 292, 261, 26);
         loginFrame = CGRectMake(352, 360, 322, 88);
     }
     
