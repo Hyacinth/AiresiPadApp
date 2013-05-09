@@ -626,8 +626,8 @@
                                            insertNewObjectForEntityForName:@"SampleChemical"
                                            inManagedObjectContext:[self mainContext]];
         
-        if (![[dict valueForKey:@"Chemical"] isKindOfClass:[NSNull class]])
-            mSampleChemical.sampleChemical_Name = [dict objectForKey:@"Chemical"];
+        if (![[dict valueForKey:@"ChemicalName"] isKindOfClass:[NSNull class]])
+            mSampleChemical.sampleChemical_Name = [dict objectForKey:@"ChemicalName"];
         if (![[dict valueForKey:@"PELCFlag"] isKindOfClass:[NSNull class]])
             mSampleChemical.sampleChemical_PELCFlag = [dict objectForKey:@"PELCFlag"];
         if (![[dict valueForKey:@"PELSTELFlag"] isKindOfClass:[NSNull class]])
