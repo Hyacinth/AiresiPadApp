@@ -176,6 +176,11 @@
 	{
         equip = [self.sectionedListContent objectAtIndexPath:indexPath];
     }
+    
+    if(_delegate && [_delegate respondsToSelector:@selector(addPPENumber:ppe:)])
+    {
+        [_delegate addPPENumber:indexPath.row+1 ppe:equip];
+    }
 }
 
 

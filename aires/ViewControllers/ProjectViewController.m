@@ -189,19 +189,8 @@
     grayLine4.backgroundColor = grayColor.CGColor;
     [_operationalAreaView.layer insertSublayer:grayLine4 atIndex:0];
     
-/*    CALayer *grayLine5 = [CALayer layer];
-    grayLine5.frame = CGRectMake(112, 0, 1.0f, _notesView.bounds.size.height);
-    grayLine5.backgroundColor = grayColor.CGColor;
-    [_notesView.layer insertSublayer:grayLine5 atIndex:0];
-    
-    CALayer *grayLine6 = [CALayer layer];
-    grayLine6.frame = CGRectMake(112, 0, 1.0f, _commentsView.bounds.size.height);
-    grayLine6.backgroundColor = grayColor.CGColor;
-    [_commentsView.layer insertSublayer:grayLine6 atIndex:0];*/
-    
-    _chemicalsArray = [[NSMutableArray alloc] initWithObjects:@"Formaldehyde", @"Methylene Chloride", @"Ethylene Oxide", @"Ethanol", @"Zinc Phosphate", @"Oxylene", nil];
-    _ppeArray = [[NSMutableArray alloc] initWithObjects:@"Safety Goggles", @"Mask", @"Apron", nil];
-    [self updateChemicalPPETable];
+    _chemicalsArray = [[NSMutableArray alloc] init];
+    _ppeArray = [[NSMutableArray alloc] init];
     
     UIImage *addMeasurementImage = [UIImage imageNamed:@"btn_contact_bg.png"];
     addMeasurementImage = [addMeasurementImage stretchableImageWithLeftCapWidth:addMeasurementImage.size.width/2 topCapHeight:addMeasurementImage.size.height/2];
@@ -424,15 +413,10 @@
 
 -(IBAction)addChemical:(id)sender
 {
-    [_chemicalsArray addObject:@"New Chemical"];
-    [self updateChemicalPPETable];
-    CGPoint bottomOffset = CGPointMake(0, _samplesScrollView.contentSize.height - _samplesScrollView.bounds.size.height);
-    [_samplesScrollView setContentOffset:bottomOffset animated:YES];
-    return;
-    
     UIButton *button = (UIButton*)sender;
     ChemicalsListViewController * chemicalListVC = [[ChemicalsListViewController alloc] initWithNibName:@"ChemicalsListViewController" bundle:nil];
     chemicalListVC.listContent = [[mSingleton getPersistentStoreManager] getChemicalList];
+    chemicalListVC.delegate = self;
     
     if(!popover)
         popover = [[UIPopoverController alloc] initWithContentViewController:chemicalListVC];
@@ -447,15 +431,11 @@
 
 -(IBAction)addPPE:(id)sender
 {
-    [_ppeArray addObject:@"New Chemical"];
-    [self updateChemicalPPETable];
-    CGPoint bottomOffset = CGPointMake(0, _samplesScrollView.contentSize.height - _samplesScrollView.bounds.size.height);
-    [_samplesScrollView setContentOffset:bottomOffset animated:YES];
-    return;
-    
     UIButton *button = (UIButton*)sender;
     PPEListViewController * ppeListVC = [[PPEListViewController alloc] initWithNibName:@"PPEListViewController" bundle:nil];
     ppeListVC.listContent = [[mSingleton getPersistentStoreManager] getProtectionEquipmentList];
+    ppeListVC.delegate = self;
+    
     if(!popover)
         popover = [[UIPopoverController alloc] initWithContentViewController:ppeListVC];
     else
@@ -547,14 +527,16 @@
     _notesValueLabel.text = sample.sample_Notes;
     _commentsValueLabel.text = sample.sample_Comments;
     
-    //[_chemicalsArray removeAllObjects];
-    //[_chemicalsArray addObjectsFromArray:[[mSingleton getPersistentStoreManager] getSampleChemicalforSample:sample]];
+    [_chemicalsArray removeAllObjects];
+    [_chemicalsArray addObjectsFromArray:[[mSingleton getPersistentStoreManager] getSampleChemicalforSample:sample]];
     
-    //[_ppeArray removeAllObjects];
-    //[_ppeArray addObjectsFromArray:[[mSingleton getPersistentStoreManager] getSampleProtectionEquipmentforSample:sample]];
+    [_ppeArray removeAllObjects];
+    [_ppeArray addObjectsFromArray:[[mSingleton getPersistentStoreManager] getSampleProtectionEquipmentforSample:sample]];
     
-    //[_chemicalsTableView reloadData];
-    //[_ppeTableView reloadData];
+    [_chemicalsTableView reloadData];
+    [_ppeTableView reloadData];
+    
+    [self updateChemicalPPETable];
 }
 
 -(void)updateNotes
@@ -625,9 +607,6 @@
 
 -(void)updateChemicalPPETable
 {
-    [_chemicalsTableView reloadData];
-    [_ppeTableView reloadData];
-    
     NSUInteger chemicalsCount = _chemicalsArray.count;
     NSUInteger ppeCount = _ppeArray.count;
     NSUInteger moreCount = chemicalsCount>ppeCount?chemicalsCount:ppeCount;
@@ -752,8 +731,16 @@
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
         }
         
-        cell.textLabel.text = (tableView==_chemicalsTableView)?[_chemicalsArray objectAtIndex:indexPath.row]:
-        [_ppeArray objectAtIndex:indexPath.row];
+        if(tableView ==_chemicalsTableView)
+        {
+            SampleChemical *sc = (SampleChemical*)[_chemicalsArray objectAtIndex:indexPath.row];
+            cell.textLabel.text = sc.sampleChemical_Name;
+        }
+        else
+        {
+            SampleProtectionEquipment *ppe = (SampleProtectionEquipment*)[_ppeArray objectAtIndex:indexPath.row];
+            cell.textLabel.text = ppe.sampleProtectionEquipment_Name;
+        }
         
         return cell;
     }
@@ -848,6 +835,32 @@
     [_btnCielingCheck setSelected:NO];
     
     selectedSampleNumber = number;
+}
+
+#pragma mark - ChemicalListProtocol
+-(void)addChemicalNumber:(NSUInteger)number chemical:(SampleChemical *)chemical
+{
+    [_chemicalsArray addObject:chemical];
+    [_chemicalsTableView reloadData];
+    [self updateChemicalPPETable];
+    
+    CGPoint bottomOffset = CGPointMake(0, _samplesScrollView.contentSize.height - _samplesScrollView.bounds.size.height);
+    [_samplesScrollView setContentOffset:bottomOffset animated:YES];
+    
+    [popover dismissPopoverAnimated:YES];
+}
+
+#pragma mark - PPEListProtocol
+-(void)addPPENumber:(NSUInteger)number ppe:(SampleProtectionEquipment *)ppe
+{
+    [_ppeArray addObject:ppe];
+    [_ppeTableView reloadData];
+    [self updateChemicalPPETable];
+    
+    CGPoint bottomOffset = CGPointMake(0, _samplesScrollView.contentSize.height - _samplesScrollView.bounds.size.height);
+    [_samplesScrollView setContentOffset:bottomOffset animated:YES];
+    
+    [popover dismissPopoverAnimated:YES];
 }
 
 #pragma mark - MeasurementAddEditProtocol

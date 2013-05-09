@@ -61,7 +61,7 @@
     NSInteger section = 0;
     for (section = 0; section < [sections count]; section++) {
         NSArray *sortedSubarray = [collation sortedArrayFromArray:[sections objectAtIndex:section]
-                                          collationStringSelector:@selector(name)];
+                                          collationStringSelector:@selector(sampleChemical_Name)];
         [sections replaceObjectAtIndex:section withObject:sortedSubarray];
     }
     sectionedListContent = sections;
@@ -175,6 +175,11 @@
 	else
 	{
         chemical = [self.sectionedListContent objectAtIndexPath:indexPath];
+    }
+    
+    if(_delegate && [_delegate respondsToSelector:@selector(addChemicalNumber:chemical:)])
+    {
+        [_delegate addChemicalNumber:indexPath.row+1 chemical:chemical];
     }
 }
 

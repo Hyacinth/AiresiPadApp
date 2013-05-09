@@ -14,10 +14,12 @@
 #import "MeasurementAddEditView.h"
 #import "Project.h"
 #import "TabularColumnView.h"
+#import "ChemicalsListViewController.h"
+#import "PPEListViewController.h"
 
 @class ProjectDetailView;
 
-@interface ProjectViewController : UIViewController<iCarouselDataSource, iCarouselDelegate, SampleTileViewDelegate, UIPopoverControllerDelegate, TextEditProtocol, MeasurementAddEditProtocol>
+@interface ProjectViewController : UIViewController<iCarouselDataSource, iCarouselDelegate, SampleTileViewDelegate, UIPopoverControllerDelegate, TextEditProtocol, MeasurementAddEditProtocol, ChemicalsListProtocol, PPEListProtocol>
 {
     PreviewReportViewController *mPreviewReportViewController;
     Project *currentProject;

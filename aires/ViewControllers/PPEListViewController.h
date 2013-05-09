@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
+@class SampleProtectionEquipment;
+@protocol PPEListProtocol;
+
 @interface PPEListViewController : UITableViewController<UISearchDisplayDelegate, UISearchBarDelegate>
 {
 	NSArray			*listContent;			// The master content.
@@ -20,6 +23,8 @@
     BOOL			searchWasActive;
 }
 
+@property (nonatomic, retain) id<PPEListProtocol> delegate;
+
 @property (nonatomic, retain) NSArray *listContent;
 @property (nonatomic, retain) NSMutableArray *filteredListContent;
 @property (nonatomic, retain, readonly) NSArray *sectionedListContent;
@@ -27,5 +32,11 @@
 @property (nonatomic, copy) NSString *savedSearchTerm;
 @property (nonatomic) NSInteger savedScopeButtonIndex;
 @property (nonatomic) BOOL searchWasActive;
+
+@end
+
+@protocol PPEListProtocol <NSObject>
+
+-(void)addPPENumber:(NSUInteger)number ppe:(SampleProtectionEquipment*)ppe;
 
 @end
