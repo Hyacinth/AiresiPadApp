@@ -542,6 +542,7 @@
     
     Sample *sample = [_samplesArray objectAtIndex:index];
     currentSample = sample;
+    _sampleIdLabel.text = [sample.sample_SampleId stringValue];
     _sampleTypeValueLabel.text = sample.sample_SampleNumber;
     _deviceTypeValueLabel.text = sample.sample_DeviceTypeName;
     _employeeNameValueLabel.text = sample.sample_EmployeeName;
