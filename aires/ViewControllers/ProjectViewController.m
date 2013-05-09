@@ -413,9 +413,9 @@
 
 -(IBAction)addChemical:(id)sender
 {
-    UIButton *button = (UIButton*)sender;
     ChemicalsListViewController * chemicalListVC = [[ChemicalsListViewController alloc] initWithNibName:@"ChemicalsListViewController" bundle:nil];
     chemicalListVC.listContent = [[mSingleton getPersistentStoreManager] getChemicalList];
+    chemicalListVC.selectedContent = _chemicalsArray;
     chemicalListVC.delegate = self;
     
     if(!popover)
@@ -426,14 +426,14 @@
     [popover setPopoverContentSize:CGSizeMake(320, 500)];
     [popover setDelegate:self];
     
-    [popover presentPopoverFromRect:button.bounds inView:button permittedArrowDirections:UIPopoverArrowDirectionLeft animated:YES];
+    [popover presentPopoverFromRect:_chemicalsTableView.bounds inView:_chemicalsTableView permittedArrowDirections:UIPopoverArrowDirectionLeft animated:YES];
 }
 
 -(IBAction)addPPE:(id)sender
 {
-    UIButton *button = (UIButton*)sender;
     PPEListViewController * ppeListVC = [[PPEListViewController alloc] initWithNibName:@"PPEListViewController" bundle:nil];
     ppeListVC.listContent = [[mSingleton getPersistentStoreManager] getProtectionEquipmentList];
+    ppeListVC.selectedContent = _ppeArray;
     ppeListVC.delegate = self;
     
     if(!popover)
@@ -441,10 +441,10 @@
     else
         [popover setContentViewController:ppeListVC];
     
-    [popover setPopoverContentSize:CGSizeMake(320, 300)];
+    [popover setPopoverContentSize:CGSizeMake(320, 500)];
     [popover setDelegate:self];
     
-    [popover presentPopoverFromRect:button.bounds inView:button permittedArrowDirections:UIPopoverArrowDirectionDown animated:YES];
+    [popover presentPopoverFromRect:_ppeTableView.bounds inView:_ppeTableView permittedArrowDirections:UIPopoverArrowDirectionRight animated:YES];
 }
 
 -(IBAction)addMeasurement:(id)sender
@@ -850,6 +850,19 @@
 }
 
 #pragma mark - ChemicalListProtocol
+
+-(void)chemicalsListBackPressed
+{
+    [popover dismissPopoverAnimated:YES];
+}
+
+-(void)selectedChemicals:(NSArray *)array
+{
+    [_chemicalsTableView reloadData];
+    [self updateChemicalPPETable];
+    [popover dismissPopoverAnimated:YES];
+}
+
 -(void)addChemicalNumber:(NSUInteger)number chemical:(SampleChemical *)chemical
 {
     [_chemicalsArray addObject:chemical];
@@ -863,6 +876,19 @@
 }
 
 #pragma mark - PPEListProtocol
+
+-(void)ppeListBackPressed
+{
+    [popover dismissPopoverAnimated:YES];
+}
+
+-(void)selectedPPE:(NSArray *)array
+{
+    [_ppeTableView reloadData];
+    [self updateChemicalPPETable];
+    [popover dismissPopoverAnimated:YES];
+}
+
 -(void)addPPENumber:(NSUInteger)number ppe:(SampleProtectionEquipment *)ppe
 {
     [_ppeArray addObject:ppe];

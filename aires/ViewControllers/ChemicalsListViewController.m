@@ -71,9 +71,7 @@
 #pragma mark Lifecycle methods
 
 - (void)viewDidLoad
-{
-    [self setTitle:@"Choose a Chemical"];
-    
+{   
 	// create a filtered list that will contain products for the search results table.
 	self.filteredListContent = [NSMutableArray arrayWithCapacity:[self.listContent count]];
 	
@@ -87,19 +85,61 @@
         self.savedSearchTerm = nil;
     }
 	
-	[self.tableView reloadData];
-	self.tableView.scrollEnabled = YES;
+	[_chemicalsTableView reloadData];
+    
+    UIImage *bgimage = [UIImage imageNamed:@"btn_navbar_nor.png"];
+	bgimage = [bgimage stretchableImageWithLeftCapWidth:bgimage.size.width/2 topCapHeight:bgimage.size.height/2];
+    [_doneButton setBackgroundImage:bgimage forState:UIControlStateNormal];
+    
+    bgimage = [UIImage imageNamed:@"btn_navbar_pressed.png"];
+	bgimage = [bgimage stretchableImageWithLeftCapWidth:bgimage.size.width/2 topCapHeight:bgimage.size.height/2];
+    [_doneButton setBackgroundImage:bgimage forState:UIControlStateHighlighted];
+    
+    bgimage = [UIImage imageNamed:@"navbar_back_nor.png"];
+    bgimage = [bgimage stretchableImageWithLeftCapWidth:bgimage.size.width/2 topCapHeight:bgimage.size.height/2];
+    [_backButton setBackgroundImage:bgimage forState:UIControlStateNormal];
+    
+    bgimage = [UIImage imageNamed:@"navbar_back_pressed.png"];
+    bgimage = [bgimage stretchableImageWithLeftCapWidth:bgimage.size.width/2 topCapHeight:bgimage.size.height/2];
+    [_backButton setBackgroundImage:bgimage forState:UIControlStateHighlighted];
+
+    _titleLabel.font = [UIFont fontWithName:@"ProximaNova-Regular" size:17.0f];
+    _backButton.titleLabel.font = [UIFont fontWithName:@"ProximaNova-Regular" size:14.0f];
+    _doneButton.titleLabel.font = [UIFont fontWithName:@"ProximaNova-Regular" size:14.0f];
 }
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    [_chemicalsTableView reloadData];
+}
 
 - (void)viewDidUnload
 {
+    [self setBackButton:nil];
+    [self setDoneButton:nil];
+    [self setTitleLabel:nil];
 	// Save the state of the search UI so that it can be restored if the view is re-created.
     self.searchWasActive = [self.searchDisplayController isActive];
     self.savedSearchTerm = [self.searchDisplayController.searchBar text];
     self.savedScopeButtonIndex = [self.searchDisplayController.searchBar selectedScopeButtonIndex];
 	
 	self.filteredListContent = nil;
+}
+
+-(IBAction)backButtonPressed:(id)sender
+{
+    if(_delegate && [_delegate respondsToSelector:@selector(chemicalsListBackPressed)])
+    {
+        [_delegate chemicalsListBackPressed];
+    }
+}
+
+-(IBAction)doneButtonPressed:(id)sender
+{
+    if(_delegate && [_delegate respondsToSelector:@selector(selectedChemicals:)])
+    {
+        [_delegate selectedChemicals:_selectedContent];
+    }
 }
 
 #pragma mark -
@@ -147,6 +187,8 @@
 	/*
 	 If the requesting table view is the search display controller's table view, configure the cell using the filtered content, otherwise use the main list.
 	 */
+    
+    
 	SampleChemical *chemical = nil;
 	if (tableView == self.searchDisplayController.searchResultsTableView)
 	{
@@ -157,32 +199,49 @@
         chemical = [self.sectionedListContent objectAtIndexPath:indexPath];
     }
 	
-	cell.textLabel.text = chemical.sampleChemical_Name;
+    cell.textLabel.text = chemical.sampleChemical_Name;
+    cell.accessoryType = UITableViewCellAccessoryNone;
+    
+    for(SampleChemical *chemical1 in self.selectedContent)
+    {
+        if([chemical.sampleChemical_Name isEqualToString:chemical1.sampleChemical_Name])
+        {
+            cell.accessoryType = UITableViewCellAccessoryCheckmark;
+            break;
+        }
+    }
+
 	return cell;
 }
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	/*
-	 If the requesting table view is the search display controller's table view, configure the next view controller using the filtered content, otherwise use the main list.
-	 */
-	SampleChemical *chemical = nil;
-	if (tableView == self.searchDisplayController.searchResultsTableView)
-	{
-        chemical = [self.filteredListContent objectAtIndex:indexPath.row];
-    }
-	else
-	{
-        chemical = [self.sectionedListContent objectAtIndexPath:indexPath];
-    }
+    [tableView deselectRowAtIndexPath:indexPath animated:NO];
     
-    if(_delegate && [_delegate respondsToSelector:@selector(addChemicalNumber:chemical:)])
+    SampleChemical *chemical = [self.sectionedListContent objectAtIndexPath:indexPath];
+
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    
+    if(cell.accessoryType == UITableViewCellAccessoryCheckmark)
     {
-        [_delegate addChemicalNumber:indexPath.row+1 chemical:chemical];
+        cell.accessoryType = UITableViewCellAccessoryNone;
+                
+        for(SampleChemical *chemical1 in _selectedContent)
+        {
+            if([chemical.sampleChemical_Name isEqualToString:chemical1.sampleChemical_Name])
+            {
+                [_selectedContent removeObject:chemical1];
+                break;
+            }
+        }
+    }
+    else
+    {
+        cell.accessoryType = UITableViewCellAccessoryCheckmark;
+        [_selectedContent addObject:chemical];
     }
 }
-
 
 #pragma mark -
 #pragma mark Content Filtering

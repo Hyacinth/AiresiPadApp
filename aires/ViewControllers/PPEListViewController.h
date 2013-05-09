@@ -11,7 +11,7 @@
 @class SampleProtectionEquipment;
 @protocol PPEListProtocol;
 
-@interface PPEListViewController : UITableViewController<UISearchDisplayDelegate, UISearchBarDelegate>
+@interface PPEListViewController : UIViewController<UISearchDisplayDelegate, UISearchBarDelegate, UITableViewDataSource, UITableViewDelegate>
 {
 	NSArray			*listContent;			// The master content.
 	NSMutableArray	*filteredListContent;	// The content filtered as a result of a search.
@@ -23,11 +23,18 @@
     BOOL			searchWasActive;
 }
 
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+@property (weak, nonatomic) IBOutlet UIButton *doneButton;
+@property (weak, nonatomic) IBOutlet UIButton *backButton;
+@property (weak, nonatomic) IBOutlet UITableView *ppeTableView;
+
 @property (nonatomic, retain) id<PPEListProtocol> delegate;
 
 @property (nonatomic, retain) NSArray *listContent;
 @property (nonatomic, retain) NSMutableArray *filteredListContent;
 @property (nonatomic, retain, readonly) NSArray *sectionedListContent;
+
+@property (nonatomic, retain) NSMutableArray *selectedContent;
 
 @property (nonatomic, copy) NSString *savedSearchTerm;
 @property (nonatomic) NSInteger savedScopeButtonIndex;
@@ -38,5 +45,7 @@
 @protocol PPEListProtocol <NSObject>
 
 -(void)addPPENumber:(NSUInteger)number ppe:(SampleProtectionEquipment*)ppe;
+-(void)ppeListBackPressed;
+-(void)selectedPPE:(NSArray*)array;
 
 @end

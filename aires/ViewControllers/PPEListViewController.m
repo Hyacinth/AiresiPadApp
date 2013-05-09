@@ -72,7 +72,6 @@
 
 - (void)viewDidLoad
 {
-    [self setTitle:@"Choose an Equipment"];
     [self.searchDisplayController setDelegate:self];
 	// create a filtered list that will contain products for the search results table.
 	self.filteredListContent = [NSMutableArray arrayWithCapacity:[self.listContent count]];
@@ -87,8 +86,28 @@
         self.savedSearchTerm = nil;
     }
 	
-	[self.tableView reloadData];
-	self.tableView.scrollEnabled = YES;
+    [_ppeTableView reloadData];
+    
+    UIImage *bgimage = [UIImage imageNamed:@"btn_navbar_nor.png"];
+	bgimage = [bgimage stretchableImageWithLeftCapWidth:bgimage.size.width/2 topCapHeight:bgimage.size.height/2];
+    [_doneButton setBackgroundImage:bgimage forState:UIControlStateNormal];
+    
+    bgimage = [UIImage imageNamed:@"btn_navbar_pressed.png"];
+	bgimage = [bgimage stretchableImageWithLeftCapWidth:bgimage.size.width/2 topCapHeight:bgimage.size.height/2];
+    [_doneButton setBackgroundImage:bgimage forState:UIControlStateHighlighted];
+    
+    bgimage = [UIImage imageNamed:@"navbar_back_nor.png"];
+    bgimage = [bgimage stretchableImageWithLeftCapWidth:bgimage.size.width/2 topCapHeight:bgimage.size.height/2];
+    [_backButton setBackgroundImage:bgimage forState:UIControlStateNormal];
+    
+    bgimage = [UIImage imageNamed:@"navbar_back_pressed.png"];
+    bgimage = [bgimage stretchableImageWithLeftCapWidth:bgimage.size.width/2 topCapHeight:bgimage.size.height/2];
+    [_backButton setBackgroundImage:bgimage forState:UIControlStateHighlighted];
+    
+    _titleLabel.font = [UIFont fontWithName:@"ProximaNova-Regular" size:17.0f];
+    _backButton.titleLabel.font = [UIFont fontWithName:@"ProximaNova-Regular" size:14.0f];
+    _doneButton.titleLabel.font = [UIFont fontWithName:@"ProximaNova-Regular" size:14.0f];
+
 }
 
 
@@ -100,6 +119,23 @@
     self.savedScopeButtonIndex = [self.searchDisplayController.searchBar selectedScopeButtonIndex];
 	
 	self.filteredListContent = nil;
+}
+
+
+-(IBAction)backButtonPressed:(id)sender
+{
+    if(_delegate && [_delegate respondsToSelector:@selector(ppeListBackPressed)])
+    {
+        [_delegate ppeListBackPressed];
+    }
+}
+
+-(IBAction)doneButtonPressed:(id)sender
+{
+    if(_delegate && [_delegate respondsToSelector:@selector(selectedPPE:)])
+    {
+        [_delegate selectedPPE:_selectedContent];
+    }
 }
 
 #pragma mark -
@@ -157,29 +193,47 @@
         equip = [self.sectionedListContent objectAtIndexPath:indexPath];
     }
 	
-	cell.textLabel.text = equip.sampleProtectionEquipment_Name;
+    cell.textLabel.text = equip.sampleProtectionEquipment_Name;
+    cell.accessoryType = UITableViewCellAccessoryNone;
+    
+    for(SampleProtectionEquipment *equip1 in self.selectedContent)
+    {
+        if([equip.sampleProtectionEquipment_Name isEqualToString:equip1.sampleProtectionEquipment_Name])
+        {
+            cell.accessoryType = UITableViewCellAccessoryCheckmark;
+            break;
+        }
+    }
+    
 	return cell;
 }
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	/*
-	 If the requesting table view is the search display controller's table view, configure the next view controller using the filtered content, otherwise use the main list.
-	 */
-	SampleProtectionEquipment *equip = nil;
-	if (tableView == self.searchDisplayController.searchResultsTableView)
-	{
-        equip = [self.filteredListContent objectAtIndex:indexPath.row];
-    }
-	else
-	{
-        equip = [self.sectionedListContent objectAtIndexPath:indexPath];
-    }
+    [tableView deselectRowAtIndexPath:indexPath animated:NO];
     
-    if(_delegate && [_delegate respondsToSelector:@selector(addPPENumber:ppe:)])
+    SampleProtectionEquipment *equip = [self.sectionedListContent objectAtIndexPath:indexPath];
+    
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    
+    if(cell.accessoryType == UITableViewCellAccessoryCheckmark)
     {
-        [_delegate addPPENumber:indexPath.row+1 ppe:equip];
+        cell.accessoryType = UITableViewCellAccessoryNone;
+        
+        for(SampleProtectionEquipment *equip1 in _selectedContent)
+        {
+            if([equip.sampleProtectionEquipment_Name isEqualToString:equip1.sampleProtectionEquipment_Name])
+            {
+                [_selectedContent removeObject:equip1];
+                break;
+            }
+        }
+    }
+    else
+    {
+        cell.accessoryType = UITableViewCellAccessoryCheckmark;
+        [_selectedContent addObject:equip];
     }
 }
 
