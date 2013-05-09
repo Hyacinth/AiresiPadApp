@@ -9,6 +9,9 @@
 #import "ActiveProjectTileView.h"
 #import <QuartzCore/QuartzCore.h>
 #import "Project.h"
+#import "AiresSingleton.h"
+
+#define mSingleton 	((AiresSingleton *) [AiresSingleton getSingletonInstance])
 
 @interface ActiveProjectTileView ()
 {
@@ -60,7 +63,7 @@
         blueLayer.mask = maskLayer;
         
         dateFont = [UIFont fontWithName:@"ProximaNova-Bold" size:48.0f];
-        dayFont = [UIFont fontWithName:@"ProximaNova-Bold" size:16.0f];
+        dayFont = [UIFont fontWithName:@"ProximaNova-Bold" size:14.0f];
         monthYearFont = [UIFont fontWithName:@"ProximaNova-Regular" size:16.0f];
         titleFont = [UIFont fontWithName:@"ProximaNova-Bold" size:28.0f];
         clientFont = [UIFont fontWithName:@"ProximaNova-Regular" size:24.0f];
@@ -126,27 +129,24 @@
 	// Set the fill color to white.
 	CGContextSetFillColorWithColor(context, [UIColor colorWithRed:28.0f/255.0f green:34.0f/255.0f blue:39.0f/255.0f alpha:1.0f].CGColor);
     
-//    NSDate *now = _project.project_DateOnsite;
-//    NSDateFormatter *weekday = [[NSDateFormatter alloc] init];
-//    [weekday setDateFormat: @"EEEE"];
-//    
-//    NSDateComponents *components = [[NSCalendar currentCalendar] components:NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit fromDate:_project.project_DateOnsite];    
-//    
-//    NSInteger day = [components day];
-//    NSInteger month = [components month];
-//    NSInteger year = [components year];
-    
-    [@"25" drawInRect:CGRectMake(40, 40, 60, 40)
+    NSString *now = _project.project_DateOnsite;
+    NSDictionary *dateComp = [mSingleton getDateComponentsforString:now];
+    NSString *date = [dateComp objectForKey:@"date"];
+    NSString *month = [dateComp objectForKey:@"month"];
+    NSString *year = [dateComp objectForKey:@"year"];
+    NSString *day = [dateComp objectForKey:@"day"];
+
+    [date drawInRect:CGRectMake(40, 40, 60, 40)
              withFont:dateFont
         lineBreakMode:UILineBreakModeTailTruncation
             alignment:UITextAlignmentLeft];
     
-    [@"Tuesday" drawInRect:CGRectMake(105, 45, 80, 20)
+    [day drawInRect:CGRectMake(105, 45, 80, 20)
                    withFont:dayFont
               lineBreakMode:UILineBreakModeTailTruncation
                   alignment:UITextAlignmentLeft];
     
-    [@"Jan, 2013" drawInRect:CGRectMake(105, 65, 80, 20)
+    [[NSString stringWithFormat:@"%@ %@",month, year] drawInRect:CGRectMake(105, 65, 80, 20)
                    withFont:monthYearFont
               lineBreakMode:UILineBreakModeTailTruncation
                   alignment:UITextAlignmentLeft];

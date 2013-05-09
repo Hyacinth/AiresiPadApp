@@ -80,6 +80,39 @@ static AiresSingleton* instance;
     return TRUE;
 }
 
+- (NSString *)getDayOfTheWeek:(NSDate *)date{
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init] ;
+    [dateFormatter setDateFormat:@"EEEE"];
+    NSString *formattedDateString = [dateFormatter stringFromDate:date];
+    return formattedDateString;
+}
+
+- (NSDictionary *)getDateComponentsforString:(NSString *)date
+{
+    NSCharacterSet *charactersToRemove = [NSCharacterSet letterCharacterSet];
+    
+    NSString *trimmedReplacement = [[date componentsSeparatedByCharactersInSet:charactersToRemove ] componentsJoinedByString:@" "];
+
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
+    [dateFormatter setDateFormat:@"yyyy-mm-dd HH:mm:ss "];
+    NSDate *theDate = [dateFormatter dateFromString:trimmedReplacement];
+    [self getDayOfTheWeek:theDate];
+    NSDateComponents *components = [[NSCalendar currentCalendar] components:NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit fromDate:theDate];
+    NSInteger day = [components day];
+    NSInteger month = [components month];
+    NSInteger year = [components year];
+    
+    NSMutableDictionary *componentDict =[[NSMutableDictionary alloc] init];
+    [componentDict setValue:[self getDayOfTheWeek:theDate]   forKey:@"day"];
+    [componentDict setValue:[NSString stringWithFormat:@"%d", day] forKey:@"date"];
+    NSDateFormatter *df = [[NSDateFormatter alloc] init];
+    NSString *monthName = [[df monthSymbols] objectAtIndex:(month-1)];
+    [componentDict setValue:[monthName substringToIndex:3] forKey:@"month"];
+    [componentDict setValue:[NSString stringWithFormat:@"%d", year] forKey:@"year"];
+
+    return componentDict;
+}
+
 #pragma mark -
 #pragma mark Manager Instance
 

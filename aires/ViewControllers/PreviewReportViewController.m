@@ -136,7 +136,9 @@
     [_loadingView setHidden:TRUE];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(localNotificationhandler:) name:NOTIFICATION_UNLOCK_PROJECT_FAILED object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(localNotificationhandler:) name:NOTIFICATION_UNLOCK_PROJECT_SUCCESS object:nil];
-    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(localNotificationhandler:) name:NOTIFICATION_POST_PROJECT_FAILED object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(localNotificationhandler:) name:NOTIFICATION_POST_PROJECT_SUCCESS object:nil];
+
 }
 
 -(void)updateReport:(Project *)project
@@ -378,6 +380,19 @@
         [projectResultAlert show];
         return;
         
+    }
+    else if ([[notification name] isEqualToString:NOTIFICATION_POST_PROJECT_FAILED])
+    {
+        projectResultAlert = [[UIAlertView alloc] initWithTitle:@"Action Falied" message:@"Unable to post the current project \n Please try again later" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+        [projectResultAlert show];
+        return;
+    }
+    else if ([[notification name] isEqualToString:NOTIFICATION_POST_PROJECT_SUCCESS])
+    {
+        projectResultAlert = [[UIAlertView alloc] initWithTitle:@"Action Successful" message:@"Project successfully posted" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"Go to Dashboard", nil];
+        projectResultAlert.delegate = self;
+        [projectResultAlert show];
+        return;
     }
 }
 

@@ -440,7 +440,7 @@
             mSample.projectId = [dict objectForKey:@"ProjectId"];
         if (![[dict valueForKey:@"SampleId"] isKindOfClass:[NSNull class]])
             mSample.sampleID = [dict objectForKey:@"SampleId"];
-
+        
         
         [project addAiresSampleObject:mSample];
         [[self mainContext] save:nil];
@@ -606,7 +606,7 @@
             mSampleProtectionEquipment.sampleID = [dict valueForKey:@"SamplesId"];
         if (![[dict valueForKey:@"SamplePPEId"] isKindOfClass:[NSNull class]])
             mSampleProtectionEquipment.SamplePPEId = [dict valueForKey:@"SamplePPEId"];
-
+        
         [sample addAiresSampleProtectionEquipmentObject:mSampleProtectionEquipment];
         [[self mainContext] save:nil];
     }

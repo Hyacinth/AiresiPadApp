@@ -30,6 +30,7 @@
 - (BOOL)isConnectedToInternet;
 - (NSDate *)getCurrentDeviceTime;
 - (BOOL)isValidAccessToken;
+- (NSDictionary *)getDateComponentsforString:(NSString *)date;
 
 //Manager Instances
 - (AppDelegate *)getAppDelegateInstance;
