@@ -116,11 +116,11 @@
     _notesView.layer.borderColor = grayColor.CGColor;
     _notesView.layer.borderWidth = 1.0f;
     _notesView.layer.cornerRadius = 5.0f;
-    // _notesView.layer.masksToBounds = YES;
+    _notesView.layer.masksToBounds = YES;
     _commentsView.layer.borderColor = grayColor.CGColor;
     _commentsView.layer.borderWidth = 1.0f;
     _commentsView.layer.cornerRadius = 5.0f;
-    //_commentsView.layer.masksToBounds = YES;
+    _commentsView.layer.masksToBounds = YES;
     
     _chemicalPPEView.layer.borderColor = grayColor.CGColor;
     _chemicalPPEView.layer.borderWidth = 1.0f;
@@ -158,6 +158,12 @@
     _onFlowRateLabel.font = fontBold12px;
     _offFlowRateLabel.font = fontBold12px;
     
+    _notesLabel.layer.borderColor = grayColor.CGColor;
+    _notesLabel.layer.borderWidth = 1.0f;
+    
+    _commentsLabel.layer.borderColor = grayColor.CGColor;
+    _commentsLabel.layer.borderWidth = 1.0f;
+    
     CALayer *grayLine = [CALayer layer];
     grayLine.frame = CGRectMake(0, _sampleTypeView.bounds.size.height/2, _sampleTypeView.bounds.size.width, 1.0f);
     grayLine.backgroundColor = grayColor.CGColor;
@@ -183,7 +189,7 @@
     grayLine4.backgroundColor = grayColor.CGColor;
     [_operationalAreaView.layer insertSublayer:grayLine4 atIndex:0];
     
-    CALayer *grayLine5 = [CALayer layer];
+/*    CALayer *grayLine5 = [CALayer layer];
     grayLine5.frame = CGRectMake(112, 0, 1.0f, _notesView.bounds.size.height);
     grayLine5.backgroundColor = grayColor.CGColor;
     [_notesView.layer insertSublayer:grayLine5 atIndex:0];
@@ -191,7 +197,7 @@
     CALayer *grayLine6 = [CALayer layer];
     grayLine6.frame = CGRectMake(112, 0, 1.0f, _commentsView.bounds.size.height);
     grayLine6.backgroundColor = grayColor.CGColor;
-    [_commentsView.layer insertSublayer:grayLine6 atIndex:0];
+    [_commentsView.layer insertSublayer:grayLine6 atIndex:0];*/
     
     _chemicalsArray = [[NSMutableArray alloc] initWithObjects:@"Formaldehyde", @"Methylene Chloride", @"Ethylene Oxide", @"Ethanol", @"Zinc Phosphate", @"Oxylene", nil];
     _ppeArray = [[NSMutableArray alloc] initWithObjects:@"Safety Goggles", @"Mask", @"Apron", nil];
@@ -551,6 +557,72 @@
     //[_ppeTableView reloadData];
 }
 
+-(void)updateNotes
+{
+    NSString *notes = _notesValueLabel.text;
+    
+    CGRect notesViewFrame = _notesView.frame;
+    CGRect notesLabelFrame = _notesLabel.frame;
+    CGRect notesValueLabelFrame = _notesValueLabel.frame;
+    
+    CGFloat height = ceilf([notes sizeWithFont:_notesValueLabel.font constrainedToSize:CGSizeMake(_notesValueLabel.bounds.size.width, CGFLOAT_MAX) lineBreakMode:UILineBreakModeWordWrap].height);
+    
+    CGFloat viewHeight = ((height+20)<44)?44:(height+20);
+    notesViewFrame.size.height = viewHeight;
+    notesLabelFrame.size.height = viewHeight;
+    CGFloat labelHeight = (height<24)?24:height;
+    notesValueLabelFrame.size.height = labelHeight;
+    
+    _notesView.frame = notesViewFrame;
+    _notesLabel.frame = notesLabelFrame;
+    _notesValueLabel.frame = notesValueLabelFrame;
+    
+    CGRect commentsViewFrame = _commentsView.frame;
+    commentsViewFrame.origin.y = notesViewFrame.origin.y + notesViewFrame.size.height + 15.0f;
+    _commentsView.frame = commentsViewFrame;
+    
+    CGRect chemicalPPEFrame = _chemicalPPEView.frame;
+    chemicalPPEFrame.origin.y = commentsViewFrame.origin.y + commentsViewFrame.size.height + 30.0f;
+    _chemicalPPEView.frame = chemicalPPEFrame;
+    
+    CGRect flagsViewFrame = _flagsView.frame;
+    flagsViewFrame.origin.y = chemicalPPEFrame.origin.y + chemicalPPEFrame.size.height + 20.0f;
+    _flagsView.frame = flagsViewFrame;
+    
+    _samplesScrollView.contentSize = CGSizeMake(_samplesScrollView.frame.size.width, _samplesScrollView.frame.size.height + ( _flagsView.frame.origin.y + _flagsView.frame.size.height + 20.0f - _samplesScrollView.frame.size.height));
+}
+
+-(void)updateComments
+{
+    NSString *comments = _commentsValueLabel.text;
+    
+    CGRect commentsViewFrame = _commentsView.frame;
+    CGRect commentsLabelFrame = _commentsLabel.frame;
+    CGRect commentsValueLabelFrame = _commentsValueLabel.frame;
+    
+    CGFloat height = ceilf([comments sizeWithFont:_commentsValueLabel.font constrainedToSize:CGSizeMake(_commentsValueLabel.bounds.size.width, CGFLOAT_MAX) lineBreakMode:UILineBreakModeWordWrap].height);
+    
+    CGFloat viewHeight = ((height+20)<44)?44:(height+20);
+    commentsViewFrame.size.height = viewHeight;
+    commentsLabelFrame.size.height = viewHeight;
+    CGFloat labelHeight = (height<24)?24:height;
+    commentsValueLabelFrame.size.height = labelHeight;
+    
+    _commentsView.frame = commentsViewFrame;
+    _commentsLabel.frame = commentsLabelFrame;
+    _commentsValueLabel.frame = commentsValueLabelFrame;
+    
+    CGRect chemicalPPEFrame = _chemicalPPEView.frame;
+    chemicalPPEFrame.origin.y = commentsViewFrame.origin.y + commentsViewFrame.size.height + 30.0f;
+    _chemicalPPEView.frame = chemicalPPEFrame;
+    
+    CGRect flagsViewFrame = _flagsView.frame;
+    flagsViewFrame.origin.y = chemicalPPEFrame.origin.y + chemicalPPEFrame.size.height + 20.0f;
+    _flagsView.frame = flagsViewFrame;
+    
+    _samplesScrollView.contentSize = CGSizeMake(_samplesScrollView.frame.size.width, _samplesScrollView.frame.size.height + ( _flagsView.frame.origin.y + _flagsView.frame.size.height + 20.0f - _samplesScrollView.frame.size.height));
+}
+
 -(void)updateChemicalPPETable
 {
     [_chemicalsTableView reloadData];
@@ -786,10 +858,12 @@
     if(bEditingNotes)
     {
         _notesValueLabel.text = text;
+        [self updateNotes];
     }
     else
     {
         _commentsValueLabel.text = text;
+        [self updateComments];
     }
 }
 

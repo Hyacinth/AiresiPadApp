@@ -660,7 +660,7 @@
 											<object class="IBUILabel" id="382715422">
 												<reference key="NSNextResponder" ref="116245303"/>
 												<int key="NSvFlags">292</int>
-												<string key="NSFrame">{{120, 0}, {554, 44}}</string>
+												<string key="NSFrame">{{120, 10}, {554, 24}}</string>
 												<reference key="NSSuperview" ref="116245303"/>
 												<reference key="NSWindow"/>
 												<reference key="NSNextKeyView" ref="341000555"/>
@@ -673,9 +673,11 @@
 												<reference key="IBUITextColor" ref="615220879"/>
 												<nil key="IBUIHighlightedColor"/>
 												<int key="IBUIBaselineAdjustment">0</int>
+												<int key="IBUINumberOfLines">20</int>
 												<reference key="IBUIFontDescription" ref="127369580"/>
 												<reference key="IBUIFont" ref="612252414"/>
 												<bool key="IBUIAdjustsFontSizeToFit">NO</bool>
+												<double key="preferredMaxLayoutWidth">554</double>
 											</object>
 										</array>
 										<string key="NSFrame">{{15, 162}, {682, 44}}</string>
@@ -722,7 +724,7 @@
 											<object class="IBUILabel" id="986890530">
 												<reference key="NSNextResponder" ref="341000555"/>
 												<int key="NSvFlags">292</int>
-												<string key="NSFrame">{{120, 0}, {554, 44}}</string>
+												<string key="NSFrame">{{120, 10}, {554, 24}}</string>
 												<reference key="NSSuperview" ref="341000555"/>
 												<reference key="NSWindow"/>
 												<reference key="NSNextKeyView" ref="213431133"/>
@@ -735,9 +737,11 @@
 												<reference key="IBUITextColor" ref="615220879"/>
 												<nil key="IBUIHighlightedColor"/>
 												<int key="IBUIBaselineAdjustment">0</int>
+												<int key="IBUINumberOfLines">20</int>
 												<reference key="IBUIFontDescription" ref="127369580"/>
 												<reference key="IBUIFont" ref="612252414"/>
 												<bool key="IBUIAdjustsFontSizeToFit">NO</bool>
+												<double key="preferredMaxLayoutWidth">554</double>
 											</object>
 										</array>
 										<string key="NSFrame">{{15, 221}, {682, 44}}</string>
@@ -1147,6 +1151,7 @@
 								<string key="NSFrame">{{627, 6}, {70, 35}}</string>
 								<reference key="NSSuperview" ref="296255916"/>
 								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<string key="targetRuntimeIdentifier">IBIPadFramework</string>
