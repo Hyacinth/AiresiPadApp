@@ -617,6 +617,8 @@
     NSUInteger moreCount = chemicalsCount>ppeCount?chemicalsCount:ppeCount;
     
     CGRect chemicalPPEFrame = _chemicalPPEView.frame;
+    if(moreCount == 0)
+        moreCount = 1;
     chemicalPPEFrame.size.height = 44.0f/*title*/ + (40.0f/*row height*/ * moreCount);
     _chemicalPPEView.frame = chemicalPPEFrame;
     
@@ -634,11 +636,12 @@
     [_measurementsTableView reloadData];
     
     CGRect measurementsViewFrame = _measurementsView.frame;
-    measurementsViewFrame.size.height = 30.0f/*header height*/ + _measurementsArray.count/*no. of measurements*/ * 44.0f/*row height*/;
+    NSUInteger numberOfMeasurements = _measurementsArray.count==0 ? 1 : _measurementsArray.count;
+    measurementsViewFrame.size.height = 30.0f/*header height*/ + numberOfMeasurements/*no. of measurements*/ * 44.0f/*row height*/;
     _measurementsView.frame = measurementsViewFrame;
     
     CGRect measurementsTableViewFrame = _measurementsTableView.frame;
-    measurementsTableViewFrame.size.height = _measurementsArray.count/*no. of measurements*/ * 44.0f/*row height*/;
+    measurementsTableViewFrame.size.height = numberOfMeasurements/*no. of measurements*/ * 44.0f/*row height*/;
     _measurementsTableView.frame = measurementsTableViewFrame;
     
     CGRect totalMeasurementsViewFrame = _totalMeasurementsView.frame;
@@ -764,7 +767,7 @@
             UIFont *font14px = [UIFont fontWithName:@"ProximaNova-Regular" size:14.0f];
             UIColor *textColor = [UIColor colorWithRed:28.0f/255.0f green:34.0f/255.0f blue:39.0f/255.0f alpha:1.0f];
             
-            SampleMeasurement *measurement = [_measurementsArray objectAtIndex:indexPath.row];
+            SampleMeasurement *measurement = (SampleMeasurement*)[_measurementsArray objectAtIndex:indexPath.row];
             
             UILabel *onTimeLabel = [[UILabel alloc] initWithFrame:CGRectMake(8, 0, 160, cell.contentView.bounds.size.height)];
             onTimeLabel.tag = MEASUREMENT_ONTIME_TAG;
@@ -901,7 +904,7 @@
     [self removeMeasurementEditView];
     
     SampleMeasurement *sampleMeasurement = [[SampleMeasurement alloc] init];
-    //sampleMeasurement.sampleMeasurement_OnTime = [NSNUmber numberWith]
+
     [_measurementsArray addObject:sampleMeasurement];
     [_measurementsTableView reloadData];
     [self updateMeasurementTable];
