@@ -11,6 +11,7 @@
 #import "Sample.h"
 #import "AiresSingleton.h"
 #import <QuartzCore/QuartzCore.h>
+#import "DashboardViewController.h"
 
 #define mSingleton 	((AiresSingleton *) [AiresSingleton getSingletonInstance])
 
@@ -72,6 +73,7 @@
     [self.unlockButton setBackgroundImage:buttonNorImage forState:UIControlStateNormal];
     [self.unlockButton setBackgroundImage:buttonSelImage forState:UIControlStateHighlighted];
     [self.unlockButton.titleLabel setFont:font14Bold];
+    [self.unlockButton.titleLabel setTextAlignment:NSTextAlignmentCenter];
     
     if(!self.sendMailButton)
         self.sendMailButton = [[UIButton alloc] init];
@@ -126,6 +128,15 @@
     [super viewWillAppear:animated];
     [self resetViewFrames];
     [self updateReport:currentProject];
+    
+    if ([currentProject.project_CompletedFlag boolValue])
+        [self.unlockButton setTitle:@"Unlock" forState:UIControlStateNormal];
+    else
+        [self.unlockButton setTitle:@"Post" forState:UIControlStateNormal];
+    [_loadingView setHidden:TRUE];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(localNotificationhandler:) name:NOTIFICATION_UNLOCK_PROJECT_FAILED object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(localNotificationhandler:) name:NOTIFICATION_UNLOCK_PROJECT_SUCCESS object:nil];
+    
 }
 
 -(void)updateReport:(Project *)project
@@ -155,6 +166,13 @@
 
 - (IBAction)onSendEmail:(id)sender
 {
+    if(![mSingleton isConnectedToInternet])
+    {
+        noNetworkAlert = [[UIAlertView alloc] initWithTitle:@"Connection error" message:@"Unable to connect.\n Check your internet connection and try again." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+        [noNetworkAlert show];
+        return;
+    }
+    
     NSString *fileName = @"Report.pdf";
     NSMutableData *pdfData = [NSMutableData data];
     CGRect contentRect = CGRectMake(0, 0, self.baseScrollView.contentSize.width, self.baseScrollView.contentSize.height);
@@ -190,7 +208,7 @@
     [mailComposeViewController setToRecipients:[NSArray arrayWithObjects:@"email1",nil]];
     [mailComposeViewController setSubject:@"Report"];
     [mailComposeViewController setMessageBody:@"your body" isHTML:YES];
-   
+    
     NSString *fileName = @"Report.pdf";
     NSArray* documentDirectories = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask,YES);
     NSString* documentDirectory = [documentDirectories objectAtIndex:0];
@@ -245,7 +263,21 @@
 
 - (IBAction)onUnlockProject:(id)sender
 {
-    
+    if(![mSingleton isConnectedToInternet])
+    {
+        noNetworkAlert = [[UIAlertView alloc] initWithTitle:@"Connection error" message:@"Unable to connect.\n Check your internet connection and try again." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+        [noNetworkAlert show];
+        return;
+    }
+    [_loadingView setHidden:FALSE];
+    if ([currentProject.project_CompletedFlag boolValue])
+    {
+        [[mSingleton getWebServiceManager] unlockProject:currentProject];
+    }
+    else
+    {
+        [[mSingleton getWebServiceManager] postProject:currentProject];
+    }
 }
 
 -(void)resetViewFrames
@@ -313,10 +345,10 @@
         cell.DateSampled.text = nil;
         cell.SampleType.text = nil;
         cell.DeviceType.text = currentSample.sample_DeviceTypeName;
-        NSArray *measurementsArray = [[mSingleton getPersistentStoreManager] getSampleMeasurementforSample:currentSample];
-        if(measurementsArray && measurementsArray.count>0)
+        NSArray *measurementArray = [[mSingleton getPersistentStoreManager] getSampleMeasurementforSample:currentSample];
+        if([measurementArray count] >0)
         {
-            SampleMeasurement *totalMeasurement = [measurementsArray objectAtIndex:0];
+            SampleMeasurement *totalMeasurement = [measurementArray objectAtIndex:0];
             cell.AirVolume.text = [totalMeasurement.sampleMeasurement_TotalVolume stringValue];
             cell.PassiveMonitors.text = [totalMeasurement.sampleMeasurement_TotalMinutes stringValue];
             cell.Area.text = [totalMeasurement.sampleMeasurement_TotalArea stringValue];
@@ -326,6 +358,61 @@
     return cell;
 }
 
+#pragma mark-
+#pragma mark Notification Handler
+- (void) localNotificationhandler:(NSNotification *) notification
+{
+    [_loadingView setHidden:TRUE];
+
+    if ([[notification name] isEqualToString:NOTIFICATION_UNLOCK_PROJECT_FAILED])
+    {
+        projectResultAlert = [[UIAlertView alloc] initWithTitle:@"Action Falied" message:@"Unable to unlock the current project \n Please try again later" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+        [projectResultAlert show];
+        return;
+        
+    }
+    else if ([[notification name] isEqualToString:NOTIFICATION_UNLOCK_PROJECT_SUCCESS])
+    {
+        projectResultAlert = [[UIAlertView alloc] initWithTitle:@"Action Successful" message:@"Project successfully unlocked" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"Go to Dashboard", nil];
+        projectResultAlert.delegate = self;
+        [projectResultAlert show];
+        return;
+        
+    }
+}
+
+#pragma mark-
+#pragma mark Alert View delegate
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (alertView == projectResultAlert) {
+        if(buttonIndex == 0)
+        {
+            NSArray *vcArray = self.navigationController.viewControllers;
+            for (DashboardViewController *vc in vcArray) {
+                if([vc isMemberOfClass:[DashboardViewController class]])
+                {
+                    [UIView transitionFromView:self.view
+                                        toView:vc.view
+                                      duration:0.75
+                                       options:UIViewAnimationOptionTransitionFlipFromLeft
+                                    completion:^(BOOL finished){
+                                        /* do something on animation completion */
+                                    }];
+                    [vc onRefreshData:nil];
+                    [self.navigationController popToViewController:vc animated:NO];
+                    return;
+                }
+            }
+        }
+    }
+}
+
+-(void) viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
 
 - (void)didReceiveMemoryWarning
 {
