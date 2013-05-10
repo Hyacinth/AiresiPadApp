@@ -14,7 +14,6 @@
 @interface SampleChemical : NSManagedObject
 
 @property (nonatomic, retain) NSString * sampleChemical_Name;
-@property (nonatomic, retain) NSNumber * sampleChemicalID;
 @property (nonatomic, retain) NSNumber * sampleChemical_PELCFlag;
 @property (nonatomic, retain) NSNumber * sampleChemical_TLVTWAFlag;
 @property (nonatomic, retain) NSNumber * sampleChemical_TLVSTELFlag;
@@ -25,5 +24,7 @@
 @property (nonatomic, retain) NSString * contentType;
 @property (nonatomic, retain) NSNumber *deleted;
 @property (nonatomic, retain) NSNumber * sampleID;
+@property (nonatomic, retain) NSNumber * sampleChemicalID;
+@property (nonatomic, retain) NSNumber * chemicalID;
 
 @end

@@ -24,4 +24,6 @@
 @dynamic contentType;
 @dynamic deleted;
 @dynamic sampleID;
+@dynamic chemicalID;
+
 @end

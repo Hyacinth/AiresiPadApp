@@ -454,8 +454,8 @@
             //else
 //                [SampleChemicalDict setValue:@"" forKey:@"SampleId"];
             
-            if(sampChe.sampleChemicalID)
-                [SampleChemicalDict setValue:sampChe.sampleChemicalID forKey:@"ChemicalId"];
+            if(sampChe.chemicalID)
+                [SampleChemicalDict setValue:sampChe.chemicalID forKey:@"ChemicalId"];
             //else
 //                [SampleChemicalDict setValue:@"" forKey:@"ChemicalId"];
             

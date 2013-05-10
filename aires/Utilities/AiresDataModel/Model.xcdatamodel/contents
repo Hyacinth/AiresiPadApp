@@ -92,6 +92,7 @@
         <relationship name="fromProject" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Project" inverseName="airesSample" inverseEntity="Project" syncable="YES"/>
     </entity>
     <entity name="SampleChemical" representedClassName="SampleChemical" syncable="YES">
+        <attribute name="chemicalID" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="contentType" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="deleted" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="sampleChemical_Name" optional="YES" attributeType="String" syncable="YES"/>
@@ -107,6 +108,7 @@
     </entity>
     <entity name="SampleMeasurement" representedClassName="SampleMeasurement" syncable="YES">
         <attribute name="deleted" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="measurementID" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="sampleID" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="sampleMeasurement_OffFlowRate" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="sampleMeasurement_OffTime" optional="YES" attributeType="String" syncable="YES"/>
@@ -148,8 +150,8 @@
         <element name="Lab" positionX="-4734" positionY="-270" width="128" height="118"/>
         <element name="Project" positionX="-4491" positionY="-658" width="171" height="525"/>
         <element name="Sample" positionX="-4284" positionY="-765" width="180" height="373"/>
-        <element name="SampleChemical" positionX="-4050" positionY="-819" width="171" height="223"/>
-        <element name="SampleMeasurement" positionX="-3960" positionY="-585" width="243" height="210"/>
+        <element name="SampleChemical" positionX="-4050" positionY="-819" width="171" height="240"/>
+        <element name="SampleMeasurement" positionX="-3960" positionY="-585" width="243" height="225"/>
         <element name="SampleProtectionEquipment" positionX="-3888" positionY="-324" width="252" height="150"/>
         <element name="SampleType" positionX="-4050" positionY="-351" width="128" height="88"/>
         <element name="User" positionX="-4671" positionY="-481" width="128" height="150"/>

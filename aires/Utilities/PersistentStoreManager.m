@@ -466,8 +466,6 @@
         NSArray *Measurements = [dict objectForKey:@"Measurements"];
         [self storeSampleMeasurementDetails:Measurements forSample:mSample];
         
-        [self storeSampleChemicalDetails:SampleChemicals forSample:mSample];
-        
         NSArray *PPE = [dict objectForKey:@"SamplePPEs"];
         [self storeSampleProtectionEquipmentDetails:PPE forSample:mSample];
     }
@@ -538,13 +536,15 @@
             mSampleChemical.sampleChemical_TLVSTELFlag = [dict objectForKey:@"TLVSTELFlag"];
         if (![[dict valueForKey:@"TLVTWAFlag"] isKindOfClass:[NSNull class]])
             mSampleChemical.sampleChemical_TLVTWAFlag = [dict objectForKey:@"TLVTWAFlag"];
-        if (![[dict valueForKey:@"ChemicalId"] isKindOfClass:[NSNull class]])
-            mSampleChemical.sampleChemicalID = [dict objectForKey:@"ChemicalId"];
+        if (![[dict valueForKey:@"SampleChemicalId"] isKindOfClass:[NSNull class]])
+            mSampleChemical.sampleChemicalID = [dict objectForKey:@"SampleChemicalId"];
         if (![[dict valueForKey:@"SampleId"] isKindOfClass:[NSNull class]])
             mSampleChemical.sampleID = [dict objectForKey:@"SampleId"];
         if (![[dict valueForKey:@"Deleted"] isKindOfClass:[NSNull class]])
             mSampleChemical.deleted = [dict objectForKey:@"Deleted"];
-        
+        if (![[dict valueForKey:@"ChemicalId"] isKindOfClass:[NSNull class]])
+        mSampleChemical.chemicalID = [dict objectForKey:@"ChemicalId"];
+
         [sample addAiresSampleChemicalObject:mSampleChemical];
         [[self mainContext] save:nil];
     }
@@ -557,11 +557,55 @@
     NSArray *results = [[self mainContext] executeFetchRequest:request error:nil];
     NSMutableArray *finalResult = [NSMutableArray arrayWithArray:results];
     for (SampleChemical *mSampleChemical in results) {
-        if (![mSampleChemical.fromSample.sample_SampleId isEqualToNumber:sample.sample_SampleId]) {
+        if (![mSampleChemical.fromSample.sampleID isEqualToNumber:sample.sampleID]) {
             [finalResult removeObject:mSampleChemical];
         }
     }
     return finalResult;
+}
+
+-(void)updateSampleChemical:(SampleChemical *)sampleChemical inSample:(Sample *)sample forField:(NSString *)field withValue:(id)value
+{
+    NSArray *sampleChemicalArray = [self getSampleChemicalforSample:sample];
+    SampleChemical *toUpdate;
+    for (SampleChemical *mSampleChemical in sampleChemicalArray)
+    {
+        if ([mSampleChemical.sampleChemicalID isEqualToNumber:sampleChemical.sampleChemicalID])
+        {
+            toUpdate = mSampleChemical;
+            break;
+        }
+    }
+    
+    if ([field isEqualToString:FIELD_SAMPLECHEMICAL_DELETE])
+    {
+        toUpdate.deleted = (NSNumber *)value;
+    }
+    else if ([field isEqualToString:FIELD_SAMPLECHEMICAL_PELCFlag])
+    {
+        toUpdate.sampleChemical_PELCFlag = (NSNumber *)value;
+    }
+    else if ([field isEqualToString:FIELD_SAMPLECHEMICAL_TLVTWAFlag])
+    {
+        toUpdate.sampleChemical_TLVTWAFlag = (NSNumber *)value;
+    }
+    else if ([field isEqualToString:FIELD_SAMPLECHEMICAL_TLVSTELFlag])
+    {
+        toUpdate.sampleChemical_TLVSTELFlag = (NSNumber *)value;
+    }
+    else if ([field isEqualToString:FIELD_SAMPLECHEMICAL_TLVCFlag])
+    {
+        toUpdate.sampleChemical_TLVCFlag = (NSNumber *)value;
+    }
+    else if ([field isEqualToString:FIELD_SAMPLECHEMICAL_PELTWAFlag])
+    {
+        toUpdate.sampleChemical_PELTWAFlag = (NSNumber *)value;
+    }
+    else if ([field isEqualToString:FIELD_SAMPLECHEMICAL_PELSTELFlag])
+    {
+        toUpdate.sampleChemical_PELSTELFlag = (NSNumber *)value;
+    }
+    [[self mainContext] save:nil];
 }
 
 #pragma mark -
@@ -594,6 +638,7 @@
         if (![[dict valueForKey:@"Deleted"] isKindOfClass:[NSNull class]])
             mSampleMeasurement.deleted = [dict objectForKey:@"Deleted"];
         
+
         [sample addAiresSampleMeasurementObject:mSampleMeasurement];
         [[self mainContext] save:nil];
     }
@@ -612,6 +657,53 @@
         }
     }
     return finalResult;
+}
+
+-(void)updateSampleMeasurement:(SampleMeasurement *)sampleMeasurement inSample:(Sample *)sample forField:(NSString *)field withValue:(id)value
+{
+    NSArray *sampleMeasurementArray = [self getSampleMeasurementforSample:sample];
+    SampleMeasurement *toUpdate;
+    for (SampleMeasurement *mSampleMeasurement in sampleMeasurementArray)
+    {
+        if ([mSampleMeasurement.sampleMesurementID isEqualToNumber:sampleMeasurement.sampleMesurementID])
+        {
+            toUpdate = mSampleMeasurement;
+            break;
+        }
+    }
+    
+    if ([field isEqualToString:FIELD_SAMPLEMEASUREMENT_DELETE])
+    {
+        toUpdate.deleted = (NSNumber *)value;
+    }
+    else if ([field isEqualToString:FIELD_SAMPLEMEASUREMENT_OffFlowRate])
+    {
+        toUpdate.sampleMeasurement_OffFlowRate = (NSNumber *)value;
+    }
+    else if ([field isEqualToString:FIELD_SAMPLEMEASUREMENT_OffTime])
+    {
+        toUpdate.sampleMeasurement_OffTime = (NSString *)value;
+    }
+    else if ([field isEqualToString:FIELD_SAMPLEMEASUREMENT_OnFlowRate])
+    {
+        toUpdate.sampleMeasurement_OnFlowRate = (NSNumber *)value;
+    }
+    else if ([field isEqualToString:FIELD_SAMPLEMEASUREMENT_OnTime])
+    {
+        toUpdate.sampleMeasurement_OnTime = (NSString *)value;
+    }
+    else if ([field isEqualToString:FIELD_SAMPLEMEASUREMENT_TotalArea])
+    {
+        toUpdate.sampleMeasurement_TotalArea = (NSNumber *)value;
+    }
+    else if ([field isEqualToString:FIELD_SAMPLEMEASUREMENT_TotalMinutes])
+    {
+        toUpdate.sampleMeasurement_TotalMinutes = (NSNumber *)value;
+    }
+    else if ([field isEqualToString:FIELD_SAMPLEMEASUREMENT_TotalVolume])
+    {
+        toUpdate.sampleMeasurement_TotalVolume = (NSNumber *)value;
+    }
 }
 
 #pragma mark -
@@ -654,6 +746,34 @@
     return finalResult;
 }
 
+-(void)updateSampleProtectionEquipment:(SampleProtectionEquipment *)sampleProtectionEquipment inSample:(Sample *)sample forField:(NSString *)field withValue:(id)value
+{
+    NSArray *sampleProtectionEquipmentArray = [self getSampleProtectionEquipmentforSample:sample];
+    SampleProtectionEquipment *toUpdate;
+    for (SampleProtectionEquipment *mSampleProtectionEquipment in sampleProtectionEquipmentArray)
+    {
+        if ([mSampleProtectionEquipment.samplePPEId isEqualToNumber:sampleProtectionEquipment.samplePPEId])
+        {
+            toUpdate = mSampleProtectionEquipment;
+            break;
+        }
+    }
+    
+    if ([field isEqualToString:FIELD_SAMPLEPROTECTIONEQUIPMENT_NAME])
+    {
+        toUpdate.sampleProtectionEquipment_Name = (NSString *)value;
+    }
+    if ([field isEqualToString:FIELD_SAMPLEPROTECTIONEQUIPMENT_DELETE])
+    {
+        toUpdate.deleted = (NSNumber *)value;
+    }
+    if ([field isEqualToString:FIELD_SAMPLEPROTECTIONEQUIPMENT_ID])
+    {
+        toUpdate.sampleProtectionEquipmentID = (NSNumber *)value;
+    }
+    [[self mainContext] save:nil];
+}
+
 #pragma mark -
 #pragma mark List DataModel methods
 -(void)saveChemicalList:(NSArray *)chemicalArray
@@ -679,7 +799,7 @@
         if (![[dict valueForKey:@"TLVTWAFlag"] isKindOfClass:[NSNull class]])
             mSampleChemical.sampleChemical_TLVTWAFlag = [dict objectForKey:@"TLVTWAFlag"];
         if (![[dict valueForKey:@"ChemicalId"] isKindOfClass:[NSNull class]])
-            mSampleChemical.sampleChemicalID = [dict objectForKey:@"ChemicalId"];
+            mSampleChemical.chemicalID = [dict objectForKey:@"ChemicalId"];
         
         mSampleChemical.contentType = @"ListData";
         [[self mainContext] save:nil];

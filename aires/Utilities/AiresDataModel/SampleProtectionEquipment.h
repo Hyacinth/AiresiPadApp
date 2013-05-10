@@ -14,11 +14,11 @@
 @interface SampleProtectionEquipment : NSManagedObject
 
 @property (nonatomic, retain) NSString * sampleProtectionEquipment_Name;
-@property (nonatomic, retain) NSNumber * sampleProtectionEquipmentID;
 @property (nonatomic, retain) Sample *fromSample;
 @property (nonatomic, retain) NSString * contentType;
 @property (nonatomic, retain) NSNumber *deleted;
 @property (nonatomic, retain) NSNumber * sampleID;
 @property (nonatomic, retain) NSNumber * samplePPEId;
+@property (nonatomic, retain) NSNumber * sampleProtectionEquipmentID;
 
 @end

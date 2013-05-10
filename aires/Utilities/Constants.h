@@ -44,3 +44,27 @@
 #define FIELD_SAMPLE_DEVICETYPE                     @"field_sample_devicetype"
 #define FIELD_SAMPLE_NOTES                          @"field_sample_notes"
 #define FIELD_SAMPLE_COMMENTS                       @"sample_comments"
+
+#define FIELD_SAMPLECHEMICAL_DELETE                 @"field_samplechemical_delete"
+#define FIELD_SAMPLECHEMICAL_PELCFlag               @"field_samplechemical_PELCFlag"
+#define FIELD_SAMPLECHEMICAL_TLVTWAFlag             @"field_samplechemical_TLVTWAFlag"
+#define FIELD_SAMPLECHEMICAL_TLVSTELFlag            @"field_samplechemical_TLVSTELFlag"
+#define FIELD_SAMPLECHEMICAL_TLVCFlag               @"field_samplechemical_TLVCFlag"
+#define FIELD_SAMPLECHEMICAL_PELTWAFlag             @"field_samplechemical_PELTWAFlag"
+#define FIELD_SAMPLECHEMICAL_PELSTELFlag            @"field_samplechemical_PELSTELFlag"
+
+#define FIELD_SAMPLEMEASUREMENT_DELETE              @"field_samplemeasurement_delete"
+#define FIELD_SAMPLEMEASUREMENT_OffFlowRate         @"field_samplemeasurement_OffFlowRate"
+#define FIELD_SAMPLEMEASUREMENT_OffTime             @"field_samplemeasurement_OffTime"
+#define FIELD_SAMPLEMEASUREMENT_OnFlowRate          @"field_samplemeasurement_OnFlowRate"
+#define FIELD_SAMPLEMEASUREMENT_OnTime              @"field_samplemeasurement_OnTime"
+#define FIELD_SAMPLEMEASUREMENT_TotalArea           @"field_samplemeasurement_TotalArea"
+#define FIELD_SAMPLEMEASUREMENT_TotalMinutes        @"field_samplemeasurement_TotalMinutes"
+#define FIELD_SAMPLEMEASUREMENT_TotalVolume         @"field_samplemeasurement_TotalVolume"
+
+#define FIELD_SAMPLEPROTECTIONEQUIPMENT_DELETE      @"field_sampleprotectionequipment_delete"
+#define FIELD_SAMPLEPROTECTIONEQUIPMENT_NAME        @"field_sampleprotectionequipment_name"
+#define FIELD_SAMPLEPROTECTIONEQUIPMENT_ID          @"field_sampleprotectionequipment_id"
+
+
+

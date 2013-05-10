@@ -55,14 +55,17 @@
 //For SampleChemical
 -(void)storeSampleChemicalDetails:(NSArray *)sampleChemical forSample:(Sample *)sample;
 -(NSArray *)getSampleChemicalforSample:(Sample *)sample;
+-(void)updateSampleChemical:(SampleChemical *)sampleChemical inSample:(Sample *)sample forField:(NSString *)field withValue:(id)value;
 
 //For SampleMeasurement
 -(void)storeSampleMeasurementDetails:(NSArray *)sampleMeaseurement forSample:(Sample *)sample;
 -(NSArray *)getSampleMeasurementforSample:(Sample *)sample;
+-(void)updateSampleMeasurement:(SampleMeasurement *)sampleMeasurement inSample:(Sample *)sample forField:(NSString *)field withValue:(id)value;
 
 //For SampleProtectionEquipment
 -(void)storeSampleProtectionEquipmentDetails:(NSArray *)sampleProtectionEquipment forSample:(Sample *)sample;
 -(NSArray *)getSampleProtectionEquipmentforSample:(Sample *)sample;
+-(void)updateSampleProtectionEquipment:(SampleProtectionEquipment *)sampleProtectionEquipment inSample:(Sample *)sample forField:(NSString *)field withValue:(id)value;
 
 //Default list methods
 -(void)saveChemicalList:(NSArray *)chemicalArray;

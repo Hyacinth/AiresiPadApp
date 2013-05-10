@@ -373,8 +373,6 @@
         _completedProjectsCarousel.alpha = 0.0f;
         [self loadCarousel];
         [_loadingView setHidden:TRUE];
-        [[mSingleton getWebServiceManager] postProject:[_projectsArray objectAtIndex:0]];
-        //[[mSingleton getWebServiceManager] unlockProject:[_projectsArray objectAtIndex:0]];
 
     }
 }
