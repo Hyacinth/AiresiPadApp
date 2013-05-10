@@ -11,6 +11,17 @@
 
 @protocol MeasurementAddEditProtocol;
 
+@interface MeasurementFields : NSObject
+
+@property (nonatomic, retain) NSNumber * sampleMeasurement_OffFlowRate;
+@property (nonatomic, retain) NSString * sampleMeasurement_OffTime;
+@property (nonatomic, retain) NSNumber * sampleMeasurement_OnFlowRate;
+@property (nonatomic, retain) NSString * sampleMeasurement_OnTime;
+
+@end
+
+@class SampleMeasurement;
+
 @interface MeasurementAddEditView : UIView<UIPopoverControllerDelegate, TimePickerProtocol>
 
 @property (nonatomic) BOOL editMode;
@@ -30,14 +41,16 @@
 @property (weak, nonatomic) IBOutlet UILabel *offTimeValueLabel;
 
 @property (nonatomic, retain) id<MeasurementAddEditProtocol> delegate;
+@property (nonatomic, retain) SampleMeasurement *sampleMeasurement;
+@property (nonatomic, retain) MeasurementFields *measurementFields;
 
 @end
 
 @protocol MeasurementAddEditProtocol <NSObject>
 
--(void)measurementsAddPressed;
--(void)measurementsDonePressed;
+-(void)measurementsAddPressed:(MeasurementFields*)measurement;
+-(void)measurementsDonePressed:(SampleMeasurement*)measurement;
 -(void)measurementsCancelPressed;
--(void)measurementsDeletePressed;
+-(void)measurementsDeletePressed:(SampleMeasurement*)measurement;
 
 @end

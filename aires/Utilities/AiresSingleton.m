@@ -92,15 +92,28 @@ static AiresSingleton* instance;
     NSCharacterSet *charactersToRemove = [NSCharacterSet letterCharacterSet];
     
     NSString *trimmedReplacement = [[date componentsSeparatedByCharactersInSet:charactersToRemove ] componentsJoinedByString:@" "];
+    trimmedReplacement = [trimmedReplacement substringToIndex:[trimmedReplacement length]-1];
 
+    NSRange dotRange = [trimmedReplacement rangeOfString:@"."];
+    if (dotRange.location != NSNotFound)
+    {
+        trimmedReplacement = [trimmedReplacement stringByReplacingCharactersInRange:NSMakeRange(dotRange.location, trimmedReplacement.length-dotRange.location) withString:@""];
+    }
+    
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
-    [dateFormatter setDateFormat:@"yyyy-mm-dd HH:mm:ss "];
+    [dateFormatter setDateFormat:@"yyyy-mm-dd HH:mm:ss"];
+    NSTimeZone *timeZone = [NSTimeZone timeZoneWithName:@"UTC"];
+    [dateFormatter setTimeZone:timeZone];
     NSDate *theDate = [dateFormatter dateFromString:trimmedReplacement];
+    
     [self getDayOfTheWeek:theDate];
-    NSDateComponents *components = [[NSCalendar currentCalendar] components:NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit fromDate:theDate];
+    NSDateComponents *components = [[NSCalendar currentCalendar] components:NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit fromDate:theDate];
     NSInteger day = [components day];
     NSInteger month = [components month];
     NSInteger year = [components year];
+    NSInteger hour = [components hour]>12 ? [components hour]-12 : [components hour];
+    NSInteger minute = [components minute];
+    NSString *meridian = [components hour]/12 > 0 ? @"PM" : @"AM";
     
     NSMutableDictionary *componentDict =[[NSMutableDictionary alloc] init];
     [componentDict setValue:[self getDayOfTheWeek:theDate]   forKey:@"day"];
@@ -109,7 +122,9 @@ static AiresSingleton* instance;
     NSString *monthName = [[df monthSymbols] objectAtIndex:(month-1)];
     [componentDict setValue:[monthName substringToIndex:3] forKey:@"month"];
     [componentDict setValue:[NSString stringWithFormat:@"%d", year] forKey:@"year"];
-
+    [componentDict setValue:[NSString stringWithFormat:@"%d", hour] forKey:@"hour"];
+    [componentDict setValue:[NSString stringWithFormat:@"%@%d", minute<10?@"0":@"", minute] forKey:@"minute"];
+    [componentDict setValue:meridian forKey:@"meridian"];
     return componentDict;
 }
 

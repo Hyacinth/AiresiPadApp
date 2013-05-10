@@ -102,9 +102,13 @@
 
 -(void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
+    NSString *hour = [self pickerView:pickerView titleForRow:[pickerView selectedRowInComponent:0] forComponent:0];
+    NSString *minute = [self pickerView:pickerView titleForRow:[pickerView selectedRowInComponent:1] forComponent:1];
+    NSString *meridian = [self pickerView:pickerView titleForRow:[pickerView selectedRowInComponent:2] forComponent:2];
+    
     if(_delegate && [_delegate respondsToSelector:@selector(timePickerChanged:)])
     {
-        [_delegate timePickerChanged:[NSString stringWithFormat:@"%d %d", row, component]];
+        [_delegate timePickerChanged:[NSString stringWithFormat:@"%@:%@%@ %@", hour, [minute intValue]<10?@"0":@"", minute, meridian]];
     }
 }
 

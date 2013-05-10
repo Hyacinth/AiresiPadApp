@@ -7,7 +7,15 @@
 //
 
 #import "MeasurementAddEditView.h"
+#import "SampleMeasurement.h"
+#import "AiresSingleton.h"
 #import <QuartzCore/QuartzCore.h>
+
+#define mSingleton 	((AiresSingleton *) [AiresSingleton getSingletonInstance])
+
+@implementation MeasurementFields
+
+@end
 
 @interface MeasurementAddEditView ()
 {
@@ -116,7 +124,38 @@
     
     UITapGestureRecognizer *offTimeTapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(offTimeTapped)];
     [_offTimeValueLabel addGestureRecognizer:offTimeTapGesture];
+}
+
+-(void)setSampleMeasurement:(SampleMeasurement *)sampleMeasurement
+{
+    _sampleMeasurement = sampleMeasurement;
     
+    NSDictionary *onTimeComponents = [mSingleton getDateComponentsforString:_sampleMeasurement.sampleMeasurement_OnTime];
+    NSString *onTimeString = [NSString stringWithFormat:@"%@:%@ %@", [onTimeComponents valueForKey:@"hour"], [onTimeComponents valueForKey:@"minute"], [onTimeComponents valueForKey:@"meridian"]];
+    
+    NSDictionary *offTimeComponents = [mSingleton getDateComponentsforString:_sampleMeasurement.sampleMeasurement_OffTime];
+    NSString *offTimeString = [NSString stringWithFormat:@"%@:%@ %@", [offTimeComponents valueForKey:@"hour"], [offTimeComponents valueForKey:@"minute"], [onTimeComponents valueForKey:@"meridian"]];
+    
+    _onTimeValueLabel.text = onTimeString;
+    _offTimeValueLabel.text = offTimeString;
+    _onFlowRateField.text = [_sampleMeasurement.sampleMeasurement_OnFlowRate stringValue];
+    _offFlowRateField.text = [_sampleMeasurement.sampleMeasurement_OffFlowRate stringValue];
+}
+
+-(void)setMeasurementFields:(MeasurementFields *)measurementFields
+{
+    _measurementFields = measurementFields;
+    
+    NSDictionary *onTimeComponents = [mSingleton getDateComponentsforString:_measurementFields.sampleMeasurement_OnTime];
+    NSString *onTimeString = [NSString stringWithFormat:@"%@:%@ %@", [onTimeComponents valueForKey:@"hour"], [onTimeComponents valueForKey:@"minute"], [onTimeComponents valueForKey:@"meridian"]];
+    
+    NSDictionary *offTimeComponents = [mSingleton getDateComponentsforString:_measurementFields.sampleMeasurement_OffTime];
+    NSString *offTimeString = [NSString stringWithFormat:@"%@:%@ %@", [offTimeComponents valueForKey:@"hour"], [offTimeComponents valueForKey:@"minute"], [onTimeComponents valueForKey:@"meridian"]];
+    
+    _onTimeValueLabel.text = onTimeString;
+    _offTimeValueLabel.text = offTimeString;
+    _onFlowRateField.text = [measurementFields.sampleMeasurement_OnFlowRate stringValue];
+    _offFlowRateField.text = [measurementFields.sampleMeasurement_OffFlowRate stringValue];
 }
 
 -(void)onTimeTapped
@@ -175,18 +214,60 @@
 {
     if(_editMode)
     {
-        if(_delegate && [_delegate respondsToSelector:@selector(measurementsDonePressed)])
+        if(_delegate && [_delegate respondsToSelector:@selector(measurementsDonePressed:)])
         {
-            [_delegate measurementsDonePressed];
+            NSDate *now = [NSDate date];
+            NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+            NSDateComponents *components = [[NSCalendar currentCalendar] components:NSHourCalendarUnit | NSMinuteCalendarUnit fromDate:now];
+            
+            [components setHour:2];
+            [components setMinute:55];
+            
+            NSDate *localDate = [calendar dateFromComponents:components];
+            
+            NSString *dateStr = [self getUTCFormateDate:localDate];
+            
+            _sampleMeasurement.sampleMeasurement_OnTime = dateStr;
+            _sampleMeasurement.sampleMeasurement_OffTime = dateStr;
+            _sampleMeasurement.sampleMeasurement_OnFlowRate = [NSNumber numberWithInt:[_onFlowRateField.text intValue]];
+            _sampleMeasurement.sampleMeasurement_OffFlowRate = [NSNumber numberWithInt:[_offFlowRateField.text intValue]];
+            
+            [_delegate measurementsDonePressed:_sampleMeasurement];
         }
     }
     else
     {
-        if(_delegate && [_delegate respondsToSelector:@selector(measurementsAddPressed)])
+        if(_delegate && [_delegate respondsToSelector:@selector(measurementsAddPressed:)])
         {
-            [_delegate measurementsAddPressed];
+            NSDate *today = [NSDate date];
+            NSCalendar *gregorian = [[NSCalendar alloc]
+                                     initWithCalendarIdentifier:NSGregorianCalendar];
+            NSDateComponents *weekdayComponents =
+            [gregorian components:(NSDayCalendarUnit | NSWeekdayCalendarUnit) fromDate:today];
+            [weekdayComponents setHour:12];
+            [weekdayComponents setMinute:10];
+            
+            /*NSDate *localDate = [gregorian dateFromComponents:weekdayComponents];*/
+            
+            
+            //_measurementFields.sampleMeasurement_OnTime = dateStr;
+            //_measurementFields.sampleMeasurement_OffTime = dateStr;
+            _measurementFields.sampleMeasurement_OnFlowRate = [NSNumber numberWithInt:[_onFlowRateField.text intValue]];
+            _measurementFields.sampleMeasurement_OffFlowRate = [NSNumber numberWithInt:[_offFlowRateField.text intValue]];
+            
+            [_delegate measurementsAddPressed:_measurementFields];
         }
     }
+}
+
+-(NSString *)getUTCFormateDate:(NSDate *)localDate
+{
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    NSTimeZone *timeZone = [NSTimeZone timeZoneWithName:@"UTC"];
+    [dateFormatter setTimeZone:timeZone];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    NSString *dateString = [dateFormatter stringFromDate:localDate];
+    return dateString;
 }
 
 -(IBAction)cancelPressed:(id)sender
@@ -199,9 +280,9 @@
 
 -(IBAction)deletePressed:(id)sender
 {
-    if(_delegate && [_delegate respondsToSelector:@selector(measurementsDeletePressed)])
+    if(_delegate && [_delegate respondsToSelector:@selector(measurementsDeletePressed:)])
     {
-        [_delegate measurementsDeletePressed];
+        [_delegate measurementsDeletePressed:_sampleMeasurement];
     }
 }
 

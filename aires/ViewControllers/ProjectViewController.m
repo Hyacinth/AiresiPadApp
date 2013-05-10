@@ -476,11 +476,11 @@
     {
         [self collapseSampleDetail:YES];
     }
-    
-    [self showMeasurementEditAddView:NO];
+    MeasurementFields *measurement = [[MeasurementFields alloc] init];
+    [self showMeasurementEditAddView:NO forMeasurement:measurement];
 }
 
--(void)showMeasurementEditAddView:(BOOL)editMode
+-(void)showMeasurementEditAddView:(BOOL)editMode forMeasurement:(id)measurement
 {
     UIView *fadeMeasurementAddEditView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1024, 768)];
     fadeMeasurementAddEditView.tag = FADE_VIEW_TAG;
@@ -492,6 +492,12 @@
     MeasurementAddEditView *measurementView = (MeasurementAddEditView *)[topLevelObjects objectAtIndex:0];
     measurementView.delegate = self;
     measurementView.editMode = editMode;
+    
+    if(editMode)
+        measurementView.sampleMeasurement = (SampleMeasurement*)measurement;
+    else
+        measurementView.measurementFields =(MeasurementFields*)measurement;
+    
     measurementView.center = fadeMeasurementAddEditView.center;
     [fadeMeasurementAddEditView addSubview:measurementView];
     
@@ -783,6 +789,14 @@
     {
         // measurementsTableView
         static NSString *kMeasurementCellID = @"MeasurementValueCell";
+        SampleMeasurement *measurement = (SampleMeasurement*)[_measurementsArray objectAtIndex:indexPath.row];
+        
+        NSDictionary *onTimeComponents = [mSingleton getDateComponentsforString:measurement.sampleMeasurement_OnTime];
+        NSString *onTimeString = [NSString stringWithFormat:@"%@:%@ %@", [onTimeComponents valueForKey:@"hour"], [onTimeComponents valueForKey:@"minute"], [onTimeComponents valueForKey:@"meridian"]];
+
+        NSDictionary *offTimeComponents = [mSingleton getDateComponentsforString:measurement.sampleMeasurement_OffTime];
+        NSString *offTimeString = [NSString stringWithFormat:@"%@:%@ %@", [offTimeComponents valueForKey:@"hour"], [offTimeComponents valueForKey:@"minute"], [onTimeComponents valueForKey:@"meridian"]];
+        
         
         UITableViewCell *cell = (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:kMeasurementCellID];
         if (cell == nil)
@@ -793,15 +807,13 @@
             
             UIFont *font14px = [UIFont fontWithName:@"ProximaNova-Regular" size:14.0f];
             UIColor *textColor = [UIColor colorWithRed:28.0f/255.0f green:34.0f/255.0f blue:39.0f/255.0f alpha:1.0f];
-            
-            SampleMeasurement *measurement = (SampleMeasurement*)[_measurementsArray objectAtIndex:indexPath.row];
-            
+                        
             UILabel *onTimeLabel = [[UILabel alloc] initWithFrame:CGRectMake(8, 0, 160, cell.contentView.bounds.size.height)];
             onTimeLabel.tag = MEASUREMENT_ONTIME_TAG;
             onTimeLabel.backgroundColor = [UIColor clearColor];
             onTimeLabel.font = font14px;
             onTimeLabel.textColor = textColor;
-            onTimeLabel.text = @"12:30 pm";
+            onTimeLabel.text = onTimeString;
             [cell.contentView addSubview:onTimeLabel];
             
             UILabel *onFlowRateLabel = [[UILabel alloc] initWithFrame:CGRectMake(179, 0, 160, cell.contentView.bounds.size.height)];
@@ -817,7 +829,7 @@
             offTimeLabel.backgroundColor = [UIColor clearColor];
             offTimeLabel.font = font14px;
             offTimeLabel.textColor = textColor;
-            offTimeLabel.text = @"12:40 pm";
+            offTimeLabel.text = offTimeString;
             [cell.contentView addSubview:offTimeLabel];
             
             UILabel *offFlowRateLabel = [[UILabel alloc] initWithFrame:CGRectMake(521, 0, 160, cell.contentView.bounds.size.height)];
@@ -829,17 +841,17 @@
             [cell.contentView addSubview:offFlowRateLabel];
         }
         else
-        {
-            SampleMeasurement *measurement = [_measurementsArray objectAtIndex:indexPath.row];
-            
+        {           
             UILabel *onTimeLabel = (UILabel*)[cell.contentView viewWithTag:MEASUREMENT_ONTIME_TAG];
-            onTimeLabel.text = @"12:30 pm";
+            onTimeLabel.text = onTimeString;
             UILabel *onFlowRateLabel = (UILabel*)[cell.contentView viewWithTag:MEASUREMENT_ONFLOWRATE_TAG];
             onFlowRateLabel.text = [measurement.sampleMeasurement_OnFlowRate stringValue];
             UILabel *offTimeLabel = (UILabel*)[cell.contentView viewWithTag:MEASUREMENT_OFFTIME_TAG];
-            offTimeLabel.text = @"12:40 pm";
+            offTimeLabel.text = offTimeString;
             UILabel *offFlowRateLabel = (UILabel*)[cell.contentView viewWithTag:MEASUREMENT_OFFFLOWRATE_TAG];
             offFlowRateLabel.text = [measurement.sampleMeasurement_OffFlowRate stringValue];
+            
+            
         }
         return cell;
     }
@@ -848,10 +860,11 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
+
     if(tableView==_measurementsTableView)
     {
-        [self showMeasurementEditAddView:YES];
+        SampleMeasurement *measurement = (SampleMeasurement*)[_measurementsArray objectAtIndex:indexPath.row];
+        [self showMeasurementEditAddView:YES forMeasurement:measurement];
     }
 }
 
@@ -960,13 +973,27 @@
 
 #pragma mark - MeasurementAddEditProtocol
 
--(void)measurementsAddPressed
+-(void)measurementsAddPressed:(MeasurementFields*)measurement
 {
     [self removeMeasurementEditView];
     
-    SampleMeasurement *sampleMeasurement = [[SampleMeasurement alloc] init];
+    NSMutableDictionary *measurementDict = [[NSMutableDictionary alloc] init];
+    [measurementDict setValue:measurement.sampleMeasurement_OnTime forKey:@"OnTime"];
+    [measurementDict setValue:measurement.sampleMeasurement_OffTime forKey:@"OffTime"];
+    [measurementDict setValue:measurement.sampleMeasurement_OnFlowRate forKey:@"OnFlowRate"];
+    [measurementDict setValue:measurement.sampleMeasurement_OffFlowRate forKey:@"OffFlowRate"];
+    [measurementDict setValue:[NSNumber numberWithInt:100] forKey:@"Area"];
+    [measurementDict setValue:[NSNumber numberWithInt:100] forKey:@"Minutes"];
+    [measurementDict setValue:[NSNumber numberWithInt:100] forKey:@"Volume"];
+    [measurementDict setValue:currentSample.sample_SampleId forKey:@"SampleId"];
+    [measurementDict setValue:[NSNumber numberWithBool:FALSE] forKey:@"Deleted"];
+    
+    NSArray *meaurement = [NSArray arrayWithObject:measurementDict];
+    [[mSingleton getPersistentStoreManager] storeSampleMeasurementDetails:meaurement forSample:currentSample];
 
-    [_measurementsArray addObject:sampleMeasurement];
+    [_measurementsArray removeAllObjects];
+    [_measurementsArray addObjectsFromArray:[[mSingleton getPersistentStoreManager] getSampleMeasurementforSample:currentSample]];
+    
     [_measurementsTableView reloadData];
     [self updateMeasurementTable];
     
@@ -974,7 +1001,7 @@
     [_measurementsScrollView setContentOffset:bottomOffset animated:YES];
 }
 
--(void)measurementsDonePressed
+-(void)measurementsDonePressed:(SampleMeasurement*)measurement
 {
     [self removeMeasurementEditView];
     [self updateMeasurementTable];
@@ -985,7 +1012,7 @@
     [self removeMeasurementEditView];
 }
 
--(void)measurementsDeletePressed
+-(void)measurementsDeletePressed:(SampleMeasurement*)measurement
 {
     [self removeMeasurementEditView];
     [_measurementsArray removeLastObject];
