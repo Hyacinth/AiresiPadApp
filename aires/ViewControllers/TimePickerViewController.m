@@ -37,12 +37,20 @@
 
 -(void)updatePicker:(NSDictionary*)dict
 {
-    NSString *hour = [dict objectForKey:@"hour"];
-    NSString *minute = [dict objectForKey:@"minute"];
+    NSUInteger hour = [[dict objectForKey:@"hour"] integerValue];
+    if(hour > 12)
+    {
+        hour = hour-12;
+    }
+    
+    NSUInteger minute = [[dict objectForKey:@"minute"] integerValue];
+    
     NSString *meridian = [dict objectForKey:@"meridian"];
     
-    [_pickerView selectRow:[hour integerValue]-1 inComponent:0 animated:YES];
-    [_pickerView selectRow:[minute integerValue]-1 inComponent:1 animated:YES];
+    NSLog(@"%d %d %@", hour, minute, meridian);
+    
+    [_pickerView selectRow:hour-1 inComponent:0 animated:YES];
+    [_pickerView selectRow:minute-1 inComponent:1 animated:YES];
     [_pickerView selectRow:[meridian isEqualToString:@"AM"]?0:1 inComponent:2 animated:YES];
 }
 

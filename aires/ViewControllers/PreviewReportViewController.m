@@ -214,23 +214,31 @@
 
 -(void)showMailPanel
 {
-    MFMailComposeViewController *mailComposeViewController = [[MFMailComposeViewController alloc] init];
-    
-    mailComposeViewController.mailComposeDelegate = self;
-    [mailComposeViewController setToRecipients:[NSArray arrayWithObjects:@"email1",nil]];
-    [mailComposeViewController setSubject:@"Report"];
-    [mailComposeViewController setMessageBody:@"your body" isHTML:YES];
-    
-    NSString *fileName = @"Report.pdf";
-    NSArray* documentDirectories = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask,YES);
-    NSString* documentDirectory = [documentDirectories objectAtIndex:0];
-    NSString* documentDirectoryFilename = [documentDirectory stringByAppendingPathComponent:fileName];
-    NSData *file = nil;
-    if ([[NSFileManager defaultManager] fileExistsAtPath:documentDirectoryFilename])
-        file = [[NSData alloc] initWithContentsOfFile:documentDirectoryFilename];
-    
-    [mailComposeViewController addAttachmentData:file mimeType:@"application/pdf" fileName:@"SomeFile.pdf"];
-    [self.navigationController presentModalViewController:mailComposeViewController animated:YES];
+    if([MFMailComposeViewController canSendMail])
+    {
+        MFMailComposeViewController *mailComposeViewController = [[MFMailComposeViewController alloc] init];
+        
+        mailComposeViewController.mailComposeDelegate = self;
+        [mailComposeViewController setToRecipients:[NSArray arrayWithObjects:@"email1",nil]];
+        [mailComposeViewController setSubject:@"Report"];
+        [mailComposeViewController setMessageBody:@"your body" isHTML:YES];
+        
+        NSString *fileName = @"Report.pdf";
+        NSArray* documentDirectories = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask,YES);
+        NSString* documentDirectory = [documentDirectories objectAtIndex:0];
+        NSString* documentDirectoryFilename = [documentDirectory stringByAppendingPathComponent:fileName];
+        NSData *file = nil;
+        if ([[NSFileManager defaultManager] fileExistsAtPath:documentDirectoryFilename])
+            file = [[NSData alloc] initWithContentsOfFile:documentDirectoryFilename];
+        
+        [mailComposeViewController addAttachmentData:file mimeType:@"application/pdf" fileName:@"SomeFile.pdf"];
+        [self.navigationController presentModalViewController:mailComposeViewController animated:YES];
+    }
+    else
+    {
+        noNetworkAlert = [[UIAlertView alloc] initWithTitle:@"Mail Error" message:@"Please configure Mail account in settings" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+        [noNetworkAlert show];
+    }
 }
 
 

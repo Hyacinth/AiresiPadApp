@@ -113,7 +113,7 @@ static AiresSingleton* instance;
     NSInteger year = [components year];
     NSInteger hour = [components hour]>12 ? [components hour]-12 : [components hour];
     NSInteger minute = [components minute];
-    NSString *meridian = [components hour]/12 > 0 ? @"PM" : @"AM";
+    NSString *meridian = [components hour]>12 ? @"PM" : @"AM";
     
     NSMutableDictionary *componentDict =[[NSMutableDictionary alloc] init];
     [componentDict setValue:[self getDayOfTheWeek:theDate]   forKey:@"day"];
