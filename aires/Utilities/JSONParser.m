@@ -167,10 +167,8 @@
    
 //    [ProjectDetailsDict setValue:@"" forKey:@"UserProjects"];
 
-    if(proj.project_CompletedFlag)
-        [ProjectDetailsDict setValue:[proj.project_CompletedFlag boolValue] ? @"TRUE" : @"FALSE" forKey:@"CompletedFlag"];
-    //else
-//        [ProjectDetailsDict setValue:@"FALSE" forKey:@"CompletedFlag"];
+
+    [ProjectDetailsDict setValue:@"TRUE" forKey:@"CompletedFlag"];
     
     if(proj.project_createdOn)
         [ProjectDetailsDict setValue:proj.project_createdOn forKey:@"CreatedOn"];
@@ -657,10 +655,7 @@
     else
         [jsonDict setValue:@"" forKey:@"TurnaroundTimeId"];
     
-    if(proj.project_CompletedFlag)
-        [jsonDict setValue:[proj.project_CompletedFlag boolValue] ? @"TRUE" : @"FALSE" forKey:@"CompletedFlag"];
-    else
-        [jsonDict setValue:@"FALSE" forKey:@"CompletedFlag"];
+    [jsonDict setValue:@"FALSE" forKey:@"CompletedFlag"];
     
     if(proj.project_createdOn)
         [jsonDict setValue:proj.project_createdOn forKey:@"CreatedOn"];
