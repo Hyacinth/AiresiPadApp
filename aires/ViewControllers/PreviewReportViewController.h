@@ -21,6 +21,7 @@
 @interface PreviewReportViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, MFMailComposeViewControllerDelegate, UIAlertViewDelegate>
 {
     UIFont *font12Regular;
+    UIFont *font12Bold;
     UIFont *font14Regular;
     UIFont *font14Bold;
     UIFont *font16Regular;

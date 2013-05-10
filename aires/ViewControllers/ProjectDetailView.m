@@ -9,6 +9,9 @@
 #import "ProjectDetailView.h"
 #import "Project.h"
 #import <QuartzCore/QuartzCore.h>
+#import "AiresSingleton.h"
+
+#define mSingleton 	((AiresSingleton *) [AiresSingleton getSingletonInstance])
 
 @interface ProjectDetailView ()
 {
@@ -112,18 +115,25 @@
     
 	// Set the fill color to white.
 	CGContextSetFillColorWithColor(context, [UIColor colorWithRed:28.0f/255.0f green:34.0f/255.0f blue:39.0f/255.0f alpha:1.0f].CGColor);
-    
-    [@"28" drawInRect:CGRectMake(20, 25, 45, 40)
+   
+    NSString *now = _project.project_DateOnsite;
+    NSDictionary *dateComp = [mSingleton getDateComponentsforString:now];
+    NSString *date = [dateComp objectForKey:@"date"];
+    NSString *month = [dateComp objectForKey:@"month"];
+    NSString *year = [dateComp objectForKey:@"year"];
+    NSString *day = [dateComp objectForKey:@"day"];
+
+    [date drawInRect:CGRectMake(20, 25, 45, 40)
              withFont:dateFont
         lineBreakMode:UILineBreakModeTailTruncation
             alignment:UITextAlignmentLeft];
     
-    [@"Thursday" drawInRect:CGRectMake(70, 30, 80, 15)
+    [day drawInRect:CGRectMake(70, 30, 80, 15)
                    withFont:dayFont
               lineBreakMode:UILineBreakModeTailTruncation
                   alignment:UITextAlignmentLeft];
     
-    [@"Mar 2013" drawInRect:CGRectMake(70, 43, 80, 15)
+    [[NSString stringWithFormat:@"%@ %@",month, year] drawInRect:CGRectMake(70, 43, 80, 15)
                    withFont:monthYearFont
               lineBreakMode:UILineBreakModeTailTruncation
                   alignment:UITextAlignmentLeft];
@@ -151,7 +161,7 @@
                      lineBreakMode:UILineBreakModeTailTruncation
                          alignment:UITextAlignmentLeft];
     
-    [@"4 Hours" drawInRect:CGRectMake(60, 263, 100, 10)
+    [_project.project_TurnAroundTime drawInRect:CGRectMake(60, 263, 140, 10)
                   withFont:font14Bold
              lineBreakMode:UILineBreakModeTailTruncation
                  alignment:UITextAlignmentLeft];

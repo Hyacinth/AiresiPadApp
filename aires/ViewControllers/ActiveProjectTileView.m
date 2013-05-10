@@ -173,7 +173,7 @@
               lineBreakMode:UILineBreakModeTailTruncation
                   alignment:UITextAlignmentLeft];
     
-    [@"4 Hours" drawInRect:CGRectMake(78, 282, 100, 20)
+    [_project.project_TurnAroundTime drawInRect:CGRectMake(78, 282, 140, 20)
                           withFont:font14Bold
                      lineBreakMode:UILineBreakModeTailTruncation
                          alignment:UITextAlignmentLeft];

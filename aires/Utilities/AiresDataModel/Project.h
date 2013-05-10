@@ -30,7 +30,7 @@
 @property (nonatomic, retain) NSString * project_ProjectDescription;
 @property (nonatomic, retain) NSString * project_ProjectNumber;
 @property (nonatomic, retain) NSString * project_QCPerson;
-@property (nonatomic, retain) NSDate *   project_TurnAroundTime;
+@property (nonatomic, retain) NSString *   project_TurnAroundTime;
 @property (nonatomic, retain) NSNumber * projectID;
 @property (nonatomic, retain) NSNumber * clientID;
 @property (nonatomic, retain) NSNumber * labID;

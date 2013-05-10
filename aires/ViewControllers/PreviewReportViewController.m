@@ -38,6 +38,9 @@
     if(!font12Regular)
         font12Regular = [[UIFont alloc] init];
     font12Regular = [UIFont fontWithName:@"ProximaNova-Regular" size:12.0f];
+    if(!font12Bold)
+        font12Bold = [[UIFont alloc] init];
+    font12Bold = [UIFont fontWithName:@"ProximaNova-Bold" size:12.0f];
     if(!font14Regular)
         font14Regular = [[UIFont alloc] init];
     font14Regular = [UIFont fontWithName:@"ProximaNova-Regular" size:14.0f];
@@ -103,16 +106,16 @@
     [self.cpLabel setFont:font12Regular];
     if(!self.ttValuelabel)
         self.ttValuelabel = [[UILabel alloc] init];
-    [self.ttValuelabel setFont:font14Bold];
+    [self.ttValuelabel setFont:font12Bold];
     if(!self.labValueLabel)
         self.labValueLabel = [[UILabel alloc] init];
-    [self.labValueLabel setFont:font14Bold];
+    [self.labValueLabel setFont:font12Bold];
     if(!self.qcValueLabel)
         self.qcValueLabel = [[UILabel alloc] init];
-    [self.qcValueLabel setFont:font14Bold];
+    [self.qcValueLabel setFont:font12Bold];
     if(!self.qpValueLabel)
         self.qpValueLabel = [[UILabel alloc] init];
-    [self.qpValueLabel setFont:font14Bold];
+    [self.qpValueLabel setFont:font12Bold];
     if(!self.projectNameLabel)
         self.projectNameLabel = [[UILabel alloc] init];
     [self.projectNameLabel setFont:font28Bold];
@@ -148,16 +151,19 @@
     
     samplesArray = [[mSingleton getPersistentStoreManager] getSampleforProject:currentProject];
     
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss zzz"];
-    NSString *stringFromDate = [formatter stringFromDate:currentProject.project_DateOnsite];
+    NSString *now = currentProject.project_DateOnsite;
+    NSDictionary *dateComp = [mSingleton getDateComponentsforString:now];
+    NSString *date = [dateComp objectForKey:@"date"];
+    NSString *month = [dateComp objectForKey:@"month"];
+    NSString *year = [dateComp objectForKey:@"year"];
+    NSString *day = [dateComp objectForKey:@"day"];
     
-    [self.dateLabel setText:nil];
-    [self.dayLabel setText:nil];
-    [self.monthLabel setText:nil];
+    [self.dateLabel setText:date];
+    [self.dayLabel setText:day];
+    [self.monthLabel setText:[NSString stringWithFormat:@"%@ %@",month, year]];
     
-    stringFromDate = [formatter stringFromDate:currentProject.project_TurnAroundTime];
-    [self.ttValuelabel setText:stringFromDate];
+    //stringFromDate = [formatter stringFromDate:currentProject.project_TurnAroundTime];
+    [self.ttValuelabel setText:currentProject.project_TurnAroundTime];
     [self.labValueLabel setText:currentProject.project_LabName];
     [self.qcValueLabel setText:currentProject.project_QCPerson];
     [self.qpValueLabel setText:[NSString stringWithFormat:@"%@ %@",currentProject.project_ContactFirstName,currentProject.project_ContactLastName]];
@@ -343,9 +349,15 @@
     
     if (indexPath.row != 0) {
         Sample *currentSample = [samplesArray objectAtIndex:(indexPath.row -1)];
+        NSString *now = currentSample.createdOn;
+        NSDictionary *dateComp = [mSingleton getDateComponentsforString:now];
+        NSString *date = [dateComp objectForKey:@"date"];
+        NSString *month = [dateComp objectForKey:@"month"];
+        NSString *year = [dateComp objectForKey:@"year"];
+
         cell.SampleID.text = [currentSample.sample_SampleId stringValue];
-        cell.DateSampled.text = nil;
-        cell.SampleType.text = nil;
+        cell.DateSampled.text = [NSString stringWithFormat:@"%@ %@ %@",month, date, year];
+        cell.SampleType.text = currentSample.airesSampleType.sampleTypeName;
         cell.DeviceType.text = currentSample.sample_DeviceTypeName;
         NSArray *measurementArray = [[mSingleton getPersistentStoreManager] getSampleMeasurementforSample:currentSample];
         if([measurementArray count] >0)
