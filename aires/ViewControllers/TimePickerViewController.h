@@ -15,10 +15,12 @@
 @property (weak, nonatomic) IBOutlet UIPickerView *pickerView;
 @property (nonatomic, retain) id<TimePickerProtocol> delegate;
 
+-(void)updatePicker:(NSDictionary*)dict;
+
 @end
 
 @protocol TimePickerProtocol <NSObject>
 
--(void)timePickerChanged:(NSString*)time;
+-(void)timePickerChanged:(NSDictionary*)timeDict;
 
 @end

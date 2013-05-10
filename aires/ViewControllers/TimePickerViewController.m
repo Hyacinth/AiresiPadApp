@@ -35,6 +35,17 @@
     // Dispose of any resources that can be recreated.
 }
 
+-(void)updatePicker:(NSDictionary*)dict
+{
+    NSString *hour = [dict objectForKey:@"hour"];
+    NSString *minute = [dict objectForKey:@"minute"];
+    NSString *meridian = [dict objectForKey:@"meridian"];
+    
+    [_pickerView selectRow:[hour integerValue]-1 inComponent:0 animated:YES];
+    [_pickerView selectRow:[minute integerValue]-1 inComponent:1 animated:YES];
+    [_pickerView selectRow:[meridian isEqualToString:@"AM"]?0:1 inComponent:2 animated:YES];
+}
+
 // returns the number of 'columns' to display.
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
 {
@@ -106,9 +117,11 @@
     NSString *minute = [self pickerView:pickerView titleForRow:[pickerView selectedRowInComponent:1] forComponent:1];
     NSString *meridian = [self pickerView:pickerView titleForRow:[pickerView selectedRowInComponent:2] forComponent:2];
     
+    NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:hour, @"hour", minute, @"minute", meridian, @"meridian", nil];
+    
     if(_delegate && [_delegate respondsToSelector:@selector(timePickerChanged:)])
     {
-        [_delegate timePickerChanged:[NSString stringWithFormat:@"%@:%@%@ %@", hour, [minute intValue]<10?@"0":@"", minute, meridian]];
+        [_delegate timePickerChanged:dict];
     }
 }
 

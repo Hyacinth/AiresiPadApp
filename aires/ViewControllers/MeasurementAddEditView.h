@@ -26,6 +26,8 @@
 
 @property (nonatomic) BOOL editMode;
 
+@property (retain, nonatomic) NSMutableDictionary *onTimeDictionary;
+@property (retain, nonatomic) NSMutableDictionary *offTimeDictionary;
 @property (weak, nonatomic) IBOutlet UIView *editView;
 @property (weak, nonatomic) IBOutlet UIButton *cancelButton;
 @property (weak, nonatomic) IBOutlet UIButton *doneButton;

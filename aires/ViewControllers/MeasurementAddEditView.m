@@ -42,6 +42,8 @@
 
 -(void)initControls
 {
+    _onTimeDictionary = [[NSMutableDictionary alloc] init];
+    _offTimeDictionary = [[NSMutableDictionary alloc] init];
     // Initialization code
     
     UIColor *grayColor = [UIColor colorWithRed:178.0f/255.0f green:178.0f/255.0f blue:178.0f/255.0f alpha:1.0f];
@@ -140,6 +142,11 @@
     _offTimeValueLabel.text = offTimeString;
     _onFlowRateField.text = [_sampleMeasurement.sampleMeasurement_OnFlowRate stringValue];
     _offFlowRateField.text = [_sampleMeasurement.sampleMeasurement_OffFlowRate stringValue];
+    
+    [_onTimeDictionary removeAllObjects];
+    [_onTimeDictionary addEntriesFromDictionary:onTimeComponents];
+    [_offTimeDictionary removeAllObjects];
+    [_offTimeDictionary addEntriesFromDictionary:offTimeComponents];
 }
 
 -(void)setMeasurementFields:(MeasurementFields *)measurementFields
@@ -174,7 +181,8 @@
     [popover setDelegate:self];
     
     [popover presentPopoverFromRect:_onTimeValueLabel.bounds inView:_onTimeValueLabel permittedArrowDirections:UIPopoverArrowDirectionLeft animated:YES];
-    
+
+    [timePickerVC updatePicker:_onTimeDictionary];
 }
 
 -(void)offTimeTapped
@@ -193,6 +201,8 @@
     [popover setDelegate:self];
     
     [popover presentPopoverFromRect:_offTimeValueLabel.bounds inView:_offTimeValueLabel permittedArrowDirections:UIPopoverArrowDirectionLeft animated:YES];
+    
+    [timePickerVC updatePicker:_offTimeDictionary];
 }
 
 -(void)setEditMode:(BOOL)editMode
@@ -218,17 +228,20 @@
         {
             NSDate *now = [NSDate date];
             NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-            NSDateComponents *components = [[NSCalendar currentCalendar] components:NSHourCalendarUnit | NSMinuteCalendarUnit fromDate:now];
+            NSDateComponents *components = [[NSCalendar currentCalendar] components:NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit fromDate:now];
             
-            [components setHour:2];
-            [components setMinute:55];
-            
+            [components setHour:[[_onTimeDictionary objectForKey:@"hour"] integerValue]];
+            [components setMinute:[[_onTimeDictionary objectForKey:@"minute"] integerValue]];
             NSDate *localDate = [calendar dateFromComponents:components];
-            
-            NSString *dateStr = [self getUTCFormateDate:localDate];
-            
+            NSString *dateStr = [self getUTCFormateDate:localDate];            
             _sampleMeasurement.sampleMeasurement_OnTime = dateStr;
+            
+            [components setHour:[[_offTimeDictionary objectForKey:@"hour"] integerValue]];
+            [components setMinute:[[_offTimeDictionary objectForKey:@"minute"] integerValue]];
+            localDate = [calendar dateFromComponents:components];
+            dateStr = [self getUTCFormateDate:localDate];
             _sampleMeasurement.sampleMeasurement_OffTime = dateStr;
+            
             _sampleMeasurement.sampleMeasurement_OnFlowRate = [NSNumber numberWithInt:[_onFlowRateField.text intValue]];
             _sampleMeasurement.sampleMeasurement_OffFlowRate = [NSNumber numberWithInt:[_offFlowRateField.text intValue]];
             
@@ -239,19 +252,22 @@
     {
         if(_delegate && [_delegate respondsToSelector:@selector(measurementsAddPressed:)])
         {
-            NSDate *today = [NSDate date];
-            NSCalendar *gregorian = [[NSCalendar alloc]
-                                     initWithCalendarIdentifier:NSGregorianCalendar];
-            NSDateComponents *weekdayComponents =
-            [gregorian components:(NSDayCalendarUnit | NSWeekdayCalendarUnit) fromDate:today];
-            [weekdayComponents setHour:12];
-            [weekdayComponents setMinute:10];
+            NSDate *now = [NSDate date];
+            NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+            NSDateComponents *components = [[NSCalendar currentCalendar] components:NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit fromDate:now];
             
-            /*NSDate *localDate = [gregorian dateFromComponents:weekdayComponents];*/
+            [components setHour:[[_onTimeDictionary objectForKey:@"hour"] integerValue]];
+            [components setMinute:[[_onTimeDictionary objectForKey:@"minute"] integerValue]];
+            NSDate *localDate = [calendar dateFromComponents:components];
+            NSString *dateStr = [self getUTCFormateDate:localDate];
+            _measurementFields.sampleMeasurement_OnTime = dateStr;
             
-            
-            //_measurementFields.sampleMeasurement_OnTime = dateStr;
-            //_measurementFields.sampleMeasurement_OffTime = dateStr;
+            [components setHour:[[_offTimeDictionary objectForKey:@"hour"] integerValue]];
+            [components setMinute:[[_offTimeDictionary objectForKey:@"minute"] integerValue]];
+            localDate = [calendar dateFromComponents:components];
+            dateStr = [self getUTCFormateDate:localDate];
+            _measurementFields.sampleMeasurement_OffTime = dateStr;
+
             _measurementFields.sampleMeasurement_OnFlowRate = [NSNumber numberWithInt:[_onFlowRateField.text intValue]];
             _measurementFields.sampleMeasurement_OffFlowRate = [NSNumber numberWithInt:[_offFlowRateField.text intValue]];
             
@@ -265,7 +281,7 @@
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     NSTimeZone *timeZone = [NSTimeZone timeZoneWithName:@"UTC"];
     [dateFormatter setTimeZone:timeZone];
-    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss'Z'"];
     NSString *dateString = [dateFormatter stringFromDate:localDate];
     return dateString;
 }
@@ -288,12 +304,26 @@
 
 #pragma mark - TimePickerProtocol
 
--(void)timePickerChanged:(NSString*)time
+-(void)timePickerChanged:(NSDictionary*)timeDict
 {
+    NSString *hour = [timeDict objectForKey:@"hour"];
+    NSString *minute = [timeDict objectForKey:@"minute"];
+    NSString *meridian = [timeDict objectForKey:@"meridian"];
+    
+    NSString *timeStr = [NSString stringWithFormat:@"%@:%@%@ %@", hour, [minute intValue]<10?@"0":@"", minute, meridian];
+    
     if(editingOnTime)
-        _onTimeValueLabel.text= time;
+    {
+        _onTimeValueLabel.text= timeStr;
+        [_onTimeDictionary removeAllObjects];
+        [_onTimeDictionary addEntriesFromDictionary:timeDict];
+    }
     else
-        _offTimeValueLabel.text= time;
+    {
+        _offTimeValueLabel.text= timeStr;
+        [_offTimeDictionary removeAllObjects];
+        [_offTimeDictionary addEntriesFromDictionary:timeDict];
+    }
 }
 
 // Only override drawRect: if you perform custom drawing.
