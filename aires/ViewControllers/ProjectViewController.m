@@ -477,7 +477,21 @@
         [self collapseSampleDetail:YES];
     }
     MeasurementFields *measurement = [[MeasurementFields alloc] init];
+    measurement.sampleMeasurement_OffTime = [self getUTCFormateDate:[NSDate date]];
+    measurement.sampleMeasurement_OnTime = [self getUTCFormateDate:[NSDate date]];
+    measurement.sampleMeasurement_OnFlowRate = [NSNumber numberWithInt:0];
+    measurement.sampleMeasurement_OffFlowRate = [NSNumber numberWithInt:0];
     [self showMeasurementEditAddView:NO forMeasurement:measurement];
+}
+
+-(NSString *)getUTCFormateDate:(NSDate *)localDate
+{
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    NSTimeZone *timeZone = [NSTimeZone timeZoneWithName:@"UTC"];
+    [dateFormatter setTimeZone:timeZone];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss'Z'"];
+    NSString *dateString = [dateFormatter stringFromDate:localDate];
+    return dateString;
 }
 
 -(void)showMeasurementEditAddView:(BOOL)editMode forMeasurement:(id)measurement

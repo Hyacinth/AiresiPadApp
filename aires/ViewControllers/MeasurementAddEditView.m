@@ -163,6 +163,11 @@
     _offTimeValueLabel.text = offTimeString;
     _onFlowRateField.text = [measurementFields.sampleMeasurement_OnFlowRate stringValue];
     _offFlowRateField.text = [measurementFields.sampleMeasurement_OffFlowRate stringValue];
+    
+    [_onTimeDictionary removeAllObjects];
+    [_onTimeDictionary addEntriesFromDictionary:onTimeComponents];
+    [_offTimeDictionary removeAllObjects];
+    [_offTimeDictionary addEntriesFromDictionary:offTimeComponents];
 }
 
 -(void)onTimeTapped
@@ -260,13 +265,17 @@
             NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
             NSDateComponents *components = [[NSCalendar currentCalendar] components:NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit fromDate:now];
             
-            [components setHour:[[_onTimeDictionary objectForKey:@"hour"] integerValue]];
+            NSUInteger hour = [[_onTimeDictionary objectForKey:@"hour"] integerValue];
+            hour = [[_onTimeDictionary objectForKey:@"meridian"] isEqualToString:@"PM"]? hour+12:hour;
+            [components setHour:hour];
             [components setMinute:[[_onTimeDictionary objectForKey:@"minute"] integerValue]];
             NSDate *localDate = [calendar dateFromComponents:components];
             NSString *dateStr = [self getUTCFormateDate:localDate];
             _measurementFields.sampleMeasurement_OnTime = dateStr;
             
-            [components setHour:[[_offTimeDictionary objectForKey:@"hour"] integerValue]];
+            hour = [[_offTimeDictionary objectForKey:@"hour"] integerValue];
+            hour = [[_offTimeDictionary objectForKey:@"meridian"] isEqualToString:@"PM"]? hour+12:hour;
+            [components setHour:hour];
             [components setMinute:[[_offTimeDictionary objectForKey:@"minute"] integerValue]];
             localDate = [calendar dateFromComponents:components];
             dateStr = [self getUTCFormateDate:localDate];
