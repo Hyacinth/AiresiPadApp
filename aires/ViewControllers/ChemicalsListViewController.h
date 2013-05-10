@@ -46,7 +46,6 @@
 
 @protocol ChemicalsListProtocol <NSObject>
 
--(void)addChemicalNumber:(NSUInteger)number chemical:(SampleChemical*)chemical;
 -(void)chemicalsListBackPressed;
 -(void)selectedChemicals:(NSArray*)array;
 

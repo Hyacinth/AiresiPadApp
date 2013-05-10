@@ -914,18 +914,27 @@
     [_chemicalsTableView reloadData];
     [self updateChemicalPPETable];
     [popover dismissPopoverAnimated:YES];
-}
-
--(void)addChemicalNumber:(NSUInteger)number chemical:(SampleChemical *)chemical
-{
-    [_chemicalsArray addObject:chemical];
-    [_chemicalsTableView reloadData];
-    [self updateChemicalPPETable];
     
-    CGPoint bottomOffset = CGPointMake(0, _samplesScrollView.contentSize.height - _samplesScrollView.bounds.size.height);
-    [_samplesScrollView setContentOffset:bottomOffset animated:YES];
-    
-    [popover dismissPopoverAnimated:YES];
+    NSMutableArray *chemArray = [[NSMutableArray alloc] init];
+    for(SampleChemical *chemical in _chemicalsArray)
+    {
+        NSMutableDictionary *chemicalDict = [[NSMutableDictionary alloc] init];
+        [chemicalDict setValue:chemical.sampleChemical_Name forKey:@"Chemical"];
+        [chemicalDict setValue:chemical.sampleChemical_PELCFlag forKey:@"PELCFlag"];
+        [chemicalDict setValue:chemical.sampleChemical_PELSTELFlag forKey:@"PELSTELFlag"];
+        [chemicalDict setValue:chemical.sampleChemical_PELTWAFlag forKey:@"PELTWAFlag"];
+        [chemicalDict setValue:chemical.sampleChemical_TLVSTELFlag forKey:@"TLVCFlag"];
+        [chemicalDict setValue:chemical.sampleChemical_TLVTWAFlag forKey:@"TLVSTELFlag"];
+        [chemicalDict setValue:chemical.sampleChemical_PELTWAFlag forKey:@"TLVTWAFlag"];
+        [chemicalDict setValue:nil forKey:@"SampleChemicalId"];
+        [chemicalDict setValue:currentSample.sampleID forKey:@"SampleId"];
+        [chemicalDict setValue:chemical.deleted forKey:@"Deleted"];
+        [chemicalDict setValue:chemical.chemicalID forKey:@"ChemicalId"];
+        
+        [chemArray addObject:chemicalDict];
+    }
+        
+    [[mSingleton getPersistentStoreManager] storeSampleChemicalDetails:chemArray forSample:currentSample];
 }
 
 #pragma mark - PPEListProtocol
@@ -940,18 +949,21 @@
     [_ppeTableView reloadData];
     [self updateChemicalPPETable];
     [popover dismissPopoverAnimated:YES];
-}
+    
+    NSMutableArray *equipArray = [[NSMutableArray alloc] init];
+    for(SampleProtectionEquipment *equipment in _ppeArray)
+    {
+        NSMutableDictionary *equipDict = [[NSMutableDictionary alloc] init];
+        [equipDict setValue:equipment.sampleProtectionEquipment_Name forKey:@"PPE"];
+        [equipDict setValue:equipment.sampleProtectionEquipmentID forKey:@"PPEId"];
+        [equipDict setValue:currentSample.sampleID forKey:@"SampleId"];
+        [equipDict setValue:equipment.deleted forKey:@"Deleted"];
+        [equipDict setValue:nil forKey:@"SamplePPEId"];
 
--(void)addPPENumber:(NSUInteger)number ppe:(SampleProtectionEquipment *)ppe
-{
-    [_ppeArray addObject:ppe];
-    [_ppeTableView reloadData];
-    [self updateChemicalPPETable];
-    
-    CGPoint bottomOffset = CGPointMake(0, _samplesScrollView.contentSize.height - _samplesScrollView.bounds.size.height);
-    [_samplesScrollView setContentOffset:bottomOffset animated:YES];
-    
-    [popover dismissPopoverAnimated:YES];
+        [equipArray addObject:equipDict];
+    }
+        
+    [[mSingleton getPersistentStoreManager] storeSampleProtectionEquipmentDetails:equipArray forSample:currentSample];
 }
 
 #pragma mark - MeasurementAddEditProtocol

@@ -44,7 +44,6 @@
 
 @protocol PPEListProtocol <NSObject>
 
--(void)addPPENumber:(NSUInteger)number ppe:(SampleProtectionEquipment*)ppe;
 -(void)ppeListBackPressed;
 -(void)selectedPPE:(NSArray*)array;
 
