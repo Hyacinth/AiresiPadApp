@@ -39,3 +39,8 @@
 
 #define NOTIFICATION_POST_PROJECT_FAILED      @"notification_post_project_failed"
 #define NOTIFICATION_POST_PROJECT_SUCCESS     @"notification_post_project_success"
+
+//Database fields
+#define FIELD_SAMPLE_DEVICETYPE                     @"field_sample_devicetype"
+#define FIELD_SAMPLE_NOTES                          @"field_sample_notes"
+#define FIELD_SAMPLE_COMMENTS                       @"sample_comments"

@@ -7,6 +7,7 @@
 //
 
 #import "PersistentStoreManager.h"
+#import "Constants.h"
 
 @interface PersistentStoreManager (Private)
 
@@ -484,6 +485,33 @@
         }
     }
     return finalResult;
+}
+
+-(void)updateSample:(Sample *)sample inProject:(Project *)proj forField:(NSString *)field withValue:(id)value
+{
+    NSArray *samplesArray = [self getSampleforProject:proj];
+    Sample *toUpdate;
+    for (Sample *mSample in samplesArray)
+    {
+        if ([mSample.sampleID isEqualToNumber:sample.sampleID])
+        {
+            toUpdate = mSample;
+            break;
+        }
+    }
+    if ([field isEqualToString:FIELD_SAMPLE_DEVICETYPE])
+    {
+        toUpdate.sample_DeviceTypeName = (NSString *)value;
+    }
+    else if ([field isEqualToString:FIELD_SAMPLE_NOTES])
+    {
+        toUpdate.sample_Notes = (NSString *)value;
+    }
+    else if ([field isEqualToString:FIELD_SAMPLE_COMMENTS])
+    {
+        toUpdate.sample_Comments = (NSString *)value;
+    }
+    [[self mainContext] save:nil];
 }
 
 #pragma mark -

@@ -50,6 +50,7 @@
 //For Sample
 -(void)storeSampleDetails:(NSArray *)sample forProject:(Project *)project;
 -(NSArray *)getSampleforProject:(Project *)project;
+-(void)updateSample:(Sample *)sample inProject:(Project *)proj forField:(NSString *)field withValue:(id)value;
 
 //For SampleChemical
 -(void)storeSampleChemicalDetails:(NSArray *)sampleChemical forSample:(Sample *)sample;

@@ -150,6 +150,10 @@
         samplesArray = [[NSArray alloc] init];
     
     samplesArray = [[mSingleton getPersistentStoreManager] getSampleforProject:currentProject];
+    NSSortDescriptor *sortDescriptor;
+    sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"sample_SampleId" ascending:YES];
+    NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
+    samplesArray = [samplesArray sortedArrayUsingDescriptors:sortDescriptors];
     
     NSString *now = currentProject.project_DateOnsite;
     NSDictionary *dateComp = [mSingleton getDateComponentsforString:now];
