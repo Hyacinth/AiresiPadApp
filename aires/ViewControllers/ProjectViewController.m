@@ -268,8 +268,6 @@
     return UIInterfaceOrientationIsLandscape(interfaceOrientation);
 }
 
-#pragma mark - Button actions
-
 -(void)showTextEditView
 {
     UIView *fadeTextEditView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1024, 768)];
@@ -307,6 +305,8 @@
                      }];
 }
 
+#pragma mark - Button actions
+
 -(IBAction)homeButtonPressed:(id)sender
 {
     UIViewController *vc = [self.navigationController.viewControllers objectAtIndex:self.navigationController.viewControllers.count-2];
@@ -320,6 +320,60 @@
                     }];
     
     [self.navigationController popViewControllerAnimated:NO];
+}
+
+-(IBAction)addSample:(id)sender
+{
+    /*if (![[dict valueForKey:@"Comments"] isKindOfClass:[NSNull class]])
+        mSample.sample_Comments = [dict objectForKey:@"Comments"];
+    if (![[dict valueForKey:@"DeviceType"] isKindOfClass:[NSNull class]])
+        mSample.sample_DeviceTypeName = [dict objectForKey:@"DeviceType"];
+    if (![[dict valueForKey:@"EmployeeJob"] isKindOfClass:[NSNull class]])
+        mSample.sample_EmployeeJob = [dict objectForKey:@"EmployeeJob"];
+    if (![[dict valueForKey:@"EmployeeName"] isKindOfClass:[NSNull class]])
+        mSample.sample_EmployeeName = [dict objectForKey:@"EmployeeName"];
+    if (![[dict valueForKey:@"Notes"] isKindOfClass:[NSNull class]])
+        mSample.sample_Notes = [dict objectForKey:@"Notes"];
+    if (![[dict valueForKey:@"OperationArea"] isKindOfClass:[NSNull class]])
+        mSample.sample_OperationArea = [dict objectForKey:@"OperationArea"];
+    if (![[dict valueForKey:@"SampleId"] isKindOfClass:[NSNull class]])
+        mSample.sample_SampleId = [dict objectForKey:@"SampleId"];
+    if (![[dict valueForKey:@"SampleNumber"] isKindOfClass:[NSNull class]])
+        mSample.sample_SampleNumber = [dict objectForKey:@"SampleNumber"];
+    if (![[dict valueForKey:@"CreatedOn"] isKindOfClass:[NSNull class]])
+        mSample.createdOn = [dict objectForKey:@"CreatedOn"];
+    if (![[dict valueForKey:@"DeviceType"] isKindOfClass:[NSNull class]])
+        mSample.deviceType = [dict objectForKey:@"DeviceType"];
+    if (![[dict valueForKey:@"Volume"] isKindOfClass:[NSNull class]])
+        mSample.volume = [dict objectForKey:@"Volume"];
+    if (![[dict valueForKey:@"Minutes"] isKindOfClass:[NSNull class]])
+        mSample.minutes = [dict objectForKey:@"Minutes"];
+    if (![[dict valueForKey:@"Area"] isKindOfClass:[NSNull class]])
+        mSample.area = [dict objectForKey:@"Area"];
+    if (![[dict valueForKey:@"DeviceTypeId"] isKindOfClass:[NSNull class]])
+        mSample.deviceTypeId = [dict objectForKey:@"DeviceTypeId"];
+    if (![[dict valueForKey:@"PPEId"] isKindOfClass:[NSNull class]])
+        mSample.ppeID = [dict objectForKey:@"PPEId"];
+    if (![[dict valueForKey:@"ProjectId"] isKindOfClass:[NSNull class]])
+        mSample.projectId = [dict objectForKey:@"ProjectId"];
+    if (![[dict valueForKey:@"SampleId"] isKindOfClass:[NSNull class]])
+        mSample.sampleID = [dict objectForKey:@"SampleId"];*/
+
+    User *user = [[mSingleton getPersistentStoreManager] getAiresUser];
+    
+    NSMutableDictionary *sampleDict = [[NSMutableDictionary alloc] init];
+    [sampleDict setValue:nil forKey:@"SampleId"]; // new field
+    [sampleDict setValue:user.user_FirstName forKey:@"EmployeeName"];
+    [sampleDict setValue:@"Engineer" forKey:@"EmployeeJob"];
+    [sampleDict setValue:@"N?A" forKey:@"OperationArea"];
+    [sampleDict setValue:currentProject.projectID forKey:@"ProjectId"];
+    [sampleDict setValue:[self getUTCFormateDate:[NSDate date]] forKey:@"CreatedOn"];
+    
+    [[mSingleton getPersistentStoreManager] storeSampleDetails:[NSArray arrayWithObject:sampleDict] forProject:currentProject];
+    
+    [_samplesArray removeAllObjects];
+    [_samplesArray addObjectsFromArray:[[mSingleton getPersistentStoreManager] getSampleforProject:currentProject]];
+    [samplesCarousel reloadData];
 }
 
 -(IBAction)adjustSamplesArea:(id)sender
@@ -1036,6 +1090,11 @@
 {
     [self removeMeasurementEditView];
     [self updateMeasurementTable];
+    
+    [[mSingleton getPersistentStoreManager] updateSampleMeasurement:measurement inSample:currentSample forField:FIELD_SAMPLEMEASUREMENT_OnTime withValue:measurement.sampleMeasurement_OnTime];
+    [[mSingleton getPersistentStoreManager] updateSampleMeasurement:measurement inSample:currentSample forField:FIELD_SAMPLEMEASUREMENT_OffTime withValue:measurement.sampleMeasurement_OffTime];
+    [[mSingleton getPersistentStoreManager] updateSampleMeasurement:measurement inSample:currentSample forField:FIELD_SAMPLEMEASUREMENT_OnFlowRate withValue:measurement.sampleMeasurement_OnFlowRate];
+    [[mSingleton getPersistentStoreManager] updateSampleMeasurement:measurement inSample:currentSample forField:FIELD_SAMPLEMEASUREMENT_OffFlowRate withValue:measurement.sampleMeasurement_OffFlowRate];
 }
 
 -(void)measurementsCancelPressed

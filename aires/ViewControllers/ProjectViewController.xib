@@ -2033,6 +2033,15 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
+						<string key="label">addSample:</string>
+						<reference key="source" ref="568343858"/>
+						<reference key="destination" ref="841351856"/>
+						<int key="IBEventType">7</int>
+					</object>
+					<int key="connectionID">156</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchEventConnection" key="connection">
 						<string key="label">adjustSamplesArea:</string>
 						<reference key="source" ref="879726057"/>
 						<reference key="destination" ref="841351856"/>
@@ -2689,7 +2698,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">155</int>
+			<int key="maxID">156</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -2708,6 +2717,7 @@
 						<string key="addChemical:">id</string>
 						<string key="addMeasurement:">id</string>
 						<string key="addPPE:">id</string>
+						<string key="addSample:">id</string>
 						<string key="adjustSamplesArea:">id</string>
 						<string key="checkButtonPressed:">id</string>
 						<string key="homeButtonPressed:">id</string>
@@ -2725,6 +2735,10 @@
 						</object>
 						<object class="IBActionInfo" key="addPPE:">
 							<string key="name">addPPE:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="addSample:">
+							<string key="name">addSample:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="adjustSamplesArea:">

@@ -99,5 +99,6 @@
 -(IBAction)addChemical:(id)sender;
 -(IBAction)addPPE:(id)sender;
 -(IBAction)addMeasurement:(id)sender;
+-(IBAction)addSample:(id)sender;
 
 @end

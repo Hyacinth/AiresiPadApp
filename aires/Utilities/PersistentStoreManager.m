@@ -552,6 +552,9 @@
 
 -(NSArray *)getSampleChemicalforSample:(Sample *)sample
 {
+    if(!sample.sampleID)
+        return nil;
+    
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     [request setEntity:[NSEntityDescription entityForName:@"SampleChemical" inManagedObjectContext:[self mainContext]]];
     NSArray *results = [[self mainContext] executeFetchRequest:request error:nil];
@@ -647,6 +650,9 @@
 
 -(NSArray *)getSampleMeasurementforSample:(Sample *)sample
 {
+    if(!sample.sampleID)
+        return nil;
+    
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     [request setEntity:[NSEntityDescription entityForName:@"SampleMeasurement" inManagedObjectContext:[self mainContext]]];
     NSArray *results = [[self mainContext] executeFetchRequest:request error:nil];
@@ -734,6 +740,9 @@
 
 -(NSArray *)getSampleProtectionEquipmentforSample:(Sample *)sample
 {
+    if(!sample.sampleID)
+        return nil;
+    
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     [request setEntity:[NSEntityDescription entityForName:@"SampleProtectionEquipment" inManagedObjectContext:[self mainContext]]];
     NSArray *results = [[self mainContext] executeFetchRequest:request error:nil];
