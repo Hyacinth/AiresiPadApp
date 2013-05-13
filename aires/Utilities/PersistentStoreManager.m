@@ -946,8 +946,8 @@
                                                                  insertNewObjectForEntityForName:@"SampleType"
                                                                  inManagedObjectContext:[self mainContext]];
         
-        if (![[dict valueForKey:@"SampleType"] isKindOfClass:[NSNull class]])
-            mSampleType.sampleTypeName = [dict valueForKey:@"SampleType"];
+        if (![[dict valueForKey:@"SampleTypeName"] isKindOfClass:[NSNull class]])
+            mSampleType.sampleTypeName = [dict valueForKey:@"SampleTypeName"];
         if (![[dict valueForKey:@"SampleTypeId"] isKindOfClass:[NSNull class]])
             mSampleType.sampleTypeID = [dict valueForKey:@"SampleTypeId"];
         

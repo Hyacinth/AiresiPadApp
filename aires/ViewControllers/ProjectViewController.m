@@ -1002,7 +1002,7 @@
     _sampleTypeValueLabel.text = sampleType.sampleTypeName;
     currentSample.airesSampleType.sampleTypeName = sampleType.sampleTypeName;;
     [popover dismissPopoverAnimated:YES];
-    //[[mSingleton getPersistentStoreManager] updateSample:currentSample inProject:currentProject forField:FIELD_SAMPLE_DEVICETYPE withValue:sampleType];
+    [[mSingleton getPersistentStoreManager] updateSample:currentSample inProject:currentProject forField:FIELD_SAMPLE_SAMPLETYPE withValue:sampleType];
 }
 
 #pragma mark - DeviceTypeListProtocol
