@@ -103,6 +103,7 @@
 {
     _project = project;
     [emailButton setTitle:_project.project_ContactEmail forState:UIControlStateNormal];
+    [self setNeedsDisplay];
 }
 
 // Only override drawRect: if you perform custom drawing.

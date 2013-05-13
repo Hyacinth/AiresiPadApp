@@ -176,7 +176,7 @@
     if(aCarousel == _activeProjectsCarousel)
         return _projectsArray.count;
     else
-        return _completedProjectsArray.count!=0 ?((_completedProjectsArray.count-1)/4)+1:0;
+        return (_completedProjectsArray.count==0) ? 0 : ((_completedProjectsArray.count-1)/4)+1;
 }
 
 - (UIView *)carousel:(iCarousel *)aCarousel viewForItemAtIndex:(NSUInteger)index reusingView:(UIView*)view
@@ -190,7 +190,12 @@
             tileView.project = (Project*)[_projectsArray objectAtIndex:index];
             return tileView;
         }
-        return view;
+        else
+        {
+            ActiveProjectTileView *tileView = (ActiveProjectTileView*)view;
+            tileView.project = (Project*)[_projectsArray objectAtIndex:index];
+            return view;
+        }
     }
     else
     {
@@ -199,15 +204,23 @@
             UIView *aView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1024, 94)];
             aView.backgroundColor = [UIColor clearColor];
             
+            NSUInteger viewsCount = ((_completedProjectsArray.count-1)/4)+1;
+            NSUInteger viewsToAdd = (index+1)<viewsCount ? 4 : _completedProjectsArray.count-(index*4);
             // 4 completed projects will be shown at a time
-            for (int i=0; i<_completedProjectsArray.count; i++)
+            for (int i=0; i<viewsToAdd; i++)
             {
                 // content view
                 CompletedProjectTileView *tileView = [[CompletedProjectTileView alloc] initWithFrame:CGRectMake(i*256, 0, 256, 154)];
-                tileView.project = (Project*)[_completedProjectsArray objectAtIndex:index];
+                tileView.tag = i;
+                tileView.project = (Project*)[_completedProjectsArray objectAtIndex:(index*4)+i];
                 [aView addSubview:tileView];
             }
+            
             return aView;
+        }
+        else
+        {
+            
         }
         return view;
     }
