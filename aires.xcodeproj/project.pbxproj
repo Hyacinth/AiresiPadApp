@@ -15,6 +15,8 @@
 		84812C811739272A00A3D5F1 /* TimePickerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84812C7D1739272A00A3D5F1 /* TimePickerViewController.xib */; };
 		84A735401737D0F0000BD714 /* ProjectViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84A7353F1737D0F0000BD714 /* ProjectViewController.xib */; };
 		84AF07B317280974006F8756 /* AiresService.plist in Resources */ = {isa = PBXBuildFile; fileRef = 84AF07B217280974006F8756 /* AiresService.plist */; };
+		84CA5DCD17411061003C338F /* SampleTypesListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84CA5DCB17411061003C338F /* SampleTypesListViewController.m */; };
+		84CA5DCE17411061003C338F /* SampleTypesListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84CA5DCC17411061003C338F /* SampleTypesListViewController.xib */; };
 		84D2E81E17338D0C00E3704E /* PreviewReportViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84D2E81D17338D0C00E3704E /* PreviewReportViewController.xib */; };
 		84D2E82117338DAF00E3704E /* ico_collapse_up_nor.png in Resources */ = {isa = PBXBuildFile; fileRef = 84D2E81F17338DAF00E3704E /* ico_collapse_up_nor.png */; };
 		84D2E82217338DAF00E3704E /* ico_collapse_up_pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 84D2E82017338DAF00E3704E /* ico_collapse_up_pressed.png */; };
@@ -245,6 +247,9 @@
 		84812C7D1739272A00A3D5F1 /* TimePickerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TimePickerViewController.xib; sourceTree = "<group>"; };
 		84A7353F1737D0F0000BD714 /* ProjectViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProjectViewController.xib; sourceTree = "<group>"; };
 		84AF07B217280974006F8756 /* AiresService.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = AiresService.plist; sourceTree = "<group>"; };
+		84CA5DCA17411060003C338F /* SampleTypesListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SampleTypesListViewController.h; sourceTree = "<group>"; };
+		84CA5DCB17411061003C338F /* SampleTypesListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SampleTypesListViewController.m; sourceTree = "<group>"; };
+		84CA5DCC17411061003C338F /* SampleTypesListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SampleTypesListViewController.xib; sourceTree = "<group>"; };
 		84D2E81D17338D0C00E3704E /* PreviewReportViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PreviewReportViewController.xib; sourceTree = "<group>"; };
 		84D2E81F17338DAF00E3704E /* ico_collapse_up_nor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ico_collapse_up_nor.png; sourceTree = "<group>"; };
 		84D2E82017338DAF00E3704E /* ico_collapse_up_pressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ico_collapse_up_pressed.png; sourceTree = "<group>"; };
@@ -760,6 +765,9 @@
 				98B68CD81728EEF10065D411 /* DashboardSettingsViewController.h */,
 				98B68CD91728EEF10065D411 /* DashboardSettingsViewController.m */,
 				98B68CDA1728EEF10065D411 /* DashboardSettingsViewController.xib */,
+				84CA5DCA17411060003C338F /* SampleTypesListViewController.h */,
+				84CA5DCB17411061003C338F /* SampleTypesListViewController.m */,
+				84CA5DCC17411061003C338F /* SampleTypesListViewController.xib */,
 				84EBEB67173BF26C00A8C71B /* DeviceTypesListViewController.h */,
 				84EBEB68173BF26D00A8C71B /* DeviceTypesListViewController.m */,
 				84EBEB69173BF26E00A8C71B /* DeviceTypesListViewController.xib */,
@@ -1176,6 +1184,7 @@
 				84812C811739272A00A3D5F1 /* TimePickerViewController.xib in Resources */,
 				84E6AFF5173A54F800BE8EB6 /* TextEditView.xib in Resources */,
 				84EBEB6B173BF26F00A8C71B /* DeviceTypesListViewController.xib in Resources */,
+				84CA5DCE17411061003C338F /* SampleTypesListViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1252,6 +1261,7 @@
 				84E6AFF4173A54F800BE8EB6 /* TextEditView.m in Sources */,
 				84E6AFF8173A721B00BE8EB6 /* SampleType.m in Sources */,
 				84EBEB6A173BF26F00A8C71B /* DeviceTypesListViewController.m in Sources */,
+				84CA5DCD17411061003C338F /* SampleTypesListViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

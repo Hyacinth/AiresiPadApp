@@ -192,6 +192,7 @@
     _chemicalsArray = [[NSMutableArray alloc] init];
     _ppeArray = [[NSMutableArray alloc] init];
     _deviceTypesArray = [[NSMutableArray alloc] init];
+    _sampleTypesArray = [[NSMutableArray alloc] init];
     
     UIImage *addMeasurementImage = [UIImage imageNamed:@"btn_contact_bg.png"];
     addMeasurementImage = [addMeasurementImage stretchableImageWithLeftCapWidth:addMeasurementImage.size.width/2 topCapHeight:addMeasurementImage.size.height/2];
@@ -216,6 +217,9 @@
     
     UITapGestureRecognizer *deviceTypeTapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(deviceTypeTapped)];
     [_deviceTypeValueLabel addGestureRecognizer:deviceTypeTapGesture];
+    
+    UITapGestureRecognizer *sampleTypeTapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(sampleTypeTapped)];
+    [_sampleTypeValueLabel addGestureRecognizer:sampleTypeTapGesture];
 }
 
 -(void)notesTapped
@@ -229,6 +233,26 @@
     bEditingNotes = NO;
     [self showTextEditView];
 }
+
+
+-(void)sampleTypeTapped
+{
+    SampleTypesListViewController * sampleTypeListVC = [[SampleTypesListViewController alloc] initWithNibName:@"SampleTypesListViewController" bundle:nil];
+    sampleTypeListVC.listContent = _sampleTypesArray;
+    sampleTypeListVC.selectedSampleType = nil;
+    sampleTypeListVC.delegate = self;
+    
+    if(!popover)
+        popover = [[UIPopoverController alloc] initWithContentViewController:sampleTypeListVC];
+    else
+        [popover setContentViewController:sampleTypeListVC];
+    
+    [popover setPopoverContentSize:CGSizeMake(320, 244)];
+    [popover setDelegate:self];
+    
+    [popover presentPopoverFromRect:_sampleTypeValueLabel.bounds inView:_sampleTypeValueLabel permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
+}
+
 
 -(void)deviceTypeTapped
 {
@@ -636,6 +660,9 @@
     
     [_measurementsArray removeAllObjects];
     [_measurementsArray addObjectsFromArray:[[mSingleton getPersistentStoreManager] getSampleMeasurementforSample:sample]];
+
+    [_sampleTypesArray removeAllObjects];
+    [_sampleTypesArray addObjectsFromArray:[[mSingleton getPersistentStoreManager] getSampleyTypeList]];
     
     [_deviceTypesArray removeAllObjects];
     [_deviceTypesArray addObjectsFromArray:[[mSingleton getPersistentStoreManager] getDeviceTypeList]];
@@ -966,6 +993,16 @@
     [_btnCielingCheck setSelected:NO];
     
     selectedSampleNumber = number;
+}
+
+#pragma mark - SampleTypeListProtocol
+
+-(void)sampleTypeSelected:(SampleType *)sampleType
+{
+    _sampleTypeValueLabel.text = sampleType.sampleTypeName;
+    currentSample.airesSampleType.sampleTypeName = sampleType.sampleTypeName;;
+    [popover dismissPopoverAnimated:YES];
+    //[[mSingleton getPersistentStoreManager] updateSample:currentSample inProject:currentProject forField:FIELD_SAMPLE_DEVICETYPE withValue:sampleType];
 }
 
 #pragma mark - DeviceTypeListProtocol
