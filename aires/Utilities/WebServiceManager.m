@@ -410,4 +410,39 @@
     [operation start];
 }
 
+-(void)getSampleTypeList
+{
+    NSString *URLString = [AiresService objectForKey:@"Data Service URL"];
+    if (!URLString)
+        return;
+    
+    NSURL *url = [NSURL URLWithString:URLString];
+    AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:url];
+    [httpClient registerHTTPOperationClass:[AFJSONRequestOperation class]];
+    [httpClient setDefaultHeader:@"Accept" value:@"application/json"];
+    [httpClient setDefaultHeader:@"access_token" value:[[mSingleton getSecurityManager] getValueForKey:LOGIN_ACCESSTOKEN]];
+    
+    NSDictionary *path = [AiresService objectForKey:@"Data Service Path"];
+    NSString *repativeURL = [path objectForKey:@"Sample Types"];
+    
+    NSMutableURLRequest *request = [httpClient requestWithMethod:@"GET" path:repativeURL parameters:nil];
+    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+    [httpClient registerHTTPOperationClass:[AFHTTPRequestOperation class]];
+    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject)
+     {
+         // Print the response body in text
+         NSLog(@"Sample Types: %@", [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding]);
+         //[[mSingleton getJSONParser] performSelectorOnMainThread:@selector(parseProtectionEquipmentList:) withObject:responseObject waitUntilDone:YES];
+         [[mSingleton getJSONParser] parseSampleTypeList:responseObject];
+     }
+                                     failure:^(AFHTTPRequestOperation *operation, NSError *error)
+     {
+         NSLog(@"Error: %@", error);
+         
+     }];
+    
+    ;
+    [operation start];
+}
+
 @end

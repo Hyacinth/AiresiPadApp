@@ -15,5 +15,6 @@
 @dynamic sampleTypeID;
 @dynamic sampleTypeName;
 @dynamic fromSample;
+@dynamic contentType;
 
 @end

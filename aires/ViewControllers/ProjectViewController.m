@@ -975,7 +975,7 @@
     _deviceTypeValueLabel.text = deviceType.deviceType_DeviceTypeName;
     currentSample.deviceTypeId = deviceType.deviceType_DeviceTypeID;
     [popover dismissPopoverAnimated:YES];
-    [[mSingleton getPersistentStoreManager] updateSample:currentSample inProject:currentProject forField:FIELD_SAMPLE_DEVICETYPE withValue:deviceType.deviceType_DeviceTypeName];
+    [[mSingleton getPersistentStoreManager] updateSample:currentSample inProject:currentProject forField:FIELD_SAMPLE_DEVICETYPE withValue:deviceType];
 }
 
 #pragma mark - ChemicalListProtocol

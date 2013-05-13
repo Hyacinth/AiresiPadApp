@@ -16,5 +16,6 @@
 @property (nonatomic, retain) NSNumber * sampleTypeID;
 @property (nonatomic, retain) NSString * sampleTypeName;
 @property (nonatomic, retain) Sample *fromSample;
+@property (nonatomic, retain) NSString *contentType;
 
 @end

@@ -20,6 +20,7 @@
 -(void)parseProtectionEquipmentList:(NSData *)jsonData;
 -(void)parseDeviceTypeList:(NSData *)jsonData;
 -(void)parseChemicalList:(NSData *)jsonData;
+-(void)parseSampleTypeList:(NSData *)jsonData;
 
 -(NSData *)JsonToPostProject:(Project *)proj;
 -(NSData *)JsonToUnlockProject:(Project *)proj;

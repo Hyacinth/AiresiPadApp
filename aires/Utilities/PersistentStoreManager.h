@@ -80,6 +80,9 @@
 -(void)saveProtectionEquipmentList:(NSArray *)equipmentArray;
 -(NSArray *)getProtectionEquipmentList;
 
+-(void)saveSampleTypeList:(NSArray *)sampletypeArray;
+-(NSArray *)getSampleyTypeList;
+
 -(NSNumber *)generateIDforNewSample;
 -(NSNumber *)generateIDforNewSampleChemical;
 -(NSNumber *)generateIDforNewSampleMeasurement;

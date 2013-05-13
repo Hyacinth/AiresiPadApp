@@ -25,5 +25,6 @@
 -(void)getChemicalsList;
 -(void)getDeviceTypesList;
 -(void)getProtectionEquipmentsList;
+-(void)getSampleTypeList;
 
 @end

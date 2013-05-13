@@ -48,6 +48,7 @@
     [[mSingleton getWebServiceManager] getChemicalsList];
     [[mSingleton getWebServiceManager] getDeviceTypesList];
     [[mSingleton getWebServiceManager] getProtectionEquipmentsList];
+    [[mSingleton getWebServiceManager] getSampleTypeList];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_LOGIN_SUCCESS object:self];
     [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_FETCH_PROJECT_SUCCESS object:self];
@@ -83,6 +84,15 @@
     [[mSingleton getPersistentStoreManager] getChemicalList];
     [[mSingleton getPersistentStoreManager] getDeviceTypeList];
     [[mSingleton getPersistentStoreManager] getProtectionEquipmentList];
+}
+
+-(void)parseSampleTypeList:(NSData *)jsonData
+{
+    NSError *error;
+    NSDictionary * config = [[CJSONDeserializer deserializer] deserializeAsDictionary:jsonData error:&error];
+	NSArray *sampleTypeDetails = [config objectForKey:@"value"];
+    NSLog(@"Sample Type:%@ %@",[sampleTypeDetails class ],sampleTypeDetails);
+    [[mSingleton getPersistentStoreManager] saveSampleTypeList:sampleTypeDetails];
 }
 
 -(NSData *)JsonToPostProject:(Project *)proj
@@ -291,7 +301,7 @@
     for (Sample *samp in projSamples)
     {
         NSMutableDictionary *SamplesDict = [[NSMutableDictionary alloc] init];
-        if(samp.sampleID)
+        if(samp.sampleID && [samp.sampleID intValue] > 0)
             [SamplesDict setValue:samp.sampleID forKey:@"SampleId"];
         //else
 //            [SamplesDict setValue:@"" forKey:@"SampleId"];
@@ -306,8 +316,8 @@
         //else
 //            [SamplesDict setValue:@"" forKey:@"SampleNumber"];
         
-        if(samp.sample_SampleId)
-            [SamplesDict setValue:samp.sample_SampleId forKey:@"SampleTypeId"];
+        if(samp.airesSampleType.sampleTypeID && [samp.airesSampleType.sampleTypeID intValue] > 0)
+            [SamplesDict setValue:samp.airesSampleType.sampleTypeID forKey:@"SampleTypeId"];
         //else
 //            [SamplesDict setValue:@"" forKey:@"SampleTypeId"];
         
@@ -364,27 +374,19 @@
         if(samp.createdOn)
             [SamplesDict setValue:samp.createdOn forKey:@"CreatedOn"];
         //else
-//            [SamplesDict setValue:@"" forKey:@"CreatedOn"];
-        
-        if(samp.deviceType)
-            [SamplesDict setValue:samp.deviceType forKey:@"DeviceType"];
-        //else
-//            [SamplesDict setValue:@"" forKey:@"DeviceType"];
-//        
-//        [SamplesDict setValue:@"" forKey:@"Project"];
-//        [SamplesDict setValue:@"" forKey:@"Results"];
-        
+//            [SamplesDict setValue:@"" forKey:@"CreatedOn"];      
+     
         NSMutableArray *measurementArray = [[NSMutableArray alloc] init];
         NSArray *sampleMeasurement = [[mSingleton getPersistentStoreManager] getSampleMeasurementforSample:samp];
         for (SampleMeasurement *sampMeas in sampleMeasurement)
         {
             NSMutableDictionary *MeasurementDict = [[NSMutableDictionary alloc] init];
-            if(sampMeas.sampleMesurementID)
+            if(sampMeas.sampleMesurementID && [sampMeas.sampleMesurementID intValue] > 0)
                 [MeasurementDict setValue:sampMeas.sampleMesurementID forKey:@"MeasurementId"];
             //else
 //                [MeasurementDict setValue:@"" forKey:@"MeasurementId"];
             
-            if(sampMeas.sampleMesurementID)
+            if(sampMeas.sampleMesurementID && [sampMeas.sampleMesurementID intValue] > 0)
                 [MeasurementDict setValue:sampMeas.sampleID forKey:@"SampleId"];
             //else
 //                [MeasurementDict setValue:@"" forKey:@"MeasurementId"];
@@ -442,12 +444,12 @@
         for (SampleChemical *sampChe in sampleChemicals)
         {
             NSMutableDictionary *SampleChemicalDict = [[NSMutableDictionary alloc] init];
-            if(sampChe.sampleChemicalID)
+            if(sampChe.sampleChemicalID && [sampChe.sampleChemicalID intValue] > 0)
                 [SampleChemicalDict setValue:sampChe.sampleChemicalID forKey:@"SampleChemicalId"];
             //else
 //                [SampleChemicalDict setValue:@"" forKey:@"SampleChemicalId"];
             
-            if(sampChe.sampleID)
+            if(sampChe.sampleID && [sampChe.sampleID intValue] > 0)
                 [SampleChemicalDict setValue:sampChe.sampleID forKey:@"SampleId"];
             //else
 //                [SampleChemicalDict setValue:@"" forKey:@"SampleId"];
@@ -516,7 +518,7 @@
             //else
 //                [SamplePPEDict setValue:@"" forKey:@"PPEId"];
             
-            if(sampPPE.sampleID)
+            if(sampPPE.sampleID && [sampPPE.sampleID intValue] > 0)
                 [SamplePPEDict setValue:sampPPE.sampleID forKey:@"SamplesId"];
             //else
 //                [SamplePPEDict setValue:@"" forKey:@"SamplesId"];
@@ -536,7 +538,7 @@
             //else
 //                [SamplePPEDict setValue:@"" forKey:@"PPE"];
             
-            if(sampPPE.samplePPEId)
+            if(sampPPE.samplePPEId && [sampPPE.samplePPEId intValue] > 0)
                 [SamplePPEDict setValue:sampPPE.samplePPEId forKey:@"SamplePPEId"];
             //else
 //                [SamplePPEDict setValue:@"" forKey:@"SamplePPEId"];
@@ -549,21 +551,6 @@
         //else
 //            [SamplesDict setValue:@"" forKey:@"SamplePPEs"];//Dict Array
         
-        SampleType *sampType = samp.airesSampleType;
-        NSMutableDictionary *SampleTypeDict = [[NSMutableDictionary alloc] init];
-        if(sampType.sampleTypeID)
-            [SampleTypeDict setValue:sampType.sampleTypeID forKey:@"SampleTypeId"];
-        //else
-//            [SampleTypeDict setValue:@"" forKey:@"SampleTypeId"];
-        
-        if(sampType.sampleTypeName)
-            [SampleTypeDict setValue:sampType.sampleTypeName forKey:@"SampleTypeName"];
-        //else
-//            [SampleTypeDict setValue:@"" forKey:@"SampleTypeName"];
-        
-//        [SampleTypeDict setValue:@"" forKey:@"Samples"];
-        if(sampType.sampleTypeID)
-            [SamplesDict setValue:SampleTypeDict forKey:@"SampleType"];//Dictionary
         [samplesArray addObject:SamplesDict];
     }
     if([samplesArray count] > 0)

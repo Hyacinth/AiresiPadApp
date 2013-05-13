@@ -130,6 +130,7 @@
         <relationship name="fromSample" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Sample" inverseName="airesSampleProtectionEquipment" inverseEntity="Sample" syncable="YES"/>
     </entity>
     <entity name="SampleType" representedClassName="SampleType" syncable="YES">
+        <attribute name="contentType" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="sampleTypeID" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="sampleTypeName" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="fromSample" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Sample" inverseName="airesSampleType" inverseEntity="Sample" syncable="YES"/>
@@ -153,7 +154,7 @@
         <element name="SampleChemical" positionX="-4050" positionY="-819" width="171" height="240"/>
         <element name="SampleMeasurement" positionX="-3960" positionY="-585" width="243" height="225"/>
         <element name="SampleProtectionEquipment" positionX="-3888" positionY="-324" width="252" height="150"/>
-        <element name="SampleType" positionX="-4050" positionY="-351" width="128" height="88"/>
+        <element name="SampleType" positionX="-4050" positionY="-351" width="128" height="105"/>
         <element name="User" positionX="-4671" positionY="-481" width="128" height="150"/>
     </elements>
 </model>

@@ -467,17 +467,26 @@
         
         [project addAiresSampleObject:mSample];
         [[self mainContext] save:nil];
-        
-        NSDictionary *sampleType = [dict objectForKey:@"SampleType"];
-        
+                
         SampleType *mSampleType = [NSEntityDescription
                                    insertNewObjectForEntityForName:@"SampleType"
                                    inManagedObjectContext:[self mainContext]];
         
-        if (![[sampleType valueForKey:@"SampleTypeId"] isKindOfClass:[NSNull class]])
-            mSampleType.sampleTypeID = [sampleType objectForKey:@"SampleTypeId"];
-        if (![[sampleType valueForKey:@"SampleTypeName"] isKindOfClass:[NSNull class]])
-            mSampleType.sampleTypeName = [sampleType objectForKey:@"SampleTypeName"];
+        if (![[dict valueForKey:@"SampleTypeId"] isKindOfClass:[NSNull class]])
+            mSampleType.sampleTypeID = [dict objectForKey:@"SampleTypeId"];
+        if (![[dict valueForKey:@"SampleType"] isKindOfClass:[NSNull class]])
+            mSampleType.sampleTypeName = [dict objectForKey:@"SampleType"];
+        
+        DeviceType *mDeviceType = [NSEntityDescription
+                                   insertNewObjectForEntityForName:@"DeviceType"
+                                   inManagedObjectContext:[self mainContext]];
+        
+        if(![[dict objectForKey:@"DeviceTypeId"] isKindOfClass:[NSNull class]])
+            mDeviceType.deviceTypeID = [dict objectForKey:@"DeviceTypeId"];
+        if(![[dict objectForKey:@"DeviceTypeId"] isKindOfClass:[NSNull class]])
+            mDeviceType.deviceType_DeviceTypeID = [dict objectForKey:@"DeviceTypeId"];
+        if(![[dict objectForKey:@"DeviceType"] isKindOfClass:[NSNull class]])
+            mDeviceType.deviceType_DeviceTypeName = [dict objectForKey:@"DeviceType"];
         
         mSample.airesSampleType = mSampleType;
         [[self mainContext] save:nil];
@@ -521,7 +530,9 @@
     }
     if ([field isEqualToString:FIELD_SAMPLE_DEVICETYPE])
     {
-        toUpdate.sample_DeviceTypeName = (NSString *)value;
+        DeviceType *mDeviceType = (DeviceType *)value;
+        toUpdate.sample_DeviceTypeName = mDeviceType.deviceType_DeviceTypeName;
+        toUpdate.deviceTypeId = mDeviceType.deviceTypeID;
     }
     else if ([field isEqualToString:FIELD_SAMPLE_NOTES])
     {
@@ -906,6 +917,7 @@
     }
     
 }
+
 -(NSArray *)getProtectionEquipmentList
 {
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
@@ -918,6 +930,40 @@
         }
     }
     return finalResult;
+}
+
+-(void)saveSampleTypeList:(NSArray *)sampletypeArray
+{
+    for (NSDictionary *dict in sampletypeArray)
+    {
+        SampleType *mSampleType = [NSEntityDescription
+                                                                 insertNewObjectForEntityForName:@"SampleType"
+                                                                 inManagedObjectContext:[self mainContext]];
+        
+        if (![[dict valueForKey:@"SampleType"] isKindOfClass:[NSNull class]])
+            mSampleType.sampleTypeName = [dict valueForKey:@"SampleType"];
+        if (![[dict valueForKey:@"SampleTypeId"] isKindOfClass:[NSNull class]])
+            mSampleType.sampleTypeID = [dict valueForKey:@"SampleTypeId"];
+        
+        mSampleType.contentType = @"ListData";
+        [[self mainContext] save:nil];
+    }
+
+}
+
+-(NSArray *)getSampleyTypeList
+{
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setEntity:[NSEntityDescription entityForName:@"SampleType" inManagedObjectContext:[self mainContext]]];
+    NSArray *results = [[self mainContext] executeFetchRequest:request error:nil];
+    NSMutableArray *finalResult = [NSMutableArray arrayWithArray:results];
+    for (SampleType *mSampleType in results) {
+        if (![mSampleType.contentType isEqualToString:@"ListData"]) {
+            [finalResult removeObject:mSampleType];
+        }
+    }
+    return finalResult;
+
 }
 
 
