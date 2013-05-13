@@ -43,7 +43,8 @@
 //Database fields
 #define FIELD_SAMPLE_DEVICETYPE                     @"field_sample_devicetype"
 #define FIELD_SAMPLE_NOTES                          @"field_sample_notes"
-#define FIELD_SAMPLE_COMMENTS                       @"sample_comments"
+#define FIELD_SAMPLE_COMMENTS                       @"field_sample_comments"
+#define FIELD_SAMPLE_SAMPLETYPE                     @"field_sample_sampletype"
 
 #define FIELD_SAMPLECHEMICAL_DELETE                 @"field_samplechemical_delete"
 #define FIELD_SAMPLECHEMICAL_PELCFlag               @"field_samplechemical_PELCFlag"

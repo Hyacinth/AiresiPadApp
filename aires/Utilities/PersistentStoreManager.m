@@ -542,6 +542,12 @@
     {
         toUpdate.sample_Comments = (NSString *)value;
     }
+    if ([field isEqualToString:FIELD_SAMPLE_SAMPLETYPE])
+    {
+        SampleType *mSampleType = (SampleType *)value;
+        toUpdate.airesSampleType.sampleTypeName = mSampleType.sampleTypeName;
+        toUpdate.airesSampleType.sampleTypeID = mSampleType.sampleTypeID;
+    }
     [[self mainContext] save:nil];
 }
 
