@@ -920,4 +920,65 @@
     return finalResult;
 }
 
+
+-(NSNumber *)generateIDforNewSample
+{
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setEntity:[NSEntityDescription entityForName:@"Sample" inManagedObjectContext:[self mainContext]]];
+    NSArray *results = [[self mainContext] executeFetchRequest:request error:nil];
+    NSInteger lowestNumber = -1;
+    for (Sample *theSample in results)
+    {
+        if ([theSample.sampleID integerValue] < lowestNumber) {
+            lowestNumber = [theSample.sampleID integerValue];
+        }
+    }
+    return [NSNumber numberWithInt:lowestNumber];
+}
+
+-(NSNumber *)generateIDforNewSampleChemical
+{
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setEntity:[NSEntityDescription entityForName:@"SampleChemical" inManagedObjectContext:[self mainContext]]];
+    NSArray *results = [[self mainContext] executeFetchRequest:request error:nil];
+    NSInteger lowestNumber = -1;
+    for (SampleChemical *theSampleChe in results)
+    {
+        if ([theSampleChe.sampleChemicalID integerValue] < lowestNumber) {
+            lowestNumber = [theSampleChe.sampleChemicalID integerValue];
+        }
+    }
+    return [NSNumber numberWithInt:lowestNumber];
+}
+
+-(NSNumber *)generateIDforNewSampleMeasurement
+{
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setEntity:[NSEntityDescription entityForName:@"SampleMeasurement" inManagedObjectContext:[self mainContext]]];
+    NSArray *results = [[self mainContext] executeFetchRequest:request error:nil];
+    NSInteger lowestNumber = -1;
+    for (SampleMeasurement *theSampleMeasure in results)
+    {
+        if ([theSampleMeasure.sampleMesurementID integerValue] < lowestNumber) {
+            lowestNumber = [theSampleMeasure.sampleMesurementID integerValue];
+        }
+    }
+    return [NSNumber numberWithInt:lowestNumber];
+}
+
+-(NSNumber *)generateIDforNewSampleProtectionEquipment
+{
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setEntity:[NSEntityDescription entityForName:@"SampleProtectionEquipment" inManagedObjectContext:[self mainContext]]];
+    NSArray *results = [[self mainContext] executeFetchRequest:request error:nil];
+    NSInteger lowestNumber = -1;
+    for (SampleProtectionEquipment *theSampleEquip in results)
+    {
+        if ([theSampleEquip.sampleProtectionEquipmentID integerValue] < lowestNumber) {
+            lowestNumber = [theSampleEquip.sampleProtectionEquipmentID integerValue];
+        }
+    }
+    return [NSNumber numberWithInt:lowestNumber];
+}
+
 @end
