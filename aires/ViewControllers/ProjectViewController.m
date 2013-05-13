@@ -765,7 +765,7 @@
 
 - (NSUInteger)numberOfItemsInCarousel:(iCarousel *)aCarousel
 {
-    return (_samplesArray.count / numberOfVisibleSamples) + 1;
+    return (_samplesArray.count==0) ? 0 : ((_samplesArray.count-1)/numberOfVisibleSamples)+1;
 }
 
 - (UIView *)carousel:(iCarousel *)aCarousel viewForItemAtIndex:(NSUInteger)index reusingView:(UIView*)view
@@ -775,12 +775,16 @@
         // content view
         UIView *aView = [[UIView alloc] initWithFrame:samplesCarousel.bounds];
         
-        for (int i=0; i<_samplesArray.count; i++)
+        NSUInteger viewsCount = ((_samplesArray.count-1)/numberOfVisibleSamples)+1;
+        NSUInteger viewsToAdd = (index+1)<viewsCount ? numberOfVisibleSamples : _samplesArray.count-(index*numberOfVisibleSamples);
+        for (int i=0; i<viewsToAdd; i++)
         {
+            NSLog(@"viewscount %d viewstoadd %d i %d numberOfVisibleSamples %d", viewsCount, viewsToAdd, i, numberOfVisibleSamples);
             SampleTileView *tileView = [[SampleTileView alloc] initWithFrame:CGRectMake((i*((numberOfVisibleSamples==14)?51:50.5)), 0, 52, 52)];
+            Sample *sample = (Sample*)[_samplesArray objectAtIndex:(index*numberOfVisibleSamples)+i];
             NSUInteger sampleNumber = (index*numberOfVisibleSamples)+i+1;
             tileView.tag = sampleNumber;
-            [tileView setSampleId:@"Sample"];
+            [tileView setSampleId:sample.sample_SampleNumber];
             [tileView setSampleNumber:sampleNumber];
             [tileView setSampleCompletedStatus:sampleNumber%3==0?YES:NO];
             [tileView setSampleSelected:(sampleNumber==selectedSampleNumber)?YES:NO];
