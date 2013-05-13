@@ -362,7 +362,8 @@
     User *user = [[mSingleton getPersistentStoreManager] getAiresUser];
     
     NSMutableDictionary *sampleDict = [[NSMutableDictionary alloc] init];
-    [sampleDict setValue:nil forKey:@"SampleId"]; // new field
+    NSNumber *sampleId = [[mSingleton getPersistentStoreManager] generateIDforNewSample];
+    [sampleDict setValue:sampleId forKey:@"SampleId"]; // new field
     [sampleDict setValue:user.user_FirstName forKey:@"EmployeeName"];
     [sampleDict setValue:@"Engineer" forKey:@"EmployeeJob"];
     [sampleDict setValue:@"N?A" forKey:@"OperationArea"];
@@ -374,6 +375,8 @@
     [_samplesArray removeAllObjects];
     [_samplesArray addObjectsFromArray:[[mSingleton getPersistentStoreManager] getSampleforProject:currentProject]];
     [samplesCarousel reloadData];
+    
+    [self updateSampleNumber:_samplesArray.count-1 animate:NO];
 }
 
 -(IBAction)adjustSamplesArea:(id)sender
@@ -994,7 +997,10 @@
         [chemicalDict setValue:chemical.sampleChemical_TLVSTELFlag forKey:@"TLVCFlag"];
         [chemicalDict setValue:chemical.sampleChemical_TLVTWAFlag forKey:@"TLVSTELFlag"];
         [chemicalDict setValue:chemical.sampleChemical_PELTWAFlag forKey:@"TLVTWAFlag"];
-        [chemicalDict setValue:nil forKey:@"SampleChemicalId"];
+        NSLog(@"Chemical Id - %@", chemical.sampleChemicalID);
+        if(chemical.sampleChemicalID.intValue == 0)
+            chemical.sampleChemicalID = [[mSingleton getPersistentStoreManager] generateIDforNewSampleChemical];
+        [chemicalDict setValue:chemical.sampleChemicalID forKey:@"SampleChemicalId"];
         [chemicalDict setValue:currentSample.sampleID forKey:@"SampleId"];
         [chemicalDict setValue:chemical.deleted forKey:@"Deleted"];
         [chemicalDict setValue:chemical.chemicalID forKey:@"ChemicalId"];
@@ -1026,7 +1032,12 @@
         [equipDict setValue:equipment.sampleProtectionEquipmentID forKey:@"PPEId"];
         [equipDict setValue:currentSample.sampleID forKey:@"SampleId"];
         [equipDict setValue:equipment.deleted forKey:@"Deleted"];
-        [equipDict setValue:nil forKey:@"SamplePPEId"];
+        
+        NSLog(@"Equipment Id - %@", equipment.samplePPEId);
+        if(equipment.samplePPEId.intValue == 0)
+            equipment.samplePPEId = [[mSingleton getPersistentStoreManager] generateIDforNewSampleProtectionEquipment];
+        
+        [equipDict setValue:equipment.samplePPEId forKey:@"SamplePPEId"];
 
         [equipArray addObject:equipDict];
     }
@@ -1071,6 +1082,8 @@
     [measurementDict setValue:[NSNumber numberWithInt:100] forKey:@"Minutes"];
     [measurementDict setValue:[NSNumber numberWithInt:100] forKey:@"Volume"];
     [measurementDict setValue:currentSample.sample_SampleId forKey:@"SampleId"];
+    NSNumber *measurementId = [[mSingleton getPersistentStoreManager] generateIDforNewSampleMeasurement];
+    [measurementDict setValue:measurementId forKey:@"MeasurementId"];
     [measurementDict setValue:[NSNumber numberWithBool:FALSE] forKey:@"Deleted"];
     
     NSArray *meaurement = [NSArray arrayWithObject:measurementDict];

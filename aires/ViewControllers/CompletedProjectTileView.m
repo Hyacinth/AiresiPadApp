@@ -61,12 +61,12 @@
                     lineBreakMode:UILineBreakModeTailTruncation
                         alignment:UITextAlignmentLeft];
     
-    [@"Building Material Review for Aires Consulting" drawInRect:CGRectMake(35, 48, 210, 20)
+    [_project.project_ProjectNumber drawInRect:CGRectMake(35, 48, 210, 20)
                                                         withFont:projectFont
                                                    lineBreakMode:UILineBreakModeTailTruncation
                                                        alignment:UITextAlignmentLeft];
     
-    [@"EFG Industries" drawInRect:CGRectMake(35, 70, 210, 20)
+    [_project.project_ClientName drawInRect:CGRectMake(35, 70, 210, 20)
                          withFont:clientFont
                     lineBreakMode:UILineBreakModeTailTruncation
                         alignment:UITextAlignmentLeft];

@@ -176,7 +176,7 @@
     if(aCarousel == _activeProjectsCarousel)
         return _projectsArray.count;
     else
-        return _completedProjectsArray.count;
+        return _completedProjectsArray.count!=0 ?((_completedProjectsArray.count-1)/4)+1:0;
 }
 
 - (UIView *)carousel:(iCarousel *)aCarousel viewForItemAtIndex:(NSUInteger)index reusingView:(UIView*)view
