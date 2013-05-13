@@ -59,8 +59,10 @@
     [_usernameLabel setText:[NSString stringWithFormat:@"%@ %@",tempUser.user_FirstName,tempUser.user_LastName]];
     
     _projectsArray = [[NSMutableArray alloc] init];
-    [_projectsArray addObjectsFromArray:[[mSingleton getPersistentStoreManager] getUserProjects]];
-    
+    _completedProjectsArray = [[NSMutableArray alloc] init];
+    [_projectsArray addObjectsFromArray:[[mSingleton getPersistentStoreManager] getLiveUserProjects]];
+    [_completedProjectsArray addObjectsFromArray:[[mSingleton getPersistentStoreManager] getCompletedUserProjects]];
+
     _activeProjectsCarousel.alpha = 0.0f;
     _completedProjectsCarousel.alpha = 0.0f;
     [self performSelector:@selector(loadCarousel) withObject:nil afterDelay:0.5];
@@ -171,7 +173,10 @@
 
 - (NSUInteger)numberOfItemsInCarousel:(iCarousel *)aCarousel
 {
-    return (aCarousel == _activeProjectsCarousel)?_projectsArray.count:4;
+    if(aCarousel == _activeProjectsCarousel)
+        return _projectsArray.count;
+    else
+        return _completedProjectsArray.count;
 }
 
 - (UIView *)carousel:(iCarousel *)aCarousel viewForItemAtIndex:(NSUInteger)index reusingView:(UIView*)view
@@ -195,10 +200,11 @@
             aView.backgroundColor = [UIColor clearColor];
             
             // 4 completed projects will be shown at a time
-            for (int i=0; i<4; i++)
+            for (int i=0; i<_completedProjectsArray.count; i++)
             {
                 // content view
                 CompletedProjectTileView *tileView = [[CompletedProjectTileView alloc] initWithFrame:CGRectMake(i*256, 0, 256, 154)];
+                tileView.project = (Project*)[_completedProjectsArray objectAtIndex:index];
                 [aView addSubview:tileView];
             }
             return aView;
@@ -230,7 +236,7 @@
     {
         if(!mPreviewReportViewController)
             mPreviewReportViewController = [[PreviewReportViewController alloc] initWithNibName:@"PreviewReportViewController" bundle:nil];
-        Project *currentProject = (Project*)[_projectsArray objectAtIndex:index];
+        Project *currentProject = (Project*)[_completedProjectsArray objectAtIndex:index];
         [mPreviewReportViewController setCurrentProject:currentProject];
     
         [self.navigationController pushViewController:mPreviewReportViewController animated:NO];
@@ -244,10 +250,6 @@
 
         
     }
-    else
-    {
-        
-    }
 }
 
 #pragma mark-
@@ -258,7 +260,7 @@
     {
         if(!mProjectListViewController)
             mProjectListViewController = [[ProjectListViewController alloc] initWithNibName:@"ProjectListViewController" bundle:nil];
-        mProjectListViewController.listContent = [[mSingleton getPersistentStoreManager] getUserProjects];
+        mProjectListViewController.listContent = [[mSingleton getPersistentStoreManager] getLiveUserProjects];
         mProjectListViewController.delegate = self;
         [mProjectListViewController filterContentForSearchText:_searchField.text scope:nil];
         
@@ -368,7 +370,9 @@
     else if ([[notification name] isEqualToString:NOTIFICATION_FETCH_PROJECT_SUCCESS])
     {
         [_projectsArray removeAllObjects];
-        [_projectsArray addObjectsFromArray:[[mSingleton getPersistentStoreManager] getUserProjects]];
+        [_projectsArray addObjectsFromArray:[[mSingleton getPersistentStoreManager] getLiveUserProjects]];
+        [_completedProjectsArray removeAllObjects];
+        [_completedProjectsArray addObjectsFromArray:[[mSingleton getPersistentStoreManager] getCompletedUserProjects]];
         _activeProjectsCarousel.alpha = 0.0f;
         _completedProjectsCarousel.alpha = 0.0f;
         [self loadCarousel];

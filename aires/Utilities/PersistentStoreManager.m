@@ -396,6 +396,28 @@
     return results;
 }
 
+-(NSArray *)getCompletedUserProjects
+{
+    NSMutableArray *projects = [NSMutableArray arrayWithArray:[self getUserProjects]];
+    for (Project *mProject in projects)
+    {
+        if (mProject && ![mProject.project_CompletedFlag boolValue])
+            [projects removeObject:mProject];
+    }
+    return [NSArray arrayWithArray:projects];
+}
+
+-(NSArray *)getLiveUserProjects
+{
+    NSMutableArray *projects = [NSMutableArray arrayWithArray:[self getUserProjects]];
+    for (Project *mProject in projects)
+    {
+        if (mProject && [mProject.project_CompletedFlag boolValue])
+            [projects removeObject:mProject];
+    }
+    return [NSArray arrayWithArray:projects];
+}
+
 #pragma mark -
 #pragma mark Sample DataModel methods
 -(void)storeSampleDetails:(NSArray *)sample forProject:(Project *)project
@@ -543,8 +565,8 @@
         if (![[dict valueForKey:@"Deleted"] isKindOfClass:[NSNull class]])
             mSampleChemical.deleted = [dict objectForKey:@"Deleted"];
         if (![[dict valueForKey:@"ChemicalId"] isKindOfClass:[NSNull class]])
-        mSampleChemical.chemicalID = [dict objectForKey:@"ChemicalId"];
-
+            mSampleChemical.chemicalID = [dict objectForKey:@"ChemicalId"];
+        
         [sample addAiresSampleChemicalObject:mSampleChemical];
         [[self mainContext] save:nil];
     }
@@ -641,7 +663,7 @@
         if (![[dict valueForKey:@"Deleted"] isKindOfClass:[NSNull class]])
             mSampleMeasurement.deleted = [dict objectForKey:@"Deleted"];
         
-
+        
         [sample addAiresSampleMeasurementObject:mSampleMeasurement];
         [[self mainContext] save:nil];
     }

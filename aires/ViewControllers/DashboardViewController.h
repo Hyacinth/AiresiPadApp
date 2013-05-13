@@ -41,6 +41,7 @@
 @property (retain, nonatomic) IBOutlet UIScrollView *loadingView;
 
 @property (retain, nonatomic) NSMutableArray *projectsArray;
+@property (retain, nonatomic) NSMutableArray *completedProjectsArray;
 
 - (IBAction)onSettings:(id)sender;
 - (IBAction)onRefreshData:(id)sender;

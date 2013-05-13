@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Project.h"
 
 @interface CompletedProjectTileView : UIView
+@property(retain, nonatomic) Project *project;
 
 @end

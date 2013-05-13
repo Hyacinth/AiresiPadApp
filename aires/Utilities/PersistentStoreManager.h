@@ -47,6 +47,9 @@
 -(void)storeProjectDetails:(NSArray *)projects;
 -(NSArray *)getUserProjects;
 
+-(NSArray *)getCompletedUserProjects;
+-(NSArray *)getLiveUserProjects;
+
 //For Sample
 -(void)storeSampleDetails:(NSArray *)sample forProject:(Project *)project;
 -(NSArray *)getSampleforProject:(Project *)project;

@@ -7,6 +7,9 @@
 //
 
 #import "CompletedProjectTileView.h"
+#import "AiresSingleton.h"
+
+#define mSingleton 	((AiresSingleton *) [AiresSingleton getSingletonInstance])
 
 @interface CompletedProjectTileView ()
 {
@@ -43,11 +46,17 @@
     
     [lockImage drawInRect:CGRectMake(9, 30, 18, 18)];
     
+    NSString *now = _project.project_DateOnsite;
+    NSDictionary *dateComp = [mSingleton getDateComponentsforString:now];
+    NSString *date = [dateComp objectForKey:@"date"];
+    NSString *month = [dateComp objectForKey:@"month"];
+    NSString *year = [dateComp objectForKey:@"year"];
+
 	// Set the fill color to white.
 	CGContextSetFillColorWithColor(context, selected ?
                                    [[UIColor colorWithRed:0 green:138.0f/255.0f blue:255.0f/255.0f alpha:1.0f] CGColor] : [[UIColor whiteColor] CGColor]);
-   
-	[@"Mar 26th, 2013" drawInRect:CGRectMake(35, 30, 210, 20)
+    
+	[[NSString stringWithFormat:@"%@ %@, %@",month, date, year] drawInRect:CGRectMake(35, 30, 210, 20)
                          withFont:dateFont
                     lineBreakMode:UILineBreakModeTailTruncation
                         alignment:UITextAlignmentLeft];
