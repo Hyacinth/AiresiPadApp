@@ -117,8 +117,8 @@
     
     [httpClient setDefaultHeader:@"Accept" value:@"application/json"];
     [httpClient setAuthorizationHeaderWithUsername:username password:password];
-//    [httpClient setDefaultHeader:@"username" value:username];
-//    [httpClient setDefaultHeader:@"password" value:password];
+    //    [httpClient setDefaultHeader:@"username" value:username];
+    //    [httpClient setDefaultHeader:@"password" value:password];
     
     NSDictionary *path = [AiresService objectForKey:@"Service Path"];
     NSString *repativeURL = [path objectForKey:@"Login"];
@@ -129,8 +129,21 @@
     [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject)
      {
          // Print the response body in text
-         [[mSingleton getJSONParser] performSelectorOnMainThread:@selector(parseLoginDetails:) withObject:responseObject waitUntilDone:YES];
-         [self fetchProjectsforUser];
+         NSLog(@"NEw : userName - %@ password - %@",username, password);
+         NSLog(@"Old : userName - %@ password - %@",[[mSingleton getSecurityManager] getValueForKey:LOGIN_USERNAME], [[mSingleton getSecurityManager] getValueForKey:LOGIN_PASSWORD]);
+         if(!([[[mSingleton getSecurityManager] getValueForKey:LOGIN_USERNAME] isEqualToString:username]))
+         {
+             [[mSingleton getSecurityManager] setValue:username forKey:LOGIN_USERNAME];
+             [[mSingleton getSecurityManager] setValue:password forKey:LOGIN_PASSWORD];
+             [[mSingleton getJSONParser] performSelectorOnMainThread:@selector(parseLoginDetails:) withObject:responseObject waitUntilDone:YES];
+             [self fetchProjectsforUser];
+         }
+         else
+         {
+             [[mSingleton getSecurityManager] setValue:username forKey:LOGIN_USERNAME];
+             [[mSingleton getSecurityManager] setValue:password forKey:LOGIN_PASSWORD];
+             [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_LOGIN_SUCCESS object:self];
+         }
          
      }
                                      failure:^(AFHTTPRequestOperation *operation, NSError *error)
@@ -240,7 +253,7 @@
     [httpClient setDefaultHeader:@"Accept" value:@"application/json"];
     [httpClient setDefaultHeader:@"access_token" value:[[mSingleton getSecurityManager] getValueForKey:LOGIN_ACCESSTOKEN]];
     [httpClient setDefaultHeader:@"Content-Type" value:@"application/json"];
-
+    
     NSDictionary *path = [AiresService objectForKey:@"Data Service Path"];
     NSString *repativeURL = [path objectForKey:@"Projects"];
     repativeURL = [NSString stringWithFormat:@"%@(%@)",repativeURL,proj.projectID];
@@ -253,13 +266,13 @@
          // Print the response body in text
          NSLog(@"REsponse: %@", [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding]);
          [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_UNLOCK_PROJECT_SUCCESS object:self];
-
+         
      }
                                      failure:^(AFHTTPRequestOperation *operation, NSError *error)
      {
          NSLog(@"Error: %@", error);
          [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_UNLOCK_PROJECT_FAILED object:self];
-
+         
          
      }];
     
@@ -279,7 +292,7 @@
     [httpClient registerHTTPOperationClass:[AFJSONRequestOperation class]];
     [httpClient setDefaultHeader:@"Accept" value:@"application/json"];
     [httpClient setDefaultHeader:@"access_token" value:[[mSingleton getSecurityManager] getValueForKey:LOGIN_ACCESSTOKEN]];
-
+    
     NSDictionary *path = [AiresService objectForKey:@"Service Path"];
     NSString *repativeURL = [path objectForKey:@"Logout"];
     

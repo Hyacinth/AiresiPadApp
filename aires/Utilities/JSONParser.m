@@ -34,6 +34,7 @@
     [[mSingleton getSecurityManager] setValue:accessTokenTime forKey:LOGIN_ACCESSTOKEN_TIME];
     
     NSDictionary *userData = [loginDetails objectForKey:@"User"];
+    [[mSingleton getPersistentStoreManager] removeAiresUser];
     [[mSingleton getPersistentStoreManager] storeAiresUser:userData];
 }
 

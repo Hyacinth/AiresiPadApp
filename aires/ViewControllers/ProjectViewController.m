@@ -642,8 +642,13 @@
         [_sampleDetailsView.layer addAnimation:transition forKey:nil];
         [_sampleMeasurementsView.layer addAnimation:transition forKey:nil];
     }
-    
-    Sample *sample = [_samplesArray objectAtIndex:index];
+    Sample *sample = nil;
+    if([_samplesArray count] >0)
+        sample = [_samplesArray objectAtIndex:index];
+    else
+    {
+        //Handle no sample condition
+    }
     currentSample = sample;
     _sampleIdLabel.text = sample.sample_SampleNumber;
     _sampleTypeValueLabel.text = sample.airesSampleType.sampleTypeName;

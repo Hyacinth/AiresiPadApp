@@ -42,6 +42,7 @@
 //For User
 -(void)storeAiresUser:(NSDictionary *)dict;
 -(User *)getAiresUser;
+-(void)removeAiresUser;
 
 //For Project
 -(void)storeProjectDetails:(NSArray *)projects;

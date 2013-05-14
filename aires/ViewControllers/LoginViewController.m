@@ -168,7 +168,7 @@
     else
         [loginFieldsView setPassFieldText:@""];
     
-    [loginFieldsView setUserFieldText:@"gbtpa\\dcreggett"];
+    [loginFieldsView setUserFieldText:@"gbtpa\\gautham"];
     //[loginFieldsView setPassFieldText:@"password123"];
     
 }
@@ -222,11 +222,13 @@
     [popover dismissPopoverAnimated:YES];
     //Save values in keychain
     SecurityManager *mSecurityManager = [mSingleton getSecurityManager];
-    [mSecurityManager setValue:[loginFieldsView getUserFieldText] forKey:LOGIN_USERNAME];
-    [mSecurityManager setValue:[loginFieldsView getPassFieldText] forKey:LOGIN_PASSWORD];
+//    [mSecurityManager setValue:[loginFieldsView getUserFieldText] forKey:LOGIN_USERNAME];
+//    [mSecurityManager setValue:[loginFieldsView getPassFieldText] forKey:LOGIN_PASSWORD];
     
     //Do Login
-    [[mSingleton getWebServiceManager] loginWithUserName:[mSecurityManager getValueForKey:LOGIN_USERNAME] andpassword:[mSecurityManager getValueForKey:LOGIN_PASSWORD]];
+//    [[mSingleton getWebServiceManager] loginWithUserName:[mSecurityManager getValueForKey:LOGIN_USERNAME] andpassword:[mSecurityManager getValueForKey:LOGIN_PASSWORD]];
+    [[mSingleton getWebServiceManager] loginWithUserName:[loginFieldsView getUserFieldText] andpassword:[loginFieldsView getPassFieldText]];
+
 }
 
 -(IBAction)onForgotPassword

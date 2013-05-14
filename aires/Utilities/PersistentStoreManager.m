@@ -235,6 +235,15 @@
     return nil;
 }
 
+-(void)removeAiresUser
+{
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setEntity:[NSEntityDescription entityForName:@"User" inManagedObjectContext:[self mainContext]]];
+    NSArray *results = [[self mainContext] executeFetchRequest:request error:nil];
+    for (User *mUser in results)
+        [[self mainContext] deleteObject:mUser];
+}
+
 #pragma mark -
 #pragma mark Project DataModel methods
 -(void)storeProjectDetails:(NSArray *)projects
@@ -399,24 +408,26 @@
 
 -(NSArray *)getCompletedUserProjects
 {
-    NSMutableArray *projects = [NSMutableArray arrayWithArray:[self getUserProjects]];
+    NSArray *projects = [self getUserProjects];
+    NSMutableArray *FinalArray = [NSMutableArray arrayWithArray:projects];
     for (Project *mProject in projects)
     {
         if (mProject && ![mProject.project_CompletedFlag boolValue])
-            [projects removeObject:mProject];
+            [FinalArray removeObject:mProject];
     }
-    return [NSArray arrayWithArray:projects];
+    return FinalArray;
 }
 
 -(NSArray *)getLiveUserProjects
 {
-    NSMutableArray *projects = [NSMutableArray arrayWithArray:[self getUserProjects]];
+    NSArray *projects = [self getUserProjects];
+    NSMutableArray *FinalArray = [NSMutableArray arrayWithArray:projects];
     for (Project *mProject in projects)
     {
         if (mProject && [mProject.project_CompletedFlag boolValue])
-            [projects removeObject:mProject];
+            [FinalArray removeObject:mProject];
     }
-    return [NSArray arrayWithArray:projects];
+    return FinalArray;
 }
 
 #pragma mark -
