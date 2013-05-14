@@ -29,7 +29,6 @@
 @property (retain, nonatomic) IBOutlet UILabel *completedProjectsLabel;
 @property (retain, nonatomic) IBOutlet UIButton *seeAllButton;
 @property (retain, nonatomic) IBOutlet UILabel *liveProjectsLabel;
-@property (retain, nonatomic) IBOutlet UIImageView *profileImageView;
 @property (retain, nonatomic) IBOutlet UILabel *usernameLabel;
 @property (retain, nonatomic) IBOutlet UILabel *welcomeLabel;
 @property (retain, nonatomic) IBOutlet UILabel *airesLabel;

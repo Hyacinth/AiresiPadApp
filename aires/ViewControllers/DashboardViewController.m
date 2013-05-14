@@ -24,8 +24,6 @@
 
 @implementation DashboardViewController
 
-//@synthesize carousel, carousel2, liveProjectsLabel, completedProjectsLabel, seeAllButton, profileImageView, welcomeLabel, usernameLabel, airesLabel, searchField, searchView, btnSettings, btnRefresh;
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -53,7 +51,6 @@
     
     [_btnSettings setBackgroundImage:bgimage forState:UIControlStateHighlighted];
     [_btnRefresh setBackgroundImage:bgimage forState:UIControlStateHighlighted];
-    
     
     User *tempUser = [[mSingleton getPersistentStoreManager] getAiresUser];
     [_usernameLabel setText:[NSString stringWithFormat:@"%@ %@",tempUser.user_FirstName,tempUser.user_LastName]];
