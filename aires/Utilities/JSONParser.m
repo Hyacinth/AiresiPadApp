@@ -313,8 +313,8 @@
         
         if(samp.sample_SampleNumber)
             [SamplesDict setValue:samp.sample_SampleNumber forKey:@"SampleNumber"];
-        //else
-//            [SamplesDict setValue:@"" forKey:@"SampleNumber"];
+//        else
+//            [SamplesDict setValue:@"5678" forKey:@"SampleNumber"];
         
         if(samp.airesSampleType.sampleTypeID && [samp.airesSampleType.sampleTypeID intValue] > 0)
             [SamplesDict setValue:samp.airesSampleType.sampleTypeID forKey:@"SampleTypeId"];

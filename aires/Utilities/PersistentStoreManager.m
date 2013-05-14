@@ -396,6 +396,7 @@
     return results;
 }
 
+
 -(NSArray *)getCompletedUserProjects
 {
     NSMutableArray *projects = [NSMutableArray arrayWithArray:[self getUserProjects]];
@@ -822,6 +823,54 @@
     [[self mainContext] save:nil];
 }
 
+-(void)removeAllProjectDetails
+{
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+   
+    [request setEntity:[NSEntityDescription entityForName:@"SampleProtectionEquipment" inManagedObjectContext:[self mainContext]]];
+    NSMutableArray *results = [NSMutableArray arrayWithArray:[[self mainContext] executeFetchRequest:request error:nil]];
+    for (SampleProtectionEquipment *mSampleProtectionEquipment in results)
+        [[self mainContext] deleteObject:mSampleProtectionEquipment];
+    [results removeAllObjects];
+    
+    [request setEntity:[NSEntityDescription entityForName:@"SampleMeasurement" inManagedObjectContext:[self mainContext]]];
+    results = [NSMutableArray arrayWithArray:[[self mainContext] executeFetchRequest:request error:nil]];
+    for (SampleMeasurement *mSampleMeasurement in results)
+        [[self mainContext] deleteObject:mSampleMeasurement];
+    [results removeAllObjects];
+    
+    [request setEntity:[NSEntityDescription entityForName:@"SampleChemical" inManagedObjectContext:[self mainContext]]];
+    results = [NSMutableArray arrayWithArray:[[self mainContext] executeFetchRequest:request error:nil]];
+    for (SampleChemical *mSampleChemical in results)
+        [[self mainContext] deleteObject:mSampleChemical];
+    [results removeAllObjects];
+    
+    [request setEntity:[NSEntityDescription entityForName:@"DeviceType" inManagedObjectContext:[self mainContext]]];
+    results = [NSMutableArray arrayWithArray:[[self mainContext] executeFetchRequest:request error:nil]];
+    for (DeviceType *mDeviceType in results)
+        [[self mainContext] deleteObject:mDeviceType];
+    [results removeAllObjects];
+    
+    [request setEntity:[NSEntityDescription entityForName:@"SampleType" inManagedObjectContext:[self mainContext]]];
+    results = [NSMutableArray arrayWithArray:[[self mainContext] executeFetchRequest:request error:nil]];
+    for (SampleType *mSampleType in results)
+        [[self mainContext] deleteObject:mSampleType];
+    [results removeAllObjects];
+
+    [request setEntity:[NSEntityDescription entityForName:@"Sample" inManagedObjectContext:[self mainContext]]];
+    results = [NSMutableArray arrayWithArray:[[self mainContext] executeFetchRequest:request error:nil]];
+    for (Sample *mSample in results)
+        [[self mainContext] deleteObject:mSample];
+    [results removeAllObjects];
+    
+    [request setEntity:[NSEntityDescription entityForName:@"Project" inManagedObjectContext:[self mainContext]]];
+    results = [NSMutableArray arrayWithArray:[[self mainContext] executeFetchRequest:request error:nil]];
+    for (Project *mProject in results)
+        [[self mainContext] deleteObject:mProject];
+    [results removeAllObjects];
+
+}
+
 #pragma mark -
 #pragma mark List DataModel methods
 -(void)saveChemicalList:(NSArray *)chemicalArray
@@ -1033,4 +1082,27 @@
     return [NSNumber numberWithInt:lowestNumber-1];
 }
 
+
+-(NSString *) generateNumberforNewSample
+{
+    NSString *letters = @"ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-";
+    NSMutableString *randomString = [NSMutableString stringWithCapacity: 6];
+    for (int i=0; i<6; i++) 
+        [randomString appendFormat: @"%C", [letters characterAtIndex: arc4random() % [letters length]]];
+  
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setEntity:[NSEntityDescription entityForName:@"Sample" inManagedObjectContext:[self mainContext]]];
+    NSArray *results = [[self mainContext] executeFetchRequest:request error:nil];
+
+    for (Sample *mSample in results)
+    {
+        if([mSample.sample_SampleNumber isEqualToString:randomString])
+        {
+           randomString = [NSString stringWithString:[self generateNumberforNewSample]];
+            break;
+        }
+    }
+    
+    return randomString;
+}
 @end

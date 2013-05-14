@@ -46,6 +46,7 @@
 //For Project
 -(void)storeProjectDetails:(NSArray *)projects;
 -(NSArray *)getUserProjects;
+-(void)removeAllProjectDetails;
 
 -(NSArray *)getCompletedUserProjects;
 -(NSArray *)getLiveUserProjects;
@@ -87,5 +88,6 @@
 -(NSNumber *)generateIDforNewSampleChemical;
 -(NSNumber *)generateIDforNewSampleMeasurement;
 -(NSNumber *)generateIDforNewSampleProtectionEquipment;
+-(NSString *)generateNumberforNewSample;
 
 @end

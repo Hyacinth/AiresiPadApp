@@ -387,7 +387,9 @@
     
     NSMutableDictionary *sampleDict = [[NSMutableDictionary alloc] init];
     NSNumber *sampleId = [[mSingleton getPersistentStoreManager] generateIDforNewSample];
+    NSString *sampleNumber = [[mSingleton getPersistentStoreManager] generateNumberforNewSample];
     [sampleDict setValue:sampleId forKey:@"SampleId"]; // new field
+    [sampleDict setValue:sampleNumber forKey:@"SampleNumber"]; // new field
     [sampleDict setValue:user.user_FirstName forKey:@"EmployeeName"];
     [sampleDict setValue:@"Engineer" forKey:@"EmployeeJob"];
     [sampleDict setValue:@"N?A" forKey:@"OperationArea"];
@@ -806,7 +808,6 @@
         NSUInteger viewsToAdd = (index+1)<viewsCount ? numberOfVisibleSamples : _samplesArray.count-(index*numberOfVisibleSamples);
         for (int i=0; i<viewsToAdd; i++)
         {
-            NSLog(@"viewscount %d viewstoadd %d i %d numberOfVisibleSamples %d", viewsCount, viewsToAdd, i, numberOfVisibleSamples);
             SampleTileView *tileView = [[SampleTileView alloc] initWithFrame:CGRectMake((i*((numberOfVisibleSamples==14)?51:50.5)), 0, 52, 52)];
             Sample *sample = (Sample*)[_samplesArray objectAtIndex:(index*numberOfVisibleSamples)+i];
             NSUInteger sampleNumber = (index*numberOfVisibleSamples)+i+1;

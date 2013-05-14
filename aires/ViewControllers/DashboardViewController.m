@@ -57,7 +57,7 @@
     
     User *tempUser = [[mSingleton getPersistentStoreManager] getAiresUser];
     [_usernameLabel setText:[NSString stringWithFormat:@"%@ %@",tempUser.user_FirstName,tempUser.user_LastName]];
-    
+
     _projectsArray = [[NSMutableArray alloc] init];
     _completedProjectsArray = [[NSMutableArray alloc] init];
     [_projectsArray addObjectsFromArray:[[mSingleton getPersistentStoreManager] getLiveUserProjects]];
@@ -165,7 +165,7 @@
     }
 
     [_loadingView setHidden:FALSE];
-    [[mSingleton getPersistentStoreManager] resetCoreData];
+    [[mSingleton getPersistentStoreManager] removeAllProjectDetails];
     [[mSingleton getWebServiceManager] fetchProjectsforUser];
 }
 
