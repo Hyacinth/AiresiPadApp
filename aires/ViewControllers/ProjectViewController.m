@@ -392,7 +392,7 @@
     [sampleDict setValue:sampleNumber forKey:@"SampleNumber"]; // new field
     [sampleDict setValue:user.user_FirstName forKey:@"EmployeeName"];
     [sampleDict setValue:@"Engineer" forKey:@"EmployeeJob"];
-    [sampleDict setValue:@"N?A" forKey:@"OperationArea"];
+    [sampleDict setValue:@"N/A" forKey:@"OperationArea"];
     [sampleDict setValue:currentProject.projectID forKey:@"ProjectId"];
     [sampleDict setValue:[self getUTCFormateDate:[NSDate date]] forKey:@"CreatedOn"];
     
@@ -400,8 +400,9 @@
     
     [_samplesArray removeAllObjects];
     [_samplesArray addObjectsFromArray:[[mSingleton getPersistentStoreManager] getSampleforProject:currentProject]];
+    selectedSampleNumber = _samplesArray.count;
     [samplesCarousel reloadData];
-    
+    [samplesCarousel scrollToItemAtIndex:samplesCarousel.numberOfItems-1 animated:YES];
     [self updateSampleNumber:_samplesArray.count-1 animate:NO];
 }
 
