@@ -143,6 +143,7 @@
              [[mSingleton getSecurityManager] setValue:username forKey:LOGIN_USERNAME];
              [[mSingleton getSecurityManager] setValue:password forKey:LOGIN_PASSWORD];
              [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_LOGIN_SUCCESS object:self];
+             [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_FETCH_PROJECT_SUCCESS object:self];
          }
          
      }
