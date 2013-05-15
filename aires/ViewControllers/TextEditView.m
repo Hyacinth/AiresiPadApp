@@ -28,10 +28,22 @@
 -(void)initControls
 {
     // Initialization code
-    self.layer.borderColor = [UIColor blackColor].CGColor;
-    self.layer.borderWidth = 1.0f;
-    self.layer.cornerRadius = 5.0f;
-    self.layer.masksToBounds = YES;
+    _controlsView.layer.borderColor = [UIColor blackColor].CGColor;
+    _controlsView.layer.borderWidth = 1.0f;
+    _controlsView.layer.cornerRadius = 5.0f;
+    //_controlsView.layer.masksToBounds = YES;
+    
+    UIColor *colorOne = [UIColor whiteColor];
+    UIColor *colorTwo = [UIColor colorWithRed:(227/255.0)  green:(241/255.0)  blue:(251/255.0)  alpha:1.0];
+    
+    NSArray *colors = [NSArray arrayWithObjects:(id)colorOne.CGColor, colorTwo.CGColor, nil];
+    NSNumber *stopOne = [NSNumber numberWithFloat:0.0];
+    NSNumber *stopTwo = [NSNumber numberWithFloat:1.0];
+    NSArray *locations = [NSArray arrayWithObjects:stopOne, stopTwo, nil];
+    CAGradientLayer *headerLayer = [CAGradientLayer layer];
+    headerLayer.colors = colors;
+    headerLayer.locations = locations;
+    [_controlsView.layer insertSublayer:headerLayer atIndex:0];
     
     UIImage *bgimage = [UIImage imageNamed:@"btn_navbar_nor.png"];
 	bgimage = [bgimage stretchableImageWithLeftCapWidth:bgimage.size.width/2 topCapHeight:bgimage.size.height/2];
@@ -57,8 +69,98 @@
     
     _titleLabel.font = [UIFont fontWithName:@"ProximaNova-Bold" size:18.0f];
     _textView.font = [UIFont fontWithName:@"ProximaNova-Regular" size:18.0f];
+        
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillShow)
+                                                 name:UIKeyboardWillShowNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillHide)
+                                                 name:UIKeyboardWillHideNotification
+                                               object:nil];
     
     [_textView becomeFirstResponder];
+}
+
+#pragma mark - Keyboard
+
+-(void)keyboardWillShow
+{
+    // move controls up only for comments and notes
+    if(_textDetailType != Edit_Comments && _textDetailType != Edit_Notes)
+        return;
+
+    [UIView animateWithDuration:0.25
+                     animations:^{
+                         CGRect frame = _controlsView.frame;
+                         frame.origin.y -= 65.0f;
+                         _controlsView.frame = frame;
+                     }];
+}
+
+-(void)keyboardWillHide
+{
+    // move controls up only for comments and note
+    if(_textDetailType != Edit_Comments && _textDetailType != Edit_Notes)
+        return;
+
+    [UIView animateWithDuration:0.25
+                     animations:^{
+                         CGRect frame = self.frame;
+                         frame.origin.y += 65.0f;
+                         _controlsView.frame = frame;
+                     }];
+}
+
+-(void)setTextDetailType:(TextDetailType)textDetailType
+{
+    _textDetailType = textDetailType;
+    
+    NSString* title = @"";
+    CGFloat height = 0;
+        
+    switch (textDetailType) {
+        case Edit_EmployeeName:
+        {
+            title = @"Edit Employee Name";
+            height = 100.0f;
+        }
+            break;
+        case Edit_EmployeeJob:
+        {
+            title = @"Edit Employee Job";
+            height = 100.0f;
+        }
+            break;
+        case Edit_OperationalArea:
+        {
+            title = @"Edit Operational Area";
+            height = 100.0f;
+        }
+            break;
+        case Edit_Notes:
+        {
+            title = @"Edit Notes";
+            height = 164.0f;
+        }
+            break;
+        case Edit_Comments:
+        {
+            title = @"Edit Comments";
+            height = 164.0f;
+        }
+            break;
+            
+        default:
+            break;
+    }
+    
+    [self setTitle:title];
+    
+    CGRect frame = _controlsView.frame;
+    frame.size.height = height;
+    _controlsView.frame = frame;
 }
 
 -(void)setText:(NSString*)text
@@ -73,9 +175,10 @@
 
 -(IBAction)donePressed:(id)sender
 {
-    if(_delegate && [_delegate respondsToSelector:@selector(textEditDonePressed:)])
+    if(_delegate && [_delegate respondsToSelector:@selector(textEditDonePressed:forDetailType:)])
     {
-        [_delegate textEditDonePressed:_textView.text];
+        [[NSNotificationCenter defaultCenter] removeObserver:self];
+        [_delegate textEditDonePressed:_textView.text forDetailType:_textDetailType];
     }
 }
 
@@ -83,33 +186,9 @@
 {
     if(_delegate && [_delegate respondsToSelector:@selector(measurementsCancelPressed)])
     {
+        [[NSNotificationCenter defaultCenter] removeObserver:self];
         [_delegate textEditCancelPressed];
     }
-}
-
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
-{
-    // Create thegradient
-    CGFloat colors [] = {
-        1.0f, 1.0f, 1.0f, 1.0f,
-        227.0f/255.0f, 241.0f/255.0f, 251.0f/255.0f, 1.0
-    };
-    
-    CGColorSpaceRef baseSpace = CGColorSpaceCreateDeviceRGB();
-    CGGradientRef gradient = CGGradientCreateWithColorComponents(baseSpace, colors, NULL, 2);
-    CGColorSpaceRelease(baseSpace), baseSpace = NULL;
-    
-    // Get the current context so we can draw.
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    CGPoint startPoint = CGPointMake(CGRectGetMidX(rect), CGRectGetMinY(rect));
-    CGPoint endPoint = CGPointMake(CGRectGetMidX(rect), CGRectGetMaxY(rect));
-    CGContextDrawLinearGradient(context, gradient, startPoint, endPoint, 0);
-    CGGradientRelease(gradient), gradient = NULL;
-    
-    // Set the fill color to white.
-    CGContextSetFillColorWithColor(context, [UIColor colorWithRed:28.0f/255.0f green:34.0f/255.0f blue:39.0f/255.0f alpha:1.0f].CGColor);
 }
 
 @end

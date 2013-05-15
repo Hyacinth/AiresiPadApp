@@ -10,8 +10,19 @@
 
 @protocol TextEditProtocol;
 
+typedef enum TEXT_DETAIL_TYPE
+{
+    Edit_EmployeeName,
+    Edit_EmployeeJob,
+    Edit_OperationalArea,
+    Edit_Notes,
+    Edit_Comments,
+}TextDetailType;
+
 @interface TextEditView : UIView
 
+@property (nonatomic) TextDetailType textDetailType;
+@property (weak, nonatomic) IBOutlet UIView *controlsView;
 @property (weak, nonatomic) IBOutlet UIButton *cancelButton;
 @property (weak, nonatomic) IBOutlet UIButton *doneButton;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
@@ -25,7 +36,7 @@
 
 @protocol TextEditProtocol <NSObject>
 
--(void)textEditDonePressed:(NSString*)text;
+-(void)textEditDonePressed:(NSString*)text forDetailType:(TextDetailType)detailType;
 -(void)textEditCancelPressed;
 
 @end

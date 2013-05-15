@@ -26,7 +26,6 @@
 @interface ProjectViewController ()
 {
     BOOL bProjectDetailsVisible;
-    BOOL bEditingNotes;
     BOOL bSampleDetailsCollapsed;
     NSUInteger selectedSampleNumber;
     NSUInteger numberOfVisibleSamples;
@@ -208,6 +207,15 @@
     
     [self updateSampleNumber:0 animate:NO];
     
+    UITapGestureRecognizer *empNameTapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(empNameTapped)];
+    [_employeeNameValueLabel addGestureRecognizer:empNameTapGesture];
+    
+    UITapGestureRecognizer *empJobTapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(empJobTapped)];
+    [_employeeJobValueLabel addGestureRecognizer:empJobTapGesture];
+    
+    UITapGestureRecognizer *opAreaTapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(operationalAreaTapped)];
+    [_operationalAreaValueLabel addGestureRecognizer:opAreaTapGesture];
+    
     UITapGestureRecognizer *notesTapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(notesTapped)];
     [_notesValueLabel addGestureRecognizer:notesTapGesture];
     
@@ -220,71 +228,27 @@
     
     UITapGestureRecognizer *sampleTypeTapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(sampleTypeTapped)];
     [_sampleTypeValueLabel addGestureRecognizer:sampleTypeTapGesture];
-}
-
--(void)notesTapped
-{
-    bEditingNotes = YES;
-    [self showTextEditView];
-}
-
--(void)commentsTapped
-{
-    bEditingNotes = NO;
-    [self showTextEditView];
-}
-
-
--(void)sampleTypeTapped
-{
-    SampleTypesListViewController * sampleTypeListVC = [[SampleTypesListViewController alloc] initWithNibName:@"SampleTypesListViewController" bundle:nil];
-    sampleTypeListVC.listContent = _sampleTypesArray;
-    sampleTypeListVC.selectedSampleType = nil;
-    sampleTypeListVC.delegate = self;
     
-    if(!popover)
-        popover = [[UIPopoverController alloc] initWithContentViewController:sampleTypeListVC];
-    else
-        [popover setContentViewController:sampleTypeListVC];
-    
-    [popover setPopoverContentSize:CGSizeMake(320, 244)];
-    [popover setDelegate:self];
-    
-    [popover presentPopoverFromRect:_sampleTypeValueLabel.bounds inView:_sampleTypeValueLabel permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
-}
-
-
--(void)deviceTypeTapped
-{
-    DeviceTypesListViewController * deviceTypeListVC = [[DeviceTypesListViewController alloc] initWithNibName:@"DeviceTypesListViewController" bundle:nil];
-    deviceTypeListVC.listContent = _deviceTypesArray;
-    deviceTypeListVC.selectedDeviceType = nil;
-    deviceTypeListVC.delegate = self;
-    
-    if(!popover)
-        popover = [[UIPopoverController alloc] initWithContentViewController:deviceTypeListVC];
-    else
-        [popover setContentViewController:deviceTypeListVC];
-    
-    [popover setPopoverContentSize:CGSizeMake(320, 244)];
-    [popover setDelegate:self];
-    
-    [popover presentPopoverFromRect:_deviceTypeValueLabel.bounds inView:_deviceTypeValueLabel permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
 }
 
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardWillShow)
-                                                 name:UIKeyboardWillShowNotification
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardWillHide)
-                                                 name:UIKeyboardWillHideNotification
-                                               object:nil];
+    /*[[NSNotificationCenter defaultCenter] addObserver:self
+     selector:@selector(keyboardWillShow)
+     name:UIKeyboardWillShowNotification
+     object:nil];
+     
+     [[NSNotificationCenter defaultCenter] addObserver:self
+     selector:@selector(keyboardWillHide)
+     name:UIKeyboardWillHideNotification
+     object:nil];*/
+}
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -292,40 +256,74 @@
     return UIInterfaceOrientationIsLandscape(interfaceOrientation);
 }
 
--(void)showTextEditView
+-(void)showTextEditViewForDetailType:(TextDetailType)detailType
 {
-    UIView *fadeTextEditView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1024, 768)];
-    fadeTextEditView.tag = FADE_VIEW_TAG;
-    fadeTextEditView.backgroundColor = [UIColor colorWithWhite:0.1 alpha:0.9];
-    fadeTextEditView.alpha = 0;
-    [self.view addSubview:fadeTextEditView];
+    /*UIView *fadeTextEditView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1024, 768)];
+     fadeTextEditView.tag = FADE_VIEW_TAG;
+     fadeTextEditView.backgroundColor = [UIColor colorWithWhite:0.1 alpha:0.9];
+     fadeTextEditView.alpha = 0;
+     [self.view addSubview:fadeTextEditView];*/
     
     NSArray *topLevelObjects = [[NSBundle mainBundle] loadNibNamed:@"TextEditView"owner:self options:nil];
     TextEditView *textEditView = (TextEditView *)[topLevelObjects objectAtIndex:0];
+    textEditView.tag = FADE_VIEW_TAG;
+    textEditView.alpha = 0;
     textEditView.delegate = self;
-    textEditView.center = fadeTextEditView.center;
-    [textEditView setText:bEditingNotes?currentSample.sample_Notes:currentSample.sample_Comments];
-    [textEditView setTitle:bEditingNotes?@"Edit Notes":@"Edit Comments"];
-    [fadeTextEditView addSubview:textEditView];
+    textEditView.textDetailType = detailType;
+    
+    NSString* text = @"";
+    switch (detailType) {
+        case Edit_EmployeeName:
+        {
+            text = _employeeNameValueLabel.text;
+        }
+            break;
+        case Edit_EmployeeJob:
+        {
+            text = _employeeJobValueLabel.text;
+        }
+            break;
+        case Edit_OperationalArea:
+        {
+            text = _operationalAreaValueLabel.text;
+        }
+            break;
+        case Edit_Notes:
+        {
+            text = _notesValueLabel.text;
+        }
+            break;
+        case Edit_Comments:
+        {
+            text = _commentsValueLabel.text;
+        }
+            break;
+            
+        default:
+            break;
+    }
+    
+    [textEditView setText:text];
+    [self.view addSubview:textEditView];
     
     [UIView animateWithDuration:0.25
                      animations:^{
-                         fadeTextEditView.alpha = 1.0f;
+                         textEditView.alpha = 1.0f;
                      }];
 }
 
 -(void)removeTextEditView
 {
-    UIView *fadeTextEditView = (UIView*)[self.view viewWithTag:FADE_VIEW_TAG];
-    if(!fadeTextEditView)
+    TextEditView *textEditView = (TextEditView*)[self.view viewWithTag:FADE_VIEW_TAG];
+    if(!textEditView)
         return;
     
     [UIView animateWithDuration:0.25
                      animations:^{
-                         fadeTextEditView.alpha = 0;
+                         textEditView.alpha = 0;
                      }
                      completion:^(BOOL finished) {
-                         [fadeTextEditView removeFromSuperview];
+                         [textEditView removeFromSuperview];
                      }];
 }
 
@@ -628,6 +626,70 @@
     
 }
 
+#pragma mark - Sample Detail Editting actions
+
+-(void)empNameTapped
+{
+    [self showTextEditViewForDetailType:Edit_EmployeeName];
+}
+
+-(void)empJobTapped
+{
+    [self showTextEditViewForDetailType:Edit_EmployeeJob];
+}
+
+-(void)operationalAreaTapped
+{
+    [self showTextEditViewForDetailType:Edit_OperationalArea];
+}
+
+-(void)notesTapped
+{
+    [self showTextEditViewForDetailType:Edit_Notes];
+}
+
+-(void)commentsTapped
+{
+    [self showTextEditViewForDetailType:Edit_Comments];
+}
+
+-(void)sampleTypeTapped
+{
+    SampleTypesListViewController * sampleTypeListVC = [[SampleTypesListViewController alloc] initWithNibName:@"SampleTypesListViewController" bundle:nil];
+    sampleTypeListVC.listContent = _sampleTypesArray;
+    sampleTypeListVC.selectedSampleType = nil;
+    sampleTypeListVC.delegate = self;
+    
+    if(!popover)
+        popover = [[UIPopoverController alloc] initWithContentViewController:sampleTypeListVC];
+    else
+        [popover setContentViewController:sampleTypeListVC];
+    
+    [popover setPopoverContentSize:CGSizeMake(320, 244)];
+    [popover setDelegate:self];
+    
+    [popover presentPopoverFromRect:_sampleTypeValueLabel.bounds inView:_sampleTypeValueLabel permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
+}
+
+
+-(void)deviceTypeTapped
+{
+    DeviceTypesListViewController * deviceTypeListVC = [[DeviceTypesListViewController alloc] initWithNibName:@"DeviceTypesListViewController" bundle:nil];
+    deviceTypeListVC.listContent = _deviceTypesArray;
+    deviceTypeListVC.selectedDeviceType = nil;
+    deviceTypeListVC.delegate = self;
+    
+    if(!popover)
+        popover = [[UIPopoverController alloc] initWithContentViewController:deviceTypeListVC];
+    else
+        [popover setContentViewController:deviceTypeListVC];
+    
+    [popover setPopoverContentSize:CGSizeMake(320, 244)];
+    [popover setDelegate:self];
+    
+    [popover presentPopoverFromRect:_deviceTypeValueLabel.bounds inView:_deviceTypeValueLabel permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
+}
+
 #pragma mark - Samples, Chemicals, PPEs and Measurements updates
 
 -(void)updateSampleNumber:(NSUInteger)index animate:(BOOL)anim
@@ -649,6 +711,8 @@
     else
     {
         //Handle no sample condition
+        [self addSample:nil];
+        return;
     }
     currentSample = sample;
     _sampleIdLabel.text = sample.sample_SampleNumber;
@@ -684,12 +748,12 @@
     [_operationalAreaValueLabel addObserver:self forKeyPath:@"text" options:NSKeyValueObservingOptionNew context:NULL];
     [_notesValueLabel addObserver:self forKeyPath:@"text" options:NSKeyValueObservingOptionNew context:NULL];
     [_commentsValueLabel addObserver:self forKeyPath:@"text" options:NSKeyValueObservingOptionNew context:NULL];
-//    [_chemicalsArray addObserver:self forKeyPath:@"count" options:NSKeyValueObservingOptionNew context:NULL];
-//    [_ppeArray addObserver:self forKeyPath:@"count" options:NSKeyValueObservingOptionNew context:NULL];
-//    [_measurementsArray addObserver:self forKeyPath:@"count" options:NSKeyValueObservingOptionNew context:NULL];
-//    [_sampleTypesArray addObserver:self forKeyPath:@"count" options:NSKeyValueObservingOptionNew context:NULL];
-//    [_deviceTypesArray addObserver:self forKeyPath:@"count" options:NSKeyValueObservingOptionNew context:NULL];
-//
+    //    [_chemicalsArray addObserver:self forKeyPath:@"count" options:NSKeyValueObservingOptionNew context:NULL];
+    //    [_ppeArray addObserver:self forKeyPath:@"count" options:NSKeyValueObservingOptionNew context:NULL];
+    //    [_measurementsArray addObserver:self forKeyPath:@"count" options:NSKeyValueObservingOptionNew context:NULL];
+    //    [_sampleTypesArray addObserver:self forKeyPath:@"count" options:NSKeyValueObservingOptionNew context:NULL];
+    //    [_deviceTypesArray addObserver:self forKeyPath:@"count" options:NSKeyValueObservingOptionNew context:NULL];
+    //
     [_chemicalsTableView reloadData];
     [_ppeTableView reloadData];
     [_measurementsTableView reloadData];
@@ -1115,20 +1179,44 @@
     [[mSingleton getPersistentStoreManager] storeSampleProtectionEquipmentDetails:equipArray forSample:currentSample];
 }
 
-#pragma mark - MeasurementAddEditProtocol
--(void)textEditDonePressed:(NSString *)text
+#pragma mark - TextEditProtocol
+
+-(void)textEditDonePressed:(NSString *)text forDetailType:(TextDetailType)detailType
 {
     [self removeTextEditView];
     
-    if(bEditingNotes)
-    {
-        _notesValueLabel.text = text;
-        [self updateNotes];
-    }
-    else
-    {
-        _commentsValueLabel.text = text;
-        [self updateComments];
+    switch (detailType) {
+        case Edit_EmployeeName:
+        {
+            _employeeNameValueLabel.text = text;
+        }
+            break;
+        case Edit_EmployeeJob:
+        {
+            _employeeJobValueLabel.text = text;
+        }
+            break;
+        case Edit_OperationalArea:
+        {
+            _operationalAreaValueLabel.text = text;
+            [[mSingleton getPersistentStoreManager] updateSample:currentSample inProject:currentProject forField:FIELD_SAMPLE_NOTES withValue:text];
+        }
+            break;
+        case Edit_Notes:
+        {
+            _notesValueLabel.text = text;
+            [self updateNotes];
+        }
+            break;
+        case Edit_Comments:
+        {
+            _commentsValueLabel.text = text;
+            [self updateComments];
+        }
+            break;
+            
+        default:
+            break;
     }
 }
 
@@ -1242,27 +1330,27 @@
     return status;
 }
 
-#pragma mark - Keyboard
-
--(void)keyboardWillShow
-{
-    UIView *fadeMeasurementAddEditView = (UIView*)[self.view viewWithTag:FADE_VIEW_TAG];
-    [UIView animateWithDuration:0.25
-                     animations:^{
-                         CGRect frame = self.view.bounds;
-                         frame.origin.y -= 100.0f;
-                         fadeMeasurementAddEditView.frame = frame;
-                     }];
-}
-
--(void)keyboardWillHide
-{
-    UIView *fadeMeasurementAddEditView = (UIView*)[self.view viewWithTag:FADE_VIEW_TAG];
-    [UIView animateWithDuration:0.25
-                     animations:^{
-                         fadeMeasurementAddEditView.frame = self.view.bounds;
-                     }];
-}
+//#pragma mark - Keyboard
+//
+//-(void)keyboardWillShow
+//{
+//    UIView *fadeMeasurementAddEditView = (UIView*)[self.view viewWithTag:FADE_VIEW_TAG];
+//    [UIView animateWithDuration:0.25
+//                     animations:^{
+//                         CGRect frame = self.view.bounds;
+//                         frame.origin.y -= 100.0f;
+//                         fadeMeasurementAddEditView.frame = frame;
+//                     }];
+//}
+//
+//-(void)keyboardWillHide
+//{
+//    UIView *fadeMeasurementAddEditView = (UIView*)[self.view viewWithTag:FADE_VIEW_TAG];
+//    [UIView animateWithDuration:0.25
+//                     animations:^{
+//                         fadeMeasurementAddEditView.frame = self.view.bounds;
+//                     }];
+//}
 
 #pragma mark - Memory warning
 
