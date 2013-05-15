@@ -16,6 +16,19 @@
          landmarkName = "-initControls"
          landmarkType = "5">
       </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "aires/ViewControllers/ProjectViewController.m"
+         timestampString = "390315729.970526"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "1337"
+         endingLineNumber = "1337"
+         landmarkName = "-isvalidField"
+         landmarkType = "5">
+      </FileBreakpoint>
    </FileBreakpoints>
    <ExceptionBreakpoints>
       <ExceptionBreakpoint

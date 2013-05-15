@@ -618,6 +618,13 @@
 
 - (IBAction)onGeneratePreview:(id)sender
 {
+    for (Sample *mSample in _samplesArray) {
+        if (![self isvalidForSample:mSample]) {
+            UIAlertView *noNetworkAlert = [[UIAlertView alloc] initWithTitle:@"Incomplete" message:@"There are certain samples incomplete.\nUpdate all samples in order to generate report." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+            [noNetworkAlert show];
+            return;
+        }
+    }
     if(!mPreviewReportViewController)
         mPreviewReportViewController = [[PreviewReportViewController alloc] initWithNibName:@"PreviewReportViewController" bundle:nil];
     [mPreviewReportViewController setCurrentProject:currentProject];
@@ -763,6 +770,10 @@
     [_deviceTypeLabel setTextColor:[UIColor blackColor]];
     [_meaurementsLabel setTextColor:[UIColor blackColor]];
     
+    _labelTWA.textColor = [UIColor blackColor];
+    _labelSTEL.textColor = [UIColor blackColor];
+    _labelCieling.textColor = [UIColor blackColor];
+
     if([status isEqualToString:KVO_SAMPLE_VALID])
     {
         [samplesCarousel reloadData];
@@ -773,7 +784,9 @@
     }
     else if([status isEqualToString:KVO_SAMPLE_INVALID_FLAG])
     {
-        _btnCielingCheck.titleLabel.textColor = [UIColor redColor];
+        _labelTWA.textColor = [UIColor redColor];
+        _labelSTEL.textColor = [UIColor redColor];
+        _labelCieling.textColor = [UIColor redColor];
     }
     else if([status isEqualToString:KVO_SAMPLE_MEASUREMENT])
     {
@@ -1321,15 +1334,15 @@
 
 -(id)isvalidField
 {
-    if([_deviceTypeValueLabel.text length] <= 0)
-        return KVO_SAMPLE_DEVICE_TYPE;
     if([_sampleTypeValueLabel.text length] <= 0)
         return KVO_SAMPLE_SAMPLE_TYPE;
-    if([_measurementsArray count] <= 0)
-        return KVO_SAMPLE_MEASUREMENT;
+    if([_deviceTypeValueLabel.text length] <= 0)
+        return KVO_SAMPLE_DEVICE_TYPE;
     if(!(_btnTWACheck.selected || _btnSTELCheck.selected|| _btnCielingCheck.selected))
         return KVO_SAMPLE_INVALID_FLAG;
-    
+    if([_measurementsArray count] <= 0)
+        return KVO_SAMPLE_MEASUREMENT;
+        
     if(!currentSample)
         return KVO_SAMPLE_INVALID;
     
