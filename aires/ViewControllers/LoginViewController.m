@@ -221,7 +221,7 @@
 {
     [popover dismissPopoverAnimated:YES];
     //Save values in keychain
-    SecurityManager *mSecurityManager = [mSingleton getSecurityManager];
+    //SecurityManager *mSecurityManager = [mSingleton getSecurityManager];
 //    [mSecurityManager setValue:[loginFieldsView getUserFieldText] forKey:LOGIN_USERNAME];
 //    [mSecurityManager setValue:[loginFieldsView getPassFieldText] forKey:LOGIN_PASSWORD];
     

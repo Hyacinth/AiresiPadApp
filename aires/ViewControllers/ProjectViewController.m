@@ -229,6 +229,13 @@
     UITapGestureRecognizer *sampleTypeTapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(sampleTypeTapped)];
     [_sampleTypeValueLabel addGestureRecognizer:sampleTypeTapGesture];
     
+    //Imp. KVO for req objects
+    [_sampleTypeValueLabel addObserver:self forKeyPath:@"text" options:NSKeyValueObservingOptionNew context:NULL];
+    [_deviceTypeValueLabel addObserver:self forKeyPath:@"text" options:NSKeyValueObservingOptionNew context:NULL];
+    [_btnTWACheck addObserver:self forKeyPath:@"highlighted" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:NULL];
+    [_btnSTELCheck addObserver:self forKeyPath:@"highlighted" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:NULL];
+    [_btnCielingCheck addObserver:self forKeyPath:@"highlighted" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:NULL];
+
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -739,33 +746,47 @@
     [_deviceTypesArray removeAllObjects];
     [_deviceTypesArray addObjectsFromArray:[[mSingleton getPersistentStoreManager] getDeviceTypeList]];
     
-    //Imp. KVO for req objects
-    [_sampleIdLabel addObserver:self forKeyPath:@"text" options:NSKeyValueObservingOptionNew context:NULL];
-    [_sampleTypeValueLabel addObserver:self forKeyPath:@"text" options:NSKeyValueObservingOptionNew context:NULL];
-    [_deviceTypeValueLabel addObserver:self forKeyPath:@"text" options:NSKeyValueObservingOptionNew context:NULL];
-    [_employeeNameValueLabel addObserver:self forKeyPath:@"text" options:NSKeyValueObservingOptionNew context:NULL];
-    [_employeeJobValueLabel addObserver:self forKeyPath:@"text" options:NSKeyValueObservingOptionNew context:NULL];
-    [_operationalAreaValueLabel addObserver:self forKeyPath:@"text" options:NSKeyValueObservingOptionNew context:NULL];
-    [_notesValueLabel addObserver:self forKeyPath:@"text" options:NSKeyValueObservingOptionNew context:NULL];
-    [_commentsValueLabel addObserver:self forKeyPath:@"text" options:NSKeyValueObservingOptionNew context:NULL];
-    //    [_chemicalsArray addObserver:self forKeyPath:@"count" options:NSKeyValueObservingOptionNew context:NULL];
-    //    [_ppeArray addObserver:self forKeyPath:@"count" options:NSKeyValueObservingOptionNew context:NULL];
-    //    [_measurementsArray addObserver:self forKeyPath:@"count" options:NSKeyValueObservingOptionNew context:NULL];
-    //    [_sampleTypesArray addObserver:self forKeyPath:@"count" options:NSKeyValueObservingOptionNew context:NULL];
-    //    [_deviceTypesArray addObserver:self forKeyPath:@"count" options:NSKeyValueObservingOptionNew context:NULL];
-    //
     [_chemicalsTableView reloadData];
     [_ppeTableView reloadData];
     [_measurementsTableView reloadData];
     
     [self updateChemicalPPETable];
     [self updateMeasurementTable];
+    [self observeValueForKeyPath:nil ofObject:nil change:nil context:nil];
 }
 
 //KVO method
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-    NSLog(@"the text changed :%@:",[[self isvalidField] class]);
+    NSString *status = [self isvalidField];
+    [_sampleTypeLabel setTextColor:[UIColor blackColor]];
+    [_deviceTypeLabel setTextColor:[UIColor blackColor]];
+    [_meaurementsLabel setTextColor:[UIColor blackColor]];
+    
+    if([status isEqualToString:KVO_SAMPLE_VALID])
+    {
+        [samplesCarousel reloadData];
+    }
+    else if([status isEqualToString:KVO_SAMPLE_INVALID])
+    {
+        
+    }
+    else if([status isEqualToString:KVO_SAMPLE_INVALID_FLAG])
+    {
+        _btnCielingCheck.titleLabel.textColor = [UIColor redColor];
+    }
+    else if([status isEqualToString:KVO_SAMPLE_MEASUREMENT])
+    {
+        [_meaurementsLabel setTextColor:[UIColor redColor]];
+    }
+    else if([status isEqualToString:KVO_SAMPLE_SAMPLE_TYPE])
+    {
+        [_sampleTypeLabel setTextColor:[UIColor redColor]];
+    }
+    else if([status isEqualToString:KVO_SAMPLE_DEVICE_TYPE])
+    {
+        [_deviceTypeLabel setTextColor:[UIColor redColor]];
+    }
 }
 
 -(void)updateNotes
@@ -905,7 +926,7 @@
             tileView.tag = sampleNumber;
             [tileView setSampleId:sample.sample_SampleNumber];
             [tileView setSampleNumber:sampleNumber];
-            //[tileView setSampleCompletedStatus:sampleNumber%3==0?YES:NO];
+            [tileView setSampleCompletedStatus:[self isvalidForSample:sample]];
             [tileView setSampleSelected:(sampleNumber==selectedSampleNumber)?YES:NO];
             tileView.delegate = self;
             [aView addSubview:tileView];
@@ -1255,6 +1276,7 @@
     
     CGPoint bottomOffset = CGPointMake(0, _measurementsScrollView.contentSize.height - _measurementsScrollView.bounds.size.height);
     [_measurementsScrollView setContentOffset:bottomOffset animated:YES];
+    [self observeValueForKeyPath:nil ofObject:nil change:nil context:nil];
 }
 
 -(void)measurementsDonePressed:(SampleMeasurement*)measurement
@@ -1297,60 +1319,36 @@
 
 -(id)isvalidField
 {
-    if([_sampleIdLabel.text length] <= 0)
-        return _sampleIdLabel;
-    if([_sampleTypeValueLabel.text length] <= 0)
-        return _sampleTypeValueLabel;
     if([_deviceTypeValueLabel.text length] <= 0)
-        return _deviceTypeValueLabel;
-    if([_employeeNameValueLabel.text length] <= 0)
-        return _employeeNameValueLabel;
-    if([_employeeJobValueLabel.text length] <= 0)
-        return _employeeJobValueLabel;
-    if([_operationalAreaValueLabel.text length] <= 0)
-        return _operationalAreaValueLabel;
-    if([_notesValueLabel.text length] <= 0)
-        return _notesValueLabel;
-    if([_commentsValueLabel.text length] <= 0)
-        return _commentsValueLabel;
-    if([_chemicalsArray count] <= 0)
-        return _chemicalsArray;
-    if([_chemicalsArray count] <= 0)
-        return _ppeArray;
+        return KVO_SAMPLE_DEVICE_TYPE;
+    if([_sampleTypeValueLabel.text length] <= 0)
+        return KVO_SAMPLE_SAMPLE_TYPE;
     if([_measurementsArray count] <= 0)
-        return _measurementsArray;
-    if([_sampleTypesArray count] <= 0)
-        return _sampleTypesArray;
-    if([_deviceTypesArray count] <= 0)
-        return _deviceTypesArray;
-    if(currentSample)
-        return currentSample;
+        return KVO_SAMPLE_MEASUREMENT;
+    if(!(_btnTWACheck.selected || _btnSTELCheck.selected|| _btnCielingCheck.selected))
+        return KVO_SAMPLE_INVALID_FLAG;
     
-    NSString *status = @"VALID";
-    return status;
+    if(!currentSample)
+        return KVO_SAMPLE_INVALID;
+    
+    return KVO_SAMPLE_VALID;
 }
 
-//#pragma mark - Keyboard
-//
-//-(void)keyboardWillShow
-//{
-//    UIView *fadeMeasurementAddEditView = (UIView*)[self.view viewWithTag:FADE_VIEW_TAG];
-//    [UIView animateWithDuration:0.25
-//                     animations:^{
-//                         CGRect frame = self.view.bounds;
-//                         frame.origin.y -= 100.0f;
-//                         fadeMeasurementAddEditView.frame = frame;
-//                     }];
-//}
-//
-//-(void)keyboardWillHide
-//{
-//    UIView *fadeMeasurementAddEditView = (UIView*)[self.view viewWithTag:FADE_VIEW_TAG];
-//    [UIView animateWithDuration:0.25
-//                     animations:^{
-//                         fadeMeasurementAddEditView.frame = self.view.bounds;
-//                     }];
-//}
+-(BOOL)isvalidForSample:(Sample *)sample
+{
+    if(!sample)
+        return FALSE;
+    
+    if([sample.deviceType length] <= 0)
+        return NO;
+    if([sample.airesSampleType.sampleTypeName length] <= 0)
+        return NO;
+    
+    if([[[mSingleton getPersistentStoreManager] getSampleMeasurementforSample:sample] count] <= 0)
+        return NO;
+    
+    return YES;
+}
 
 #pragma mark - Memory warning
 
