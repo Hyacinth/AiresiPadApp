@@ -35,6 +35,7 @@
     
     NSDictionary *userData = [loginDetails objectForKey:@"User"];
     [[mSingleton getPersistentStoreManager] removeAiresUser];
+    [[mSingleton getPersistentStoreManager] removeAllProjectDetails];
     [[mSingleton getPersistentStoreManager] storeAiresUser:userData];
 }
 

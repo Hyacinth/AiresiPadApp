@@ -29,6 +29,19 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     
+
+}
+
+-(void) viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(localNotificationhandler:) name:NOTIFICATION_LOGOUT_FAILED object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(localNotificationhandler:) name:NOTIFICATION_LOGOUT_SUCCESS object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(localNotificationhandler:) name:NOTIFICATION_FETCH_PROJECT_FAILED object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(localNotificationhandler:) name:NOTIFICATION_FETCH_PROJECT_SUCCESS object:nil];
+    
     _activeProjectsCarousel.type = iCarouselTypeAires;
     _activeProjectsCarousel.bounceDistance = 0.25f;
     
@@ -54,26 +67,15 @@
     
     User *tempUser = [[mSingleton getPersistentStoreManager] getAiresUser];
     [_usernameLabel setText:[NSString stringWithFormat:@"%@ %@",tempUser.user_FirstName,tempUser.user_LastName]];
-
+    
     _projectsArray = [[NSMutableArray alloc] init];
     _completedProjectsArray = [[NSMutableArray alloc] init];
     [_projectsArray addObjectsFromArray:[[mSingleton getPersistentStoreManager] getLiveUserProjects]];
     [_completedProjectsArray addObjectsFromArray:[[mSingleton getPersistentStoreManager] getCompletedUserProjects]];
-
+    
     _activeProjectsCarousel.alpha = 0.0f;
     _completedProjectsCarousel.alpha = 0.0f;
     [self performSelector:@selector(loadCarousel) withObject:nil afterDelay:0.5];
-}
-
--(void) viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(localNotificationhandler:) name:NOTIFICATION_LOGOUT_FAILED object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(localNotificationhandler:) name:NOTIFICATION_LOGOUT_SUCCESS object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(localNotificationhandler:) name:NOTIFICATION_FETCH_PROJECT_FAILED object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(localNotificationhandler:) name:NOTIFICATION_FETCH_PROJECT_SUCCESS object:nil];
 }
 
 -(void) viewWillDisappear:(BOOL)animated
