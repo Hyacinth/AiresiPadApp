@@ -349,40 +349,40 @@
 -(IBAction)addSample:(id)sender
 {
     /*if (![[dict valueForKey:@"Comments"] isKindOfClass:[NSNull class]])
-        mSample.sample_Comments = [dict objectForKey:@"Comments"];
-    if (![[dict valueForKey:@"DeviceType"] isKindOfClass:[NSNull class]])
-        mSample.sample_DeviceTypeName = [dict objectForKey:@"DeviceType"];
-    if (![[dict valueForKey:@"EmployeeJob"] isKindOfClass:[NSNull class]])
-        mSample.sample_EmployeeJob = [dict objectForKey:@"EmployeeJob"];
-    if (![[dict valueForKey:@"EmployeeName"] isKindOfClass:[NSNull class]])
-        mSample.sample_EmployeeName = [dict objectForKey:@"EmployeeName"];
-    if (![[dict valueForKey:@"Notes"] isKindOfClass:[NSNull class]])
-        mSample.sample_Notes = [dict objectForKey:@"Notes"];
-    if (![[dict valueForKey:@"OperationArea"] isKindOfClass:[NSNull class]])
-        mSample.sample_OperationArea = [dict objectForKey:@"OperationArea"];
-    if (![[dict valueForKey:@"SampleId"] isKindOfClass:[NSNull class]])
-        mSample.sample_SampleId = [dict objectForKey:@"SampleId"];
-    if (![[dict valueForKey:@"SampleNumber"] isKindOfClass:[NSNull class]])
-        mSample.sample_SampleNumber = [dict objectForKey:@"SampleNumber"];
-    if (![[dict valueForKey:@"CreatedOn"] isKindOfClass:[NSNull class]])
-        mSample.createdOn = [dict objectForKey:@"CreatedOn"];
-    if (![[dict valueForKey:@"DeviceType"] isKindOfClass:[NSNull class]])
-        mSample.deviceType = [dict objectForKey:@"DeviceType"];
-    if (![[dict valueForKey:@"Volume"] isKindOfClass:[NSNull class]])
-        mSample.volume = [dict objectForKey:@"Volume"];
-    if (![[dict valueForKey:@"Minutes"] isKindOfClass:[NSNull class]])
-        mSample.minutes = [dict objectForKey:@"Minutes"];
-    if (![[dict valueForKey:@"Area"] isKindOfClass:[NSNull class]])
-        mSample.area = [dict objectForKey:@"Area"];
-    if (![[dict valueForKey:@"DeviceTypeId"] isKindOfClass:[NSNull class]])
-        mSample.deviceTypeId = [dict objectForKey:@"DeviceTypeId"];
-    if (![[dict valueForKey:@"PPEId"] isKindOfClass:[NSNull class]])
-        mSample.ppeID = [dict objectForKey:@"PPEId"];
-    if (![[dict valueForKey:@"ProjectId"] isKindOfClass:[NSNull class]])
-        mSample.projectId = [dict objectForKey:@"ProjectId"];
-    if (![[dict valueForKey:@"SampleId"] isKindOfClass:[NSNull class]])
-        mSample.sampleID = [dict objectForKey:@"SampleId"];*/
-
+     mSample.sample_Comments = [dict objectForKey:@"Comments"];
+     if (![[dict valueForKey:@"DeviceType"] isKindOfClass:[NSNull class]])
+     mSample.sample_DeviceTypeName = [dict objectForKey:@"DeviceType"];
+     if (![[dict valueForKey:@"EmployeeJob"] isKindOfClass:[NSNull class]])
+     mSample.sample_EmployeeJob = [dict objectForKey:@"EmployeeJob"];
+     if (![[dict valueForKey:@"EmployeeName"] isKindOfClass:[NSNull class]])
+     mSample.sample_EmployeeName = [dict objectForKey:@"EmployeeName"];
+     if (![[dict valueForKey:@"Notes"] isKindOfClass:[NSNull class]])
+     mSample.sample_Notes = [dict objectForKey:@"Notes"];
+     if (![[dict valueForKey:@"OperationArea"] isKindOfClass:[NSNull class]])
+     mSample.sample_OperationArea = [dict objectForKey:@"OperationArea"];
+     if (![[dict valueForKey:@"SampleId"] isKindOfClass:[NSNull class]])
+     mSample.sample_SampleId = [dict objectForKey:@"SampleId"];
+     if (![[dict valueForKey:@"SampleNumber"] isKindOfClass:[NSNull class]])
+     mSample.sample_SampleNumber = [dict objectForKey:@"SampleNumber"];
+     if (![[dict valueForKey:@"CreatedOn"] isKindOfClass:[NSNull class]])
+     mSample.createdOn = [dict objectForKey:@"CreatedOn"];
+     if (![[dict valueForKey:@"DeviceType"] isKindOfClass:[NSNull class]])
+     mSample.deviceType = [dict objectForKey:@"DeviceType"];
+     if (![[dict valueForKey:@"Volume"] isKindOfClass:[NSNull class]])
+     mSample.volume = [dict objectForKey:@"Volume"];
+     if (![[dict valueForKey:@"Minutes"] isKindOfClass:[NSNull class]])
+     mSample.minutes = [dict objectForKey:@"Minutes"];
+     if (![[dict valueForKey:@"Area"] isKindOfClass:[NSNull class]])
+     mSample.area = [dict objectForKey:@"Area"];
+     if (![[dict valueForKey:@"DeviceTypeId"] isKindOfClass:[NSNull class]])
+     mSample.deviceTypeId = [dict objectForKey:@"DeviceTypeId"];
+     if (![[dict valueForKey:@"PPEId"] isKindOfClass:[NSNull class]])
+     mSample.ppeID = [dict objectForKey:@"PPEId"];
+     if (![[dict valueForKey:@"ProjectId"] isKindOfClass:[NSNull class]])
+     mSample.projectId = [dict objectForKey:@"ProjectId"];
+     if (![[dict valueForKey:@"SampleId"] isKindOfClass:[NSNull class]])
+     mSample.sampleID = [dict objectForKey:@"SampleId"];*/
+    
     User *user = [[mSingleton getPersistentStoreManager] getAiresUser];
     
     NSMutableDictionary *sampleDict = [[NSMutableDictionary alloc] init];
@@ -668,19 +668,40 @@
     
     [_measurementsArray removeAllObjects];
     [_measurementsArray addObjectsFromArray:[[mSingleton getPersistentStoreManager] getSampleMeasurementforSample:sample]];
-
+    
     [_sampleTypesArray removeAllObjects];
     [_sampleTypesArray addObjectsFromArray:[[mSingleton getPersistentStoreManager] getSampleyTypeList]];
     
     [_deviceTypesArray removeAllObjects];
     [_deviceTypesArray addObjectsFromArray:[[mSingleton getPersistentStoreManager] getDeviceTypeList]];
     
+    //Imp. KVO for req objects
+    [_sampleIdLabel addObserver:self forKeyPath:@"text" options:NSKeyValueObservingOptionNew context:NULL];
+    [_sampleTypeValueLabel addObserver:self forKeyPath:@"text" options:NSKeyValueObservingOptionNew context:NULL];
+    [_deviceTypeValueLabel addObserver:self forKeyPath:@"text" options:NSKeyValueObservingOptionNew context:NULL];
+    [_employeeNameValueLabel addObserver:self forKeyPath:@"text" options:NSKeyValueObservingOptionNew context:NULL];
+    [_employeeJobValueLabel addObserver:self forKeyPath:@"text" options:NSKeyValueObservingOptionNew context:NULL];
+    [_operationalAreaValueLabel addObserver:self forKeyPath:@"text" options:NSKeyValueObservingOptionNew context:NULL];
+    [_notesValueLabel addObserver:self forKeyPath:@"text" options:NSKeyValueObservingOptionNew context:NULL];
+    [_commentsValueLabel addObserver:self forKeyPath:@"text" options:NSKeyValueObservingOptionNew context:NULL];
+//    [_chemicalsArray addObserver:self forKeyPath:@"count" options:NSKeyValueObservingOptionNew context:NULL];
+//    [_ppeArray addObserver:self forKeyPath:@"count" options:NSKeyValueObservingOptionNew context:NULL];
+//    [_measurementsArray addObserver:self forKeyPath:@"count" options:NSKeyValueObservingOptionNew context:NULL];
+//    [_sampleTypesArray addObserver:self forKeyPath:@"count" options:NSKeyValueObservingOptionNew context:NULL];
+//    [_deviceTypesArray addObserver:self forKeyPath:@"count" options:NSKeyValueObservingOptionNew context:NULL];
+//
     [_chemicalsTableView reloadData];
     [_ppeTableView reloadData];
     [_measurementsTableView reloadData];
     
     [self updateChemicalPPETable];
     [self updateMeasurementTable];
+}
+
+//KVO method
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    NSLog(@"the text changed :%@:",[[self isvalidField] class]);
 }
 
 -(void)updateNotes
@@ -820,7 +841,7 @@
             tileView.tag = sampleNumber;
             [tileView setSampleId:sample.sample_SampleNumber];
             [tileView setSampleNumber:sampleNumber];
-            [tileView setSampleCompletedStatus:sampleNumber%3==0?YES:NO];
+            //[tileView setSampleCompletedStatus:sampleNumber%3==0?YES:NO];
             [tileView setSampleSelected:(sampleNumber==selectedSampleNumber)?YES:NO];
             tileView.delegate = self;
             [aView addSubview:tileView];
@@ -906,7 +927,7 @@
         
         NSDictionary *onTimeComponents = [mSingleton getDateComponentsforString:measurement.sampleMeasurement_OnTime];
         NSString *onTimeString = [NSString stringWithFormat:@"%@:%@ %@", [onTimeComponents valueForKey:@"hour"], [onTimeComponents valueForKey:@"minute"], [onTimeComponents valueForKey:@"meridian"]];
-
+        
         NSDictionary *offTimeComponents = [mSingleton getDateComponentsforString:measurement.sampleMeasurement_OffTime];
         NSString *offTimeString = [NSString stringWithFormat:@"%@:%@ %@", [offTimeComponents valueForKey:@"hour"], [offTimeComponents valueForKey:@"minute"], [offTimeComponents valueForKey:@"meridian"]];
         
@@ -920,7 +941,7 @@
             
             UIFont *font14px = [UIFont fontWithName:@"ProximaNova-Regular" size:14.0f];
             UIColor *textColor = [UIColor colorWithRed:28.0f/255.0f green:34.0f/255.0f blue:39.0f/255.0f alpha:1.0f];
-                        
+            
             UILabel *onTimeLabel = [[UILabel alloc] initWithFrame:CGRectMake(8, 0, 160, cell.contentView.bounds.size.height)];
             onTimeLabel.tag = MEASUREMENT_ONTIME_TAG;
             onTimeLabel.backgroundColor = [UIColor clearColor];
@@ -954,7 +975,7 @@
             [cell.contentView addSubview:offFlowRateLabel];
         }
         else
-        {           
+        {
             UILabel *onTimeLabel = (UILabel*)[cell.contentView viewWithTag:MEASUREMENT_ONTIME_TAG];
             onTimeLabel.text = onTimeString;
             UILabel *onFlowRateLabel = (UILabel*)[cell.contentView viewWithTag:MEASUREMENT_ONFLOWRATE_TAG];
@@ -973,7 +994,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-
+    
     if(tableView==_measurementsTableView)
     {
         SampleMeasurement *measurement = (SampleMeasurement*)[_measurementsArray objectAtIndex:indexPath.row];
@@ -1056,7 +1077,7 @@
         
         [chemArray addObject:chemicalDict];
     }
-        
+    
     [[mSingleton getPersistentStoreManager] storeSampleChemicalDetails:chemArray forSample:currentSample];
 }
 
@@ -1087,10 +1108,10 @@
             equipment.samplePPEId = [[mSingleton getPersistentStoreManager] generateIDforNewSampleProtectionEquipment];
         
         [equipDict setValue:equipment.samplePPEId forKey:@"SamplePPEId"];
-
+        
         [equipArray addObject:equipDict];
     }
-        
+    
     [[mSingleton getPersistentStoreManager] storeSampleProtectionEquipmentDetails:equipArray forSample:currentSample];
 }
 
@@ -1137,7 +1158,7 @@
     
     NSArray *meaurement = [NSArray arrayWithObject:measurementDict];
     [[mSingleton getPersistentStoreManager] storeSampleMeasurementDetails:meaurement forSample:currentSample];
-
+    
     [_measurementsArray removeAllObjects];
     [_measurementsArray addObjectsFromArray:[[mSingleton getPersistentStoreManager] getSampleMeasurementforSample:currentSample]];
     
@@ -1184,6 +1205,41 @@
                      completion:^(BOOL finished) {
                          [fadeMeasurementAddEditView removeFromSuperview];
                      }];
+}
+
+-(id)isvalidField
+{
+    if([_sampleIdLabel.text length] <= 0)
+        return _sampleIdLabel;
+    if([_sampleTypeValueLabel.text length] <= 0)
+        return _sampleTypeValueLabel;
+    if([_deviceTypeValueLabel.text length] <= 0)
+        return _deviceTypeValueLabel;
+    if([_employeeNameValueLabel.text length] <= 0)
+        return _employeeNameValueLabel;
+    if([_employeeJobValueLabel.text length] <= 0)
+        return _employeeJobValueLabel;
+    if([_operationalAreaValueLabel.text length] <= 0)
+        return _operationalAreaValueLabel;
+    if([_notesValueLabel.text length] <= 0)
+        return _notesValueLabel;
+    if([_commentsValueLabel.text length] <= 0)
+        return _commentsValueLabel;
+    if([_chemicalsArray count] <= 0)
+        return _chemicalsArray;
+    if([_chemicalsArray count] <= 0)
+        return _ppeArray;
+    if([_measurementsArray count] <= 0)
+        return _measurementsArray;
+    if([_sampleTypesArray count] <= 0)
+        return _sampleTypesArray;
+    if([_deviceTypesArray count] <= 0)
+        return _deviceTypesArray;
+    if(currentSample)
+        return currentSample;
+    
+    NSString *status = @"VALID";
+    return status;
 }
 
 #pragma mark - Keyboard
