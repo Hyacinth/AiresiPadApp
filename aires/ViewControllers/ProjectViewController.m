@@ -235,7 +235,7 @@
     [_btnTWACheck addObserver:self forKeyPath:@"highlighted" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:NULL];
     [_btnSTELCheck addObserver:self forKeyPath:@"highlighted" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:NULL];
     [_btnCielingCheck addObserver:self forKeyPath:@"highlighted" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:NULL];
-
+    
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -1210,17 +1210,19 @@
         case Edit_EmployeeName:
         {
             _employeeNameValueLabel.text = text;
+            [[mSingleton getPersistentStoreManager] updateSample:currentSample inProject:currentProject forField:FIELD_SAMPLE_EMPLOYEE_NAME withValue:text];
         }
             break;
         case Edit_EmployeeJob:
         {
             _employeeJobValueLabel.text = text;
+            [[mSingleton getPersistentStoreManager] updateSample:currentSample inProject:currentProject forField:FIELD_SAMPLE_EMPLOYEE_JOB withValue:text];
         }
             break;
         case Edit_OperationalArea:
         {
             _operationalAreaValueLabel.text = text;
-            [[mSingleton getPersistentStoreManager] updateSample:currentSample inProject:currentProject forField:FIELD_SAMPLE_NOTES withValue:text];
+            [[mSingleton getPersistentStoreManager] updateSample:currentSample inProject:currentProject forField:FIELD_SAMPLE_OPERATIONAL_AREA withValue:text];
         }
             break;
         case Edit_Notes:
