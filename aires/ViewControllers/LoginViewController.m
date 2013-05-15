@@ -168,7 +168,7 @@
     else
         [loginFieldsView setPassFieldText:@""];
     
-    [loginFieldsView setUserFieldText:@"gbtpa\\gautham"];
+    //[loginFieldsView setUserFieldText:@"gbtpa\\gautham"];
     //[loginFieldsView setPassFieldText:@"password123"];
     
 }

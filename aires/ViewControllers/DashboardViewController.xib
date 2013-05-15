@@ -199,7 +199,6 @@
 						<string key="NSFrame">{{949, 614}, {75, 35}}</string>
 						<reference key="NSSuperview" ref="766721923"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBIPadFramework</string>
@@ -911,7 +910,6 @@
 						<string key="completedProjectsLabel">UILabel</string>
 						<string key="liveProjectsLabel">UILabel</string>
 						<string key="loadingView">UIScrollView</string>
-						<string key="profileImageView">UIImageView</string>
 						<string key="searchField">UITextField</string>
 						<string key="searchView">UIView</string>
 						<string key="seeAllButton">UIButton</string>
@@ -950,10 +948,6 @@
 						<object class="IBToOneOutletInfo" key="loadingView">
 							<string key="name">loadingView</string>
 							<string key="candidateClassName">UIScrollView</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="profileImageView">
-							<string key="name">profileImageView</string>
-							<string key="candidateClassName">UIImageView</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="searchField">
 							<string key="name">searchField</string>
