@@ -45,6 +45,9 @@
 #define FIELD_SAMPLE_NOTES                          @"field_sample_notes"
 #define FIELD_SAMPLE_COMMENTS                       @"field_sample_comments"
 #define FIELD_SAMPLE_SAMPLETYPE                     @"field_sample_sampletype"
+#define FIELD_SAMPLE_EMPLOYEE_NAME                  @"field_sample_employee_name"
+#define FIELD_SAMPLE_EMPLOYEE_JOB                   @"field_sample_employee_job"
+#define FIELD_SAMPLE_OPERATIONAL_AREA               @"field_sample_operational_area"
 
 #define FIELD_SAMPLECHEMICAL_DELETE                 @"field_samplechemical_delete"
 #define FIELD_SAMPLECHEMICAL_PELCFlag               @"field_samplechemical_PELCFlag"
@@ -67,5 +70,11 @@
 #define FIELD_SAMPLEPROTECTIONEQUIPMENT_NAME        @"field_sampleprotectionequipment_name"
 #define FIELD_SAMPLEPROTECTIONEQUIPMENT_ID          @"field_sampleprotectionequipment_id"
 
-
+//KVO fields
+#define KVO_SAMPLE_DEVICE_TYPE                      @"kvo_sample_device_type"
+#define KVO_SAMPLE_SAMPLE_TYPE                      @"kvo_sample_sample_type"
+#define KVO_SAMPLE_MEASUREMENT                      @"kvo_sample_measurement"
+#define KVO_SAMPLE_INVALID_FLAG                     @"kvo_sample_invalid_flag"
+#define KVO_SAMPLE_INVALID                          @"kvo_sample_invalid"
+#define KVO_SAMPLE_VALID                            @"kvo_sample_valid"
 

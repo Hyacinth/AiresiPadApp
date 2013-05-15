@@ -550,6 +550,18 @@
     {
         toUpdate.sample_Notes = (NSString *)value;
     }
+    else if ([field isEqualToString:FIELD_SAMPLE_EMPLOYEE_NAME])
+    {
+        toUpdate.sample_EmployeeName = (NSString *)value;
+    }
+    else if ([field isEqualToString:FIELD_SAMPLE_EMPLOYEE_JOB])
+    {
+        toUpdate.sample_EmployeeJob = (NSString *)value;
+    }
+    else if ([field isEqualToString:FIELD_SAMPLE_OPERATIONAL_AREA])
+    {
+        toUpdate.sample_OperationArea = (NSString *)value;
+    }
     else if ([field isEqualToString:FIELD_SAMPLE_COMMENTS])
     {
         toUpdate.sample_Comments = (NSString *)value;
