@@ -479,7 +479,7 @@
         
         [project addAiresSampleObject:mSample];
         [[self mainContext] save:nil];
-                
+        
         SampleType *mSampleType = [NSEntityDescription
                                    insertNewObjectForEntityForName:@"SampleType"
                                    inManagedObjectContext:[self mainContext]];
@@ -633,45 +633,62 @@
 -(void)updateSampleChemical:(SampleChemical *)sampleChemical inSample:(Sample *)sample forField:(NSString *)field withValue:(id)value
 {
     NSArray *sampleChemicalArray = [self getSampleChemicalforSample:sample];
-    SampleChemical *toUpdate;
+    SampleChemical *toUpdate = nil;
     for (SampleChemical *mSampleChemical in sampleChemicalArray)
     {
-        if ([mSampleChemical.sampleChemicalID isEqualToNumber:sampleChemical.sampleChemicalID])
+        if (!sampleChemical)
+        {
+            if ([field isEqualToString:FIELD_SAMPLECHEMICAL_DELETE])
+            {
+                mSampleChemical.deleted = (NSNumber *)value;
+            }
+            else if ([field isEqualToString:FIELD_SAMPLECHEMICAL_CFlag])
+            {
+                mSampleChemical.sampleChemical_PELCFlag = (NSNumber *)value;
+                mSampleChemical.sampleChemical_TLVCFlag = (NSNumber *)value;
+            }
+            else if ([field isEqualToString:FIELD_SAMPLECHEMICAL_TWAFlag])
+            {
+                mSampleChemical.sampleChemical_PELTWAFlag = (NSNumber *)value;
+                mSampleChemical.sampleChemical_TLVTWAFlag = (NSNumber *)value;
+            }
+            else if ([field isEqualToString:FIELD_SAMPLECHEMICAL_STELFlag])
+            {
+                mSampleChemical.sampleChemical_PELSTELFlag = (NSNumber *)value;
+                mSampleChemical.sampleChemical_TLVSTELFlag = (NSNumber *)value;
+            }
+            [[self mainContext] save:nil];
+            
+        }
+        else if ([mSampleChemical.sampleChemicalID isEqualToNumber:sampleChemical.sampleChemicalID])
         {
             toUpdate = mSampleChemical;
             break;
         }
     }
-    
-    if ([field isEqualToString:FIELD_SAMPLECHEMICAL_DELETE])
+    if(toUpdate)
     {
-        toUpdate.deleted = (NSNumber *)value;
+        if ([field isEqualToString:FIELD_SAMPLECHEMICAL_DELETE])
+        {
+            toUpdate.deleted = (NSNumber *)value;
+        }
+        else if ([field isEqualToString:FIELD_SAMPLECHEMICAL_CFlag])
+        {
+            toUpdate.sampleChemical_PELCFlag = (NSNumber *)value;
+            toUpdate.sampleChemical_TLVCFlag = (NSNumber *)value;
+        }
+        else if ([field isEqualToString:FIELD_SAMPLECHEMICAL_TWAFlag])
+        {
+            toUpdate.sampleChemical_PELTWAFlag = (NSNumber *)value;
+            toUpdate.sampleChemical_TLVTWAFlag = (NSNumber *)value;
+        }
+        else if ([field isEqualToString:FIELD_SAMPLECHEMICAL_STELFlag])
+        {
+            toUpdate.sampleChemical_PELSTELFlag = (NSNumber *)value;
+            toUpdate.sampleChemical_TLVSTELFlag = (NSNumber *)value;
+        }
+        [[self mainContext] save:nil];
     }
-    else if ([field isEqualToString:FIELD_SAMPLECHEMICAL_PELCFlag])
-    {
-        toUpdate.sampleChemical_PELCFlag = (NSNumber *)value;
-    }
-    else if ([field isEqualToString:FIELD_SAMPLECHEMICAL_TLVTWAFlag])
-    {
-        toUpdate.sampleChemical_TLVTWAFlag = (NSNumber *)value;
-    }
-    else if ([field isEqualToString:FIELD_SAMPLECHEMICAL_TLVSTELFlag])
-    {
-        toUpdate.sampleChemical_TLVSTELFlag = (NSNumber *)value;
-    }
-    else if ([field isEqualToString:FIELD_SAMPLECHEMICAL_TLVCFlag])
-    {
-        toUpdate.sampleChemical_TLVCFlag = (NSNumber *)value;
-    }
-    else if ([field isEqualToString:FIELD_SAMPLECHEMICAL_PELTWAFlag])
-    {
-        toUpdate.sampleChemical_PELTWAFlag = (NSNumber *)value;
-    }
-    else if ([field isEqualToString:FIELD_SAMPLECHEMICAL_PELSTELFlag])
-    {
-        toUpdate.sampleChemical_PELSTELFlag = (NSNumber *)value;
-    }
-    [[self mainContext] save:nil];
 }
 
 #pragma mark -
@@ -849,7 +866,7 @@
 -(void)removeAllProjectDetails
 {
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
-   
+    
     [request setEntity:[NSEntityDescription entityForName:@"SampleProtectionEquipment" inManagedObjectContext:[self mainContext]]];
     NSMutableArray *results = [NSMutableArray arrayWithArray:[[self mainContext] executeFetchRequest:request error:nil]];
     for (SampleProtectionEquipment *mSampleProtectionEquipment in results)
@@ -879,7 +896,7 @@
     for (SampleType *mSampleType in results)
         [[self mainContext] deleteObject:mSampleType];
     [results removeAllObjects];
-
+    
     [request setEntity:[NSEntityDescription entityForName:@"Sample" inManagedObjectContext:[self mainContext]]];
     results = [NSMutableArray arrayWithArray:[[self mainContext] executeFetchRequest:request error:nil]];
     for (Sample *mSample in results)
@@ -891,7 +908,7 @@
     for (Project *mProject in results)
         [[self mainContext] deleteObject:mProject];
     [results removeAllObjects];
-
+    
 }
 
 #pragma mark -
@@ -1015,8 +1032,8 @@
     for (NSDictionary *dict in sampletypeArray)
     {
         SampleType *mSampleType = [NSEntityDescription
-                                                                 insertNewObjectForEntityForName:@"SampleType"
-                                                                 inManagedObjectContext:[self mainContext]];
+                                   insertNewObjectForEntityForName:@"SampleType"
+                                   inManagedObjectContext:[self mainContext]];
         
         if (![[dict valueForKey:@"SampleTypeName"] isKindOfClass:[NSNull class]])
             mSampleType.sampleTypeName = [dict valueForKey:@"SampleTypeName"];
@@ -1026,7 +1043,7 @@
         mSampleType.contentType = @"ListData";
         [[self mainContext] save:nil];
     }
-
+    
 }
 
 -(NSArray *)getSampleyTypeList
@@ -1041,7 +1058,7 @@
         }
     }
     return finalResult;
-
+    
 }
 
 
@@ -1110,18 +1127,18 @@
 {
     NSString *letters = @"ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-";
     NSMutableString *randomString = [NSMutableString stringWithCapacity: 6];
-    for (int i=0; i<6; i++) 
+    for (int i=0; i<6; i++)
         [randomString appendFormat: @"%C", [letters characterAtIndex: arc4random() % [letters length]]];
-  
+    
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     [request setEntity:[NSEntityDescription entityForName:@"Sample" inManagedObjectContext:[self mainContext]]];
     NSArray *results = [[self mainContext] executeFetchRequest:request error:nil];
-
+    
     for (Sample *mSample in results)
     {
         if([mSample.sample_SampleNumber isEqualToString:randomString])
         {
-           randomString = [NSString stringWithString:[self generateNumberforNewSample]];
+            randomString = [NSString stringWithString:[self generateNumberforNewSample]];
             break;
         }
     }

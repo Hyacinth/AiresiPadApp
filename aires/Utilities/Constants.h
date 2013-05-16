@@ -50,12 +50,9 @@
 #define FIELD_SAMPLE_OPERATIONAL_AREA               @"field_sample_operational_area"
 
 #define FIELD_SAMPLECHEMICAL_DELETE                 @"field_samplechemical_delete"
-#define FIELD_SAMPLECHEMICAL_PELCFlag               @"field_samplechemical_PELCFlag"
-#define FIELD_SAMPLECHEMICAL_TLVTWAFlag             @"field_samplechemical_TLVTWAFlag"
-#define FIELD_SAMPLECHEMICAL_TLVSTELFlag            @"field_samplechemical_TLVSTELFlag"
-#define FIELD_SAMPLECHEMICAL_TLVCFlag               @"field_samplechemical_TLVCFlag"
-#define FIELD_SAMPLECHEMICAL_PELTWAFlag             @"field_samplechemical_PELTWAFlag"
-#define FIELD_SAMPLECHEMICAL_PELSTELFlag            @"field_samplechemical_PELSTELFlag"
+#define FIELD_SAMPLECHEMICAL_CFlag                  @"field_samplechemical_CFlag"
+#define FIELD_SAMPLECHEMICAL_TWAFlag                @"field_samplechemical_TWAFlag"
+#define FIELD_SAMPLECHEMICAL_STELFlag               @"field_samplechemical_STELFlag"
 
 #define FIELD_SAMPLEMEASUREMENT_DELETE              @"field_samplemeasurement_delete"
 #define FIELD_SAMPLEMEASUREMENT_OffFlowRate         @"field_samplemeasurement_OffFlowRate"
@@ -73,8 +70,15 @@
 //KVO fields
 #define KVO_SAMPLE_DEVICE_TYPE                      @"kvo_sample_device_type"
 #define KVO_SAMPLE_SAMPLE_TYPE                      @"kvo_sample_sample_type"
+#define KVO_SAMPLE_SC                               @"kvo_sample_sc"
+#define KVO_SAMPLE_PPE                              @"kvo_sample_ppw"
 #define KVO_SAMPLE_MEASUREMENT                      @"kvo_sample_measurement"
 #define KVO_SAMPLE_INVALID_FLAG                     @"kvo_sample_invalid_flag"
 #define KVO_SAMPLE_INVALID                          @"kvo_sample_invalid"
 #define KVO_SAMPLE_VALID                            @"kvo_sample_valid"
+
+//sampleChemical flags
+#define FLAG_CIELING                                @"flag_cieling"
+#define FLAG_TWA                                    @"flag_twa"
+#define FLAG_STEL                                   @"flag_stel"
 

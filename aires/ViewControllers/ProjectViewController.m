@@ -232,9 +232,9 @@
     //Imp. KVO for req objects
     [_sampleTypeValueLabel addObserver:self forKeyPath:@"text" options:NSKeyValueObservingOptionNew context:NULL];
     [_deviceTypeValueLabel addObserver:self forKeyPath:@"text" options:NSKeyValueObservingOptionNew context:NULL];
-    [_btnTWACheck addObserver:self forKeyPath:@"highlighted" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:NULL];
-    [_btnSTELCheck addObserver:self forKeyPath:@"highlighted" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:NULL];
-    [_btnCielingCheck addObserver:self forKeyPath:@"highlighted" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:NULL];
+    [_btnTWACheck addObserver:self forKeyPath:@"selected" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:NULL];
+    [_btnSTELCheck addObserver:self forKeyPath:@"selected" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:NULL];
+    [_btnCielingCheck addObserver:self forKeyPath:@"selected" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:NULL];
     
 }
 
@@ -353,41 +353,6 @@
 
 -(IBAction)addSample:(id)sender
 {
-    /*if (![[dict valueForKey:@"Comments"] isKindOfClass:[NSNull class]])
-     mSample.sample_Comments = [dict objectForKey:@"Comments"];
-     if (![[dict valueForKey:@"DeviceType"] isKindOfClass:[NSNull class]])
-     mSample.sample_DeviceTypeName = [dict objectForKey:@"DeviceType"];
-     if (![[dict valueForKey:@"EmployeeJob"] isKindOfClass:[NSNull class]])
-     mSample.sample_EmployeeJob = [dict objectForKey:@"EmployeeJob"];
-     if (![[dict valueForKey:@"EmployeeName"] isKindOfClass:[NSNull class]])
-     mSample.sample_EmployeeName = [dict objectForKey:@"EmployeeName"];
-     if (![[dict valueForKey:@"Notes"] isKindOfClass:[NSNull class]])
-     mSample.sample_Notes = [dict objectForKey:@"Notes"];
-     if (![[dict valueForKey:@"OperationArea"] isKindOfClass:[NSNull class]])
-     mSample.sample_OperationArea = [dict objectForKey:@"OperationArea"];
-     if (![[dict valueForKey:@"SampleId"] isKindOfClass:[NSNull class]])
-     mSample.sample_SampleId = [dict objectForKey:@"SampleId"];
-     if (![[dict valueForKey:@"SampleNumber"] isKindOfClass:[NSNull class]])
-     mSample.sample_SampleNumber = [dict objectForKey:@"SampleNumber"];
-     if (![[dict valueForKey:@"CreatedOn"] isKindOfClass:[NSNull class]])
-     mSample.createdOn = [dict objectForKey:@"CreatedOn"];
-     if (![[dict valueForKey:@"DeviceType"] isKindOfClass:[NSNull class]])
-     mSample.deviceType = [dict objectForKey:@"DeviceType"];
-     if (![[dict valueForKey:@"Volume"] isKindOfClass:[NSNull class]])
-     mSample.volume = [dict objectForKey:@"Volume"];
-     if (![[dict valueForKey:@"Minutes"] isKindOfClass:[NSNull class]])
-     mSample.minutes = [dict objectForKey:@"Minutes"];
-     if (![[dict valueForKey:@"Area"] isKindOfClass:[NSNull class]])
-     mSample.area = [dict objectForKey:@"Area"];
-     if (![[dict valueForKey:@"DeviceTypeId"] isKindOfClass:[NSNull class]])
-     mSample.deviceTypeId = [dict objectForKey:@"DeviceTypeId"];
-     if (![[dict valueForKey:@"PPEId"] isKindOfClass:[NSNull class]])
-     mSample.ppeID = [dict objectForKey:@"PPEId"];
-     if (![[dict valueForKey:@"ProjectId"] isKindOfClass:[NSNull class]])
-     mSample.projectId = [dict objectForKey:@"ProjectId"];
-     if (![[dict valueForKey:@"SampleId"] isKindOfClass:[NSNull class]])
-     mSample.sampleID = [dict objectForKey:@"SampleId"];*/
-    
     User *user = [[mSingleton getPersistentStoreManager] getAiresUser];
     
     NSMutableDictionary *sampleDict = [[NSMutableDictionary alloc] init];
@@ -614,6 +579,14 @@
 {
     UIButton *button = (UIButton*)sender;
     [button setSelected:!button.isSelected];
+    
+    if(button == _btnCielingCheck)
+        [[mSingleton getPersistentStoreManager] updateSampleChemical:nil inSample:currentSample forField:FIELD_SAMPLECHEMICAL_CFlag withValue:[NSNumber numberWithBool:button.isSelected]];
+    else if(button == _btnSTELCheck)
+        [[mSingleton getPersistentStoreManager] updateSampleChemical:nil inSample:currentSample forField:FIELD_SAMPLECHEMICAL_STELFlag withValue:[NSNumber numberWithBool:button.isSelected]];
+    else if(button == _btnTWACheck)
+        [[mSingleton getPersistentStoreManager] updateSampleChemical:nil inSample:currentSample forField:FIELD_SAMPLECHEMICAL_TWAFlag withValue:[NSNumber numberWithBool:button.isSelected]];
+    
 }
 
 - (IBAction)onGeneratePreview:(id)sender
@@ -773,7 +746,9 @@
     _labelTWA.textColor = [UIColor blackColor];
     _labelSTEL.textColor = [UIColor blackColor];
     _labelCieling.textColor = [UIColor blackColor];
-
+    [_sampleChemicalsLabel setTextColor:[UIColor blackColor]];
+    [_ppelabel setTextColor:[UIColor blackColor]];
+    
     if([status isEqualToString:KVO_SAMPLE_VALID])
     {
         [samplesCarousel reloadData];
@@ -787,6 +762,14 @@
         _labelTWA.textColor = [UIColor redColor];
         _labelSTEL.textColor = [UIColor redColor];
         _labelCieling.textColor = [UIColor redColor];
+    }
+    else if([status isEqualToString:KVO_SAMPLE_SC])
+    {
+        [_sampleChemicalsLabel setTextColor:[UIColor redColor]];
+    }
+    else if([status isEqualToString:KVO_SAMPLE_PPE])
+    {
+        [_ppelabel setTextColor:[UIColor redColor]];
     }
     else if([status isEqualToString:KVO_SAMPLE_MEASUREMENT])
     {
@@ -1008,6 +991,21 @@
         {
             SampleChemical *sc = (SampleChemical*)[_chemicalsArray objectAtIndex:indexPath.row];
             cell.textLabel.text = sc.sampleChemical_Name;
+            if (sc.sampleChemical_PELCFlag || sc.sampleChemical_TLVCFlag)
+            {
+                [_btnCielingCheck setSelected:TRUE];
+                [[mSingleton getPersistentStoreManager] updateSampleChemical:nil inSample:currentSample forField:FIELD_SAMPLECHEMICAL_CFlag withValue:[NSNumber numberWithBool:TRUE]];
+            }
+            if (sc.sampleChemical_TLVTWAFlag || sc.sampleChemical_PELTWAFlag)
+            {
+                [_btnTWACheck setSelected:TRUE];
+                [[mSingleton getPersistentStoreManager] updateSampleChemical:nil inSample:currentSample forField:FIELD_SAMPLECHEMICAL_TWAFlag withValue:[NSNumber numberWithBool:TRUE]];
+            }
+            if (sc.sampleChemical_TLVSTELFlag || sc.sampleChemical_PELSTELFlag)
+            {
+                [_btnSTELCheck setSelected:TRUE];
+                [[mSingleton getPersistentStoreManager] updateSampleChemical:nil inSample:currentSample forField:FIELD_SAMPLECHEMICAL_STELFlag withValue:[NSNumber numberWithBool:TRUE]];
+            }
         }
         else
         {
@@ -1177,6 +1175,7 @@
     }
     
     [[mSingleton getPersistentStoreManager] storeSampleChemicalDetails:chemArray forSample:currentSample];
+    [self observeValueForKeyPath:nil ofObject:nil change:nil context:nil];
 }
 
 #pragma mark - PPEListProtocol
@@ -1211,6 +1210,7 @@
     }
     
     [[mSingleton getPersistentStoreManager] storeSampleProtectionEquipmentDetails:equipArray forSample:currentSample];
+    [self observeValueForKeyPath:nil ofObject:nil change:nil context:nil];
 }
 
 #pragma mark - TextEditProtocol
@@ -1315,6 +1315,7 @@
     [self removeMeasurementEditView];
     [_measurementsArray removeLastObject];
     [self updateMeasurementTable];
+    [self observeValueForKeyPath:nil ofObject:nil change:nil context:nil];
 }
 
 -(void)removeMeasurementEditView
@@ -1338,11 +1339,15 @@
         return KVO_SAMPLE_SAMPLE_TYPE;
     if([_deviceTypeValueLabel.text length] <= 0)
         return KVO_SAMPLE_DEVICE_TYPE;
+    if([_chemicalsArray count] <= 0)
+        return KVO_SAMPLE_SC;
+    if([_ppeArray count] <= 0)
+        return KVO_SAMPLE_PPE;
     if(!(_btnTWACheck.selected || _btnSTELCheck.selected|| _btnCielingCheck.selected))
         return KVO_SAMPLE_INVALID_FLAG;
     if([_measurementsArray count] <= 0)
         return KVO_SAMPLE_MEASUREMENT;
-        
+    
     if(!currentSample)
         return KVO_SAMPLE_INVALID;
     
@@ -1423,6 +1428,8 @@
     [self setOffFlowRateLabel:nil];
     [self setTotalMeasurementsView:nil];
     [self setMeasurementsScrollView:nil];
+    [self setSampleChemicalsLabel:nil];
+    [self setPpelabel:nil];
     [super viewDidUnload];
 }
 

@@ -92,6 +92,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *onFlowRateLabel;
 @property (weak, nonatomic) IBOutlet UILabel *offFlowRateLabel;
 @property (weak, nonatomic) IBOutlet UIView *totalMeasurementsView;
+@property (weak, nonatomic) IBOutlet UILabel *sampleChemicalsLabel;
+@property (weak, nonatomic) IBOutlet UILabel *ppelabel;
 
 -(IBAction)checkButtonPressed:(id)sender;
 -(IBAction)onGeneratePreview:(id)sender;
