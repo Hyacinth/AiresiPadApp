@@ -11,7 +11,9 @@
 #import "SampleTileView.h"
 #import "PreviewReportViewController.h"
 #import "TextEditView.h"
-#import "MeasurementAddEditView.h"
+#import "MeasurementActiveView.h"
+#import "MeasurementPassiveView.h"
+#import "MeasurementWipeView.h"
 #import "Project.h"
 #import "TabularColumnView.h"
 #import "ChemicalsListViewController.h"
@@ -21,7 +23,7 @@
 
 @class ProjectDetailView;
 
-@interface ProjectViewController : UIViewController<iCarouselDataSource, iCarouselDelegate, SampleTileViewDelegate, UIPopoverControllerDelegate, TextEditProtocol, MeasurementAddEditProtocol, ChemicalsListProtocol, PPEListProtocol, DeviceTypeListProtocol, SampleTypeListProtocol>
+@interface ProjectViewController : UIViewController<iCarouselDataSource, iCarouselDelegate, SampleTileViewDelegate, UIPopoverControllerDelegate, TextEditProtocol, MeasurementActiveProtocol, MeasurementPassiveProtocol, MeasurementWipeProtocol, ChemicalsListProtocol, PPEListProtocol, DeviceTypeListProtocol, SampleTypeListProtocol>
 {
     PreviewReportViewController *mPreviewReportViewController;
     Project *currentProject;

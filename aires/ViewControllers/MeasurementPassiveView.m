@@ -1,30 +1,28 @@
 //
-//  MeasurementAddEditView.m
+//  MeasurementPassiveView.m
 //  aires
 //
 //  Created by Mani on 5/7/13.
 //  Copyright (c) 2013 Imaginea. All rights reserved.
 //
 
-#import "MeasurementAddEditView.h"
+#import "MeasurementPassiveView.h"
 #import "SampleMeasurement.h"
 #import "AiresSingleton.h"
+#import "MeasurementFields.h"
+#import "TextInsetLabel.h"
 #import <QuartzCore/QuartzCore.h>
 
 #define mSingleton 	((AiresSingleton *) [AiresSingleton getSingletonInstance])
 
-@implementation MeasurementFields
-
-@end
-
-@interface MeasurementAddEditView ()
+@interface MeasurementPassiveView ()
 {
     UIPopoverController *popover;
     BOOL editingOnTime;
 }
 @end
 
-@implementation MeasurementAddEditView
+@implementation MeasurementPassiveView
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -110,13 +108,9 @@
     
     _onTimeLabel.font = fontBold14px;
     _offTimeLabel.font = fontBold14px;
-    _onFlowRateLabel.font = fontBold14px;
-    _offFlowRateLabel.font = fontBold14px;
     
     _onTimeValueLabel.font = font26px;
     _offTimeValueLabel.font = font26px;
-    _onFlowRateField.font = font26px;
-    _offFlowRateField.font = font26px;
     
     _onTimeValueLabel.userInteractionEnabled = YES;
     _offTimeValueLabel.userInteractionEnabled = YES;
@@ -126,63 +120,6 @@
     
     UITapGestureRecognizer *offTimeTapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(offTimeTapped)];
     [_offTimeValueLabel addGestureRecognizer:offTimeTapGesture];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardWillShow)
-                                                 name:UIKeyboardWillShowNotification
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardWillHide)
-                                                 name:UIKeyboardWillHideNotification
-                                               object:nil];
-}
-
-#pragma mark - Keyboard
-
--(void)keyboardWillShow
-{
-    // move controls up only for comments and note
-    [UIView animateWithDuration:0.25
-                     animations:^{
-                         CGRect frame = _controlsView.frame;
-                         frame.origin.y -= _editMode?100.0f:54.0f;
-                         _controlsView.frame = frame;
-                     }];
-}
-
--(void)keyboardWillHide
-{
-    // move controls up only for comments and note
-    [UIView animateWithDuration:0.25
-                     animations:^{
-                         CGRect frame = _controlsView.frame;
-                         frame.origin.y += _editMode?100.0f:54.0f;
-                         _controlsView.frame = frame;
-                     }];
-}
-
--(void)setDeviceType:(NSString *)deviceType
-{
-    _deviceType = deviceType;
-    
-    if([_deviceType isEqualToString:@"Passive"])
-    {
-        //_onFlowRateField.backgroundColor = [UIColor lightGrayColor];
-        _onFlowRateField.userInteractionEnabled = NO;
-        //_offFlowRateField.backgroundColor = [UIColor lightGrayColor];
-        _offFlowRateField.userInteractionEnabled = NO;
-        
-        CALayer *grayLine12 = [CALayer layer];
-        grayLine12.frame = CGRectMake(221, 30, 220, 60);
-        grayLine12.backgroundColor = [UIColor lightGrayColor].CGColor;
-        [_editView.layer addSublayer:grayLine12];
-        
-        CALayer *grayLine13 = [CALayer layer];
-        grayLine13.frame = CGRectMake(662, 30, 220, 60);
-        grayLine13.backgroundColor = [UIColor lightGrayColor].CGColor;
-        [_editView.layer addSublayer:grayLine13];
-    }
 }
 
 -(void)setSampleMeasurement:(SampleMeasurement *)sampleMeasurement
@@ -197,8 +134,6 @@
     
     _onTimeValueLabel.text = onTimeString;
     _offTimeValueLabel.text = offTimeString;
-    _onFlowRateField.text = [_sampleMeasurement.sampleMeasurement_OnFlowRate stringValue];
-    _offFlowRateField.text = [_sampleMeasurement.sampleMeasurement_OffFlowRate stringValue];
     
     [_onTimeDictionary removeAllObjects];
     [_onTimeDictionary addEntriesFromDictionary:onTimeComponents];
@@ -218,8 +153,6 @@
     
     _onTimeValueLabel.text = onTimeString;
     _offTimeValueLabel.text = offTimeString;
-    _onFlowRateField.text = [measurementFields.sampleMeasurement_OnFlowRate stringValue];
-    _offFlowRateField.text = [measurementFields.sampleMeasurement_OffFlowRate stringValue];
     
     [_onTimeDictionary removeAllObjects];
     [_onTimeDictionary addEntriesFromDictionary:onTimeComponents];
@@ -285,10 +218,8 @@
 {
     if(_editMode)
     {
-        if(_delegate && [_delegate respondsToSelector:@selector(measurementsDonePressed:)])
+        if(_delegate && [_delegate respondsToSelector:@selector(measurementPassiveDonePressed:)])
         {
-            [[NSNotificationCenter defaultCenter] removeObserver:self];
-
             NSDate *now = [NSDate date];
             NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
             NSDateComponents *components = [[NSCalendar currentCalendar] components:NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit fromDate:now];
@@ -307,20 +238,14 @@
             [components setMinute:[[_offTimeDictionary objectForKey:@"minute"] integerValue]];
             localDate = [calendar dateFromComponents:components];
             dateStr = [self getUTCFormateDate:localDate];
-            _sampleMeasurement.sampleMeasurement_OffTime = dateStr;
-            
-            _sampleMeasurement.sampleMeasurement_OnFlowRate = [NSNumber numberWithInt:[_onFlowRateField.text intValue]];
-            _sampleMeasurement.sampleMeasurement_OffFlowRate = [NSNumber numberWithInt:[_offFlowRateField.text intValue]];
-            
-            [_delegate measurementsDonePressed:_sampleMeasurement];
+            _sampleMeasurement.sampleMeasurement_OffTime = dateStr;            
+            [_delegate measurementPassiveDonePressed:_sampleMeasurement];
         }
     }
     else
     {
-        if(_delegate && [_delegate respondsToSelector:@selector(measurementsAddPressed:)])
+        if(_delegate && [_delegate respondsToSelector:@selector(measurementPassiveAddPressed:)])
         {
-            [[NSNotificationCenter defaultCenter] removeObserver:self];
-
             NSDate *now = [NSDate date];
             NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
             NSDateComponents *components = [[NSCalendar currentCalendar] components:NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit fromDate:now];
@@ -341,10 +266,7 @@
             dateStr = [self getUTCFormateDate:localDate];
             _measurementFields.sampleMeasurement_OffTime = dateStr;
 
-            _measurementFields.sampleMeasurement_OnFlowRate = [NSNumber numberWithInt:[_onFlowRateField.text intValue]];
-            _measurementFields.sampleMeasurement_OffFlowRate = [NSNumber numberWithInt:[_offFlowRateField.text intValue]];
-            
-            [_delegate measurementsAddPressed:_measurementFields];
+            [_delegate measurementPassiveAddPressed:_measurementFields];
         }
     }
 }
@@ -361,19 +283,17 @@
 
 -(IBAction)cancelPressed:(id)sender
 {
-    if(_delegate && [_delegate respondsToSelector:@selector(measurementsCancelPressed)])
+    if(_delegate && [_delegate respondsToSelector:@selector(measurementPassiveCancelPressed)])
     {
-        [[NSNotificationCenter defaultCenter] removeObserver:self];
-        [_delegate measurementsCancelPressed];
+        [_delegate measurementPassiveCancelPressed];
     }
 }
 
 -(IBAction)deletePressed:(id)sender
 {
-    if(_delegate && [_delegate respondsToSelector:@selector(measurementsDeletePressed:)])
+    if(_delegate && [_delegate respondsToSelector:@selector(measurementPassiveDeletePressed:)])
     {
-        [[NSNotificationCenter defaultCenter] removeObserver:self];
-        [_delegate measurementsDeletePressed:_sampleMeasurement];
+        [_delegate measurementPassiveDeletePressed:_sampleMeasurement];
     }
 }
 

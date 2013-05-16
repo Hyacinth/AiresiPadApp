@@ -8,9 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		8439D369172911140053278E /* LoginFieldsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8439D368172911140053278E /* LoginFieldsView.m */; };
+		847E66411744BF8B00921EA7 /* MeasurementActiveView.m in Sources */ = {isa = PBXBuildFile; fileRef = 847E663F1744BF8B00921EA7 /* MeasurementActiveView.m */; };
+		847E66421744BF8B00921EA7 /* MeasurementActiveView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 847E66401744BF8B00921EA7 /* MeasurementActiveView.xib */; };
+		847E66461744C15300921EA7 /* MeasurementPassiveView.m in Sources */ = {isa = PBXBuildFile; fileRef = 847E66441744C15300921EA7 /* MeasurementPassiveView.m */; };
+		847E66471744C15300921EA7 /* MeasurementPassiveView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 847E66451744C15300921EA7 /* MeasurementPassiveView.xib */; };
+		847E664A1744C29200921EA7 /* MeasurementFields.m in Sources */ = {isa = PBXBuildFile; fileRef = 847E66491744C29200921EA7 /* MeasurementFields.m */; };
+		847E66521744D90F00921EA7 /* MeasurementWipeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 847E66501744D90E00921EA7 /* MeasurementWipeView.m */; };
+		847E66531744D90F00921EA7 /* MeasurementWipeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 847E66511744D90E00921EA7 /* MeasurementWipeView.xib */; };
 		84812C571738CCCF00A3D5F1 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84812C561738CCCF00A3D5F1 /* MessageUI.framework */; };
-		84812C7E1739272A00A3D5F1 /* MeasurementAddEditView.m in Sources */ = {isa = PBXBuildFile; fileRef = 84812C791739272A00A3D5F1 /* MeasurementAddEditView.m */; };
-		84812C7F1739272A00A3D5F1 /* MeasurementAddEditView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84812C7A1739272A00A3D5F1 /* MeasurementAddEditView.xib */; };
 		84812C801739272A00A3D5F1 /* TimePickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84812C7C1739272A00A3D5F1 /* TimePickerViewController.m */; };
 		84812C811739272A00A3D5F1 /* TimePickerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84812C7D1739272A00A3D5F1 /* TimePickerViewController.xib */; };
 		8487FE5F1743BE34000DEAD7 /* TextInsetLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8487FE5E1743BE34000DEAD7 /* TextInsetLabel.m */; };
@@ -237,10 +242,18 @@
 /* Begin PBXFileReference section */
 		8439D367172911140053278E /* LoginFieldsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginFieldsView.h; sourceTree = "<group>"; };
 		8439D368172911140053278E /* LoginFieldsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginFieldsView.m; sourceTree = "<group>"; };
+		847E663E1744BF8B00921EA7 /* MeasurementActiveView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MeasurementActiveView.h; sourceTree = "<group>"; };
+		847E663F1744BF8B00921EA7 /* MeasurementActiveView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MeasurementActiveView.m; sourceTree = "<group>"; };
+		847E66401744BF8B00921EA7 /* MeasurementActiveView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MeasurementActiveView.xib; sourceTree = "<group>"; };
+		847E66431744C15300921EA7 /* MeasurementPassiveView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MeasurementPassiveView.h; sourceTree = "<group>"; };
+		847E66441744C15300921EA7 /* MeasurementPassiveView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MeasurementPassiveView.m; sourceTree = "<group>"; };
+		847E66451744C15300921EA7 /* MeasurementPassiveView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MeasurementPassiveView.xib; sourceTree = "<group>"; };
+		847E66481744C29100921EA7 /* MeasurementFields.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MeasurementFields.h; sourceTree = "<group>"; };
+		847E66491744C29200921EA7 /* MeasurementFields.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MeasurementFields.m; sourceTree = "<group>"; };
+		847E664F1744D90E00921EA7 /* MeasurementWipeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MeasurementWipeView.h; sourceTree = "<group>"; };
+		847E66501744D90E00921EA7 /* MeasurementWipeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MeasurementWipeView.m; sourceTree = "<group>"; };
+		847E66511744D90E00921EA7 /* MeasurementWipeView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MeasurementWipeView.xib; sourceTree = "<group>"; };
 		84812C561738CCCF00A3D5F1 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
-		84812C781739272A00A3D5F1 /* MeasurementAddEditView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MeasurementAddEditView.h; sourceTree = "<group>"; };
-		84812C791739272A00A3D5F1 /* MeasurementAddEditView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MeasurementAddEditView.m; sourceTree = "<group>"; };
-		84812C7A1739272A00A3D5F1 /* MeasurementAddEditView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MeasurementAddEditView.xib; sourceTree = "<group>"; };
 		84812C7B1739272A00A3D5F1 /* TimePickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimePickerViewController.h; sourceTree = "<group>"; };
 		84812C7C1739272A00A3D5F1 /* TimePickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimePickerViewController.m; sourceTree = "<group>"; };
 		84812C7D1739272A00A3D5F1 /* TimePickerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TimePickerViewController.xib; sourceTree = "<group>"; };
@@ -755,9 +768,17 @@
 				84E6AFF3173A54F700BE8EB6 /* TextEditView.xib */,
 				84E6AFED173A29CB00BE8EB6 /* TabularColumnView.h */,
 				84E6AFEE173A29CB00BE8EB6 /* TabularColumnView.m */,
-				84812C781739272A00A3D5F1 /* MeasurementAddEditView.h */,
-				84812C791739272A00A3D5F1 /* MeasurementAddEditView.m */,
-				84812C7A1739272A00A3D5F1 /* MeasurementAddEditView.xib */,
+				847E66481744C29100921EA7 /* MeasurementFields.h */,
+				847E66491744C29200921EA7 /* MeasurementFields.m */,
+				847E663E1744BF8B00921EA7 /* MeasurementActiveView.h */,
+				847E663F1744BF8B00921EA7 /* MeasurementActiveView.m */,
+				847E66401744BF8B00921EA7 /* MeasurementActiveView.xib */,
+				847E66431744C15300921EA7 /* MeasurementPassiveView.h */,
+				847E66441744C15300921EA7 /* MeasurementPassiveView.m */,
+				847E66451744C15300921EA7 /* MeasurementPassiveView.xib */,
+				847E664F1744D90E00921EA7 /* MeasurementWipeView.h */,
+				847E66501744D90E00921EA7 /* MeasurementWipeView.m */,
+				847E66511744D90E00921EA7 /* MeasurementWipeView.xib */,
 				84812C7B1739272A00A3D5F1 /* TimePickerViewController.h */,
 				84812C7C1739272A00A3D5F1 /* TimePickerViewController.m */,
 				84812C7D1739272A00A3D5F1 /* TimePickerViewController.xib */,
@@ -1177,11 +1198,13 @@
 				84D2E82617338DBF00E3704E /* ico_collapse_up_pressed@2x.png in Resources */,
 				98A5E92B17377EED008A3A84 /* ProjectListViewController.xib in Resources */,
 				84A735401737D0F0000BD714 /* ProjectViewController.xib in Resources */,
-				84812C7F1739272A00A3D5F1 /* MeasurementAddEditView.xib in Resources */,
 				84812C811739272A00A3D5F1 /* TimePickerViewController.xib in Resources */,
 				84E6AFF5173A54F800BE8EB6 /* TextEditView.xib in Resources */,
 				84EBEB6B173BF26F00A8C71B /* DeviceTypesListViewController.xib in Resources */,
 				84CA5DCE17411061003C338F /* SampleTypesListViewController.xib in Resources */,
+				847E66421744BF8B00921EA7 /* MeasurementActiveView.xib in Resources */,
+				847E66471744C15300921EA7 /* MeasurementPassiveView.xib in Resources */,
+				847E66531744D90F00921EA7 /* MeasurementWipeView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1252,7 +1275,6 @@
 				989354B5173908830048C670 /* Client.m in Sources */,
 				989354B8173908860048C670 /* Lab.m in Sources */,
 				989354BB173908870048C670 /* Contact.m in Sources */,
-				84812C7E1739272A00A3D5F1 /* MeasurementAddEditView.m in Sources */,
 				84812C801739272A00A3D5F1 /* TimePickerViewController.m in Sources */,
 				84E6AFEF173A29CB00BE8EB6 /* TabularColumnView.m in Sources */,
 				84E6AFF4173A54F800BE8EB6 /* TextEditView.m in Sources */,
@@ -1260,6 +1282,10 @@
 				84EBEB6A173BF26F00A8C71B /* DeviceTypesListViewController.m in Sources */,
 				84CA5DCD17411061003C338F /* SampleTypesListViewController.m in Sources */,
 				8487FE5F1743BE34000DEAD7 /* TextInsetLabel.m in Sources */,
+				847E66411744BF8B00921EA7 /* MeasurementActiveView.m in Sources */,
+				847E66461744C15300921EA7 /* MeasurementPassiveView.m in Sources */,
+				847E664A1744C29200921EA7 /* MeasurementFields.m in Sources */,
+				847E66521744D90F00921EA7 /* MeasurementWipeView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

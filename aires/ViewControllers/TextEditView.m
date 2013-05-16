@@ -177,6 +177,7 @@
 {
     if(_delegate && [_delegate respondsToSelector:@selector(textEditDonePressed:forDetailType:)])
     {
+        [self endEditing:YES];
         [[NSNotificationCenter defaultCenter] removeObserver:self];
         [_delegate textEditDonePressed:_textView.text forDetailType:_textDetailType];
     }
@@ -184,8 +185,9 @@
 
 -(IBAction)cancelPressed:(id)sender
 {
-    if(_delegate && [_delegate respondsToSelector:@selector(measurementsCancelPressed)])
+    if(_delegate && [_delegate respondsToSelector:@selector(textEditCancelPressed)])
     {
+        [self endEditing:YES];
         [[NSNotificationCenter defaultCenter] removeObserver:self];
         [_delegate textEditCancelPressed];
     }

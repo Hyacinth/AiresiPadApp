@@ -1,5 +1,5 @@
 //
-//  MeasurementAddEditView.h
+//  MeasurementActiveView.h
 //  aires
 //
 //  Created by Mani on 5/7/13.
@@ -8,22 +8,14 @@
 
 #import <UIKit/UIKit.h>
 #import "TimePickerViewController.h"
-#import "TextInsetLabel.h"
 
-@protocol MeasurementAddEditProtocol;
-
-@interface MeasurementFields : NSObject
-
-@property (nonatomic, retain) NSNumber * sampleMeasurement_OffFlowRate;
-@property (nonatomic, retain) NSString * sampleMeasurement_OffTime;
-@property (nonatomic, retain) NSNumber * sampleMeasurement_OnFlowRate;
-@property (nonatomic, retain) NSString * sampleMeasurement_OnTime;
-
-@end
+@protocol MeasurementActiveProtocol;
 
 @class SampleMeasurement;
+@class MeasurementFields;
+@class TextInsetLabel;
 
-@interface MeasurementAddEditView : UIView<UIPopoverControllerDelegate, TimePickerProtocol>
+@interface MeasurementActiveView : UIView<UIPopoverControllerDelegate, TimePickerProtocol>
 
 @property (nonatomic) BOOL editMode;
 
@@ -44,18 +36,17 @@
 @property (weak, nonatomic) IBOutlet TextInsetLabel *onTimeValueLabel;
 @property (weak, nonatomic) IBOutlet TextInsetLabel *offTimeValueLabel;
 
-@property (nonatomic, retain) id<MeasurementAddEditProtocol> delegate;
+@property (nonatomic, retain) id<MeasurementActiveProtocol> delegate;
 @property (nonatomic, retain) SampleMeasurement *sampleMeasurement;
 @property (nonatomic, retain) MeasurementFields *measurementFields;
-@property (nonatomic, retain) NSString *deviceType;
 
 @end
 
-@protocol MeasurementAddEditProtocol <NSObject>
+@protocol MeasurementActiveProtocol <NSObject>
 
--(void)measurementsAddPressed:(MeasurementFields*)measurement;
--(void)measurementsDonePressed:(SampleMeasurement*)measurement;
--(void)measurementsCancelPressed;
--(void)measurementsDeletePressed:(SampleMeasurement*)measurement;
+-(void)measurementActiveAddPressed:(MeasurementFields*)measurement;
+-(void)measurementActiveDonePressed:(SampleMeasurement*)measurement;
+-(void)measurementActiveCancelPressed;
+-(void)measurementActiveDeletePressed:(SampleMeasurement*)measurement;
 
 @end

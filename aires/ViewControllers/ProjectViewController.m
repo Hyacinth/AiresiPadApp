@@ -14,6 +14,7 @@
 #import "ChemicalsListViewController.h"
 #import "PPEListViewController.h"
 #import "TextInsetLabel.h"
+#import "MeasurementFields.h"
 
 #define FADE_VIEW_TAG 999
 
@@ -379,6 +380,7 @@
 
 -(IBAction)adjustSamplesArea:(id)sender
 {
+    return;
     [UIView animateWithDuration:0.25
                      animations:^{
                          _projectDetailView.frame = CGRectMake(bProjectDetailsVisible?-300.0f:0, 44.0f, 300.0f, 704.0f);
@@ -551,31 +553,74 @@
 
 -(void)showMeasurementEditAddView:(BOOL)editMode forMeasurement:(id)measurement
 {
-/*    UIView *fadeMeasurementAddEditView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1024, 768)];
-    fadeMeasurementAddEditView.tag = FADE_VIEW_TAG;
-    fadeMeasurementAddEditView.backgroundColor = [UIColor colorWithWhite:0.1 alpha:0.9];
-    fadeMeasurementAddEditView.alpha = 0;
-    [self.view addSubview:fadeMeasurementAddEditView];*/
-    
-    NSArray *topLevelObjects = [[NSBundle mainBundle] loadNibNamed:@"MeasurementAddEditView"owner:self options:nil];
-    MeasurementAddEditView *measurementView = (MeasurementAddEditView *)[topLevelObjects objectAtIndex:0];
-    measurementView.tag = FADE_VIEW_TAG;
-    measurementView.delegate = self;
-    measurementView.editMode = editMode;
-    
-    if(editMode)
-        measurementView.sampleMeasurement = (SampleMeasurement*)measurement;
+    if([currentSample.deviceType isEqualToString:@"Active"])
+    {
+        NSArray *topLevelObjects = [[NSBundle mainBundle] loadNibNamed:@"MeasurementActiveView"owner:self options:nil];
+        MeasurementActiveView *measurementView = (MeasurementActiveView *)[topLevelObjects objectAtIndex:0];
+        measurementView.tag = FADE_VIEW_TAG;
+        measurementView.delegate = self;
+        measurementView.editMode = editMode;
+        
+        if(editMode)
+            measurementView.sampleMeasurement = (SampleMeasurement*)measurement;
+        else
+            measurementView.measurementFields =(MeasurementFields*)measurement;
+        
+        [self.view addSubview:measurementView];
+        
+        [UIView animateWithDuration:0.25
+                         animations:^{
+                             measurementView.alpha = 1.0f;
+                         }];
+    }
+    else if([currentSample.deviceType isEqualToString:@"Passive"])
+    {
+        NSArray *topLevelObjects = [[NSBundle mainBundle] loadNibNamed:@"MeasurementPassiveView"owner:self options:nil];
+        MeasurementPassiveView *measurementView = (MeasurementPassiveView *)[topLevelObjects objectAtIndex:0];
+        measurementView.tag = FADE_VIEW_TAG;
+        measurementView.delegate = self;
+        measurementView.editMode = editMode;
+        
+        if(editMode)
+            measurementView.sampleMeasurement = (SampleMeasurement*)measurement;
+        else
+            measurementView.measurementFields =(MeasurementFields*)measurement;
+        
+        [self.view addSubview:measurementView];
+        
+        [UIView animateWithDuration:0.25
+                         animations:^{
+                             measurementView.alpha = 1.0f;
+                         }];
+    }
+    else if([currentSample.deviceType isEqualToString:@"Wipe"])
+    {
+        NSArray *topLevelObjects = [[NSBundle mainBundle] loadNibNamed:@"MeasurementWipeView"owner:self options:nil];
+        MeasurementWipeView *measurementView = (MeasurementWipeView *)[topLevelObjects objectAtIndex:0];
+        measurementView.tag = FADE_VIEW_TAG;
+        measurementView.delegate = self;
+        measurementView.editMode = editMode;
+        
+        if(editMode)
+            measurementView.sampleMeasurement = (SampleMeasurement*)measurement;
+        else
+            measurementView.measurementFields =(MeasurementFields*)measurement;
+        
+        [self.view addSubview:measurementView];
+        
+        [UIView animateWithDuration:0.25
+                         animations:^{
+                             measurementView.alpha = 1.0f;
+                         }];
+    }
+    else if([currentSample.deviceType isEqualToString:@"Bulk"])
+    {
+       
+    }
     else
-        measurementView.measurementFields =(MeasurementFields*)measurement;
-    
-    //measurementView.center = fadeMeasurementAddEditView.center;
-    [self.view addSubview:measurementView];
-    measurementView.deviceType = _deviceTypeValueLabel.text;
-
-    [UIView animateWithDuration:0.25
-                     animations:^{
-                         measurementView.alpha = 1.0f;
-                     }];
+    {
+        // shouldn't reach here
+    }
 }
 
 -(IBAction)checkButtonPressed:(id)sender
@@ -1030,9 +1075,6 @@
         NSDictionary *offTimeComponents = [mSingleton getDateComponentsforString:measurement.sampleMeasurement_OffTime];
         NSString *offTimeString = [NSString stringWithFormat:@"%@:%@ %@", [offTimeComponents valueForKey:@"hour"], [offTimeComponents valueForKey:@"minute"], [offTimeComponents valueForKey:@"meridian"]];
         
-        NSString *deviceType = _deviceTypeValueLabel.text;
-        BOOL bShowFlowRate = [deviceType isEqualToString:@"Passive"];
-        
         UITableViewCell *cell = (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:kMeasurementCellID];
         if (cell == nil)
         {
@@ -1053,7 +1095,7 @@
             
             TextInsetLabel *onFlowRateLabel = [[TextInsetLabel alloc] initWithFrame:CGRectMake(170.5, 0, 170.5, cell.contentView.bounds.size.height)];
             onFlowRateLabel.tag = MEASUREMENT_ONFLOWRATE_TAG;
-            onFlowRateLabel.backgroundColor = bShowFlowRate?[UIColor lightGrayColor]:[UIColor clearColor];
+            onFlowRateLabel.backgroundColor = [UIColor clearColor];
             onFlowRateLabel.font = font14px;
             onFlowRateLabel.textColor = textColor;
             onFlowRateLabel.text = [measurement.sampleMeasurement_OnFlowRate stringValue];
@@ -1069,7 +1111,7 @@
             
             TextInsetLabel *offFlowRateLabel = [[TextInsetLabel alloc] initWithFrame:CGRectMake(511.5, 0, 170.5, cell.contentView.bounds.size.height)];
             offFlowRateLabel.tag = MEASUREMENT_OFFFLOWRATE_TAG;
-            offFlowRateLabel.backgroundColor = bShowFlowRate?[UIColor lightGrayColor]:[UIColor clearColor];
+            offFlowRateLabel.backgroundColor = [UIColor clearColor];
             offFlowRateLabel.font = font14px;
             offFlowRateLabel.textColor = textColor;
             offFlowRateLabel.text = [measurement.sampleMeasurement_OffFlowRate stringValue];
@@ -1081,12 +1123,12 @@
             onTimeLabel.text = onTimeString;
             TextInsetLabel *onFlowRateLabel = (TextInsetLabel*)[cell.contentView viewWithTag:MEASUREMENT_ONFLOWRATE_TAG];
             onFlowRateLabel.text = [measurement.sampleMeasurement_OnFlowRate stringValue];
-            onFlowRateLabel.backgroundColor = bShowFlowRate?[UIColor lightGrayColor]:[UIColor clearColor];
+            onFlowRateLabel.backgroundColor = [UIColor clearColor];
             TextInsetLabel *offTimeLabel = (TextInsetLabel*)[cell.contentView viewWithTag:MEASUREMENT_OFFTIME_TAG];
             offTimeLabel.text = offTimeString;
             TextInsetLabel *offFlowRateLabel = (TextInsetLabel*)[cell.contentView viewWithTag:MEASUREMENT_OFFFLOWRATE_TAG];
             offFlowRateLabel.text = [measurement.sampleMeasurement_OffFlowRate stringValue];
-            offFlowRateLabel.backgroundColor = bShowFlowRate?[UIColor lightGrayColor]:[UIColor clearColor];
+            offFlowRateLabel.backgroundColor =[UIColor clearColor];
         }
         return cell;
     }
@@ -1140,6 +1182,7 @@
 {
     _deviceTypeValueLabel.text = deviceType.deviceType_DeviceTypeName;
     currentSample.deviceTypeId = deviceType.deviceType_DeviceTypeID;
+    currentSample.deviceType = deviceType.deviceType_DeviceTypeName;
     [popover dismissPopoverAnimated:YES];
     [[mSingleton getPersistentStoreManager] updateSample:currentSample inProject:currentProject forField:FIELD_SAMPLE_DEVICETYPE withValue:deviceType];
     [_measurementsTableView reloadData];
@@ -1267,9 +1310,9 @@
     [self removeTextEditView];
 }
 
-#pragma mark - MeasurementAddEditProtocol
+#pragma mark - MeasurementActiveProtocol
 
--(void)measurementsAddPressed:(MeasurementFields*)measurement
+-(void)measurementActiveAddPressed:(MeasurementFields *)measurement
 {
     [self removeMeasurementEditView];
     
@@ -1300,7 +1343,7 @@
     [self observeValueForKeyPath:nil ofObject:nil change:nil context:nil];
 }
 
--(void)measurementsDonePressed:(SampleMeasurement*)measurement
+-(void)measurementActiveDonePressed:(SampleMeasurement*)measurement
 {
     [self removeMeasurementEditView];
     [self updateMeasurementTable];
@@ -1311,12 +1354,126 @@
     [[mSingleton getPersistentStoreManager] updateSampleMeasurement:measurement inSample:currentSample forField:FIELD_SAMPLEMEASUREMENT_OffFlowRate withValue:measurement.sampleMeasurement_OffFlowRate];
 }
 
--(void)measurementsCancelPressed
+-(void)measurementActiveCancelPressed
 {
     [self removeMeasurementEditView];
 }
 
--(void)measurementsDeletePressed:(SampleMeasurement*)measurement
+-(void)measurementActiveDeletePressed:(SampleMeasurement*)measurement
+{
+    [self removeMeasurementEditView];
+    [_measurementsArray removeLastObject];
+    [self updateMeasurementTable];
+    [self observeValueForKeyPath:nil ofObject:nil change:nil context:nil];
+}
+
+#pragma mark - MeasurementPassiveProtocol
+
+-(void)measurementPassiveAddPressed:(MeasurementFields *)measurement
+{
+    [self removeMeasurementEditView];
+    
+    NSMutableDictionary *measurementDict = [[NSMutableDictionary alloc] init];
+    [measurementDict setValue:measurement.sampleMeasurement_OnTime forKey:@"OnTime"];
+    [measurementDict setValue:measurement.sampleMeasurement_OffTime forKey:@"OffTime"];
+    //[measurementDict setValue:measurement.sampleMeasurement_OnFlowRate forKey:@"OnFlowRate"];
+    //[measurementDict setValue:measurement.sampleMeasurement_OffFlowRate forKey:@"OffFlowRate"];
+    [measurementDict setValue:[NSNumber numberWithInt:100] forKey:@"Area"];
+    [measurementDict setValue:[NSNumber numberWithInt:100] forKey:@"Minutes"];
+    [measurementDict setValue:[NSNumber numberWithInt:100] forKey:@"Volume"];
+    [measurementDict setValue:currentSample.sample_SampleId forKey:@"SampleId"];
+    NSNumber *measurementId = [[mSingleton getPersistentStoreManager] generateIDforNewSampleMeasurement];
+    [measurementDict setValue:measurementId forKey:@"MeasurementId"];
+    [measurementDict setValue:[NSNumber numberWithBool:FALSE] forKey:@"Deleted"];
+    
+    NSArray *meaurement = [NSArray arrayWithObject:measurementDict];
+    [[mSingleton getPersistentStoreManager] storeSampleMeasurementDetails:meaurement forSample:currentSample];
+    
+    [_measurementsArray removeAllObjects];
+    [_measurementsArray addObjectsFromArray:[[mSingleton getPersistentStoreManager] getSampleMeasurementforSample:currentSample]];
+    
+    [_measurementsTableView reloadData];
+    [self updateMeasurementTable];
+    
+    CGPoint bottomOffset = CGPointMake(0, _measurementsScrollView.contentSize.height - _measurementsScrollView.bounds.size.height);
+    [_measurementsScrollView setContentOffset:bottomOffset animated:YES];
+    [self observeValueForKeyPath:nil ofObject:nil change:nil context:nil];
+}
+
+-(void)measurementPassiveDonePressed:(SampleMeasurement*)measurement
+{
+    [self removeMeasurementEditView];
+    [self updateMeasurementTable];
+    
+    [[mSingleton getPersistentStoreManager] updateSampleMeasurement:measurement inSample:currentSample forField:FIELD_SAMPLEMEASUREMENT_OnTime withValue:measurement.sampleMeasurement_OnTime];
+    [[mSingleton getPersistentStoreManager] updateSampleMeasurement:measurement inSample:currentSample forField:FIELD_SAMPLEMEASUREMENT_OffTime withValue:measurement.sampleMeasurement_OffTime];
+    //[[mSingleton getPersistentStoreManager] updateSampleMeasurement:measurement inSample:currentSample forField:FIELD_SAMPLEMEASUREMENT_OnFlowRate withValue:measurement.sampleMeasurement_OnFlowRate];
+    //[[mSingleton getPersistentStoreManager] updateSampleMeasurement:measurement inSample:currentSample forField:FIELD_SAMPLEMEASUREMENT_OffFlowRate withValue:measurement.sampleMeasurement_OffFlowRate];
+}
+
+-(void)measurementPassiveCancelPressed
+{
+    [self removeMeasurementEditView];
+}
+
+-(void)measurementPassiveDeletePressed:(SampleMeasurement*)measurement
+{
+    [self removeMeasurementEditView];
+    [_measurementsArray removeLastObject];
+    [self updateMeasurementTable];
+    [self observeValueForKeyPath:nil ofObject:nil change:nil context:nil];
+}
+
+#pragma mark - MeasurementWipeProtocol
+
+-(void)measurementWipeAddPressed:(MeasurementFields *)measurement
+{
+    [self removeMeasurementEditView];
+    
+    NSMutableDictionary *measurementDict = [[NSMutableDictionary alloc] init];
+    //[measurementDict setValue:measurement.sampleMeasurement_OnTime forKey:@"OnTime"];
+    //[measurementDict setValue:measurement.sampleMeasurement_OffTime forKey:@"OffTime"];
+    //[measurementDict setValue:measurement.sampleMeasurement_OnFlowRate forKey:@"OnFlowRate"];
+    //[measurementDict setValue:measurement.sampleMeasurement_OffFlowRate forKey:@"OffFlowRate"];
+    [measurementDict setValue:[NSNumber numberWithInt:100] forKey:@"Area"];
+    [measurementDict setValue:[NSNumber numberWithInt:100] forKey:@"Minutes"];
+    [measurementDict setValue:[NSNumber numberWithInt:100] forKey:@"Volume"];
+    [measurementDict setValue:currentSample.sample_SampleId forKey:@"SampleId"];
+    NSNumber *measurementId = [[mSingleton getPersistentStoreManager] generateIDforNewSampleMeasurement];
+    [measurementDict setValue:measurementId forKey:@"MeasurementId"];
+    [measurementDict setValue:[NSNumber numberWithBool:FALSE] forKey:@"Deleted"];
+    
+    NSArray *meaurement = [NSArray arrayWithObject:measurementDict];
+    [[mSingleton getPersistentStoreManager] storeSampleMeasurementDetails:meaurement forSample:currentSample];
+    
+    [_measurementsArray removeAllObjects];
+    [_measurementsArray addObjectsFromArray:[[mSingleton getPersistentStoreManager] getSampleMeasurementforSample:currentSample]];
+    
+    [_measurementsTableView reloadData];
+    [self updateMeasurementTable];
+    
+    CGPoint bottomOffset = CGPointMake(0, _measurementsScrollView.contentSize.height - _measurementsScrollView.bounds.size.height);
+    [_measurementsScrollView setContentOffset:bottomOffset animated:YES];
+    [self observeValueForKeyPath:nil ofObject:nil change:nil context:nil];
+}
+
+-(void)measurementWipeDonePressed:(SampleMeasurement*)measurement
+{
+    [self removeMeasurementEditView];
+    [self updateMeasurementTable];
+    
+    //[[mSingleton getPersistentStoreManager] updateSampleMeasurement:measurement inSample:currentSample forField:FIELD_SAMPLEMEASUREMENT_OnTime withValue:measurement.sampleMeasurement_OnTime];
+    //[[mSingleton getPersistentStoreManager] updateSampleMeasurement:measurement inSample:currentSample forField:FIELD_SAMPLEMEASUREMENT_OffTime withValue:measurement.sampleMeasurement_OffTime];
+    //[[mSingleton getPersistentStoreManager] updateSampleMeasurement:measurement inSample:currentSample forField:FIELD_SAMPLEMEASUREMENT_OnFlowRate withValue:measurement.sampleMeasurement_OnFlowRate];
+    //[[mSingleton getPersistentStoreManager] updateSampleMeasurement:measurement inSample:currentSample forField:FIELD_SAMPLEMEASUREMENT_OffFlowRate withValue:measurement.sampleMeasurement_OffFlowRate];
+}
+
+-(void)measurementWipeCancelPressed
+{
+    [self removeMeasurementEditView];
+}
+
+-(void)measurementWipeDeletePressed:(SampleMeasurement*)measurement
 {
     [self removeMeasurementEditView];
     [_measurementsArray removeLastObject];
@@ -1326,7 +1483,7 @@
 
 -(void)removeMeasurementEditView
 {
-    MeasurementAddEditView *measurementAddEditView = (MeasurementAddEditView*)[self.view viewWithTag:FADE_VIEW_TAG];
+    MeasurementActiveView *measurementAddEditView = (MeasurementActiveView*)[self.view viewWithTag:FADE_VIEW_TAG];
     if(!measurementAddEditView)
         return;
     
