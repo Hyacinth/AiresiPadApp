@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="2061" systemVersion="12D78" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1811" systemVersion="12C60" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="Client" representedClassName="Client" syncable="YES">
         <attribute name="client_City" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="client_CreateOn" optional="YES" attributeType="String" syncable="YES"/>
@@ -68,11 +68,9 @@
         <relationship name="fromUser" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="airesProject" inverseEntity="User" syncable="YES"/>
     </entity>
     <entity name="Sample" representedClassName="Sample" syncable="YES">
-        <attribute name="area" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="createdOn" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="deviceType" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="deviceTypeId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
-        <attribute name="minutes" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="ppeID" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="projectId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="sample_Comments" optional="YES" attributeType="String" syncable="YES"/>
@@ -84,7 +82,9 @@
         <attribute name="sample_SampleId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="sample_SampleNumber" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="sampleID" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
-        <attribute name="volume" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="totalArea" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="totalMinutes" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="totalVolume" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <relationship name="airesSampleChemical" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="SampleChemical" inverseName="fromSample" inverseEntity="SampleChemical" syncable="YES"/>
         <relationship name="airesSampleMeasurement" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="SampleMeasurement" inverseName="fromSample" inverseEntity="SampleMeasurement" syncable="YES"/>
         <relationship name="airesSampleProtectionEquipment" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="SampleProtectionEquipment" inverseName="fromSample" inverseEntity="SampleProtectionEquipment" syncable="YES"/>
@@ -110,13 +110,13 @@
         <attribute name="deleted" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="measurementID" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="sampleID" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="sampleMeasurement_Area" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="sampleMeasurement_Minutes" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="sampleMeasurement_OffFlowRate" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="sampleMeasurement_OffTime" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="sampleMeasurement_OnFlowRate" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="sampleMeasurement_OnTime" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="sampleMeasurement_TotalArea" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
-        <attribute name="sampleMeasurement_TotalMinutes" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
-        <attribute name="sampleMeasurement_TotalVolume" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="sampleMeasurement_Volume" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="sampleMesurementID" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <relationship name="fromSample" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Sample" inverseName="airesSampleMeasurement" inverseEntity="Sample" syncable="YES"/>
     </entity>
@@ -150,7 +150,7 @@
         <element name="DeviceType" positionX="-4284" positionY="-364" width="128" height="103"/>
         <element name="Lab" positionX="-4734" positionY="-270" width="128" height="118"/>
         <element name="Project" positionX="-4491" positionY="-658" width="171" height="525"/>
-        <element name="Sample" positionX="-4284" positionY="-765" width="180" height="373"/>
+        <element name="Sample" positionX="-4284" positionY="-765" width="180" height="375"/>
         <element name="SampleChemical" positionX="-4050" positionY="-819" width="171" height="240"/>
         <element name="SampleMeasurement" positionX="-3960" positionY="-585" width="243" height="225"/>
         <element name="SampleProtectionEquipment" positionX="-3888" positionY="-324" width="252" height="150"/>
