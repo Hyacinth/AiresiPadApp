@@ -15,10 +15,10 @@
 		847E664A1744C29200921EA7 /* MeasurementFields.m in Sources */ = {isa = PBXBuildFile; fileRef = 847E66491744C29200921EA7 /* MeasurementFields.m */; };
 		847E66521744D90F00921EA7 /* MeasurementWipeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 847E66501744D90E00921EA7 /* MeasurementWipeView.m */; };
 		847E66531744D90F00921EA7 /* MeasurementWipeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 847E66511744D90E00921EA7 /* MeasurementWipeView.xib */; };
+		847E665A1744E91A00921EA7 /* ProjectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 847E66591744E91A00921EA7 /* ProjectViewController.m */; };
 		84812C571738CCCF00A3D5F1 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84812C561738CCCF00A3D5F1 /* MessageUI.framework */; };
 		84812C801739272A00A3D5F1 /* TimePickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84812C7C1739272A00A3D5F1 /* TimePickerViewController.m */; };
 		84812C811739272A00A3D5F1 /* TimePickerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84812C7D1739272A00A3D5F1 /* TimePickerViewController.xib */; };
-		8487FE5F1743BE34000DEAD7 /* TextInsetLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8487FE5E1743BE34000DEAD7 /* TextInsetLabel.m */; };
 		84A735401737D0F0000BD714 /* ProjectViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84A7353F1737D0F0000BD714 /* ProjectViewController.xib */; };
 		84AF07B317280974006F8756 /* AiresService.plist in Resources */ = {isa = PBXBuildFile; fileRef = 84AF07B217280974006F8756 /* AiresService.plist */; };
 		84CA5DCD17411061003C338F /* SampleTypesListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84CA5DCB17411061003C338F /* SampleTypesListViewController.m */; };
@@ -98,7 +98,6 @@
 		98B42514172689A100D15811 /* ActiveProjectTileView.m in Sources */ = {isa = PBXBuildFile; fileRef = 98B4250A172689A000D15811 /* ActiveProjectTileView.m */; };
 		98B42515172689A100D15811 /* CompletedProjectTileView.m in Sources */ = {isa = PBXBuildFile; fileRef = 98B4250C172689A000D15811 /* CompletedProjectTileView.m */; };
 		98B42516172689A100D15811 /* DashboardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98B4250E172689A000D15811 /* DashboardViewController.m */; };
-		98B42517172689A100D15811 /* ProjectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98B42510172689A100D15811 /* ProjectViewController.m */; };
 		98B4258D17268A3300D15811 /* background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 98B4251B17268A3200D15811 /* background@2x.png */; };
 		98B4258E17268A3300D15811 /* bg_completedprojects@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 98B4251C17268A3200D15811 /* bg_completedprojects@2x.png */; };
 		98B4258F17268A3300D15811 /* bg_subheader@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 98B4251D17268A3200D15811 /* bg_subheader@2x.png */; };
@@ -253,12 +252,11 @@
 		847E664F1744D90E00921EA7 /* MeasurementWipeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MeasurementWipeView.h; sourceTree = "<group>"; };
 		847E66501744D90E00921EA7 /* MeasurementWipeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MeasurementWipeView.m; sourceTree = "<group>"; };
 		847E66511744D90E00921EA7 /* MeasurementWipeView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MeasurementWipeView.xib; sourceTree = "<group>"; };
+		847E66591744E91A00921EA7 /* ProjectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProjectViewController.m; sourceTree = "<group>"; };
 		84812C561738CCCF00A3D5F1 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		84812C7B1739272A00A3D5F1 /* TimePickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimePickerViewController.h; sourceTree = "<group>"; };
 		84812C7C1739272A00A3D5F1 /* TimePickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimePickerViewController.m; sourceTree = "<group>"; };
 		84812C7D1739272A00A3D5F1 /* TimePickerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TimePickerViewController.xib; sourceTree = "<group>"; };
-		8487FE5D1743BE34000DEAD7 /* TextInsetLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextInsetLabel.h; sourceTree = "<group>"; };
-		8487FE5E1743BE34000DEAD7 /* TextInsetLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextInsetLabel.m; sourceTree = "<group>"; };
 		84A7353F1737D0F0000BD714 /* ProjectViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProjectViewController.xib; sourceTree = "<group>"; };
 		84AF07B217280974006F8756 /* AiresService.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = AiresService.plist; sourceTree = "<group>"; };
 		84CA5DCA17411060003C338F /* SampleTypesListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SampleTypesListViewController.h; sourceTree = "<group>"; };
@@ -384,7 +382,6 @@
 		98B4250D172689A000D15811 /* DashboardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DashboardViewController.h; sourceTree = "<group>"; };
 		98B4250E172689A000D15811 /* DashboardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DashboardViewController.m; sourceTree = "<group>"; };
 		98B4250F172689A000D15811 /* ProjectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProjectViewController.h; sourceTree = "<group>"; };
-		98B42510172689A100D15811 /* ProjectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProjectViewController.m; sourceTree = "<group>"; };
 		98B4251B17268A3200D15811 /* background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "background@2x.png"; sourceTree = "<group>"; };
 		98B4251C17268A3200D15811 /* bg_completedprojects@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg_completedprojects@2x.png"; sourceTree = "<group>"; };
 		98B4251D17268A3200D15811 /* bg_subheader@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg_subheader@2x.png"; sourceTree = "<group>"; };
@@ -761,7 +758,7 @@
 				84ECA91F17311A8B00CAAE51 /* SampleTileView.h */,
 				84ECA92017311A8C00CAAE51 /* SampleTileView.m */,
 				98B4250F172689A000D15811 /* ProjectViewController.h */,
-				98B42510172689A100D15811 /* ProjectViewController.m */,
+				847E66591744E91A00921EA7 /* ProjectViewController.m */,
 				84A7353F1737D0F0000BD714 /* ProjectViewController.xib */,
 				84E6AFF1173A54F700BE8EB6 /* TextEditView.h */,
 				84E6AFF2173A54F700BE8EB6 /* TextEditView.m */,
@@ -804,8 +801,6 @@
 				98C7871817324386008F80DD /* PreviewReportCell.m */,
 				98C7871A173243B7008F80DD /* PreviewReportCell.xib */,
 				98B42505172689A000D15811 /* iCarousel */,
-				8487FE5D1743BE34000DEAD7 /* TextInsetLabel.h */,
-				8487FE5E1743BE34000DEAD7 /* TextInsetLabel.m */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -1249,7 +1244,6 @@
 				98B42514172689A100D15811 /* ActiveProjectTileView.m in Sources */,
 				98B42515172689A100D15811 /* CompletedProjectTileView.m in Sources */,
 				98B42516172689A100D15811 /* DashboardViewController.m in Sources */,
-				98B42517172689A100D15811 /* ProjectViewController.m in Sources */,
 				9817B52517269D0D00155182 /* ini.m in Sources */,
 				9817B52617269D0D00155182 /* parse.m in Sources */,
 				9817B52717269D0D00155182 /* retrieve.m in Sources */,
@@ -1281,11 +1275,11 @@
 				84E6AFF8173A721B00BE8EB6 /* SampleType.m in Sources */,
 				84EBEB6A173BF26F00A8C71B /* DeviceTypesListViewController.m in Sources */,
 				84CA5DCD17411061003C338F /* SampleTypesListViewController.m in Sources */,
-				8487FE5F1743BE34000DEAD7 /* TextInsetLabel.m in Sources */,
 				847E66411744BF8B00921EA7 /* MeasurementActiveView.m in Sources */,
 				847E66461744C15300921EA7 /* MeasurementPassiveView.m in Sources */,
 				847E664A1744C29200921EA7 /* MeasurementFields.m in Sources */,
 				847E66521744D90F00921EA7 /* MeasurementWipeView.m in Sources */,
+				847E665A1744E91A00921EA7 /* ProjectViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

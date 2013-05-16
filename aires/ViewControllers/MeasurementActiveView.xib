@@ -729,11 +729,11 @@
 						<string key="offFlowRateField">UITextField</string>
 						<string key="offFlowRateLabel">UILabel</string>
 						<string key="offTimeLabel">UILabel</string>
-						<string key="offTimeValueLabel">TextInsetLabel</string>
+						<string key="offTimeValueLabel">UILabel</string>
 						<string key="onFlowRateField">UITextField</string>
 						<string key="onFlowRateLabel">UILabel</string>
 						<string key="onTimeLabel">UILabel</string>
-						<string key="onTimeValueLabel">TextInsetLabel</string>
+						<string key="onTimeValueLabel">UILabel</string>
 						<string key="titleLabel">UILabel</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
@@ -771,7 +771,7 @@
 						</object>
 						<object class="IBToOneOutletInfo" key="offTimeValueLabel">
 							<string key="name">offTimeValueLabel</string>
-							<string key="candidateClassName">TextInsetLabel</string>
+							<string key="candidateClassName">UILabel</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="onFlowRateField">
 							<string key="name">onFlowRateField</string>
@@ -787,7 +787,7 @@
 						</object>
 						<object class="IBToOneOutletInfo" key="onTimeValueLabel">
 							<string key="name">onTimeValueLabel</string>
-							<string key="candidateClassName">TextInsetLabel</string>
+							<string key="candidateClassName">UILabel</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="titleLabel">
 							<string key="name">titleLabel</string>
@@ -797,14 +797,6 @@
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">./Classes/MeasurementActiveView.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">TextInsetLabel</string>
-					<string key="superclassName">UILabel</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/TextInsetLabel.h</string>
 					</object>
 				</object>
 			</array>

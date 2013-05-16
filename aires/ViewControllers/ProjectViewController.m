@@ -13,7 +13,6 @@
 #import "AiresSingleton.h"
 #import "ChemicalsListViewController.h"
 #import "PPEListViewController.h"
-#import "TextInsetLabel.h"
 #import "MeasurementFields.h"
 
 #define FADE_VIEW_TAG 999
@@ -154,10 +153,6 @@
     _labelTWA.font = fontBold14px;
     _labelSTEL.font = fontBold14px;
     _labelCieling.font = fontBold14px;
-    _onTimeLabel.font = fontBold12px;
-    _offTimeLabel.font = fontBold12px;
-    _onFlowRateLabel.font = fontBold12px;
-    _offFlowRateLabel.font = fontBold12px;
     
     _notesLabel.layer.borderColor = grayColor.CGColor;
     _notesLabel.layer.borderWidth = 1.0f;
@@ -615,7 +610,7 @@
     }
     else if([currentSample.deviceType isEqualToString:@"Bulk"])
     {
-       
+        
     }
     else
     {
@@ -941,9 +936,38 @@
     totalMeasurementsViewFrame.origin.y = measurementsViewFrame.origin.y + measurementsViewFrame.size.height + 20.0f;
     _totalMeasurementsView.frame = totalMeasurementsViewFrame;
     
-    [_measurementsView updateDividerLines];
+    [self updateMeasurementTableBasedOnDeviceType];
     
     _measurementsScrollView.contentSize = CGSizeMake(_measurementsScrollView.frame.size.width, _measurementsScrollView.frame.size.height + ( _totalMeasurementsView.frame.origin.y + _totalMeasurementsView.frame.size.height + 20.0f - _measurementsScrollView.frame.size.height));
+}
+
+-(void)updateMeasurementTableBasedOnDeviceType
+{
+    CGRect frame = _measurementsView.frame;
+    
+    if([currentSample.deviceType isEqualToString:@"Active"])
+    {
+        _measurementsView.numberOfColumns = 4;
+        frame.size.width = 682.0f;
+    }
+    else if([currentSample.deviceType isEqualToString:@"Passive"])
+    {
+        _measurementsView.numberOfColumns = 2;
+        frame.size.width = 341.0f;
+    }
+    else if([currentSample.deviceType isEqualToString:@"Wipe"])
+    {
+        _measurementsView.numberOfColumns = 1;
+        frame.size.width = 341.0f;
+    }
+    else if([currentSample.deviceType isEqualToString:@"Bulk"])
+    {
+        _measurementsView.numberOfColumns = 0;
+        frame.size.width = 0;
+    }
+    _measurementsView.frame = frame;
+    [_measurementsTableView reloadData];
+    [_measurementsView updateDividerLines];
 }
 
 #pragma mark - iCarousel datasource
@@ -1003,7 +1027,7 @@
     else
     {
         // measurementsTableView
-        return _measurementsArray.count;
+        return _measurementsArray.count+1;
     }
 }
 
@@ -1016,7 +1040,7 @@
     else
     {
         // measurementsTableView
-        return 44.0f;
+        return indexPath.row==0?30.0f:44.0f;
     }
 }
 
@@ -1067,70 +1091,255 @@
     {
         // measurementsTableView
         static NSString *kMeasurementCellID = @"MeasurementValueCell";
-        SampleMeasurement *measurement = (SampleMeasurement*)[_measurementsArray objectAtIndex:indexPath.row];
         
-        NSDictionary *onTimeComponents = [mSingleton getDateComponentsforString:measurement.sampleMeasurement_OnTime];
-        NSString *onTimeString = [NSString stringWithFormat:@"%@:%@ %@", [onTimeComponents valueForKey:@"hour"], [onTimeComponents valueForKey:@"minute"], [onTimeComponents valueForKey:@"meridian"]];
-        
-        NSDictionary *offTimeComponents = [mSingleton getDateComponentsforString:measurement.sampleMeasurement_OffTime];
-        NSString *offTimeString = [NSString stringWithFormat:@"%@:%@ %@", [offTimeComponents valueForKey:@"hour"], [offTimeComponents valueForKey:@"minute"], [offTimeComponents valueForKey:@"meridian"]];
-        
-        UITableViewCell *cell = (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:kMeasurementCellID];
-        if (cell == nil)
+        if([currentSample.deviceType isEqualToString:@"Active"])
         {
-            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kMeasurementCellID];
-            cell.textLabel.textAlignment = UITextAlignmentLeft;
-            cell.selectionStyle = UITableViewCellSelectionStyleGray;
+            if(indexPath.row == 0)
+            {
+                    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kMeasurementCellID];
+                    cell.textLabel.textAlignment = UITextAlignmentLeft;
+                    cell.selectionStyle = UITableViewCellSelectionStyleGray;
+                    
+                    UIFont *fontBold12px = [UIFont fontWithName:@"ProximaNova-Bold" size:12.0f];
+                    UIColor *textColor = [UIColor colorWithRed:28.0f/255.0f green:34.0f/255.0f blue:39.0f/255.0f alpha:1.0f];
+                    UIColor *bgColor = [UIColor colorWithRed:(227/255.0)  green:(241/255.0)  blue:(251/255.0)  alpha:1.0];
+                    
+                    UILabel *onTimeLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 170.5, 30)];
+                    onTimeLabel.backgroundColor = bgColor;
+                    onTimeLabel.font = fontBold12px;
+                    onTimeLabel.textColor = textColor;
+                    onTimeLabel.text = @"   On Time";
+                    [cell.contentView addSubview:onTimeLabel];
+                    
+                    UILabel *onFlowRateLabel = [[UILabel alloc] initWithFrame:CGRectMake(170.5, 0, 170.5, 30)];
+                    onFlowRateLabel.backgroundColor = bgColor;
+                    onFlowRateLabel.font = fontBold12px;
+                    onFlowRateLabel.textColor = textColor;
+                    onFlowRateLabel.text = @"   On Flow Rate (Unit)";
+                    [cell.contentView addSubview:onFlowRateLabel];
+                    
+                    UILabel *offTimeLabel = [[UILabel alloc] initWithFrame:CGRectMake(341, 0, 170.5, 30)];
+                    offTimeLabel.backgroundColor = bgColor;
+                    offTimeLabel.font = fontBold12px;
+                    offTimeLabel.textColor = textColor;
+                    offTimeLabel.text = @"   Off Time";
+                    [cell.contentView addSubview:offTimeLabel];
+                    
+                    UILabel *offFlowRateLabel = [[UILabel alloc] initWithFrame:CGRectMake(511.5, 0, 170.5, 30)];
+                    offFlowRateLabel.backgroundColor = bgColor;
+                    offFlowRateLabel.font = fontBold12px;
+                    offFlowRateLabel.textColor = textColor;
+                    offFlowRateLabel.text = @"   Off Flow Rate (Unit)";
+                    [cell.contentView addSubview:offFlowRateLabel];
+                return cell;
+            }
             
-            UIFont *font14px = [UIFont fontWithName:@"ProximaNova-Regular" size:14.0f];
-            UIColor *textColor = [UIColor colorWithRed:28.0f/255.0f green:34.0f/255.0f blue:39.0f/255.0f alpha:1.0f];
+            SampleMeasurement *measurement = (SampleMeasurement*)[_measurementsArray objectAtIndex:indexPath.row];
+
+            NSDictionary *onTimeComponents = [mSingleton getDateComponentsforString:measurement.sampleMeasurement_OnTime];
+            NSString *onTimeString = [NSString stringWithFormat:@"%@:%@ %@", [onTimeComponents valueForKey:@"hour"], [onTimeComponents valueForKey:@"minute"], [onTimeComponents valueForKey:@"meridian"]];
             
-            TextInsetLabel *onTimeLabel = [[TextInsetLabel alloc] initWithFrame:CGRectMake(0, 0, 170.5, cell.contentView.bounds.size.height)];
-            onTimeLabel.tag = MEASUREMENT_ONTIME_TAG;
-            onTimeLabel.backgroundColor = [UIColor clearColor];
-            onTimeLabel.font = font14px;
-            onTimeLabel.textColor = textColor;
-            onTimeLabel.text = onTimeString;
-            [cell.contentView addSubview:onTimeLabel];
+            NSDictionary *offTimeComponents = [mSingleton getDateComponentsforString:measurement.sampleMeasurement_OffTime];
+            NSString *offTimeString = [NSString stringWithFormat:@"%@:%@ %@", [offTimeComponents valueForKey:@"hour"], [offTimeComponents valueForKey:@"minute"], [offTimeComponents valueForKey:@"meridian"]];
             
-            TextInsetLabel *onFlowRateLabel = [[TextInsetLabel alloc] initWithFrame:CGRectMake(170.5, 0, 170.5, cell.contentView.bounds.size.height)];
-            onFlowRateLabel.tag = MEASUREMENT_ONFLOWRATE_TAG;
-            onFlowRateLabel.backgroundColor = [UIColor clearColor];
-            onFlowRateLabel.font = font14px;
-            onFlowRateLabel.textColor = textColor;
-            onFlowRateLabel.text = [measurement.sampleMeasurement_OnFlowRate stringValue];
-            [cell.contentView addSubview:onFlowRateLabel];
+            UITableViewCell *cell = (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:kMeasurementCellID];
+            if (cell == nil)
+            {
+                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kMeasurementCellID];
+                cell.textLabel.textAlignment = UITextAlignmentLeft;
+                cell.selectionStyle = UITableViewCellSelectionStyleGray;
+                
+                UIFont *font14px = [UIFont fontWithName:@"ProximaNova-Regular" size:14.0f];
+                UIColor *textColor = [UIColor colorWithRed:28.0f/255.0f green:34.0f/255.0f blue:39.0f/255.0f alpha:1.0f];
+                
+                UILabel *onTimeLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 170.5, cell.contentView.bounds.size.height)];
+                onTimeLabel.tag = MEASUREMENT_ONTIME_TAG;
+                onTimeLabel.backgroundColor = [UIColor clearColor];
+                onTimeLabel.font = font14px;
+                onTimeLabel.textColor = textColor;
+                onTimeLabel.text = onTimeString;
+                [cell.contentView addSubview:onTimeLabel];
+                
+                UILabel *onFlowRateLabel = [[UILabel alloc] initWithFrame:CGRectMake(170.5, 0, 170.5, cell.contentView.bounds.size.height)];
+                onFlowRateLabel.tag = MEASUREMENT_ONFLOWRATE_TAG;
+                onFlowRateLabel.backgroundColor = [UIColor clearColor];
+                onFlowRateLabel.font = font14px;
+                onFlowRateLabel.textColor = textColor;
+                onFlowRateLabel.text = [measurement.sampleMeasurement_OnFlowRate stringValue];
+                [cell.contentView addSubview:onFlowRateLabel];
+                
+                UILabel *offTimeLabel = [[UILabel alloc] initWithFrame:CGRectMake(341, 0, 170.5, cell.contentView.bounds.size.height)];
+                offTimeLabel.tag = MEASUREMENT_OFFTIME_TAG;
+                offTimeLabel.backgroundColor = [UIColor clearColor];
+                offTimeLabel.font = font14px;
+                offTimeLabel.textColor = textColor;
+                offTimeLabel.text = offTimeString;
+                [cell.contentView addSubview:offTimeLabel];
+                
+                UILabel *offFlowRateLabel = [[UILabel alloc] initWithFrame:CGRectMake(511.5, 0, 170.5, cell.contentView.bounds.size.height)];
+                offFlowRateLabel.tag = MEASUREMENT_OFFFLOWRATE_TAG;
+                offFlowRateLabel.backgroundColor = [UIColor clearColor];
+                offFlowRateLabel.font = font14px;
+                offFlowRateLabel.textColor = textColor;
+                offFlowRateLabel.text = [measurement.sampleMeasurement_OffFlowRate stringValue];
+                [cell.contentView addSubview:offFlowRateLabel];
+            }
+            else
+            {
+                UILabel *onTimeLabel = (UILabel*)[cell.contentView viewWithTag:MEASUREMENT_ONTIME_TAG];
+                onTimeLabel.text = onTimeString;
+                UILabel *onFlowRateLabel = (UILabel*)[cell.contentView viewWithTag:MEASUREMENT_ONFLOWRATE_TAG];
+                onFlowRateLabel.text = [measurement.sampleMeasurement_OnFlowRate stringValue];
+                onFlowRateLabel.backgroundColor = [UIColor clearColor];
+                UILabel *offTimeLabel = (UILabel*)[cell.contentView viewWithTag:MEASUREMENT_OFFTIME_TAG];
+                offTimeLabel.text = offTimeString;
+                UILabel *offFlowRateLabel = (UILabel*)[cell.contentView viewWithTag:MEASUREMENT_OFFFLOWRATE_TAG];
+                offFlowRateLabel.text = [measurement.sampleMeasurement_OffFlowRate stringValue];
+                offFlowRateLabel.backgroundColor =[UIColor clearColor];
+            }
+            return cell;
+        }
+        else if([currentSample.deviceType isEqualToString:@"Passive"])
+        {
+            if(indexPath.row == 0)
+            {
+                    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kMeasurementCellID];
+                    cell.textLabel.textAlignment = UITextAlignmentLeft;
+                    cell.selectionStyle = UITableViewCellSelectionStyleGray;
+                    
+                    UIFont *fontBold12px = [UIFont fontWithName:@"ProximaNova-Bold" size:12.0f];
+                    UIColor *textColor = [UIColor colorWithRed:28.0f/255.0f green:34.0f/255.0f blue:39.0f/255.0f alpha:1.0f];
+                    UIColor *bgColor = [UIColor colorWithRed:(227/255.0)  green:(241/255.0)  blue:(251/255.0)  alpha:1.0];
+                    
+                    UILabel *onTimeLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 170.5, 30)];
+                    onTimeLabel.backgroundColor = bgColor;
+                    onTimeLabel.font = fontBold12px;
+                    onTimeLabel.textColor = textColor;
+                    onTimeLabel.text = @"   On Time";
+                    [cell.contentView addSubview:onTimeLabel];
+                    
+                    UILabel *offTimeLabel = [[UILabel alloc] initWithFrame:CGRectMake(170.5, 0, 170.5, 30)];
+                    offTimeLabel.backgroundColor = bgColor;
+                    offTimeLabel.font = fontBold12px;
+                    offTimeLabel.textColor = textColor;
+                    offTimeLabel.text = @"   Off Time";
+                    [cell.contentView addSubview:offTimeLabel];
+                return cell;
+            }
             
-            TextInsetLabel *offTimeLabel = [[TextInsetLabel alloc] initWithFrame:CGRectMake(341, 0, 170.5, cell.contentView.bounds.size.height)];
-            offTimeLabel.tag = MEASUREMENT_OFFTIME_TAG;
-            offTimeLabel.backgroundColor = [UIColor clearColor];
-            offTimeLabel.font = font14px;
-            offTimeLabel.textColor = textColor;
-            offTimeLabel.text = offTimeString;
-            [cell.contentView addSubview:offTimeLabel];
+            SampleMeasurement *measurement = (SampleMeasurement*)[_measurementsArray objectAtIndex:indexPath.row];
+
+            NSDictionary *onTimeComponents = [mSingleton getDateComponentsforString:measurement.sampleMeasurement_OnTime];
+            NSString *onTimeString = [NSString stringWithFormat:@"%@:%@ %@", [onTimeComponents valueForKey:@"hour"], [onTimeComponents valueForKey:@"minute"], [onTimeComponents valueForKey:@"meridian"]];
             
-            TextInsetLabel *offFlowRateLabel = [[TextInsetLabel alloc] initWithFrame:CGRectMake(511.5, 0, 170.5, cell.contentView.bounds.size.height)];
-            offFlowRateLabel.tag = MEASUREMENT_OFFFLOWRATE_TAG;
-            offFlowRateLabel.backgroundColor = [UIColor clearColor];
-            offFlowRateLabel.font = font14px;
-            offFlowRateLabel.textColor = textColor;
-            offFlowRateLabel.text = [measurement.sampleMeasurement_OffFlowRate stringValue];
-            [cell.contentView addSubview:offFlowRateLabel];
+            NSDictionary *offTimeComponents = [mSingleton getDateComponentsforString:measurement.sampleMeasurement_OffTime];
+            NSString *offTimeString = [NSString stringWithFormat:@"%@:%@ %@", [offTimeComponents valueForKey:@"hour"], [offTimeComponents valueForKey:@"minute"], [offTimeComponents valueForKey:@"meridian"]];
+            
+            UITableViewCell *cell = (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:kMeasurementCellID];
+            if (cell == nil)
+            {
+                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kMeasurementCellID];
+                cell.textLabel.textAlignment = UITextAlignmentLeft;
+                cell.selectionStyle = UITableViewCellSelectionStyleGray;
+                
+                UIFont *font14px = [UIFont fontWithName:@"ProximaNova-Regular" size:14.0f];
+                UIColor *textColor = [UIColor colorWithRed:28.0f/255.0f green:34.0f/255.0f blue:39.0f/255.0f alpha:1.0f];
+                
+                UILabel *onTimeLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 170.5, cell.contentView.bounds.size.height)];
+                onTimeLabel.tag = MEASUREMENT_ONTIME_TAG;
+                onTimeLabel.backgroundColor = [UIColor clearColor];
+                onTimeLabel.font = font14px;
+                onTimeLabel.textColor = textColor;
+                onTimeLabel.text = onTimeString;
+                [cell.contentView addSubview:onTimeLabel];
+                
+                UILabel *offTimeLabel = [[UILabel alloc] initWithFrame:CGRectMake(170.5, 0, 170.5, cell.contentView.bounds.size.height)];
+                offTimeLabel.tag = MEASUREMENT_OFFTIME_TAG;
+                offTimeLabel.backgroundColor = [UIColor clearColor];
+                offTimeLabel.font = font14px;
+                offTimeLabel.textColor = textColor;
+                offTimeLabel.text = offTimeString;
+                [cell.contentView addSubview:offTimeLabel];
+            }
+            else
+            {
+                UILabel *onTimeLabel = (UILabel*)[cell.contentView viewWithTag:MEASUREMENT_ONTIME_TAG];
+                onTimeLabel.text = onTimeString;
+                UILabel *offTimeLabel = (UILabel*)[cell.contentView viewWithTag:MEASUREMENT_OFFTIME_TAG];
+                offTimeLabel.text = offTimeString;
+            }
+            return cell;
+        }
+        else if([currentSample.deviceType isEqualToString:@"Wipe"])
+        {
+            if(indexPath.row == 0)
+            {
+                    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kMeasurementCellID];
+                    cell.textLabel.textAlignment = UITextAlignmentLeft;
+                    cell.selectionStyle = UITableViewCellSelectionStyleGray;
+                    
+                    UIFont *fontBold12px = [UIFont fontWithName:@"ProximaNova-Bold" size:12.0f];
+                    UIColor *textColor = [UIColor colorWithRed:28.0f/255.0f green:34.0f/255.0f blue:39.0f/255.0f alpha:1.0f];
+                    UIColor *bgColor = [UIColor colorWithRed:(227/255.0)  green:(241/255.0)  blue:(251/255.0)  alpha:1.0];
+                    
+                    UILabel *onTimeLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 341, 30)];
+                    onTimeLabel.backgroundColor = bgColor;
+                    onTimeLabel.font = fontBold12px;
+                    onTimeLabel.textColor = textColor;
+                    onTimeLabel.text = @"   Area (Sq.In)";
+                    [cell.contentView addSubview:onTimeLabel];
+                return cell;
+            }
+            
+            SampleMeasurement *measurement = (SampleMeasurement*)[_measurementsArray objectAtIndex:indexPath.row];
+
+            UITableViewCell *cell = (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:kMeasurementCellID];
+            if (cell == nil)
+            {
+                UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kMeasurementCellID];
+                cell.textLabel.textAlignment = UITextAlignmentLeft;
+                cell.selectionStyle = UITableViewCellSelectionStyleGray;
+                
+                UIFont *font14px = [UIFont fontWithName:@"ProximaNova-Regular" size:14.0f];
+                UIColor *textColor = [UIColor colorWithRed:28.0f/255.0f green:34.0f/255.0f blue:39.0f/255.0f alpha:1.0f];
+                
+                UILabel *onTimeLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 341, cell.contentView.bounds.size.height)];
+                onTimeLabel.tag = MEASUREMENT_ONTIME_TAG;
+                onTimeLabel.backgroundColor = [UIColor clearColor];
+                onTimeLabel.font = font14px;
+                onTimeLabel.textColor = textColor;
+                onTimeLabel.text = [measurement.sampleMeasurement_Area stringValue];
+                [cell.contentView addSubview:onTimeLabel];
+            }
+            else
+            {
+                UILabel *onTimeLabel = (UILabel*)[cell.contentView viewWithTag:MEASUREMENT_ONTIME_TAG];
+                onTimeLabel.text = [measurement.sampleMeasurement_Area stringValue];
+            }            
         }
         else
         {
-            TextInsetLabel *onTimeLabel = (TextInsetLabel*)[cell.contentView viewWithTag:MEASUREMENT_ONTIME_TAG];
-            onTimeLabel.text = onTimeString;
-            TextInsetLabel *onFlowRateLabel = (TextInsetLabel*)[cell.contentView viewWithTag:MEASUREMENT_ONFLOWRATE_TAG];
-            onFlowRateLabel.text = [measurement.sampleMeasurement_OnFlowRate stringValue];
-            onFlowRateLabel.backgroundColor = [UIColor clearColor];
-            TextInsetLabel *offTimeLabel = (TextInsetLabel*)[cell.contentView viewWithTag:MEASUREMENT_OFFTIME_TAG];
-            offTimeLabel.text = offTimeString;
-            TextInsetLabel *offFlowRateLabel = (TextInsetLabel*)[cell.contentView viewWithTag:MEASUREMENT_OFFFLOWRATE_TAG];
-            offFlowRateLabel.text = [measurement.sampleMeasurement_OffFlowRate stringValue];
-            offFlowRateLabel.backgroundColor =[UIColor clearColor];
+            if(indexPath.row == 0)
+            {
+                    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kMeasurementCellID];
+                    cell.textLabel.textAlignment = UITextAlignmentLeft;
+                    cell.selectionStyle = UITableViewCellSelectionStyleGray;
+                    
+                    UIFont *fontBold12px = [UIFont fontWithName:@"ProximaNova-Bold" size:12.0f];
+                    UIColor *textColor = [UIColor colorWithRed:28.0f/255.0f green:34.0f/255.0f blue:39.0f/255.0f alpha:1.0f];
+                    UIColor *bgColor = [UIColor colorWithRed:(227/255.0)  green:(241/255.0)  blue:(251/255.0)  alpha:1.0];
+                    
+                    UILabel *onTimeLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 341, 30)];
+                    onTimeLabel.backgroundColor = bgColor;
+                    onTimeLabel.font = fontBold12px;
+                    onTimeLabel.textColor = textColor;
+                    onTimeLabel.text = @"   Area (Sq.In)";
+                    [cell.contentView addSubview:onTimeLabel];
+                return cell;
+            }
+            return nil;
         }
-        return cell;
+        return nil;
     }
 }
 
@@ -1185,7 +1394,8 @@
     currentSample.deviceType = deviceType.deviceType_DeviceTypeName;
     [popover dismissPopoverAnimated:YES];
     [[mSingleton getPersistentStoreManager] updateSample:currentSample inProject:currentProject forField:FIELD_SAMPLE_DEVICETYPE withValue:deviceType];
-    [_measurementsTableView reloadData];
+    
+    [self updateMeasurementTableBasedOnDeviceType];
 }
 
 #pragma mark - ChemicalListProtocol
@@ -1324,7 +1534,7 @@
     [measurementDict setValue:measurement.sampleMeasurement_Area forKey:@"Area"];
     [measurementDict setValue:measurement.sampleMeasurement_Mintes forKey:@"Minutes"];
     [measurementDict setValue:measurement.sampleMeasurement_Volume forKey:@"Volume"];
-    [measurementDict setValue:currentSample.sample_SampleId forKey:@"SampleId"];
+    [measurementDict setValue:currentSample.sampleID forKey:@"SampleId"];
     NSNumber *measurementId = [[mSingleton getPersistentStoreManager] generateIDforNewSampleMeasurement];
     [measurementDict setValue:measurementId forKey:@"MeasurementId"];
     [measurementDict setValue:[NSNumber numberWithBool:FALSE] forKey:@"Deleted"];
@@ -1383,7 +1593,7 @@
     [measurementDict setValue:measurement.sampleMeasurement_Area forKey:@"Area"];
     [measurementDict setValue:measurement.sampleMeasurement_Mintes forKey:@"Minutes"];
     [measurementDict setValue:measurement.sampleMeasurement_Volume forKey:@"Volume"];
-    [measurementDict setValue:currentSample.sample_SampleId forKey:@"SampleId"];
+    [measurementDict setValue:currentSample.sampleID forKey:@"SampleId"];
     NSNumber *measurementId = [[mSingleton getPersistentStoreManager] generateIDforNewSampleMeasurement];
     [measurementDict setValue:measurementId forKey:@"MeasurementId"];
     [measurementDict setValue:[NSNumber numberWithBool:FALSE] forKey:@"Deleted"];
@@ -1440,7 +1650,7 @@
     [measurementDict setValue:measurement.sampleMeasurement_Area forKey:@"Area"];
     [measurementDict setValue:measurement.sampleMeasurement_Mintes forKey:@"Minutes"];
     [measurementDict setValue:measurement.sampleMeasurement_Volume forKey:@"Volume"];
-    [measurementDict setValue:currentSample.sample_SampleId forKey:@"SampleId"];
+    [measurementDict setValue:currentSample.sampleID forKey:@"SampleId"];
     NSNumber *measurementId = [[mSingleton getPersistentStoreManager] generateIDforNewSampleMeasurement];
     [measurementDict setValue:measurementId forKey:@"MeasurementId"];
     [measurementDict setValue:[NSNumber numberWithBool:FALSE] forKey:@"Deleted"];
@@ -1584,10 +1794,6 @@
     [self setCommentsValueLabel:nil];
     [self setMeasurementsView:nil];
     [self setMeasurementsTableView:nil];
-    [self setOnTimeLabel:nil];
-    [self setOffTimeLabel:nil];
-    [self setOnFlowRateLabel:nil];
-    [self setOffFlowRateLabel:nil];
     [self setTotalMeasurementsView:nil];
     [self setMeasurementsScrollView:nil];
     [self setSampleChemicalsLabel:nil];

@@ -13,7 +13,6 @@
 
 @class SampleMeasurement;
 @class MeasurementFields;
-@class TextInsetLabel;
 
 @interface MeasurementActiveView : UIView<UIPopoverControllerDelegate, TimePickerProtocol>
 
@@ -33,8 +32,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *deleteButton;
 @property (weak, nonatomic) IBOutlet UITextField *onFlowRateField;
 @property (weak, nonatomic) IBOutlet UITextField *offFlowRateField;
-@property (weak, nonatomic) IBOutlet TextInsetLabel *onTimeValueLabel;
-@property (weak, nonatomic) IBOutlet TextInsetLabel *offTimeValueLabel;
+@property (weak, nonatomic) IBOutlet UILabel *onTimeValueLabel;
+@property (weak, nonatomic) IBOutlet UILabel *offTimeValueLabel;
 
 @property (nonatomic, retain) id<MeasurementActiveProtocol> delegate;
 @property (nonatomic, retain) SampleMeasurement *sampleMeasurement;

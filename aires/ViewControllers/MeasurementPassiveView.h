@@ -13,7 +13,6 @@
 
 @class SampleMeasurement;
 @class MeasurementFields;
-@class TextInsetLabel;
 
 @interface MeasurementPassiveView : UIView<UIPopoverControllerDelegate, TimePickerProtocol>
 
@@ -29,8 +28,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *onTimeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *offTimeLabel;
 @property (weak, nonatomic) IBOutlet UIButton *deleteButton;
-@property (weak, nonatomic) IBOutlet TextInsetLabel *onTimeValueLabel;
-@property (weak, nonatomic) IBOutlet TextInsetLabel *offTimeValueLabel;
+@property (weak, nonatomic) IBOutlet UILabel *onTimeValueLabel;
+@property (weak, nonatomic) IBOutlet UILabel *offTimeValueLabel;
 
 @property (nonatomic, retain) id<MeasurementPassiveProtocol> delegate;
 @property (nonatomic, retain) SampleMeasurement *sampleMeasurement;

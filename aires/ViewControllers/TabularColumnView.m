@@ -38,6 +38,10 @@
         horizontalLine.frame = CGRectMake(0, _horizontalLineYPos, self.bounds.size.width, 1.0f);
         [self.layer addSublayer:horizontalLine];
     }
+    else
+    {
+        horizontalLine.frame = CGRectMake(0, _horizontalLineYPos, self.bounds.size.width, 1.0f);
+    }
     
     if(!verticalLines)
     {

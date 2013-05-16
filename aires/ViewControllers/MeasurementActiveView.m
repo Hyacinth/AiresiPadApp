@@ -10,7 +10,6 @@
 #import "SampleMeasurement.h"
 #import "AiresSingleton.h"
 #import "MeasurementFields.h"
-#import "TextInsetLabel.h"
 #import <QuartzCore/QuartzCore.h>
 
 #define mSingleton 	((AiresSingleton *) [AiresSingleton getSingletonInstance])

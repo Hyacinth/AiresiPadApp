@@ -89,10 +89,6 @@
 @property (weak, nonatomic) IBOutlet UIScrollView *measurementsScrollView;
 @property (weak, nonatomic) IBOutlet TabularColumnView *measurementsView;
 @property (weak, nonatomic) IBOutlet UITableView *measurementsTableView;
-@property (weak, nonatomic) IBOutlet UILabel *onTimeLabel;
-@property (weak, nonatomic) IBOutlet UILabel *offTimeLabel;
-@property (weak, nonatomic) IBOutlet UILabel *onFlowRateLabel;
-@property (weak, nonatomic) IBOutlet UILabel *offFlowRateLabel;
 @property (weak, nonatomic) IBOutlet UIView *totalMeasurementsView;
 @property (weak, nonatomic) IBOutlet UILabel *sampleChemicalsLabel;
 @property (weak, nonatomic) IBOutlet UILabel *ppelabel;
