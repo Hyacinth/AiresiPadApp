@@ -613,7 +613,8 @@
     }
 }
 
--(NSArray *)getSampleChemicalforSample:(Sample *)sample
+//Give all sample chemical for corresponding sample including deleted field
+-(NSArray *)getAllSampleChemicalforSample:(Sample *)sample
 {
     if(!sample.sampleID)
         return nil;
@@ -630,9 +631,24 @@
     return finalResult;
 }
 
+-(NSArray *)getSampleChemicalforSample:(Sample *)sample
+{
+    if(!sample.sampleID)
+        return nil;
+    
+    NSArray *results = [self getAllSampleChemicalforSample:sample];
+    NSMutableArray *finalResult = [NSMutableArray arrayWithArray:results];
+    for (SampleChemical *mSampleChemical in results) {
+        if (mSampleChemical.deleted) {
+            [finalResult removeObject:mSampleChemical];
+        }
+    }
+    return finalResult;
+}
+
 -(void)updateSampleChemical:(SampleChemical *)sampleChemical inSample:(Sample *)sample forField:(NSString *)field withValue:(id)value
 {
-    NSArray *sampleChemicalArray = [self getSampleChemicalforSample:sample];
+    NSArray *sampleChemicalArray = [self getAllSampleChemicalforSample:sample];
     SampleChemical *toUpdate = nil;
     for (SampleChemical *mSampleChemical in sampleChemicalArray)
     {
@@ -728,7 +744,7 @@
     
 }
 
--(NSArray *)getSampleMeasurementforSample:(Sample *)sample
+-(NSArray *)getAllSampleMeasurementforSample:(Sample *)sample
 {
     if(!sample.sampleID)
         return nil;
@@ -745,9 +761,24 @@
     return finalResult;
 }
 
+-(NSArray *)getSampleMeasurementforSample:(Sample *)sample
+{
+    if(!sample.sampleID)
+        return nil;
+    
+    NSArray *results = [self getAllSampleMeasurementforSample:sample];
+    NSMutableArray *finalResult = [NSMutableArray arrayWithArray:results];
+    for (SampleMeasurement *mSampleMeasurement in results) {
+        if (mSampleMeasurement.deleted) {
+            [finalResult removeObject:mSampleMeasurement];
+        }
+    }
+    return finalResult;
+}
+
 -(void)updateSampleMeasurement:(SampleMeasurement *)sampleMeasurement inSample:(Sample *)sample forField:(NSString *)field withValue:(id)value
 {
-    NSArray *sampleMeasurementArray = [self getSampleMeasurementforSample:sample];
+    NSArray *sampleMeasurementArray = [self getAllSampleMeasurementforSample:sample];
     SampleMeasurement *toUpdate;
     for (SampleMeasurement *mSampleMeasurement in sampleMeasurementArray)
     {
@@ -818,7 +849,7 @@
     }
 }
 
--(NSArray *)getSampleProtectionEquipmentforSample:(Sample *)sample
+-(NSArray *)getAllSampleProtectionEquipmentforSample:(Sample *)sample
 {
     if(!sample.sampleID)
         return nil;
@@ -835,9 +866,24 @@
     return finalResult;
 }
 
+-(NSArray *)getSampleProtectionEquipmentforSample:(Sample *)sample
+{
+    if(!sample.sampleID)
+        return nil;
+    
+    NSArray *results = [self getAllSampleProtectionEquipmentforSample:sample];
+    NSMutableArray *finalResult = [NSMutableArray arrayWithArray:results];
+    for (SampleProtectionEquipment *mSampleProtectionEquipment in results) {
+        if (mSampleProtectionEquipment.deleted) {
+            [finalResult removeObject:mSampleProtectionEquipment];
+        }
+    }
+    return finalResult;
+}
+
 -(void)updateSampleProtectionEquipment:(SampleProtectionEquipment *)sampleProtectionEquipment inSample:(Sample *)sample forField:(NSString *)field withValue:(id)value
 {
-    NSArray *sampleProtectionEquipmentArray = [self getSampleProtectionEquipmentforSample:sample];
+    NSArray *sampleProtectionEquipmentArray = [self getAllSampleProtectionEquipmentforSample:sample];
     SampleProtectionEquipment *toUpdate;
     for (SampleProtectionEquipment *mSampleProtectionEquipment in sampleProtectionEquipmentArray)
     {

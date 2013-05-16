@@ -128,10 +128,10 @@
     [httpClient registerHTTPOperationClass:[AFHTTPRequestOperation class]];
     [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject)
      {
-         // Print the response body in text
-         NSLog(@"NEw : userName - %@ password - %@",username, password);
-         NSLog(@"Old : userName - %@ password - %@",[[mSingleton getSecurityManager] getValueForKey:LOGIN_USERNAME], [[mSingleton getSecurityManager] getValueForKey:LOGIN_PASSWORD]);
-         if(!([[[mSingleton getSecurityManager] getValueForKey:LOGIN_USERNAME] isEqualToString:username]))
+         BOOL shouldfetchDetails =!([[[mSingleton getSecurityManager] getValueForKey:LOGIN_USERNAME] isEqualToString:username]);
+         shouldfetchDetails = shouldfetchDetails || !([[mSingleton getPersistentStoreManager] getAiresUser]);
+         shouldfetchDetails = shouldfetchDetails || !([[mSingleton getPersistentStoreManager] getUserProjects]);
+         if(shouldfetchDetails)
          {
              [[mSingleton getSecurityManager] setValue:username forKey:LOGIN_USERNAME];
              [[mSingleton getSecurityManager] setValue:password forKey:LOGIN_PASSWORD];

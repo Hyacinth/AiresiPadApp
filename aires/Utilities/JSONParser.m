@@ -379,7 +379,7 @@
 //            [SamplesDict setValue:@"" forKey:@"CreatedOn"];      
      
         NSMutableArray *measurementArray = [[NSMutableArray alloc] init];
-        NSArray *sampleMeasurement = [[mSingleton getPersistentStoreManager] getSampleMeasurementforSample:samp];
+        NSArray *sampleMeasurement = [[mSingleton getPersistentStoreManager] getAllSampleMeasurementforSample:samp];
         for (SampleMeasurement *sampMeas in sampleMeasurement)
         {
             NSMutableDictionary *MeasurementDict = [[NSMutableDictionary alloc] init];
@@ -442,7 +442,7 @@
 //            [SamplesDict setValue:@"" forKey:@"Measurements"];//Dict Array
         
         NSMutableArray *sampleChemicalArray = [[NSMutableArray alloc] init];
-        NSArray *sampleChemicals = [[mSingleton getPersistentStoreManager] getSampleChemicalforSample:samp];
+        NSArray *sampleChemicals = [[mSingleton getPersistentStoreManager] getAllSampleChemicalforSample:samp];
         for (SampleChemical *sampChe in sampleChemicals)
         {
             NSMutableDictionary *SampleChemicalDict = [[NSMutableDictionary alloc] init];
@@ -511,7 +511,7 @@
 //            [SamplesDict setValue:@"" forKey:@"SampleChemicals"];//Dict Array
         
         NSMutableArray *samplePPEArray = [[NSMutableArray alloc] init];
-        NSArray *samplePPE = [[mSingleton getPersistentStoreManager] getSampleProtectionEquipmentforSample:samp];
+        NSArray *samplePPE = [[mSingleton getPersistentStoreManager] getAllSampleProtectionEquipmentforSample:samp];
         for (SampleProtectionEquipment *sampPPE in samplePPE)
         {
             NSMutableDictionary *SamplePPEDict = [[NSMutableDictionary alloc] init];

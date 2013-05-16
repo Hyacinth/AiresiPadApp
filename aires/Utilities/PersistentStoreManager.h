@@ -91,4 +91,8 @@
 -(NSNumber *)generateIDforNewSampleProtectionEquipment;
 -(NSString *)generateNumberforNewSample;
 
+//All values
+-(NSArray *)getAllSampleProtectionEquipmentforSample:(Sample *)sample;
+-(NSArray *)getAllSampleMeasurementforSample:(Sample *)sample;
+-(NSArray *)getAllSampleChemicalforSample:(Sample *)sample;
 @end
