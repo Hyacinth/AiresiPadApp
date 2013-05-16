@@ -128,13 +128,13 @@
 -(void)setSampleMeasurement:(SampleMeasurement *)sampleMeasurement
 {
     _sampleMeasurement = sampleMeasurement;    
-    _areaField.text = [_sampleMeasurement.sampleMeasurement_OnFlowRate stringValue];
+    _areaField.text = [_sampleMeasurement.sampleMeasurement_Area stringValue];
 }
 
 -(void)setMeasurementFields:(MeasurementFields *)measurementFields
 {
     _measurementFields = measurementFields;
-    _areaField.text = [measurementFields.sampleMeasurement_OnFlowRate stringValue];
+    _areaField.text = [measurementFields.sampleMeasurement_Area stringValue];
 }
 
 -(void)setEditMode:(BOOL)editMode

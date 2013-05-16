@@ -1064,7 +1064,7 @@
 										<string key="targetRuntimeIdentifier">IBIPadFramework</string>
 									</object>
 								</array>
-								<string key="NSFrame">{{0, -427}, {712, 465}}</string>
+								<string key="NSFrame">{{0, 48}, {712, 465}}</string>
 								<reference key="NSSuperview" ref="184895833"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="1062241654"/>
@@ -1104,7 +1104,7 @@
 								<reference key="IBUIFont" ref="330862825"/>
 							</object>
 						</array>
-						<string key="NSFrame">{{306, 141}, {712, 48}}</string>
+						<string key="NSFrame">{{306, 141}, {712, 523}}</string>
 						<reference key="NSSuperview" ref="766721923"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="496863849"/>
@@ -1426,7 +1426,7 @@
 										<string key="targetRuntimeIdentifier">IBIPadFramework</string>
 									</object>
 								</array>
-								<string key="NSFrame">{{0, 57}, {712, 452}}</string>
+								<string key="NSFrame">{{0, -414}, {712, 452}}</string>
 								<reference key="NSSuperview" ref="296255916"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="889185807"/>
@@ -1439,7 +1439,7 @@
 								<bool key="IBUIShowsHorizontalScrollIndicator">NO</bool>
 							</object>
 						</array>
-						<string key="NSFrame">{{306, 195}, {712, 519}}</string>
+						<string key="NSFrame">{{306, 670}, {712, 48}}</string>
 						<reference key="NSSuperview" ref="766721923"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="888283082"/>
@@ -2645,10 +2645,6 @@
 						<string key="notesLabel">UILabel</string>
 						<string key="notesValueLabel">UILabel</string>
 						<string key="notesView">UIView</string>
-						<string key="offFlowRateLabel">UILabel</string>
-						<string key="offTimeLabel">UILabel</string>
-						<string key="onFlowRateLabel">UILabel</string>
-						<string key="onTimeLabel">UILabel</string>
 						<string key="operationalAreaLabel">UILabel</string>
 						<string key="operationalAreaValueLabel">UILabel</string>
 						<string key="operationalAreaView">UIView</string>
@@ -2787,22 +2783,6 @@
 						<object class="IBToOneOutletInfo" key="notesView">
 							<string key="name">notesView</string>
 							<string key="candidateClassName">UIView</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="offFlowRateLabel">
-							<string key="name">offFlowRateLabel</string>
-							<string key="candidateClassName">UILabel</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="offTimeLabel">
-							<string key="name">offTimeLabel</string>
-							<string key="candidateClassName">UILabel</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="onFlowRateLabel">
-							<string key="name">onFlowRateLabel</string>
-							<string key="candidateClassName">UILabel</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="onTimeLabel">
-							<string key="name">onTimeLabel</string>
-							<string key="candidateClassName">UILabel</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="operationalAreaLabel">
 							<string key="name">operationalAreaLabel</string>
