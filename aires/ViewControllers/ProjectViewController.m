@@ -13,6 +13,7 @@
 #import "AiresSingleton.h"
 #import "ChemicalsListViewController.h"
 #import "PPEListViewController.h"
+#import "TextInsetLabel.h"
 
 #define FADE_VIEW_TAG 999
 
@@ -550,14 +551,15 @@
 
 -(void)showMeasurementEditAddView:(BOOL)editMode forMeasurement:(id)measurement
 {
-    UIView *fadeMeasurementAddEditView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1024, 768)];
+/*    UIView *fadeMeasurementAddEditView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1024, 768)];
     fadeMeasurementAddEditView.tag = FADE_VIEW_TAG;
     fadeMeasurementAddEditView.backgroundColor = [UIColor colorWithWhite:0.1 alpha:0.9];
     fadeMeasurementAddEditView.alpha = 0;
-    [self.view addSubview:fadeMeasurementAddEditView];
+    [self.view addSubview:fadeMeasurementAddEditView];*/
     
     NSArray *topLevelObjects = [[NSBundle mainBundle] loadNibNamed:@"MeasurementAddEditView"owner:self options:nil];
     MeasurementAddEditView *measurementView = (MeasurementAddEditView *)[topLevelObjects objectAtIndex:0];
+    measurementView.tag = FADE_VIEW_TAG;
     measurementView.delegate = self;
     measurementView.editMode = editMode;
     
@@ -566,12 +568,13 @@
     else
         measurementView.measurementFields =(MeasurementFields*)measurement;
     
-    measurementView.center = fadeMeasurementAddEditView.center;
-    [fadeMeasurementAddEditView addSubview:measurementView];
-    
+    //measurementView.center = fadeMeasurementAddEditView.center;
+    [self.view addSubview:measurementView];
+    measurementView.deviceType = _deviceTypeValueLabel.text;
+
     [UIView animateWithDuration:0.25
                      animations:^{
-                         fadeMeasurementAddEditView.alpha = 1.0f;
+                         measurementView.alpha = 1.0f;
                      }];
 }
 
@@ -1027,6 +1030,8 @@
         NSDictionary *offTimeComponents = [mSingleton getDateComponentsforString:measurement.sampleMeasurement_OffTime];
         NSString *offTimeString = [NSString stringWithFormat:@"%@:%@ %@", [offTimeComponents valueForKey:@"hour"], [offTimeComponents valueForKey:@"minute"], [offTimeComponents valueForKey:@"meridian"]];
         
+        NSString *deviceType = _deviceTypeValueLabel.text;
+        BOOL bShowFlowRate = [deviceType isEqualToString:@"Passive"];
         
         UITableViewCell *cell = (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:kMeasurementCellID];
         if (cell == nil)
@@ -1038,7 +1043,7 @@
             UIFont *font14px = [UIFont fontWithName:@"ProximaNova-Regular" size:14.0f];
             UIColor *textColor = [UIColor colorWithRed:28.0f/255.0f green:34.0f/255.0f blue:39.0f/255.0f alpha:1.0f];
             
-            UILabel *onTimeLabel = [[UILabel alloc] initWithFrame:CGRectMake(8, 0, 160, cell.contentView.bounds.size.height)];
+            TextInsetLabel *onTimeLabel = [[TextInsetLabel alloc] initWithFrame:CGRectMake(0, 0, 170.5, cell.contentView.bounds.size.height)];
             onTimeLabel.tag = MEASUREMENT_ONTIME_TAG;
             onTimeLabel.backgroundColor = [UIColor clearColor];
             onTimeLabel.font = font14px;
@@ -1046,15 +1051,15 @@
             onTimeLabel.text = onTimeString;
             [cell.contentView addSubview:onTimeLabel];
             
-            UILabel *onFlowRateLabel = [[UILabel alloc] initWithFrame:CGRectMake(179, 0, 160, cell.contentView.bounds.size.height)];
+            TextInsetLabel *onFlowRateLabel = [[TextInsetLabel alloc] initWithFrame:CGRectMake(170.5, 0, 170.5, cell.contentView.bounds.size.height)];
             onFlowRateLabel.tag = MEASUREMENT_ONFLOWRATE_TAG;
-            onFlowRateLabel.backgroundColor = [UIColor clearColor];
+            onFlowRateLabel.backgroundColor = bShowFlowRate?[UIColor lightGrayColor]:[UIColor clearColor];
             onFlowRateLabel.font = font14px;
             onFlowRateLabel.textColor = textColor;
             onFlowRateLabel.text = [measurement.sampleMeasurement_OnFlowRate stringValue];
             [cell.contentView addSubview:onFlowRateLabel];
             
-            UILabel *offTimeLabel = [[UILabel alloc] initWithFrame:CGRectMake(350, 0, 160, cell.contentView.bounds.size.height)];
+            TextInsetLabel *offTimeLabel = [[TextInsetLabel alloc] initWithFrame:CGRectMake(341, 0, 170.5, cell.contentView.bounds.size.height)];
             offTimeLabel.tag = MEASUREMENT_OFFTIME_TAG;
             offTimeLabel.backgroundColor = [UIColor clearColor];
             offTimeLabel.font = font14px;
@@ -1062,9 +1067,9 @@
             offTimeLabel.text = offTimeString;
             [cell.contentView addSubview:offTimeLabel];
             
-            UILabel *offFlowRateLabel = [[UILabel alloc] initWithFrame:CGRectMake(521, 0, 160, cell.contentView.bounds.size.height)];
+            TextInsetLabel *offFlowRateLabel = [[TextInsetLabel alloc] initWithFrame:CGRectMake(511.5, 0, 170.5, cell.contentView.bounds.size.height)];
             offFlowRateLabel.tag = MEASUREMENT_OFFFLOWRATE_TAG;
-            offFlowRateLabel.backgroundColor = [UIColor clearColor];
+            offFlowRateLabel.backgroundColor = bShowFlowRate?[UIColor lightGrayColor]:[UIColor clearColor];
             offFlowRateLabel.font = font14px;
             offFlowRateLabel.textColor = textColor;
             offFlowRateLabel.text = [measurement.sampleMeasurement_OffFlowRate stringValue];
@@ -1072,16 +1077,16 @@
         }
         else
         {
-            UILabel *onTimeLabel = (UILabel*)[cell.contentView viewWithTag:MEASUREMENT_ONTIME_TAG];
+            TextInsetLabel *onTimeLabel = (TextInsetLabel*)[cell.contentView viewWithTag:MEASUREMENT_ONTIME_TAG];
             onTimeLabel.text = onTimeString;
-            UILabel *onFlowRateLabel = (UILabel*)[cell.contentView viewWithTag:MEASUREMENT_ONFLOWRATE_TAG];
+            TextInsetLabel *onFlowRateLabel = (TextInsetLabel*)[cell.contentView viewWithTag:MEASUREMENT_ONFLOWRATE_TAG];
             onFlowRateLabel.text = [measurement.sampleMeasurement_OnFlowRate stringValue];
-            UILabel *offTimeLabel = (UILabel*)[cell.contentView viewWithTag:MEASUREMENT_OFFTIME_TAG];
+            onFlowRateLabel.backgroundColor = bShowFlowRate?[UIColor lightGrayColor]:[UIColor clearColor];
+            TextInsetLabel *offTimeLabel = (TextInsetLabel*)[cell.contentView viewWithTag:MEASUREMENT_OFFTIME_TAG];
             offTimeLabel.text = offTimeString;
-            UILabel *offFlowRateLabel = (UILabel*)[cell.contentView viewWithTag:MEASUREMENT_OFFFLOWRATE_TAG];
+            TextInsetLabel *offFlowRateLabel = (TextInsetLabel*)[cell.contentView viewWithTag:MEASUREMENT_OFFFLOWRATE_TAG];
             offFlowRateLabel.text = [measurement.sampleMeasurement_OffFlowRate stringValue];
-            
-            
+            offFlowRateLabel.backgroundColor = bShowFlowRate?[UIColor lightGrayColor]:[UIColor clearColor];
         }
         return cell;
     }
@@ -1137,6 +1142,7 @@
     currentSample.deviceTypeId = deviceType.deviceType_DeviceTypeID;
     [popover dismissPopoverAnimated:YES];
     [[mSingleton getPersistentStoreManager] updateSample:currentSample inProject:currentProject forField:FIELD_SAMPLE_DEVICETYPE withValue:deviceType];
+    [_measurementsTableView reloadData];
 }
 
 #pragma mark - ChemicalListProtocol
@@ -1320,16 +1326,16 @@
 
 -(void)removeMeasurementEditView
 {
-    UIView *fadeMeasurementAddEditView = (UIView*)[self.view viewWithTag:FADE_VIEW_TAG];
-    if(!fadeMeasurementAddEditView)
+    MeasurementAddEditView *measurementAddEditView = (MeasurementAddEditView*)[self.view viewWithTag:FADE_VIEW_TAG];
+    if(!measurementAddEditView)
         return;
     
     [UIView animateWithDuration:0.25
                      animations:^{
-                         fadeMeasurementAddEditView.alpha = 0;
+                         measurementAddEditView.alpha = 0;
                      }
                      completion:^(BOOL finished) {
-                         [fadeMeasurementAddEditView removeFromSuperview];
+                         [measurementAddEditView removeFromSuperview];
                      }];
 }
 
