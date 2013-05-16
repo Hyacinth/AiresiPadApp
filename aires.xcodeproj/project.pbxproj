@@ -13,6 +13,7 @@
 		84812C7F1739272A00A3D5F1 /* MeasurementAddEditView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84812C7A1739272A00A3D5F1 /* MeasurementAddEditView.xib */; };
 		84812C801739272A00A3D5F1 /* TimePickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84812C7C1739272A00A3D5F1 /* TimePickerViewController.m */; };
 		84812C811739272A00A3D5F1 /* TimePickerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84812C7D1739272A00A3D5F1 /* TimePickerViewController.xib */; };
+		8487FE5F1743BE34000DEAD7 /* TextInsetLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8487FE5E1743BE34000DEAD7 /* TextInsetLabel.m */; };
 		84A735401737D0F0000BD714 /* ProjectViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84A7353F1737D0F0000BD714 /* ProjectViewController.xib */; };
 		84AF07B317280974006F8756 /* AiresService.plist in Resources */ = {isa = PBXBuildFile; fileRef = 84AF07B217280974006F8756 /* AiresService.plist */; };
 		84CA5DCD17411061003C338F /* SampleTypesListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84CA5DCB17411061003C338F /* SampleTypesListViewController.m */; };
@@ -243,6 +244,8 @@
 		84812C7B1739272A00A3D5F1 /* TimePickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimePickerViewController.h; sourceTree = "<group>"; };
 		84812C7C1739272A00A3D5F1 /* TimePickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimePickerViewController.m; sourceTree = "<group>"; };
 		84812C7D1739272A00A3D5F1 /* TimePickerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TimePickerViewController.xib; sourceTree = "<group>"; };
+		8487FE5D1743BE34000DEAD7 /* TextInsetLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextInsetLabel.h; sourceTree = "<group>"; };
+		8487FE5E1743BE34000DEAD7 /* TextInsetLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextInsetLabel.m; sourceTree = "<group>"; };
 		84A7353F1737D0F0000BD714 /* ProjectViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProjectViewController.xib; sourceTree = "<group>"; };
 		84AF07B217280974006F8756 /* AiresService.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = AiresService.plist; sourceTree = "<group>"; };
 		84CA5DCA17411060003C338F /* SampleTypesListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SampleTypesListViewController.h; sourceTree = "<group>"; };
@@ -780,6 +783,8 @@
 				98C7871817324386008F80DD /* PreviewReportCell.m */,
 				98C7871A173243B7008F80DD /* PreviewReportCell.xib */,
 				98B42505172689A000D15811 /* iCarousel */,
+				8487FE5D1743BE34000DEAD7 /* TextInsetLabel.h */,
+				8487FE5E1743BE34000DEAD7 /* TextInsetLabel.m */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -1254,6 +1259,7 @@
 				84E6AFF8173A721B00BE8EB6 /* SampleType.m in Sources */,
 				84EBEB6A173BF26F00A8C71B /* DeviceTypesListViewController.m in Sources */,
 				84CA5DCD17411061003C338F /* SampleTypesListViewController.m in Sources */,
+				8487FE5F1743BE34000DEAD7 /* TextInsetLabel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "TimePickerViewController.h"
+#import "TextInsetLabel.h"
 
 @protocol MeasurementAddEditProtocol;
 
@@ -28,6 +29,7 @@
 
 @property (retain, nonatomic) NSMutableDictionary *onTimeDictionary;
 @property (retain, nonatomic) NSMutableDictionary *offTimeDictionary;
+@property (weak, nonatomic) IBOutlet UIView *controlsView;
 @property (weak, nonatomic) IBOutlet UIView *editView;
 @property (weak, nonatomic) IBOutlet UIButton *cancelButton;
 @property (weak, nonatomic) IBOutlet UIButton *doneButton;
@@ -39,12 +41,13 @@
 @property (weak, nonatomic) IBOutlet UIButton *deleteButton;
 @property (weak, nonatomic) IBOutlet UITextField *onFlowRateField;
 @property (weak, nonatomic) IBOutlet UITextField *offFlowRateField;
-@property (weak, nonatomic) IBOutlet UILabel *onTimeValueLabel;
-@property (weak, nonatomic) IBOutlet UILabel *offTimeValueLabel;
+@property (weak, nonatomic) IBOutlet TextInsetLabel *onTimeValueLabel;
+@property (weak, nonatomic) IBOutlet TextInsetLabel *offTimeValueLabel;
 
 @property (nonatomic, retain) id<MeasurementAddEditProtocol> delegate;
 @property (nonatomic, retain) SampleMeasurement *sampleMeasurement;
 @property (nonatomic, retain) MeasurementFields *measurementFields;
+@property (nonatomic, retain) NSString *deviceType;
 
 @end
 

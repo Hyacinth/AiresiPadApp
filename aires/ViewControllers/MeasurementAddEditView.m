@@ -52,10 +52,10 @@
     UIFont *fontBold18px = [UIFont fontWithName:@"ProximaNova-Bold" size:18.0f];
     UIFont *fontBold14px = [UIFont fontWithName:@"ProximaNova-Bold" size:14.0f];
     
-    self.layer.borderColor = [UIColor blackColor].CGColor;
-    self.layer.borderWidth = 1.0f;
-    self.layer.cornerRadius = 5.0f;
-    self.layer.masksToBounds = YES;
+    _controlsView.layer.borderColor = [UIColor blackColor].CGColor;
+    _controlsView.layer.borderWidth = 1.0f;
+    _controlsView.layer.cornerRadius = 5.0f;
+    //_controlsView.layer.masksToBounds = YES;
     
     _editView.layer.borderColor = grayColor.CGColor;
     _editView.layer.borderWidth = 1.0f;
@@ -126,6 +126,29 @@
     
     UITapGestureRecognizer *offTimeTapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(offTimeTapped)];
     [_offTimeValueLabel addGestureRecognizer:offTimeTapGesture];
+}
+
+-(void)setDeviceType:(NSString *)deviceType
+{
+    _deviceType = deviceType;
+    
+    if([_deviceType isEqualToString:@"Passive"])
+    {
+        //_onFlowRateField.backgroundColor = [UIColor lightGrayColor];
+        _onFlowRateField.userInteractionEnabled = NO;
+        //_offFlowRateField.backgroundColor = [UIColor lightGrayColor];
+        _offFlowRateField.userInteractionEnabled = NO;
+        
+        CALayer *grayLine12 = [CALayer layer];
+        grayLine12.frame = CGRectMake(221, 30, 220, 60);
+        grayLine12.backgroundColor = [UIColor lightGrayColor].CGColor;
+        [_editView.layer addSublayer:grayLine12];
+        
+        CALayer *grayLine13 = [CALayer layer];
+        grayLine13.frame = CGRectMake(662, 30, 220, 60);
+        grayLine13.backgroundColor = [UIColor lightGrayColor].CGColor;
+        [_editView.layer addSublayer:grayLine13];
+    }
 }
 
 -(void)setSampleMeasurement:(SampleMeasurement *)sampleMeasurement
@@ -218,10 +241,10 @@
     {
         _titleLabel. text = @"Create Measurement";
         [_deleteButton removeFromSuperview];
-        CGRect frame = self.frame;
+        CGRect frame = _controlsView.frame;
         frame.size.height = 164.0f;
-        self.frame = frame;
-        self.center = self.superview.center;
+        _controlsView.frame = frame;
+        //self.center = self.superview.center;
     }
 }
 
@@ -339,7 +362,7 @@
     }
 }
 
-// Only override drawRect: if you perform custom drawing.
+/*// Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.
 - (void)drawRect:(CGRect)rect
 {
@@ -363,6 +386,6 @@
     // Set the fill color to white.
     CGContextSetFillColorWithColor(context, [UIColor colorWithRed:28.0f/255.0f green:34.0f/255.0f blue:39.0f/255.0f alpha:1.0f].CGColor);
 }
-
+*/
 
 @end
