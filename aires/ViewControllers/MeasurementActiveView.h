@@ -14,7 +14,7 @@
 @class SampleMeasurement;
 @class MeasurementFields;
 
-@interface MeasurementActiveView : UIView<UIPopoverControllerDelegate, TimePickerProtocol>
+@interface MeasurementActiveView : UIView<UIPopoverControllerDelegate, TimePickerProtocol, UITextFieldDelegate>
 
 @property (nonatomic) BOOL editMode;
 

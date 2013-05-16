@@ -13,7 +13,7 @@
 @class SampleMeasurement;
 @class MeasurementFields;
 
-@interface MeasurementWipeView : UIView<UIPopoverControllerDelegate>
+@interface MeasurementWipeView : UIView<UITextFieldDelegate>
 
 @property (nonatomic) BOOL editMode;
 

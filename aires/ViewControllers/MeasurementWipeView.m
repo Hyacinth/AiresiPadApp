@@ -195,6 +195,31 @@
     }
 }
 
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    
+    NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
+    [numberFormatter setNumberStyle:NSNumberFormatterDecimalStyle];
+    
+    NSNumber* candidateNumber;
+    
+    NSString* candidateString = [textField.text stringByReplacingCharactersInRange:range withString:string];
+    
+    range = NSMakeRange(0, [candidateString length]);
+    
+    [numberFormatter getObjectValue:&candidateNumber forString:candidateString range:&range error:nil];
+    
+    if (([candidateString length] > 0) && (candidateNumber == nil || range.length < [candidateString length])) {
+        
+        return NO;
+    }
+    else
+    {
+        return YES;
+    }
+}
+
+
 /*// Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.
 - (void)drawRect:(CGRect)rect
