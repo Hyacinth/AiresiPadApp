@@ -126,6 +126,40 @@
     
     UITapGestureRecognizer *offTimeTapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(offTimeTapped)];
     [_offTimeValueLabel addGestureRecognizer:offTimeTapGesture];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillShow)
+                                                 name:UIKeyboardWillShowNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillHide)
+                                                 name:UIKeyboardWillHideNotification
+                                               object:nil];
+}
+
+#pragma mark - Keyboard
+
+-(void)keyboardWillShow
+{
+    // move controls up only for comments and note
+    [UIView animateWithDuration:0.25
+                     animations:^{
+                         CGRect frame = _controlsView.frame;
+                         frame.origin.y -= _editMode?100.0f:54.0f;
+                         _controlsView.frame = frame;
+                     }];
+}
+
+-(void)keyboardWillHide
+{
+    // move controls up only for comments and note
+    [UIView animateWithDuration:0.25
+                     animations:^{
+                         CGRect frame = _controlsView.frame;
+                         frame.origin.y += _editMode?100.0f:54.0f;
+                         _controlsView.frame = frame;
+                     }];
 }
 
 -(void)setDeviceType:(NSString *)deviceType
@@ -244,7 +278,6 @@
         CGRect frame = _controlsView.frame;
         frame.size.height = 164.0f;
         _controlsView.frame = frame;
-        //self.center = self.superview.center;
     }
 }
 
@@ -254,6 +287,8 @@
     {
         if(_delegate && [_delegate respondsToSelector:@selector(measurementsDonePressed:)])
         {
+            [[NSNotificationCenter defaultCenter] removeObserver:self];
+
             NSDate *now = [NSDate date];
             NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
             NSDateComponents *components = [[NSCalendar currentCalendar] components:NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit fromDate:now];
@@ -284,6 +319,8 @@
     {
         if(_delegate && [_delegate respondsToSelector:@selector(measurementsAddPressed:)])
         {
+            [[NSNotificationCenter defaultCenter] removeObserver:self];
+
             NSDate *now = [NSDate date];
             NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
             NSDateComponents *components = [[NSCalendar currentCalendar] components:NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit fromDate:now];
@@ -326,6 +363,7 @@
 {
     if(_delegate && [_delegate respondsToSelector:@selector(measurementsCancelPressed)])
     {
+        [[NSNotificationCenter defaultCenter] removeObserver:self];
         [_delegate measurementsCancelPressed];
     }
 }
@@ -334,6 +372,7 @@
 {
     if(_delegate && [_delegate respondsToSelector:@selector(measurementsDeletePressed:)])
     {
+        [[NSNotificationCenter defaultCenter] removeObserver:self];
         [_delegate measurementsDeletePressed:_sampleMeasurement];
     }
 }
