@@ -388,7 +388,7 @@
             //else
 //                [MeasurementDict setValue:@"" forKey:@"MeasurementId"];
             
-            if(sampMeas.sampleMesurementID && [sampMeas.sampleMesurementID intValue] > 0)
+            if(sampMeas.sampleID && [sampMeas.sampleID intValue] > 0)
                 [MeasurementDict setValue:sampMeas.sampleID forKey:@"SampleId"];
             //else
 //                [MeasurementDict setValue:@"" forKey:@"MeasurementId"];

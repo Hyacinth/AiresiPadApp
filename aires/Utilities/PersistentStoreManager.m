@@ -581,36 +581,63 @@
 {
     for (NSDictionary *dict in sampleChemical)
     {
-        SampleChemical *mSampleChemical = [NSEntityDescription
-                                           insertNewObjectForEntityForName:@"SampleChemical"
-                                           inManagedObjectContext:[self mainContext]];
-        
-        if (![[dict valueForKey:@"Chemical"] isKindOfClass:[NSNull class]])
-            mSampleChemical.sampleChemical_Name = [dict objectForKey:@"Chemical"];
-        if (![[dict valueForKey:@"PELCFlag"] isKindOfClass:[NSNull class]])
-            mSampleChemical.sampleChemical_PELCFlag = [dict objectForKey:@"PELCFlag"];
-        if (![[dict valueForKey:@"PELSTELFlag"] isKindOfClass:[NSNull class]])
-            mSampleChemical.sampleChemical_PELSTELFlag = [dict objectForKey:@"PELSTELFlag"];
-        if (![[dict valueForKey:@"PELTWAFlag"] isKindOfClass:[NSNull class]])
-            mSampleChemical.sampleChemical_PELTWAFlag = [dict objectForKey:@"PELTWAFlag"];
-        if (![[dict valueForKey:@"TLVCFlag"] isKindOfClass:[NSNull class]])
-            mSampleChemical.sampleChemical_TLVCFlag = [dict objectForKey:@"TLVCFlag"];
-        if (![[dict valueForKey:@"TLVSTELFlag"] isKindOfClass:[NSNull class]])
-            mSampleChemical.sampleChemical_TLVSTELFlag = [dict objectForKey:@"TLVSTELFlag"];
-        if (![[dict valueForKey:@"TLVTWAFlag"] isKindOfClass:[NSNull class]])
-            mSampleChemical.sampleChemical_TLVTWAFlag = [dict objectForKey:@"TLVTWAFlag"];
-        if (![[dict valueForKey:@"SampleChemicalId"] isKindOfClass:[NSNull class]])
-            mSampleChemical.sampleChemicalID = [dict objectForKey:@"SampleChemicalId"];
-        if (![[dict valueForKey:@"SampleId"] isKindOfClass:[NSNull class]])
-            mSampleChemical.sampleID = [dict objectForKey:@"SampleId"];
-        if (![[dict valueForKey:@"Deleted"] isKindOfClass:[NSNull class]])
-            mSampleChemical.deleted = [dict objectForKey:@"Deleted"];
-        if (![[dict valueForKey:@"ChemicalId"] isKindOfClass:[NSNull class]])
-            mSampleChemical.chemicalID = [dict objectForKey:@"ChemicalId"];
-        
-        [sample addAiresSampleChemicalObject:mSampleChemical];
-        [[self mainContext] save:nil];
+        if (![self isDuplicateSampleChemical:dict forSample:sample])
+        {
+            SampleChemical *mSampleChemical = [NSEntityDescription
+                                               insertNewObjectForEntityForName:@"SampleChemical"
+                                               inManagedObjectContext:[self mainContext]];
+            
+            if (![[dict valueForKey:@"Chemical"] isKindOfClass:[NSNull class]])
+                mSampleChemical.sampleChemical_Name = [dict objectForKey:@"Chemical"];
+            if (![[dict valueForKey:@"PELCFlag"] isKindOfClass:[NSNull class]])
+                mSampleChemical.sampleChemical_PELCFlag = [dict objectForKey:@"PELCFlag"];
+            if (![[dict valueForKey:@"PELSTELFlag"] isKindOfClass:[NSNull class]])
+                mSampleChemical.sampleChemical_PELSTELFlag = [dict objectForKey:@"PELSTELFlag"];
+            if (![[dict valueForKey:@"PELTWAFlag"] isKindOfClass:[NSNull class]])
+                mSampleChemical.sampleChemical_PELTWAFlag = [dict objectForKey:@"PELTWAFlag"];
+            if (![[dict valueForKey:@"TLVCFlag"] isKindOfClass:[NSNull class]])
+                mSampleChemical.sampleChemical_TLVCFlag = [dict objectForKey:@"TLVCFlag"];
+            if (![[dict valueForKey:@"TLVSTELFlag"] isKindOfClass:[NSNull class]])
+                mSampleChemical.sampleChemical_TLVSTELFlag = [dict objectForKey:@"TLVSTELFlag"];
+            if (![[dict valueForKey:@"TLVTWAFlag"] isKindOfClass:[NSNull class]])
+                mSampleChemical.sampleChemical_TLVTWAFlag = [dict objectForKey:@"TLVTWAFlag"];
+            if (![[dict valueForKey:@"SampleChemicalId"] isKindOfClass:[NSNull class]])
+                mSampleChemical.sampleChemicalID = [dict objectForKey:@"SampleChemicalId"];
+            if (![[dict valueForKey:@"SampleId"] isKindOfClass:[NSNull class]])
+                mSampleChemical.sampleID = [dict objectForKey:@"SampleId"];
+            if (![[dict valueForKey:@"Deleted"] isKindOfClass:[NSNull class]])
+                mSampleChemical.deleted = [dict objectForKey:@"Deleted"];
+            if (![[dict valueForKey:@"ChemicalId"] isKindOfClass:[NSNull class]])
+                mSampleChemical.chemicalID = [dict objectForKey:@"ChemicalId"];
+            
+            [sample addAiresSampleChemicalObject:mSampleChemical];
+            [[self mainContext] save:nil];
+        }
+        else
+        {
+            if (![[dict valueForKey:@"SampleChemicalId"] isKindOfClass:[NSNull class]])
+            {
+                NSArray *sampleChemicalArray = [self getAllSampleChemicalforSample:sample];
+                for (SampleChemical *chem in sampleChemicalArray)
+                {
+                    if ([chem.sampleChemicalID isEqualToNumber:[dict valueForKey:@"SampleChemicalId"]]) 
+                        [self updateSampleChemical:chem inSample:sample forField:FIELD_SAMPLECHEMICAL_DELETE withValue:[NSNumber numberWithBool:FALSE]];
+                }
+            }
+        }
     }
+}
+
+-(BOOL)isDuplicateSampleChemical:(NSDictionary *)dict forSample:(Sample *)sample
+{
+    NSArray *SCarray = [self getAllSampleChemicalforSample:sample];
+    for (SampleChemical *sc in SCarray)
+    {
+        if (![[dict valueForKey:@"ChemicalId"] isKindOfClass:[NSNull class]])
+            if([[dict objectForKey:@"ChemicalId"] isEqualToNumber:sc.chemicalID])
+                return YES;
+    }
+    return NO;
 }
 
 //Give all sample chemical for corresponding sample including deleted field
@@ -639,7 +666,7 @@
     NSArray *results = [self getAllSampleChemicalforSample:sample];
     NSMutableArray *finalResult = [NSMutableArray arrayWithArray:results];
     for (SampleChemical *mSampleChemical in results) {
-        if (mSampleChemical.deleted) {
+        if ([mSampleChemical.deleted boolValue]) {
             [finalResult removeObject:mSampleChemical];
         }
     }
@@ -769,7 +796,7 @@
     NSArray *results = [self getAllSampleMeasurementforSample:sample];
     NSMutableArray *finalResult = [NSMutableArray arrayWithArray:results];
     for (SampleMeasurement *mSampleMeasurement in results) {
-        if (mSampleMeasurement.deleted) {
+        if ([mSampleMeasurement.deleted boolValue]) {
             [finalResult removeObject:mSampleMeasurement];
         }
     }
@@ -829,24 +856,53 @@
 {
     for (NSDictionary *dict in sampleProtectionEquipment)
     {
-        SampleProtectionEquipment *mSampleProtectionEquipment = [NSEntityDescription
-                                                                 insertNewObjectForEntityForName:@"SampleProtectionEquipment"
-                                                                 inManagedObjectContext:[self mainContext]];
-        
-        if (![[dict valueForKey:@"PPE"] isKindOfClass:[NSNull class]])
-            mSampleProtectionEquipment.sampleProtectionEquipment_Name = [dict valueForKey:@"PPE"];
-        if (![[dict valueForKey:@"PPEId"] isKindOfClass:[NSNull class]])
-            mSampleProtectionEquipment.sampleProtectionEquipmentID = [dict valueForKey:@"PPEId"];
-        if (![[dict valueForKey:@"Deleted"] isKindOfClass:[NSNull class]])
-            mSampleProtectionEquipment.deleted = [dict objectForKey:@"Deleted"];
-        if (![[dict valueForKey:@"SamplesId"] isKindOfClass:[NSNull class]])
-            mSampleProtectionEquipment.sampleID = [dict valueForKey:@"SamplesId"];
-        if (![[dict valueForKey:@"SamplePPEId"] isKindOfClass:[NSNull class]])
-            mSampleProtectionEquipment.SamplePPEId = [dict valueForKey:@"SamplePPEId"];
-        
-        [sample addAiresSampleProtectionEquipmentObject:mSampleProtectionEquipment];
-        [[self mainContext] save:nil];
+        if (![self isDuplicateSampleProtectionEquipment:dict forSample:sample])
+        {
+            SampleProtectionEquipment *mSampleProtectionEquipment = [NSEntityDescription
+                                                                     insertNewObjectForEntityForName:@"SampleProtectionEquipment"
+                                                                     inManagedObjectContext:[self mainContext]];
+            
+            if (![[dict valueForKey:@"PPE"] isKindOfClass:[NSNull class]])
+                mSampleProtectionEquipment.sampleProtectionEquipment_Name = [dict valueForKey:@"PPE"];
+            if (![[dict valueForKey:@"PPEId"] isKindOfClass:[NSNull class]])
+                mSampleProtectionEquipment.sampleProtectionEquipmentID = [dict valueForKey:@"PPEId"];
+            if (![[dict valueForKey:@"Deleted"] isKindOfClass:[NSNull class]])
+                mSampleProtectionEquipment.deleted = [dict objectForKey:@"Deleted"];
+            if (![[dict valueForKey:@"SamplesId"] isKindOfClass:[NSNull class]])
+                mSampleProtectionEquipment.sampleID = [dict valueForKey:@"SamplesId"];
+            if (![[dict valueForKey:@"SamplePPEId"] isKindOfClass:[NSNull class]])
+                mSampleProtectionEquipment.SamplePPEId = [dict valueForKey:@"SamplePPEId"];
+            
+            [sample addAiresSampleProtectionEquipmentObject:mSampleProtectionEquipment];
+            [[self mainContext] save:nil];
+        }
+        else
+        {
+            if (![[dict valueForKey:@"SamplePPEId"] isKindOfClass:[NSNull class]])
+            {
+                NSArray *samplePPEArray = [self getAllSampleProtectionEquipmentforSample:sample];
+                for (SampleProtectionEquipment *ppem in samplePPEArray)
+                {
+                    if ([ppem.samplePPEId isEqualToNumber:[dict valueForKey:@"SamplePPEId"]])
+                        [self updateSampleProtectionEquipment:ppem inSample:sample forField:FIELD_SAMPLEPROTECTIONEQUIPMENT_DELETE withValue:[NSNumber numberWithBool:FALSE]];
+                }
+            }
+
+        }
     }
+}
+
+
+-(BOOL)isDuplicateSampleProtectionEquipment:(NSDictionary *)dict forSample:(Sample *)sample
+{
+    NSArray *SPEarray = [self getAllSampleProtectionEquipmentforSample:sample];
+    for (SampleProtectionEquipment *spe in SPEarray)
+    {
+        if (![[dict valueForKey:@"SamplePPEId"] isKindOfClass:[NSNull class]])
+            if([[dict objectForKey:@"SamplePPEId"] isEqualToNumber:spe.samplePPEId])
+                return YES;
+    }
+    return NO;
 }
 
 -(NSArray *)getAllSampleProtectionEquipmentforSample:(Sample *)sample
@@ -874,7 +930,7 @@
     NSArray *results = [self getAllSampleProtectionEquipmentforSample:sample];
     NSMutableArray *finalResult = [NSMutableArray arrayWithArray:results];
     for (SampleProtectionEquipment *mSampleProtectionEquipment in results) {
-        if (mSampleProtectionEquipment.deleted) {
+        if ([mSampleProtectionEquipment.deleted boolValue]) {
             [finalResult removeObject:mSampleProtectionEquipment];
         }
     }
