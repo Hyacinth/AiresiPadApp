@@ -1321,9 +1321,9 @@
     [measurementDict setValue:measurement.sampleMeasurement_OffTime forKey:@"OffTime"];
     [measurementDict setValue:measurement.sampleMeasurement_OnFlowRate forKey:@"OnFlowRate"];
     [measurementDict setValue:measurement.sampleMeasurement_OffFlowRate forKey:@"OffFlowRate"];
-    [measurementDict setValue:[NSNumber numberWithInt:100] forKey:@"Area"];
-    [measurementDict setValue:[NSNumber numberWithInt:100] forKey:@"Minutes"];
-    [measurementDict setValue:[NSNumber numberWithInt:100] forKey:@"Volume"];
+    [measurementDict setValue:measurement.sampleMeasurement_Area forKey:@"Area"];
+    [measurementDict setValue:measurement.sampleMeasurement_Mintes forKey:@"Minutes"];
+    [measurementDict setValue:measurement.sampleMeasurement_Volume forKey:@"Volume"];
     [measurementDict setValue:currentSample.sample_SampleId forKey:@"SampleId"];
     NSNumber *measurementId = [[mSingleton getPersistentStoreManager] generateIDforNewSampleMeasurement];
     [measurementDict setValue:measurementId forKey:@"MeasurementId"];
@@ -1352,6 +1352,8 @@
     [[mSingleton getPersistentStoreManager] updateSampleMeasurement:measurement inSample:currentSample forField:FIELD_SAMPLEMEASUREMENT_OffTime withValue:measurement.sampleMeasurement_OffTime];
     [[mSingleton getPersistentStoreManager] updateSampleMeasurement:measurement inSample:currentSample forField:FIELD_SAMPLEMEASUREMENT_OnFlowRate withValue:measurement.sampleMeasurement_OnFlowRate];
     [[mSingleton getPersistentStoreManager] updateSampleMeasurement:measurement inSample:currentSample forField:FIELD_SAMPLEMEASUREMENT_OffFlowRate withValue:measurement.sampleMeasurement_OffFlowRate];
+    [[mSingleton getPersistentStoreManager] updateSampleMeasurement:measurement inSample:currentSample forField:FIELD_SAMPLEMEASUREMENT_TotalMinutes withValue:measurement.sampleMeasurement_Minutes];
+    [[mSingleton getPersistentStoreManager] updateSampleMeasurement:measurement inSample:currentSample forField:FIELD_SAMPLEMEASUREMENT_TotalVolume withValue:measurement.sampleMeasurement_Volume];
 }
 
 -(void)measurementActiveCancelPressed
@@ -1376,11 +1378,11 @@
     NSMutableDictionary *measurementDict = [[NSMutableDictionary alloc] init];
     [measurementDict setValue:measurement.sampleMeasurement_OnTime forKey:@"OnTime"];
     [measurementDict setValue:measurement.sampleMeasurement_OffTime forKey:@"OffTime"];
-    //[measurementDict setValue:measurement.sampleMeasurement_OnFlowRate forKey:@"OnFlowRate"];
-    //[measurementDict setValue:measurement.sampleMeasurement_OffFlowRate forKey:@"OffFlowRate"];
-    [measurementDict setValue:[NSNumber numberWithInt:100] forKey:@"Area"];
-    [measurementDict setValue:[NSNumber numberWithInt:100] forKey:@"Minutes"];
-    [measurementDict setValue:[NSNumber numberWithInt:100] forKey:@"Volume"];
+    [measurementDict setValue:measurement.sampleMeasurement_OnFlowRate forKey:@"OnFlowRate"];
+    [measurementDict setValue:measurement.sampleMeasurement_OffFlowRate forKey:@"OffFlowRate"];
+    [measurementDict setValue:measurement.sampleMeasurement_Area forKey:@"Area"];
+    [measurementDict setValue:measurement.sampleMeasurement_Mintes forKey:@"Minutes"];
+    [measurementDict setValue:measurement.sampleMeasurement_Volume forKey:@"Volume"];
     [measurementDict setValue:currentSample.sample_SampleId forKey:@"SampleId"];
     NSNumber *measurementId = [[mSingleton getPersistentStoreManager] generateIDforNewSampleMeasurement];
     [measurementDict setValue:measurementId forKey:@"MeasurementId"];
@@ -1407,8 +1409,8 @@
     
     [[mSingleton getPersistentStoreManager] updateSampleMeasurement:measurement inSample:currentSample forField:FIELD_SAMPLEMEASUREMENT_OnTime withValue:measurement.sampleMeasurement_OnTime];
     [[mSingleton getPersistentStoreManager] updateSampleMeasurement:measurement inSample:currentSample forField:FIELD_SAMPLEMEASUREMENT_OffTime withValue:measurement.sampleMeasurement_OffTime];
-    //[[mSingleton getPersistentStoreManager] updateSampleMeasurement:measurement inSample:currentSample forField:FIELD_SAMPLEMEASUREMENT_OnFlowRate withValue:measurement.sampleMeasurement_OnFlowRate];
-    //[[mSingleton getPersistentStoreManager] updateSampleMeasurement:measurement inSample:currentSample forField:FIELD_SAMPLEMEASUREMENT_OffFlowRate withValue:measurement.sampleMeasurement_OffFlowRate];
+    [[mSingleton getPersistentStoreManager] updateSampleMeasurement:measurement inSample:currentSample forField:FIELD_SAMPLEMEASUREMENT_TotalMinutes withValue:measurement.sampleMeasurement_Minutes];
+    [[mSingleton getPersistentStoreManager] updateSampleMeasurement:measurement inSample:currentSample forField:FIELD_SAMPLEMEASUREMENT_TotalVolume withValue:measurement.sampleMeasurement_Volume];
 }
 
 -(void)measurementPassiveCancelPressed
@@ -1431,13 +1433,13 @@
     [self removeMeasurementEditView];
     
     NSMutableDictionary *measurementDict = [[NSMutableDictionary alloc] init];
-    //[measurementDict setValue:measurement.sampleMeasurement_OnTime forKey:@"OnTime"];
-    //[measurementDict setValue:measurement.sampleMeasurement_OffTime forKey:@"OffTime"];
-    //[measurementDict setValue:measurement.sampleMeasurement_OnFlowRate forKey:@"OnFlowRate"];
-    //[measurementDict setValue:measurement.sampleMeasurement_OffFlowRate forKey:@"OffFlowRate"];
-    [measurementDict setValue:[NSNumber numberWithInt:100] forKey:@"Area"];
-    [measurementDict setValue:[NSNumber numberWithInt:100] forKey:@"Minutes"];
-    [measurementDict setValue:[NSNumber numberWithInt:100] forKey:@"Volume"];
+    [measurementDict setValue:measurement.sampleMeasurement_OnTime forKey:@"OnTime"];
+    [measurementDict setValue:measurement.sampleMeasurement_OffTime forKey:@"OffTime"];
+    [measurementDict setValue:measurement.sampleMeasurement_OnFlowRate forKey:@"OnFlowRate"];
+    [measurementDict setValue:measurement.sampleMeasurement_OffFlowRate forKey:@"OffFlowRate"];
+    [measurementDict setValue:measurement.sampleMeasurement_Area forKey:@"Area"];
+    [measurementDict setValue:measurement.sampleMeasurement_Mintes forKey:@"Minutes"];
+    [measurementDict setValue:measurement.sampleMeasurement_Volume forKey:@"Volume"];
     [measurementDict setValue:currentSample.sample_SampleId forKey:@"SampleId"];
     NSNumber *measurementId = [[mSingleton getPersistentStoreManager] generateIDforNewSampleMeasurement];
     [measurementDict setValue:measurementId forKey:@"MeasurementId"];
@@ -1462,10 +1464,7 @@
     [self removeMeasurementEditView];
     [self updateMeasurementTable];
     
-    //[[mSingleton getPersistentStoreManager] updateSampleMeasurement:measurement inSample:currentSample forField:FIELD_SAMPLEMEASUREMENT_OnTime withValue:measurement.sampleMeasurement_OnTime];
-    //[[mSingleton getPersistentStoreManager] updateSampleMeasurement:measurement inSample:currentSample forField:FIELD_SAMPLEMEASUREMENT_OffTime withValue:measurement.sampleMeasurement_OffTime];
-    //[[mSingleton getPersistentStoreManager] updateSampleMeasurement:measurement inSample:currentSample forField:FIELD_SAMPLEMEASUREMENT_OnFlowRate withValue:measurement.sampleMeasurement_OnFlowRate];
-    //[[mSingleton getPersistentStoreManager] updateSampleMeasurement:measurement inSample:currentSample forField:FIELD_SAMPLEMEASUREMENT_OffFlowRate withValue:measurement.sampleMeasurement_OffFlowRate];
+    [[mSingleton getPersistentStoreManager] updateSampleMeasurement:measurement inSample:currentSample forField:FIELD_SAMPLEMEASUREMENT_TotalArea withValue:measurement.sampleMeasurement_Area];
 }
 
 -(void)measurementWipeCancelPressed

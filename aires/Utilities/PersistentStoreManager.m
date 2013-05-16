@@ -462,11 +462,11 @@
         if (![[dict valueForKey:@"DeviceType"] isKindOfClass:[NSNull class]])
             mSample.deviceType = [dict objectForKey:@"DeviceType"];
         if (![[dict valueForKey:@"Volume"] isKindOfClass:[NSNull class]])
-            mSample.volume = [dict objectForKey:@"Volume"];
+            mSample.totalVolume = [dict objectForKey:@"Volume"];
         if (![[dict valueForKey:@"Minutes"] isKindOfClass:[NSNull class]])
-            mSample.minutes = [dict objectForKey:@"Minutes"];
+            mSample.totalMinutes = [dict objectForKey:@"Minutes"];
         if (![[dict valueForKey:@"Area"] isKindOfClass:[NSNull class]])
-            mSample.area = [dict objectForKey:@"Area"];
+            mSample.totalArea = [dict objectForKey:@"Area"];
         if (![[dict valueForKey:@"DeviceTypeId"] isKindOfClass:[NSNull class]])
             mSample.deviceTypeId = [dict objectForKey:@"DeviceTypeId"];
         if (![[dict valueForKey:@"PPEId"] isKindOfClass:[NSNull class]])
@@ -725,11 +725,11 @@
         if (![[dict valueForKey:@"OnTime"] isKindOfClass:[NSNull class]])
             mSampleMeasurement.sampleMeasurement_OnTime = [dict objectForKey:@"OnTime"];
         if (![[dict valueForKey:@"Area"] isKindOfClass:[NSNull class]])
-            mSampleMeasurement.sampleMeasurement_TotalArea = [dict objectForKey:@"Area"];
+            mSampleMeasurement.sampleMeasurement_Area = [dict objectForKey:@"Area"];
         if (![[dict valueForKey:@"Minutes"] isKindOfClass:[NSNull class]])
-            mSampleMeasurement.sampleMeasurement_TotalMinutes = [dict objectForKey:@"Minutes"];
+            mSampleMeasurement.sampleMeasurement_Minutes = [dict objectForKey:@"Minutes"];
         if (![[dict valueForKey:@"Volume"] isKindOfClass:[NSNull class]])
-            mSampleMeasurement.sampleMeasurement_TotalVolume = [dict objectForKey:@"Volume"];
+            mSampleMeasurement.sampleMeasurement_Volume = [dict objectForKey:@"Volume"];
         if (![[dict valueForKey:@"MeasurementId"] isKindOfClass:[NSNull class]])
             mSampleMeasurement.sampleMesurementID = [dict objectForKey:@"MeasurementId"];
         if (![[dict valueForKey:@"SampleId"] isKindOfClass:[NSNull class]])
@@ -811,15 +811,15 @@
     }
     else if ([field isEqualToString:FIELD_SAMPLEMEASUREMENT_TotalArea])
     {
-        toUpdate.sampleMeasurement_TotalArea = (NSNumber *)value;
+        toUpdate.sampleMeasurement_Area = (NSNumber *)value;
     }
     else if ([field isEqualToString:FIELD_SAMPLEMEASUREMENT_TotalMinutes])
     {
-        toUpdate.sampleMeasurement_TotalMinutes = (NSNumber *)value;
+        toUpdate.sampleMeasurement_Minutes = (NSNumber *)value;
     }
     else if ([field isEqualToString:FIELD_SAMPLEMEASUREMENT_TotalVolume])
     {
-        toUpdate.sampleMeasurement_TotalVolume = (NSNumber *)value;
+        toUpdate.sampleMeasurement_Volume = (NSNumber *)value;
     }
 }
 

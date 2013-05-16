@@ -375,9 +375,9 @@
         if([measurementArray count] >0)
         {
             SampleMeasurement *totalMeasurement = [measurementArray objectAtIndex:0];
-            cell.AirVolume.text = [totalMeasurement.sampleMeasurement_TotalVolume stringValue];
-            cell.PassiveMonitors.text = [totalMeasurement.sampleMeasurement_TotalMinutes stringValue];
-            cell.Area.text = [totalMeasurement.sampleMeasurement_TotalArea stringValue];
+            cell.AirVolume.text = [totalMeasurement.sampleMeasurement_Volume stringValue];
+            cell.PassiveMonitors.text = [totalMeasurement.sampleMeasurement_Minutes stringValue];
+            cell.Area.text = [totalMeasurement.sampleMeasurement_Area stringValue];
             cell.AnalysisRequested.text = nil;
         }
     }

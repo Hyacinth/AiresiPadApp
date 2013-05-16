@@ -17,9 +17,9 @@
 @property (nonatomic, retain) NSString * sampleMeasurement_OffTime;
 @property (nonatomic, retain) NSNumber * sampleMeasurement_OnFlowRate;
 @property (nonatomic, retain) NSString * sampleMeasurement_OnTime;
-@property (nonatomic, retain) NSNumber * sampleMeasurement_TotalArea;
-@property (nonatomic, retain) NSNumber * sampleMeasurement_TotalMinutes;
-@property (nonatomic, retain) NSNumber * sampleMeasurement_TotalVolume;
+@property (nonatomic, retain) NSNumber * sampleMeasurement_Area;
+@property (nonatomic, retain) NSNumber * sampleMeasurement_Minutes;
+@property (nonatomic, retain) NSNumber * sampleMeasurement_Volume;
 @property (nonatomic, retain) Sample *fromSample;
 @property (nonatomic, retain) NSNumber *deleted;
 @property (nonatomic, retain) NSNumber * sampleID;

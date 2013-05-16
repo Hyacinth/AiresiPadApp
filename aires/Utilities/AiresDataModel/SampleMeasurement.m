@@ -16,9 +16,9 @@
 @dynamic sampleMeasurement_OffTime;
 @dynamic sampleMeasurement_OnFlowRate;
 @dynamic sampleMeasurement_OnTime;
-@dynamic sampleMeasurement_TotalArea;
-@dynamic sampleMeasurement_TotalMinutes;
-@dynamic sampleMeasurement_TotalVolume;
+@dynamic sampleMeasurement_Area;
+@dynamic sampleMeasurement_Minutes;
+@dynamic sampleMeasurement_Volume;
 @dynamic sampleMesurementID;
 @dynamic fromSample;
 @dynamic deleted;

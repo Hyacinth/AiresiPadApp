@@ -343,18 +343,18 @@
         //else
 //            [SamplesDict setValue:@"" forKey:@"DeviceTypeId"];
         
-        if(samp.area)
-            [SamplesDict setValue:samp.area forKey:@"Area"];
+        if(samp.totalArea)
+            [SamplesDict setValue:samp.totalArea forKey:@"Area"];
         //else
 //            [SamplesDict setValue:@"" forKey:@"Area"];
         
-        if(samp.minutes)
-            [SamplesDict setValue:samp.minutes forKey:@"Minutes"];
+        if(samp.totalMinutes)
+            [SamplesDict setValue:samp.totalMinutes forKey:@"Minutes"];
         //else
 //            [SamplesDict setValue:@"" forKey:@"Minutes"];
         
-        if(samp.volume)
-            [SamplesDict setValue:samp.volume forKey:@"Volume"];
+        if(samp.totalVolume)
+            [SamplesDict setValue:samp.totalVolume forKey:@"Volume"];
         //else
 //            [SamplesDict setValue:@"" forKey:@"Volume"];
         
@@ -413,18 +413,18 @@
             //else
 //                [MeasurementDict setValue:@"" forKey:@"OffFlowRate"];
             
-            if(sampMeas.sampleMeasurement_TotalArea)
-                [MeasurementDict setValue:sampMeas.sampleMeasurement_TotalArea forKey:@"Area"];
+            if(sampMeas.sampleMeasurement_Area)
+                [MeasurementDict setValue:sampMeas.sampleMeasurement_Area forKey:@"Area"];
             //else
 //                [MeasurementDict setValue:@"" forKey:@"Area"];
             
-            if(sampMeas.sampleMeasurement_TotalMinutes)
-                [MeasurementDict setValue:sampMeas.sampleMeasurement_TotalMinutes forKey:@"Minutes"];
+            if(sampMeas.sampleMeasurement_Minutes)
+                [MeasurementDict setValue:sampMeas.sampleMeasurement_Minutes forKey:@"Minutes"];
             //else
 //                [MeasurementDict setValue:@"" forKey:@"Minutes"];
             
-            if(sampMeas.sampleMeasurement_TotalVolume)
-                [MeasurementDict setValue:sampMeas.sampleMeasurement_TotalVolume forKey:@"Volume"];
+            if(sampMeas.sampleMeasurement_Volume)
+                [MeasurementDict setValue:sampMeas.sampleMeasurement_Volume forKey:@"Volume"];
             //else
 //                [MeasurementDict setValue:@"" forKey:@"Volume"];
             

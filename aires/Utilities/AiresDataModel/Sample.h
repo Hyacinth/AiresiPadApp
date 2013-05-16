@@ -26,9 +26,9 @@
 @property (nonatomic, retain) NSSet *    airesSampleMeasurement;
 @property (nonatomic, retain) NSSet *    airesSampleProtectionEquipment;
 @property (nonatomic, retain) SampleTotalMeasurement *airesSampleTotalMeasurement;
-@property (nonatomic, retain) NSNumber * area;
-@property (nonatomic, retain) NSNumber * minutes;
-@property (nonatomic, retain) NSNumber * volume;
+@property (nonatomic, retain) NSNumber * totalArea;
+@property (nonatomic, retain) NSNumber * totalMinutes;
+@property (nonatomic, retain) NSNumber * totalVolume;
 @property (nonatomic, retain) NSNumber * deviceTypeId;
 @property (nonatomic, retain) NSNumber * ppeID;
 @property (nonatomic, retain) NSNumber * projectId;

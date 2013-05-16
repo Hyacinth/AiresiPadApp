@@ -159,7 +159,7 @@
         {
             [self endEditing:YES];
             [[NSNotificationCenter defaultCenter] removeObserver:self];
-            // TODO set area
+            _sampleMeasurement.sampleMeasurement_Area = [NSNumber numberWithInt:[_areaField.text intValue]];
             [_delegate measurementWipeDonePressed:_sampleMeasurement];
         }
     }
@@ -169,7 +169,7 @@
         {
             [self endEditing:YES];
             [[NSNotificationCenter defaultCenter] removeObserver:self];
-            // TODO set area
+            _measurementFields.sampleMeasurement_Area = [NSNumber numberWithInt:[_areaField.text intValue]];
             [_delegate measurementWipeAddPressed:_measurementFields];
         }
     }

@@ -29,9 +29,9 @@
 @dynamic airesSampleProtectionEquipment;
 @dynamic airesSampleTotalMeasurement;
 @dynamic fromProject;
-@dynamic area;
-@dynamic volume;
-@dynamic minutes;
+@dynamic totalArea;
+@dynamic totalVolume;
+@dynamic totalMinutes;
 @dynamic ppeID;
 @dynamic projectId;
 @dynamic deviceType;
